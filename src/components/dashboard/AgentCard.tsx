@@ -1,0 +1,128 @@
+import React from 'react';
+import { Badge } from '@/components/ui/Badge';
+import { IconPlay, IconChevronRight, IconBarChart } from '@/components/ui/Icons';
+
+interface AgentCardProps {
+  id: string;
+  name: string;
+  category: string;
+  phase: string;
+  priority: string;
+  icon: string; // kept for data shape but we render SVG
+  desc: string;
+  uses: number;
+  compact?: boolean;
+  onClick?: () => void;
+}
+
+const phaseColor: Record<string, 'success' | 'brand' | 'neutral'> = {
+  '1a': 'success', '1b': 'brand', '1c': 'neutral',
+};
+const priorityColor: Record<string, 'danger' | 'warning' | 'neutral'> = {
+  P0: 'danger', P1: 'warning', P2: 'neutral',
+};
+const categoryColors: Record<string, { bg: string; text: string; icon: string }> = {
+  'Search & Discovery':      { bg: '#EEF2FF', text: '#4F46E5', icon: '#4F46E5' },
+  'Network Management':      { bg: '#ECFEFF', text: '#0891B2', icon: '#06B6D4' },
+  'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', icon: '#EF4444' },
+  'Data Delivery':           { bg: '#FFFBEB', text: '#B45309', icon: '#F59E0B' },
+  'Credentialing (resQ)':    { bg: '#ECFDF5', text: '#059669', icon: '#10B981' },
+  'Analytics & Prediction':  { bg: '#F5F3FF', text: '#6D28D9', icon: '#8B5CF6' },
+  'Claims & Routing':        { bg: '#EFF6FF', text: '#2563EB', icon: '#3B82F6' },
+  'NCPDP Internal':          { bg: '#FDF4FF', text: '#9333EA', icon: '#A855F7' },
+};
+
+// Map each category to a small SVG icon
+function CategoryIcon({ category }: { category: string }) {
+  const color = categoryColors[category]?.icon || '#4F46E5';
+  const icons: Record<string, React.ReactNode> = {
+    'Search & Discovery':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>,
+    'Network Management':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M12 11l-6.5 6M12 11l6.5 6"/></svg>,
+    'Compliance & Regulatory': <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>,
+    'Data Delivery':           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>,
+    'Credentialing (resQ)':    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>,
+    'Analytics & Prediction':  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
+    'Claims & Routing':        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>,
+    'NCPDP Internal':          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>,
+  };
+  return <>{icons[category] || <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg>}</>;
+}
+
+export function AgentCard({ name, category, phase, priority, desc, uses, compact, onClick }: AgentCardProps) {
+  const catStyle = categoryColors[category] || categoryColors['Search & Discovery'];
+
+  if (compact) {
+    return (
+      <div
+        className="card card-hover"
+        onClick={onClick}
+        style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}
+      >
+        <div style={{
+          width: 32, height: 32, borderRadius: 8,
+          background: catStyle.bg,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        }}>
+          <CategoryIcon category={category}/>
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 1 }}>
+            <IconBarChart size={9} color="var(--text-muted)"/>
+            {uses.toLocaleString()} uses
+          </div>
+        </div>
+        <IconChevronRight size={13} color="var(--text-muted)"/>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="card card-hover"
+      onClick={onClick}
+      style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 12 }}
+    >
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+        <div style={{
+          width: 40, height: 40, borderRadius: 10,
+          background: catStyle.bg,
+          border: `1px solid ${catStyle.text}20`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        }}>
+          <CategoryIcon category={category}/>
+        </div>
+        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          <Badge variant={phaseColor[phase]}>Phase {phase}</Badge>
+          <Badge variant={priorityColor[priority]}>{priority}</Badge>
+        </div>
+      </div>
+
+      <div>
+        <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{name}</div>
+        <span style={{
+          fontSize: 10,
+          fontWeight: 600,
+          color: catStyle.text,
+          background: catStyle.bg,
+          padding: '2px 7px',
+          borderRadius: 9999,
+          display: 'inline-block',
+          marginBottom: 6,
+        }}>{category}</span>
+        <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>{desc}</p>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 4 }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
+          <IconBarChart size={10} color="var(--text-muted)"/>
+          {uses.toLocaleString()} uses/mo
+        </span>
+        <button className="btn-primary" style={{ fontSize: 12, padding: '5px 12px', borderRadius: 7, gap: 5 }}>
+          <IconPlay size={11} color="#fff"/>
+          Launch
+        </button>
+      </div>
+    </div>
+  );
+}

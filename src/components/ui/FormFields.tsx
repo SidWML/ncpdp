@@ -1,0 +1,167 @@
+'use client';
+import React, { useState } from 'react';
+
+/* ─── Shared styles ──────────────────────────────────────────────── */
+const fieldInput: React.CSSProperties = {
+  width: '100%',
+  padding: '7px 10px',
+  borderRadius: 6,
+  border: '1px solid #CBD5E1',
+  fontSize: 12.5,
+  color: '#1E293B',
+  background: '#fff',
+  outline: 'none',
+  boxSizing: 'border-box',
+};
+
+/* ─── FieldLabel ─────────────────────────────────────────────────── */
+interface FieldLabelProps {
+  children: React.ReactNode;
+  required?: boolean;
+}
+
+export function FieldLabel({ children, required }: FieldLabelProps) {
+  return (
+    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2B6B', marginBottom: 4 }}>
+      {children}
+      {required && <span style={{ color: '#DC2626', marginLeft: 2 }}>*</span>}
+    </label>
+  );
+}
+
+/* ─── TextInput ──────────────────────────────────────────────────── */
+interface TextInputProps {
+  placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  style?: React.CSSProperties;
+  type?: string;
+}
+
+export function TextInput({ placeholder, value, onChange, onKeyDown, style, type = 'text' }: TextInputProps) {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      style={{ ...fieldInput, ...style }}
+    />
+  );
+}
+
+/* ─── Select ─────────────────────────────────────────────────────── */
+interface SelectProps {
+  children: React.ReactNode;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  style?: React.CSSProperties;
+}
+
+export function Select({ children, value, onChange, style }: SelectProps) {
+  return (
+    <select
+      value={value}
+      onChange={onChange}
+      style={{ ...fieldInput, appearance: 'auto', ...style }}
+    >
+      {children}
+    </select>
+  );
+}
+
+/* ─── MultiSelect (checkbox list) ────────────────────────────────── */
+interface MultiSelectProps {
+  options: string[];
+  height?: number;
+  value?: string[];
+  onChange?: (selected: string[]) => void;
+}
+
+export function MultiSelect({ options, height = 96, value, onChange }: MultiSelectProps) {
+  const [internal, setInternal] = useState<string[]>([]);
+  const selected = value ?? internal;
+  const setSelected = onChange ?? setInternal;
+
+  function toggle(o: string) {
+    setSelected(selected.includes(o) ? selected.filter(x => x !== o) : [...selected, o]);
+  }
+
+  return (
+    <div style={{
+      height, overflowY: 'auto', border: '1px solid #CBD5E1', borderRadius: 6,
+      background: '#fff', padding: '2px 0',
+    }}>
+      {options.map(o => {
+        const active = selected.includes(o);
+        return (
+          <label
+            key={o}
+            onClick={() => toggle(o)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8, padding: '5px 10px',
+              fontSize: 12, color: active ? '#1B2B6B' : '#475569', cursor: 'pointer',
+              background: active ? '#EEF2FF' : 'transparent',
+              fontWeight: active ? 600 : 400,
+              transition: 'background .1s',
+            }}
+          >
+            <div style={{
+              width: 15, height: 15, borderRadius: 3, flexShrink: 0,
+              border: active ? '1.5px solid #4F46E5' : '1.5px solid #CBD5E1',
+              background: active ? '#4F46E5' : '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              {active && (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              )}
+            </div>
+            {o}
+          </label>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ─── DateRange ──────────────────────────────────────────────────── */
+interface DateRangeProps {
+  label: string;
+  required?: boolean;
+  fromValue?: string;
+  toValue?: string;
+  onFromChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onToChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export function DateRange({ label, required, fromValue, toValue, onFromChange, onToChange }: DateRangeProps) {
+  return (
+    <div>
+      <FieldLabel required={required}>{label}</FieldLabel>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <input type="text" placeholder="From" value={fromValue} onChange={onFromChange} style={fieldInput}/>
+        <input type="text" placeholder="To" value={toValue} onChange={onToChange} style={fieldInput}/>
+      </div>
+    </div>
+  );
+}
+
+/* ─── SectionTitle (form section header) ─────────────────────────── */
+interface SectionTitleProps {
+  children: React.ReactNode;
+}
+
+export function SectionTitle({ children }: SectionTitleProps) {
+  return (
+    <div style={{
+      fontSize: 11, fontWeight: 700, color: '#94A3B8',
+      textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 10,
+    }}>
+      {children}
+    </div>
+  );
+}

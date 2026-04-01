@@ -80,6 +80,13 @@ export default function NoSurprisesPage() {
     setSubmitted(true);
   }
 
+  function goToStep(i: number) {
+    // Auto-set prerequisites when jumping ahead
+    if (i >= 1 && !queried) { setQueried(true); }
+    if (i >= 2 && !fixed)   { setFixed(true); }
+    setStep(i);
+  }
+
   return (
     <>
       <Topbar
@@ -99,30 +106,41 @@ export default function NoSurprisesPage() {
         <div>
           {/* Step progress */}
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20, gap: 0 }}>
-            {STEPS.map((s, i) => (
-              <React.Fragment key={s.label}>
-                <div
-                  onClick={() => { if (i < step || (i === step)) setStep(i); }}
-                  style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: i <= step ? 'pointer' : 'default' }}
-                >
-                  <div style={{
-                    width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 12, fontWeight: 700, flexShrink: 0,
-                    background: i < step ? '#10B981' : i === step ? '#1B2B6B' : '#E2E8F0',
-                    color: i <= step ? '#fff' : '#94A3B8',
-                  }}>
-                    {i < step ? <IconCheck size={13} color="#fff"/> : i + 1}
+            {STEPS.map((s, i) => {
+              const completed = i < step;
+              const active = i === step;
+              return (
+                <React.Fragment key={s.label}>
+                  <div
+                    onClick={() => goToStep(i)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer',
+                      opacity: !active && !completed ? 0.7 : 1,
+                      transition: 'opacity .15s',
+                    }}
+                    onMouseEnter={e => { if (!active) e.currentTarget.style.opacity = '1'; }}
+                    onMouseLeave={e => { if (!active && !completed) e.currentTarget.style.opacity = '0.7'; }}
+                  >
+                    <div style={{
+                      width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 12, fontWeight: 700, flexShrink: 0,
+                      background: completed ? '#10B981' : active ? '#1B2B6B' : '#E2E8F0',
+                      color: completed || active ? '#fff' : '#94A3B8',
+                      transition: 'all .15s',
+                    }}>
+                      {completed ? <IconCheck size={13} color="#fff"/> : i + 1}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 12.5, fontWeight: 700, color: active ? '#1B2B6B' : completed ? '#10B981' : '#94A3B8' }}>{s.label}</div>
+                      <div style={{ fontSize: 11, color: '#94A3B8' }}>{s.desc}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div style={{ fontSize: 12.5, fontWeight: 700, color: i === step ? '#1B2B6B' : i < step ? '#10B981' : '#94A3B8' }}>{s.label}</div>
-                    <div style={{ fontSize: 11, color: '#94A3B8' }}>{s.desc}</div>
-                  </div>
-                </div>
-                {i < STEPS.length - 1 && (
-                  <div style={{ flex: 1, height: 1, background: i < step ? '#10B981' : '#E2E8F0', margin: '0 12px' }}/>
-                )}
-              </React.Fragment>
-            ))}
+                  {i < STEPS.length - 1 && (
+                    <div style={{ flex: 1, height: 2, borderRadius: 1, background: completed ? '#10B981' : '#E2E8F0', margin: '0 12px', transition: 'background .15s' }}/>
+                  )}
+                </React.Fragment>
+              );
+            })}
           </div>
 
           {/* ── STEP 0: Query & Filter ── */}
@@ -273,8 +291,8 @@ export default function NoSurprisesPage() {
                         <div style={{ fontSize: 12, color: '#047857', marginTop: 2 }}>Q1 2026 — Jan 1 through Mar 31, 2026</div>
                       </div>
                     </div>
-                    <button className="btn-primary" onClick={() => setStep(1)} style={{ gap: 6, fontSize: 12 }}>
-                      Continue <IconChevronRight size={13} color="#fff"/>
+                    <button className="btn-primary" onClick={() => goToStep(1)} style={{ gap: 6, fontSize: 12 }}>
+                      Next: Validate Data <IconChevronRight size={13} color="#fff"/>
                     </button>
                   </div>
                 )}
@@ -325,14 +343,14 @@ export default function NoSurprisesPage() {
                   })}
                 </div>
                 <div style={{ marginTop: 16, display: 'flex', gap: 10, justifyContent: 'space-between' }}>
-                  <button className="btn-secondary" onClick={() => setStep(0)} style={{ gap: 6, fontSize: 12 }}>Back</button>
+                  <button className="btn-secondary" onClick={() => goToStep(0)} style={{ gap: 6, fontSize: 12 }}>Back</button>
                   <button
                     className="btn-primary"
-                    onClick={() => setStep(2)}
+                    onClick={() => goToStep(2)}
                     disabled={!fixed && hasFailure}
                     style={{ gap: 6, fontSize: 12, opacity: (!fixed && hasFailure) ? 0.5 : 1 }}
                   >
-                    Continue to Review <IconChevronRight size={13} color="#fff"/>
+                    Next: Review Report <IconChevronRight size={13} color="#fff"/>
                   </button>
                 </div>
               </CardBody>
@@ -384,11 +402,11 @@ export default function NoSurprisesPage() {
                 </div>
 
                 <div style={{ marginTop: 16, display: 'flex', gap: 10, justifyContent: 'space-between' }}>
-                  <button className="btn-secondary" onClick={() => setStep(1)} style={{ gap: 6, fontSize: 12 }}>Back</button>
+                  <button className="btn-secondary" onClick={() => goToStep(1)} style={{ gap: 6, fontSize: 12 }}>Back</button>
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button className="btn-secondary" style={{ gap: 6, fontSize: 12 }}><IconDownload size={12}/> Download Preview</button>
-                    <button className="btn-primary" onClick={() => setStep(3)} style={{ gap: 6, fontSize: 12 }}>
-                      Proceed to Submit <IconChevronRight size={13} color="#fff"/>
+                    <button className="btn-primary" onClick={() => goToStep(3)} style={{ gap: 6, fontSize: 12 }}>
+                      Next: Submit to CMS <IconChevronRight size={13} color="#fff"/>
                     </button>
                   </div>
                 </div>
@@ -414,7 +432,7 @@ export default function NoSurprisesPage() {
                       <strong>Deadline:</strong> March 31, 2026 — Today is the deadline. Submit immediately to avoid late filing penalties.
                     </div>
                     <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-                      <button className="btn-secondary" onClick={() => setStep(2)} style={{ fontSize: 12 }}>Back</button>
+                      <button className="btn-secondary" onClick={() => goToStep(2)} style={{ fontSize: 12 }}>Back</button>
                       <button className="btn-primary" onClick={handleSubmit} style={{ gap: 6, fontSize: 13, padding: '8px 28px' }}>
                         <IconCheck size={14} color="#fff"/> Submit to CMS Now
                       </button>
@@ -443,7 +461,7 @@ export default function NoSurprisesPage() {
                     </div>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
                       <button className="btn-secondary" style={{ gap: 5, fontSize: 12 }}><IconDownload size={12}/> Download Receipt</button>
-                      <button className="btn-secondary" onClick={() => { setStep(0); setQueried(false); setFixed(false); setSubmitted(false); }} style={{ fontSize: 12 }}>New Submission</button>
+                      <button className="btn-secondary" onClick={() => { setStep(0); setQueried(false); setFixed(false); setSubmitted(false); setQuerying(false); setFixing(false); }} style={{ fontSize: 12 }}>New Submission</button>
                     </div>
                   </div>
                 )}

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(rm -rf src/app/v2 src/components/v2)",
+      "Bash(mkdir -p src/app/v2 src/app/v2/\\\\\\(workspace\\\\\\)/search src/app/v2/\\\\\\(workspace\\\\\\)/reports src/app/v2/\\\\\\(workspace\\\\\\)/compliance src/app/v2/\\\\\\(workspace\\\\\\)/admin src/app/v2/\\\\\\(workspace\\\\\\)/agents/run src/components/v2)",
+      "Bash(ls -la src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx)",
+      "Read(//c/projects/ncpdp/**)",
+      "Bash(wc -l src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx src/app/v2/page.tsx)"
+    ]
+  }
+}

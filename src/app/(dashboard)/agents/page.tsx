@@ -174,32 +174,6 @@ export default function AgentsPage() {
       />
       <main style={{ padding: '16px 20px 40px' }}>
 
-        {/* Phase summary */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 16 }}>
-          {[
-            { phase: '1a', label: 'Phase 1a — Live',        count: phaseCount('1a'), color: '#10B981', bg: '#D1FAE5', border: '#A7F3D0', desc: 'Core agents deployed & running' },
-            { phase: '1b', label: 'Phase 1b — In Progress', count: phaseCount('1b'), color: '#4F46E5', bg: '#EEF2FF', border: '#C7D2FE', desc: 'Mid-tier agents, Q2 2026' },
-            { phase: '1c', label: 'Phase 1c — Roadmap',     count: phaseCount('1c'), color: '#94A3B8', bg: '#F8FAFC', border: '#E2E8F0', desc: 'Advanced agents, Q3 2026' },
-          ].map(({ phase, label, count, color, bg, border, desc }) => (
-            <button
-              key={phase}
-              onClick={() => setActivePhase(activePhase === phase ? 'All' : phase)}
-              style={{
-                background: activePhase === phase ? bg : 'var(--surface)',
-                border: `1px solid ${activePhase === phase ? border : 'var(--border)'}`,
-                borderRadius: 14, padding: '14px 18px', textAlign: 'left', cursor: 'pointer',
-                transition: 'all .15s', boxShadow: 'var(--shadow-card)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{label}</span>
-                <span style={{ fontSize: 22, fontWeight: 800, color, lineHeight: 1 }}>{count}</span>
-              </div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{desc}</div>
-            </button>
-          ))}
-        </div>
-
         {/* Filter bar */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
           <div style={{ position: 'relative', width: 220 }}>

@@ -1,0 +1,78 @@
+/*  dataQ.ai V2 — Soft Professional Design System  */
+:root {
+  --v2-bg:         #F7F7F8;
+  --v2-surface:    #FFFFFF;
+  --v2-surface-2:  #F3F3F5;
+  --v2-surface-3:  #EBEBED;
+  --v2-border:     #E4E4E7;
+  --v2-border-lt:  #F0F0F2;
+
+  --v2-text:       #18181B;
+  --v2-text-2:     #52525B;
+  --v2-text-3:     #A1A1AA;
+
+  --v2-primary:    #6366F1;
+  --v2-primary-h:  #4F46E5;
+  --v2-primary-bg: #EEF2FF;
+  --v2-primary-m:  #C7D2FE;
+
+  --v2-green:      #059669;
+  --v2-green-bg:   #ECFDF5;
+  --v2-amber:      #D97706;
+  --v2-amber-bg:   #FFFBEB;
+  --v2-red:        #DC2626;
+  --v2-red-bg:     #FEF2F2;
+
+  --v2-shadow-sm:  0 1px 2px rgba(0,0,0,.04), 0 0 0 1px rgba(0,0,0,.015);
+  --v2-shadow-md:  0 3px 10px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.015);
+  --v2-shadow-lg:  0 8px 24px rgba(0,0,0,.1);
+
+  --v2-r-sm: 6px;
+  --v2-r:    8px;
+  --v2-r-md: 10px;
+  --v2-r-lg: 12px;
+}
+
+/*  Cards  */
+.v2c { background: var(--v2-surface); border-radius: var(--v2-r-lg); box-shadow: var(--v2-shadow-sm); }
+
+/*  Buttons  */
+.v2b { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 550; border-radius: var(--v2-r); padding: 7px 14px; cursor: pointer; border: none; transition: all .12s; letter-spacing: -0.01em; }
+.v2b-p { background: var(--v2-primary); color: #fff; }
+.v2b-p:hover { background: var(--v2-primary-h); box-shadow: 0 2px 8px rgba(99,102,241,.2); }
+.v2b-s { background: var(--v2-surface-2); color: var(--v2-text-2); }
+.v2b-s:hover { background: var(--v2-surface-3); }
+.v2b-g { background: transparent; color: var(--v2-text-2); padding: 5px 8px; }
+.v2b-g:hover { background: var(--v2-surface-2); }
+
+/*  Inputs  */
+.v2i { width: 100%; padding: 8px 12px; border-radius: var(--v2-r); border: 1px solid var(--v2-border); font: inherit; font-size: 13px; color: var(--v2-text); background: var(--v2-surface); outline: none; transition: border-color .12s, box-shadow .12s; }
+.v2i::placeholder { color: var(--v2-text-3); }
+.v2i:focus { border-color: var(--v2-primary); box-shadow: 0 0 0 3px rgba(99,102,241,.07); }
+
+/*  Badges  */
+.v2g { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 20px; font-size: 10.5px; font-weight: 600; white-space: nowrap; }
+.v2g-ok  { background: var(--v2-green-bg); color: var(--v2-green); }
+.v2g-w   { background: var(--v2-amber-bg); color: var(--v2-amber); }
+.v2g-err { background: var(--v2-red-bg);   color: var(--v2-red); }
+.v2g-n   { background: var(--v2-surface-2); color: var(--v2-text-2); }
+.v2g-p   { background: var(--v2-primary-bg); color: var(--v2-primary); }
+
+/*  Nav items  */
+.v2n { display: flex; align-items: center; gap: 11px; padding: 8px 12px; border-radius: var(--v2-r); font-size: 14px; font-weight: 450; color: rgba(255,255,255,.6); cursor: pointer; transition: all .1s; text-decoration: none; }
+.v2n:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); }
+.v2n.active { background: rgba(99,102,241,.12); color: #E0E7FF; font-weight: 550; }
+.v2n.active svg { color: #A5B4FC !important; }
+
+/*  Tables inside V2  */
+.v2-tw { border-radius: var(--v2-r-md); box-shadow: 0 0 0 1px var(--v2-border); overflow: hidden; background: var(--v2-surface); }
+
+/*  Tab bar  */
+.v2-tab { padding: 10px 16px; font-size: 13px; font-weight: 450; color: var(--v2-text-3); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .1s; }
+.v2-tab:hover { color: var(--v2-text-2); }
+.v2-tab.active { color: var(--v2-primary); font-weight: 600; border-bottom-color: var(--v2-primary); }
+
+/*  Utility  */
+.v2-title { font-size: 16px; font-weight: 600; color: var(--v2-text); letter-spacing: -0.02em; margin: 0; }
+.v2-sub   { font-size: 12px; color: var(--v2-text-3); margin-top: 1px; }
+.v2-label { font-size: 11.5px; font-weight: 500; color: var(--v2-text-3); display: block; margin-bottom: 4px; }

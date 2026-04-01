@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { IconBell, IconSearch, IconUser, IconList } from '@/components/ui/Icons';
+import { IconBell, IconSearch, IconUser, IconList, IconSettings, IconDatabase, IconLogoBrain, IconSparkles } from '@/components/ui/Icons';
 import { tickerMessages } from '@/lib/mockData';
 import { useSidebarVersion } from '@/lib/sidebar-context';
 
@@ -14,6 +14,7 @@ interface TopbarProps {
 
 export function Topbar({ title, subtitle, actions }: TopbarProps) {
   const [query, setQuery] = useState('');
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const router = useRouter();
   const { version, toggle: toggleSidebar } = useSidebarVersion();
   const doubled = [...tickerMessages, ...tickerMessages];
@@ -103,21 +104,17 @@ export function Topbar({ title, subtitle, actions }: TopbarProps) {
 
         {actions}
 
-        {/* Sidebar version toggle */}
-        <button
-          onClick={toggleSidebar}
-          title={version === 'v1' ? 'Switch to V2 sidebar' : 'Switch to V1 sidebar'}
-          style={{
-            height: 34, padding: '0 10px', borderRadius: 8,
-            background: version === 'v2' ? '#EEF2FF' : 'var(--surface-2)',
-            border: `1px solid ${version === 'v2' ? '#C7D2FE' : 'var(--border)'}`,
-            color: version === 'v2' ? '#4F46E5' : 'var(--text-secondary)',
-            fontSize: 11, fontWeight: 600, cursor: 'pointer',
-            display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0,
-          }}
-        >
-          <IconList size={13}/> {version === 'v2' ? 'V2' : 'V1'}
-        </button>
+
+        {/* V2 Product Link */}
+        {/* <Link href="/v2" style={{
+          height: 34, padding: '0 12px', borderRadius: 8,
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+          color: '#fff', fontSize: 11, fontWeight: 600,
+          display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0,
+          textDecoration: 'none',
+        }}>
+          <IconSparkles size={12} color="#fff"/> Try V2
+        </Link> */}
 
         {/* Notifications */}
         <Link href="/alerts" style={{
@@ -154,20 +151,73 @@ export function Topbar({ title, subtitle, actions }: TopbarProps) {
           }}>47</span>
         </Link>
 
-        {/* Avatar */}
-        <Link href="/settings" style={{
-          width: 34,
-          height: 34,
-          borderRadius: 8,
-          background: 'linear-gradient(135deg, #4F46E5, #8B5CF6)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-          textDecoration: 'none',
-        }}>
-          <IconUser size={15} color="#fff"/>
-        </Link>
+        {/* Avatar + dropdown */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          <button
+            onClick={() => setUserMenuOpen(o => !o)}
+            style={{
+              width: 34, height: 34, borderRadius: 8,
+              background: 'linear-gradient(135deg, #4F46E5, #8B5CF6)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: 'none', cursor: 'pointer',
+            }}
+          >
+            <IconUser size={15} color="#fff"/>
+          </button>
+          {userMenuOpen && (
+            <>
+              <div onClick={() => setUserMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 99 }}/>
+              <div style={{
+                position: 'absolute', top: 42, right: 0, width: 240, zIndex: 100,
+                background: '#fff', borderRadius: 10, border: '1px solid #E5E7EB',
+                boxShadow: '0 8px 24px rgba(0,0,0,.1)', overflow: 'hidden',
+              }}>
+                {/* User info */}
+                <div style={{ padding: '14px 16px', borderBottom: '1px solid #F3F4F6' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>Sarah Chen</div>
+                  <div style={{ fontSize: 12, color: '#6B7280' }}>Network Director</div>
+                  <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>sarah.chen@ncpdp.org</div>
+                </div>
+                {/* Tier */}
+                <div style={{ padding: '10px 16px', borderBottom: '1px solid #F3F4F6', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <IconDatabase size={13} color="#4F46E5"/>
+                  <div>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: '#4F46E5' }}>Enterprise Tier</div>
+                    <div style={{ fontSize: 10, color: '#9CA3AF' }}>99.9% SLA · Real-time · 33 Agents</div>
+                  </div>
+                </div>
+                {/* Menu items */}
+                {[
+                  { label: 'Settings', icon: IconSettings, href: '/settings' },
+                  { label: 'Agent Library', icon: IconLogoBrain, href: '/agents' },
+                ].map(item => (
+                  <Link key={item.label} href={item.href} onClick={() => setUserMenuOpen(false)} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '9px 16px',
+                    fontSize: 13, color: '#374151', textDecoration: 'none', transition: 'background .1s',
+                  }}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#F9FAFB')}
+                    onMouseLeave={e => (e.currentTarget.style.background = '')}
+                  >
+                    <item.icon size={14} color="#6B7280"/>
+                    {item.label}
+                  </Link>
+                ))}
+                <div style={{ borderTop: '1px solid #F3F4F6' }}>
+                  <button style={{
+                    width: '100%', padding: '9px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                    fontSize: 13, color: '#DC2626', background: 'none', border: 'none', cursor: 'pointer',
+                    textAlign: 'left',
+                  }}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#FEF2F2')}
+                    onMouseLeave={e => (e.currentTarget.style.background = '')}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </header>
     </>
   );

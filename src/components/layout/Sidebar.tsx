@@ -7,7 +7,7 @@ import {
   IconBell, IconShield, IconReport, IconDelivery, IconSettings,
   IconChevronLeft, IconChevronRight,
   IconCode, IconBook, IconFileCheck, IconLock, IconShieldCheck,
-  IconGlobe, IconStore, IconDownload, IconFolder,
+  IconGlobe, IconStore, IconDownload, IconFolder, IconLogoBrain,
 } from '@/components/ui/Icons';
 
 interface NavItem {
@@ -22,10 +22,12 @@ const navSections: { section: string; highlighted?: boolean; items: NavItem[] }[
     {
     section: 'Main',
     items: [
-      { href: '/',             label: 'Dashboard',      icon: IconDashboard },
-      { href: '/agents',       label: 'Agent Library',  icon: IconAgents, badge: '33' },
-      { href: '/analytics',    label: 'Analytics',      icon: IconAnalytics },
-      { href: '/alerts',       label: 'Alerts',         icon: IconBell, badge: '47', badgeColor: '#EF4444' },
+      { href: '/',             label: 'Dashboard',       icon: IconDashboard },
+      { href: '/ai-search',   label: 'AI Smart Search',  icon: IconLogoBrain, badge: 'AI', badgeColor: '#8B5CF6' },
+      { href: '/ai-reports',  label: 'AI Report Builder', icon: IconReport, badge: 'AI', badgeColor: '#2563EB' },
+      { href: '/agents',       label: 'Agent Library',   icon: IconAgents, badge: '33' },
+      { href: '/analytics',    label: 'Analytics',       icon: IconAnalytics },
+      { href: '/alerts',       label: 'Alerts',          icon: IconBell, badge: '47', badgeColor: '#EF4444' },
     ],
   },
   
@@ -106,41 +108,35 @@ export function Sidebar() {
           flexShrink: 0,
         }}
       >
-        {!collapsed && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <LogoMark />
-            <div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-.4px', lineHeight: 1 }}>
-                dataQ<span style={{ color: '#818CF8' }}>.ai</span>
-              </div>
-              <div style={{ fontSize: 9, color: 'rgba(255,255,255,.35)', fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', marginTop: 1 }}>
-                by NCPDP
-              </div>
+        {collapsed ? (
+          <button
+            onClick={() => setCollapsed(false)}
+            style={{
+              background: 'rgba(255,255,255,.06)', border: 'none', cursor: 'pointer',
+              padding: 4, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="NCPDP" width={28} height={28} style={{ borderRadius: 4 }}/>
+          </button>
+        ) : (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="NCPDP" className=' w-20 invert brightness-0' style={{ borderRadius: 4 }}/>
             </div>
-          </div>
+            <button
+              onClick={() => setCollapsed(true)}
+              style={{
+                background: 'rgba(255,255,255,.06)', border: 'none', cursor: 'pointer',
+                color: 'rgba(255,255,255,.4)', padding: 5, borderRadius: 6,
+                display: 'flex', alignItems: 'center', flexShrink: 0,
+              }}
+            >
+              <IconChevronLeft size={13} color="rgba(255,255,255,.4)"/>
+            </button>
+          </>
         )}
-        {collapsed && <LogoMark />}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            background: 'rgba(255,255,255,.06)',
-            border: 'none',
-            cursor: 'pointer',
-            color: 'rgba(255,255,255,.4)',
-            padding: 5,
-            borderRadius: 6,
-            display: 'flex',
-            alignItems: 'center',
-            transition: 'background .15s',
-            flexShrink: 0,
-            marginLeft: collapsed ? 0 : 4,
-          }}
-        >
-          {collapsed
-            ? <IconChevronRight size={13} color="rgba(255,255,255,.4)"/>
-            : <IconChevronLeft size={13} color="rgba(255,255,255,.4)"/>
-          }
-        </button>
       </div>
 
       {/* Nav */}
@@ -214,21 +210,3 @@ export function Sidebar() {
   );
 }
 
-function LogoMark() {
-  return (
-    <div style={{
-      width: 30,
-      height: 30,
-      borderRadius: 8,
-      background: 'linear-gradient(135deg, #4F46E5, #8B5CF6)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-    }}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M3 5h18M3 12h12M3 19h8" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-      </svg>
-    </div>
-  );
-}

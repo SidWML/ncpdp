@@ -14,12 +14,12 @@ import {
 
 /* ── Category color map ───────────────────────────────────────────── */
 const catColors: Record<string, { bg: string; text: string; border: string }> = {
-  'Search & Discovery':      { bg: '#EEF2FF', text: '#4F46E5', border: '#C7D2FE' },
+  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5' },
   'Network Management':      { bg: '#ECFDF5', text: '#059669', border: '#A7F3D0' },
   'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', border: '#FECACA' },
   'Data Delivery':           { bg: '#EFF6FF', text: '#2563EB', border: '#BFDBFE' },
   'Credentialing (resQ)':    { bg: '#FFF7ED', text: '#D97706', border: '#FDE68A' },
-  'Analytics & Prediction':  { bg: '#F5F3FF', text: '#7C3AED', border: '#DDD6FE' },
+  'Analytics & Prediction':  { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5' },
   'Claims & Routing':        { bg: '#ECFDF5', text: '#10B981', border: '#6EE7B7' },
   'NCPDP Internal':          { bg: '#F0F9FF', text: '#0284C7', border: '#BAE6FD' },
 };
@@ -100,26 +100,26 @@ type AgentType = typeof agents[0];
 /* ── Agent card (inline, no import) ──────────────────────────────── */
 function AgentGridCard({ agent, onLaunch }: { agent: AgentType; onLaunch: () => void }) {
   const cc = catColors[agent.category] || catColors['Search & Discovery'];
-  const phaseColors: Record<string, string> = { '1a': '#10B981', '1b': '#4F46E5', '1c': '#94A3B8' };
+  const phaseColors: Record<string, string> = { '1a': '#10B981', '1b': '#2968B0', '1c': '#94A3B8' };
   const phaseColor = phaseColors[agent.phase] || '#94A3B8';
 
   return (
-    <div className="card" style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10, cursor: 'default' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+    <div className="card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 12, cursor: 'default' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
-            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            width: 36, height: 36, borderRadius: 8, flexShrink: 0,
             background: cc.bg, border: `1px solid ${cc.border}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', color: cc.text,
           }}>
             {catIcon(agent.category)}
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>{agent.name}</div>
-            <div style={{ fontSize: 10.5, color: cc.text, marginTop: 2 }}>{agent.category}</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.2 }}>{agent.name}</div>
+            <div style={{ fontSize: 12, color: cc.text, marginTop: 2 }}>{agent.category}</div>
           </div>
         </div>
-        <span style={{ fontSize: 10, fontWeight: 700, color: phaseColor, background: `${phaseColor}18`, border: `1px solid ${phaseColor}30`, padding: '2px 7px', borderRadius: 9999, flexShrink: 0 }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: phaseColor, background: `${phaseColor}18`, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>
           {agent.phase === '1a' ? 'Live' : agent.phase === '1b' ? 'Q2' : 'Q3'}
         </span>
       </div>
@@ -127,15 +127,15 @@ function AgentGridCard({ agent, onLaunch }: { agent: AgentType; onLaunch: () => 
       <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5, margin: 0, flex: 1 }}>{agent.desc}</p>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>
           {agent.uses.toLocaleString()} runs
         </span>
         <button
           className={agent.phase === '1a' ? 'btn-primary' : 'btn-secondary'}
           onClick={onLaunch}
-          style={{ fontSize: 11.5, gap: 5, padding: '5px 12px' }}
+          style={{ fontSize: 12, gap: 5, padding: '4px 12px' }}
         >
-          <IconPlay size={11} color={agent.phase === '1a' ? '#fff' : 'var(--text-secondary)'}/>
+          <IconPlay size={12} color={agent.phase === '1a' ? '#fff' : 'var(--text-secondary)'}/>
           {agent.phase === '1a' ? 'Launch' : 'Preview'}
         </button>
       </div>
@@ -194,7 +194,7 @@ export default function AgentsPage() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 style={{
-                  fontSize: 12, fontWeight: 500, padding: '4px 12px', borderRadius: 9999,
+                  fontSize: 12, fontWeight: 500, padding: '4px 12px', borderRadius: 4,
                   border: '1px solid', cursor: 'pointer',
                   background: activeCategory === cat ? 'var(--brand-600)' : 'var(--surface)',
                   color: activeCategory === cat ? '#fff' : 'var(--text-secondary)',

@@ -122,7 +122,7 @@ export function AgentChat({
               {/* Avatar */}
               <div style={{
                 width: 26, height: 26, borderRadius: 8, flexShrink: 0, marginTop: 2,
-                background: m.role === 'bot' ? gradient : '#4F46E5',
+                background: m.role === 'bot' ? gradient : '#2968B0',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 {m.role === 'bot'
@@ -135,7 +135,7 @@ export function AgentChat({
                 <div style={{
                   padding: '9px 13px',
                   borderRadius: m.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
-                  background: m.role === 'user' ? '#4F46E5' : '#F3F4F6',
+                  background: m.role === 'user' ? '#2968B0' : '#F3F4F6',
                   color: m.role === 'user' ? '#fff' : '#1F2937',
                   fontSize: 13, lineHeight: 1.55,
                 }}>
@@ -149,17 +149,17 @@ export function AgentChat({
                     onClick={() => onOpenCanvas(m.queryId!, m.text)}
                     style={{
                       marginTop: 5, padding: '6px 12px',
-                      borderRadius: 8, background: '#EEF2FF', border: '1px solid #C7D2FE',
+                      borderRadius: 8, background: '#F0F7FF', border: '1px solid #B8D5F5',
                       display: 'inline-flex', alignItems: 'center', gap: 8,
                       cursor: 'pointer', transition: 'background .12s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = '#E0E7FF')}
-                    onMouseLeave={e => (e.currentTarget.style.background = '#EEF2FF')}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#DFEEFF')}
+                    onMouseLeave={e => (e.currentTarget.style.background = '#F0F7FF')}
                   >
-                    <IconSparkles size={13} color="#4F46E5"/>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: '#4F46E5' }}>247 results</span>
-                    <span style={{ fontSize: 11, color: '#818CF8' }}>Open in Canvas</span>
-                    <IconExternalLink size={10} color="#818CF8"/>
+                    <IconSparkles size={13} color="#2968B0"/>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: '#2968B0' }}>247 results</span>
+                    <span style={{ fontSize: 11, color: '#5B9BD5' }}>Open in Canvas</span>
+                    <IconExternalLink size={10} color="#5B9BD5"/>
                   </button>
                 )}
                 <div style={{ fontSize: 10, color: '#D1D5DB', marginTop: 3, paddingLeft: 2 }}>{m.time}</div>
@@ -207,7 +207,7 @@ export function AgentChat({
                 background: '#FAFBFC', color: '#374151', fontSize: 12.5, cursor: 'pointer',
                 textAlign: 'left', transition: 'border-color .15s, background .15s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#C7D2FE'; e.currentTarget.style.background = '#EEF2FF'; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8D5F5'; e.currentTarget.style.background = '#F0F7FF'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.background = '#FAFBFC'; }}
             >{s}</button>
           ))}
@@ -241,7 +241,7 @@ export function AgentChat({
             disabled={!input.trim() || typing}
             style={{
               width: 42, height: 42, borderRadius: 10, border: 'none',
-              background: input.trim() && !typing ? '#4F46E5' : '#E5E7EB',
+              background: input.trim() && !typing ? '#2968B0' : '#E5E7EB',
               cursor: input.trim() && !typing ? 'pointer' : 'default',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'background .15s', flexShrink: 0,

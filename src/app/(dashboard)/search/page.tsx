@@ -66,14 +66,14 @@ export default function SearchPage() {
         <Card style={{ marginBottom: 14 }}>
           <div style={{ padding: '14px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#1B2B6B' }}>Pharmacy Audit Search</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Pharmacy Audit Search</div>
               <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 1 }}>Search with detailed filters across the entire pharmacy database</div>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn-primary" onClick={() => setSearched(true)} style={{ gap: 6, fontSize: 12.5, padding: '7px 22px' }}>
+              <button className="btn-primary" onClick={() => setSearched(true)} style={{ gap: 6, fontSize: 13, padding: '8px 24px' }}>
                 <IconSearch size={13} color="#fff"/> Search
               </button>
-              <button className="btn-secondary" onClick={() => setSearched(false)} style={{ gap: 6, fontSize: 12.5, padding: '7px 18px' }}>
+              <button className="btn-secondary" onClick={() => setSearched(false)} style={{ gap: 6, fontSize: 13, padding: '8px 20px' }}>
                 <IconRefresh size={13}/> Reset
               </button>
             </div>
@@ -120,7 +120,7 @@ export default function SearchPage() {
                 <DateRange label="Close Date"/>
                 <div><FieldLabel>Status</FieldLabel><Select><option>Active</option><option>Inactive</option><option>All</option></Select></div>
                 <div style={{ display: 'flex', alignItems: 'flex-end', paddingBottom: 2 }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: '#334155', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#334155', cursor: 'pointer' }}>
                     <input type="checkbox" style={{ width: 15, height: 15 }}/>
                     Include Inactive
                   </label>
@@ -133,7 +133,7 @@ export default function SearchPage() {
         {/* Results */}
         {searched
           ? <DataTable columns={PHARM_COLS} data={PHARMACY_RESULTS}/>
-          : <EmptyState icon={<IconFilter size={22} color="#818CF8"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to query the pharmacy database"/>
+          : <EmptyState icon={<IconFilter size={22} color="#5B9BD5"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to query the pharmacy database"/>
         }
       </main>
     </>

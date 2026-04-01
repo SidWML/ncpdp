@@ -123,16 +123,16 @@ export default function NoSurprisesPage() {
                   >
                     <div style={{
                       width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: 12, fontWeight: 700, flexShrink: 0,
-                      background: completed ? '#10B981' : active ? '#1B2B6B' : '#E2E8F0',
+                      fontSize: 12, fontWeight: 600, flexShrink: 0,
+                      background: completed ? '#10B981' : active ? '#1E5690' : '#E2E8F0',
                       color: completed || active ? '#fff' : '#94A3B8',
                       transition: 'all .15s',
                     }}>
                       {completed ? <IconCheck size={13} color="#fff"/> : i + 1}
                     </div>
                     <div>
-                      <div style={{ fontSize: 12.5, fontWeight: 700, color: active ? '#1B2B6B' : completed ? '#10B981' : '#94A3B8' }}>{s.label}</div>
-                      <div style={{ fontSize: 11, color: '#94A3B8' }}>{s.desc}</div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: active ? '#1E5690' : completed ? '#10B981' : '#94A3B8' }}>{s.label}</div>
+                      <div style={{ fontSize: 12, color: '#94A3B8' }}>{s.desc}</div>
                     </div>
                   </div>
                   {i < STEPS.length - 1 && (
@@ -147,7 +147,7 @@ export default function NoSurprisesPage() {
           {step === 0 && (
             <Card>
               <div style={{ padding: '14px 20px', borderBottom: '1px solid #F1F5F9' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#1B2B6B' }}>No Surprises Report — Query Filter</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>No Surprises Report — Query Filter</div>
                 <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
                   Configure pharmacy filter criteria. Profile Last Updated Date is required.
                 </div>
@@ -194,7 +194,7 @@ export default function NoSurprisesPage() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                   <div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8' }}>OR</span>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#94A3B8' }}>OR</span>
                   <div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/>
                 </div>
 
@@ -256,7 +256,7 @@ export default function NoSurprisesPage() {
                     <Sel><option>Profile Last Update Date</option><option>Pharmacy NCPDP No</option><option>Pharmacy DBA Name</option><option>State</option></Sel>
                   </div>
                   <div style={{ paddingTop: 20 }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: '#334155', cursor: 'pointer' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#334155', cursor: 'pointer' }}>
                       <input type="checkbox" style={{ width: 14, height: 14 }}/>
                       Include Inactive Relation
                     </label>
@@ -287,7 +287,7 @@ export default function NoSurprisesPage() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <IconCheck size={18} color="#10B981"/>
                       <div>
-                        <div style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>38,569 pharmacies matched your filter criteria</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#065F46' }}>38,569 pharmacies matched your filter criteria</div>
                         <div style={{ fontSize: 12, color: '#047857', marginTop: 2 }}>Q1 2026 — Jan 1 through Mar 31, 2026</div>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export default function NoSurprisesPage() {
             <Card>
               <div style={{ padding: '14px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#1B2B6B' }}>Data Validation — 38,569 Pharmacies</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Data Validation — 38,569 Pharmacies</div>
                   <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>Running automated compliance checks</div>
                 </div>
                 {!fixed && hasFailure && (
@@ -331,12 +331,12 @@ export default function NoSurprisesPage() {
                           }
                         </div>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: 12.5, fontWeight: 700, color: '#1E293B' }}>{c.label}</div>
-                          <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 1 }}>{c.detail}</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>{c.label}</div>
+                          <div style={{ fontSize: 12, color: '#64748B', marginTop: 1 }}>{c.detail}</div>
                         </div>
                         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 700, color: cfg.color }}>{pct}%</div>
-                          <div style={{ fontSize: 10.5, color: '#94A3B8' }}>{c.pass.toLocaleString()} / {c.total.toLocaleString()}</div>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: cfg.color }}>{pct}%</div>
+                          <div style={{ fontSize: 11, color: '#94A3B8' }}>{c.pass.toLocaleString()} / {c.total.toLocaleString()}</div>
                         </div>
                       </div>
                     );
@@ -361,27 +361,27 @@ export default function NoSurprisesPage() {
           {step === 2 && (
             <Card>
               <div style={{ padding: '14px 20px', borderBottom: '1px solid #F1F5F9' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#1B2B6B' }}>Report Preview — Q1 2026</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Report Preview — Q1 2026</div>
                 <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>Review before submitting to CMS</div>
               </div>
               <CardBody style={{ padding: '20px 24px' }}>
                 {/* Summary */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 18 }}>
                   {[
-                    { label: 'Pharmacies in Report', value: '38,569',  color: '#4F46E5' },
-                    { label: 'Reporting Period',      value: 'Q1 2026', color: '#1B2B6B' },
+                    { label: 'Pharmacies in Report', value: '38,569',  color: '#2968B0' },
+                    { label: 'Reporting Period',      value: 'Q1 2026', color: 'var(--text-primary)' },
                     { label: 'Validation Status',     value: 'Passed',  color: '#10B981' },
                   ].map(s => (
                     <div key={s.label} style={{ padding: '14px 16px', borderRadius: 8, background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                      <div style={{ fontSize: 11, color: '#64748B', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
-                      <div style={{ fontSize: 20, fontWeight: 800, color: s.color }}>{s.value}</div>
+                      <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
+                      <div style={{ fontSize: 20, fontWeight: 700, color: s.color }}>{s.value}</div>
                     </div>
                   ))}
                 </div>
 
                 {/* Pharmacy type breakdown */}
                 <div style={{ marginBottom: 18 }}>
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: '#1E293B', marginBottom: 10 }}>Pharmacy Type Breakdown</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B', marginBottom: 10 }}>Pharmacy Type Breakdown</div>
                   {[
                     { type: 'Community / Retail',   count: 21340, pct: 55 },
                     { type: 'Specialty',             count: 9214,  pct: 24 },
@@ -392,9 +392,9 @@ export default function NoSurprisesPage() {
                     <div key={r.type} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 7 }}>
                       <div style={{ fontSize: 12, color: '#475569', width: 160, flexShrink: 0 }}>{r.type}</div>
                       <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#E2E8F0', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${r.pct}%`, background: '#4F46E5', borderRadius: 3 }}/>
+                        <div style={{ height: '100%', width: `${r.pct}%`, background: '#2968B0', borderRadius: 3 }}/>
                       </div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#4F46E5', width: 60, textAlign: 'right' }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#2968B0', width: 60, textAlign: 'right' }}>
                         {r.count.toLocaleString()}
                       </div>
                     </div>
@@ -420,14 +420,14 @@ export default function NoSurprisesPage() {
               <CardBody style={{ padding: '32px 24px', textAlign: 'center' }}>
                 {!submitted ? (
                   <>
-                    <div style={{ fontSize: 15, fontWeight: 800, color: '#1B2B6B', marginBottom: 8 }}>Ready to Submit to CMS</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>Ready to Submit to CMS</div>
                     <div style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
                       You are about to electronically file the Q1 2026 No Surprises Act report<br/>
                       for <strong>38,569 pharmacies</strong> to the Centers for Medicare & Medicaid Services.
                     </div>
                     <div style={{
                       padding: '14px 20px', borderRadius: 8, background: '#FEF9C3', border: '1px solid #FDE047',
-                      marginBottom: 24, textAlign: 'left', fontSize: 12.5, color: '#713F12',
+                      marginBottom: 24, textAlign: 'left', fontSize: 12, color: '#713F12',
                     }}>
                       <strong>Deadline:</strong> March 31, 2026 — Today is the deadline. Submit immediately to avoid late filing penalties.
                     </div>
@@ -446,7 +446,7 @@ export default function NoSurprisesPage() {
                     }}>
                       <IconCheck size={28} color="#10B981"/>
                     </div>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: '#065F46', marginBottom: 8 }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: '#065F46', marginBottom: 8 }}>
                       Successfully Submitted to CMS
                     </div>
                     <div style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
@@ -456,8 +456,8 @@ export default function NoSurprisesPage() {
                       display: 'inline-block', padding: '10px 20px', borderRadius: 8,
                       background: '#F0FDF4', border: '1px solid #A7F3D0', marginBottom: 20,
                     }}>
-                      <div style={{ fontSize: 11, color: '#047857', fontWeight: 600, marginBottom: 2 }}>CMS Confirmation ID</div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 800, color: '#065F46' }}>CMS-NSA-Q12026-1104</div>
+                      <div style={{ fontSize: 12, color: '#047857', fontWeight: 600, marginBottom: 2 }}>CMS Confirmation ID</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, color: '#065F46' }}>CMS-NSA-Q12026-1104</div>
                     </div>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
                       <button className="btn-secondary" style={{ gap: 5, fontSize: 12 }}><IconDownload size={12}/> Download Receipt</button>
@@ -476,10 +476,10 @@ export default function NoSurprisesPage() {
           {/* Deadline card */}
           <Card>
             <CardBody style={{ padding: '16px' }}>
-              <div style={{ fontSize: 11.5, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 10 }}>Filing Deadline</div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#DC2626' }}>Today</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 10 }}>Filing Deadline</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#DC2626' }}>Today</div>
               <div style={{ fontSize: 12, color: '#EF4444', fontWeight: 600 }}>Q1 2026 — Due Mar 31, 2026</div>
-              <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 6, background: '#FEF2F2', border: '1px solid #FECACA', fontSize: 11.5, color: '#B91C1C' }}>
+              <div style={{ marginTop: 10, padding: '8px 12px', borderRadius: 8, background: '#FEF2F2', border: '1px solid #FECACA', fontSize: 12, color: '#B91C1C' }}>
                 File before 11:59 PM ET to avoid late filing penalties.
               </div>
             </CardBody>
@@ -488,17 +488,17 @@ export default function NoSurprisesPage() {
           {/* Past submissions */}
           <Card>
             <div style={{ padding: '12px 16px', borderBottom: '1px solid #F1F5F9' }}>
-              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#1E293B' }}>Past Submissions</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>Past Submissions</div>
             </div>
             <CardBody style={{ padding: '10px 14px' }}>
               {PAST.map(r => (
                 <div key={r.cms} style={{ padding: '8px 0', borderBottom: '1px solid #F1F5F9' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 }}>
-                    <span style={{ fontSize: 12.5, fontWeight: 700, color: '#1E293B' }}>{r.period}</span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>{r.period}</span>
                     <Badge variant="success">Accepted</Badge>
                   </div>
-                  <div style={{ fontSize: 11, color: '#94A3B8' }}>{r.count} pharmacies · {r.submitted}</div>
-                  <div style={{ fontSize: 10.5, fontFamily: 'monospace', color: '#94A3B8', marginTop: 2 }}>{r.cms}</div>
+                  <div style={{ fontSize: 12, color: '#94A3B8' }}>{r.count} pharmacies · {r.submitted}</div>
+                  <div style={{ fontSize: 11, fontFamily: 'monospace', color: '#94A3B8', marginTop: 2 }}>{r.cms}</div>
                 </div>
               ))}
             </CardBody>
@@ -508,15 +508,15 @@ export default function NoSurprisesPage() {
           <Card>
             <CardBody style={{ padding: '14px 16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#4F46E5,#818CF8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#2968B0,#5B9BD5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <IconSearch size={13} color="#fff"/>
                 </div>
                 <div>
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: '#1E293B' }}>No Surprises Assistant</div>
-                  <div style={{ fontSize: 11, color: '#10B981' }}>AGT-08 · Active</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>No Surprises Assistant</div>
+                  <div style={{ fontSize: 12, color: '#10B981' }}>AGT-08 · Active</div>
                 </div>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: '#64748B', lineHeight: 1.5 }}>
                 AI-powered assistance for your NSA filing. Ask questions or get help with data validation.
               </div>
               <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: 12, marginTop: 10, gap: 5 }}>

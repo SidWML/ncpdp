@@ -63,7 +63,7 @@ export default function ReportsPage() {
       <main style={{ padding: '16px 20px 40px' }}>
         <Card style={{ marginBottom: 16 }}>
           <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9' }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#1B2B6B' }}>dataQ OnDemand</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>dataQ OnDemand</div>
           </div>
           <CardBody style={{ padding: '18px 24px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
@@ -77,7 +77,7 @@ export default function ReportsPage() {
               <div><FieldLabel>City</FieldLabel><TextInput placeholder="City"/></div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/><span style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', padding: '0 4px' }}>OR</span><div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/>
+              <div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/><span style={{ fontSize: 12, fontWeight: 600, color: '#94A3B8', padding: '0 4px' }}>OR</span><div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
               <div><FieldLabel>Relationship Name</FieldLabel><Select><option>--All--</option>{RELATIONSHIPS.map(o => <option key={o}>{o}</option>)}</Select></div>
@@ -95,7 +95,7 @@ export default function ReportsPage() {
               <div><FieldLabel>MSA</FieldLabel><TextInput placeholder="MSA Code"/></div>
               <div><FieldLabel>PMSA</FieldLabel><TextInput placeholder="PMSA Code"/></div>
               <div style={{ paddingBottom: 6 }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: '#334155', cursor: 'pointer' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#334155', cursor: 'pointer' }}>
                   <input type="checkbox" style={{ width: 14, height: 14 }}/> Include Inactive Relation
                 </label>
               </div>
@@ -121,20 +121,20 @@ export default function ReportsPage() {
         {reported && (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>Report Results — <span style={{ color: '#10B981' }}>{total.toLocaleString()} records found</span></div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>Report Results — <span style={{ color: '#10B981' }}>{total.toLocaleString()} records found</span></div>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button className="btn-secondary" style={{ fontSize: 12, gap: 4 }}><IconDownload size={12}/> Export CSV</button>
                 <button className="btn-secondary" style={{ fontSize: 12, gap: 4 }}><IconDownload size={12}/> Export PDF</button>
               </div>
             </div>
-            <div style={{ borderRadius: 10, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
+            <div style={{ borderRadius: 8, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
               <table>
                 <thead><tr>{['Pharmacy DBA Name','NCPDP Provider ID','Rel. Type','City','State','Dispenser Class','Open Date','Status'].map(h => <th key={h}>{h}</th>)}</tr></thead>
                 <tbody>
                   {visible.map(r => (
                     <tr key={r.ncpdp}>
                       <td style={{ fontWeight: 500 }}>{r.name}</td>
-                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#4F46E5', fontSize: 12.5 }}>{r.ncpdp}</td>
+                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
                       <td style={{ color: '#64748B' }}>{r.relType}</td>
                       <td>{r.city}</td>
                       <td style={{ fontWeight: 600 }}>{r.state}</td>
@@ -162,7 +162,7 @@ export default function ReportsPage() {
                     { lbl: '›', fn: () => setPage(page + 1), dis: page >= totalPages - 1 },
                     { lbl: '»', fn: () => setPage(totalPages - 1), dis: page >= totalPages - 1 },
                   ].map(b => (
-                    <button key={b.lbl} onClick={b.fn} disabled={b.dis} style={{ width: 26, height: 26, borderRadius: 4, border: '1px solid #CBD5E1', background: b.dis ? '#F1F5F9' : '#fff', color: b.dis ? '#CBD5E1' : '#334155', fontSize: 13, fontWeight: 700, cursor: b.dis ? 'default' : 'pointer' }}>{b.lbl}</button>
+                    <button key={b.lbl} onClick={b.fn} disabled={b.dis} style={{ width: 26, height: 26, borderRadius: 4, border: '1px solid #CBD5E1', background: b.dis ? '#F1F5F9' : '#fff', color: b.dis ? '#CBD5E1' : '#334155', fontSize: 13, fontWeight: 600, cursor: b.dis ? 'default' : 'pointer' }}>{b.lbl}</button>
                   ))}
                 </div>
               </div>

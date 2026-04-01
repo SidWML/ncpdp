@@ -24,8 +24,8 @@ const dotColors: Record<Variant, string> = {
   warning: '#F59E0B',
   danger:  '#EF4444',
   info:    '#3B82F6',
-  brand:   '#4F46E5',
-  violet:  '#8B5CF6',
+  brand:   '#2968B0',
+  violet:  '#6D28D9',
   neutral: '#94A3B8',
 };
 

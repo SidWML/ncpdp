@@ -35,7 +35,7 @@ export function CardHeader({ title, subtitle, action, icon, badge }: CardHeaderP
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        padding: '16px 16px 0',
+        padding: '16px 20px 0',
         gap: 8,
       }}
     >
@@ -49,7 +49,7 @@ export function CardHeader({ title, subtitle, action, icon, badge }: CardHeaderP
             {badge}
           </div>
           {subtitle && (
-            <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 1 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>
               {subtitle}
             </p>
           )}
@@ -68,6 +68,6 @@ export function CardBody({
   style?: React.CSSProperties;
 }) {
   return (
-    <div style={{ padding: '12px 16px 16px', ...style }}>{children}</div>
+    <div style={{ padding: '14px 20px 20px', ...style }}>{children}</div>
   );
 }

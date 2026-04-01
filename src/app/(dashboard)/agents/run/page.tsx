@@ -19,12 +19,12 @@ import { useCallback, useRef } from 'react';
 
 /* ── Category helpers ────────────────────────────────────────────── */
 const catColors: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
-  'Search & Discovery':      { bg: '#EEF2FF', text: '#4F46E5', border: '#C7D2FE', gradient: 'linear-gradient(135deg,#4F46E5,#818CF8)' },
+  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5', gradient: 'linear-gradient(135deg,#2968B0,#5B9BD5)' },
   'Network Management':      { bg: '#ECFDF5', text: '#059669', border: '#A7F3D0', gradient: 'linear-gradient(135deg,#059669,#34D399)' },
   'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', border: '#FECACA', gradient: 'linear-gradient(135deg,#DC2626,#F87171)' },
   'Data Delivery':           { bg: '#EFF6FF', text: '#2563EB', border: '#BFDBFE', gradient: 'linear-gradient(135deg,#2563EB,#60A5FA)' },
   'Credentialing (resQ)':    { bg: '#FFF7ED', text: '#D97706', border: '#FDE68A', gradient: 'linear-gradient(135deg,#D97706,#FBBF24)' },
-  'Analytics & Prediction':  { bg: '#F5F3FF', text: '#7C3AED', border: '#DDD6FE', gradient: 'linear-gradient(135deg,#7C3AED,#A78BFA)' },
+  'Analytics & Prediction':  { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5', gradient: 'linear-gradient(135deg,#2968B0,#5B9BD5)' },
   'Claims & Routing':        { bg: '#ECFDF5', text: '#10B981', border: '#6EE7B7', gradient: 'linear-gradient(135deg,#10B981,#6EE7B7)' },
   'NCPDP Internal':          { bg: '#F0F9FF', text: '#0284C7', border: '#BAE6FD', gradient: 'linear-gradient(135deg,#0284C7,#38BDF8)' },
 };
@@ -137,11 +137,11 @@ const BAR_DATA = [
   { state: 'PA', count: 12 }, { state: 'WA', count: 9 },
 ];
 const PIE_DATA = [
-  { name: 'Community/Retail', value: 136, color: '#4F46E5' },
+  { name: 'Community/Retail', value: 136, color: '#2968B0' },
   { name: 'Specialty',        value: 59,  color: '#10B981' },
   { name: 'Compounding',      value: 25,  color: '#F59E0B' },
   { name: 'Chain',            value: 18,  color: '#EF4444' },
-  { name: 'Infusion',         value: 9,   color: '#8B5CF6' },
+  { name: 'Infusion',         value: 9,   color: '#2968B0' },
 ];
 const TREND_DATA = [
   { month: 'Oct', active: 64200, new: 320, closed: 180 },
@@ -164,21 +164,21 @@ function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: 
       {/* Summary strip */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginBottom: 18 }}>
         {[
-          { label: 'Records Found',  value: '247',    color: '#4F46E5', bg: '#EEF2FF' },
+          { label: 'Records Found',  value: '247',    color: '#2968B0', bg: '#F0F7FF' },
           { label: 'Execution Time', value: '0.83s',  color: '#10B981', bg: '#ECFDF5' },
           { label: 'Records Scanned',value: '68,247', color: '#334155', bg: '#F8FAFC' },
           { label: 'Active',         value: '218',    color: '#10B981', bg: '#ECFDF5' },
           { label: 'Inactive',       value: '29',     color: '#EF4444', bg: '#FEF2F2' },
         ].map(s => (
-          <div key={s.label} style={{ padding: '12px 14px', borderRadius: 10, background: s.bg, textAlign: 'center' }}>
-            <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>{s.label}</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: s.color, marginTop: 4 }}>{s.value}</div>
+          <div key={s.label} style={{ padding: '12px 16px', borderRadius: 8, background: s.bg, textAlign: 'center' }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>{s.label}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: s.color, marginTop: 4 }}>{s.value}</div>
           </div>
         ))}
       </div>
 
       {/* Results table */}
-      <div style={{ borderRadius: 10, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
+      <div style={{ borderRadius: 8, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
         <table>
           <thead>
             <tr>
@@ -190,15 +190,15 @@ function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: 
           <tbody>
             {resultRows.map(r => (
               <tr key={r.ncpdp}>
-                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#4F46E5', fontSize: 12.5 }}>{r.ncpdp}</td>
+                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
                 <td style={{ fontWeight: 500 }}>{r.name}</td>
                 <td style={{ color: '#64748B' }}>{r.city}</td>
                 <td style={{ fontWeight: 600 }}>{r.state}</td>
                 <td>
-                  <span style={{ padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 500, background: '#F1F5F9', color: '#475569', border: '1px solid #E2E8F0' }}>{r.type}</span>
+                  <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 12, fontWeight: 500, background: '#F1F5F9', color: '#475569' }}>{r.type}</span>
                 </td>
                 <td>{deaBadge(r.dea)}</td>
-                <td style={{ color: '#94A3B8', fontSize: 12.5 }}>{r.phone}</td>
+                <td style={{ color: '#94A3B8', fontSize: 13 }}>{r.phone}</td>
                 <td><Badge variant={r.status === 'Active' ? 'success' : 'neutral'}>{r.status}</Badge></td>
               </tr>
             ))}
@@ -219,27 +219,27 @@ function SqlTab({ sql }: { sql: string }) {
     <div>
       <div style={{ position: 'relative' }}>
         <pre style={{
-          background: '#0F1A3E', color: '#A5B4FC',
+          background: 'var(--surface-2)', color: 'var(--text-primary)',
           fontFamily: 'ui-monospace, "Cascadia Code", Menlo, monospace',
-          fontSize: 12.5, lineHeight: 1.7, padding: '24px 28px',
+          fontSize: 13, lineHeight: 1.7, padding: '24px 28px',
           borderRadius: 12, overflowX: 'auto', margin: 0,
-          border: '1px solid rgba(165,180,252,.12)',
+          border: '1px solid var(--border)',
         }}>{sql}</pre>
         <button onClick={() => { navigator.clipboard.writeText(sql).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1800); }} style={{
           position: 'absolute', top: 12, right: 14,
-          background: copied ? '#059669' : 'rgba(165,180,252,.15)',
-          border: '1px solid rgba(165,180,252,.25)', borderRadius: 6,
-          padding: '5px 14px', fontSize: 11, fontWeight: 600,
-          color: copied ? '#fff' : '#A5B4FC', cursor: 'pointer',
+          background: copied ? '#059669' : 'rgba(41,104,176,.15)',
+          border: '1px solid rgba(41,104,176,.25)', borderRadius: 6,
+          padding: '4px 16px', fontSize: 12, fontWeight: 600,
+          color: copied ? '#fff' : '#2968B0', cursor: 'pointer',
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
           <IconCopy size={12}/> {copied ? 'Copied!' : 'Copy SQL'}
         </button>
       </div>
-      <div style={{ marginTop: 12, padding: '10px 16px', background: '#fff', borderRadius: 10, border: '1px solid #E2E8F0', display: 'flex', gap: 20, fontSize: 12, color: '#64748B' }}>
+      <div style={{ marginTop: 12, padding: '10px 16px', background: '#fff', borderRadius: 8, border: '1px solid #E2E8F0', display: 'flex', gap: 20, fontSize: 12, color: '#64748B' }}>
         <span>Execution: <strong style={{ color: '#10B981' }}>0.83s</strong></span>
         <span>Scanned: <strong style={{ color: '#334155' }}>68,247</strong></span>
-        <span>Returned: <strong style={{ color: '#4F46E5' }}>247 rows</strong></span>
+        <span>Returned: <strong style={{ color: '#2968B0' }}>247 rows</strong></span>
         <span>Engine: <strong style={{ color: '#334155' }}>PostgreSQL 16</strong></span>
       </div>
     </div>
@@ -260,7 +260,7 @@ function ChartsTab() {
               <XAxis dataKey="state" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
               <YAxis tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
               <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-              <Bar dataKey="count" fill="#4F46E5" radius={[4, 4, 0, 0]} barSize={32}/>
+              <Bar dataKey="count" fill="#2968B0" radius={[4, 4, 0, 0]} barSize={32}/>
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -350,10 +350,10 @@ function ExportTab({ agentName, resultRows, sql }: { agentName: string; resultRo
   }
 
   const formats = [
-    { key: 'csv',  icon: <IconReport size={22} color="#4F46E5"/>,  label: 'CSV',             desc: 'Comma-separated values. Compatible with Excel, Google Sheets, and any data tool.', size: `~${(resultRows.length * 120 / 1024).toFixed(0)} KB`, action: 'Download CSV',     fn: downloadCSV,   gradient: '#EEF2FF' },
+    { key: 'csv',  icon: <IconReport size={22} color="#2968B0"/>,  label: 'CSV',             desc: 'Comma-separated values. Compatible with Excel, Google Sheets, and any data tool.', size: `~${(resultRows.length * 120 / 1024).toFixed(0)} KB`, action: 'Download CSV',     fn: downloadCSV,   gradient: '#F0F7FF' },
     { key: 'json', icon: <IconCode size={22} color="#10B981"/>,    label: 'JSON',            desc: 'Structured JSON array. Ideal for programmatic access and API integrations.',        size: `~${(resultRows.length * 200 / 1024).toFixed(0)} KB`, action: 'Download JSON',    fn: downloadJSON,  gradient: '#ECFDF5' },
     { key: 'sql',  icon: <IconDatabase size={22} color="#F59E0B"/>,label: 'SQL Query',       desc: 'Download the generated SQL query to run directly against your database.',           size: '~1 KB',                                              action: 'Download SQL',     fn: downloadSQL,   gradient: '#FFF7ED' },
-    { key: 'api',  icon: <IconNetwork size={22} color="#8B5CF6"/>, label: 'API Endpoint',    desc: 'Copy the REST endpoint URL to fetch these results programmatically.',               size: 'Live',                                               action: 'Copy Endpoint',    fn: copyEndpoint,  gradient: '#F5F3FF' },
+    { key: 'api',  icon: <IconNetwork size={22} color="#2968B0"/>, label: 'API Endpoint',    desc: 'Copy the REST endpoint URL to fetch these results programmatically.',               size: 'Live',                                               action: 'Copy Endpoint',    fn: copyEndpoint,  gradient: '#F0F7FF' },
   ];
 
   return (
@@ -365,7 +365,7 @@ function ExportTab({ agentName, resultRows, sql }: { agentName: string; resultRo
               {f.icon}
               <div style={{ fontSize: 15, fontWeight: 700, color: '#1E293B' }}>{f.label}</div>
             </div>
-            <div style={{ fontSize: 12.5, color: '#64748B', lineHeight: 1.5 }}>{f.desc}</div>
+            <div style={{ fontSize: 13, color: '#64748B', lineHeight: 1.5 }}>{f.desc}</div>
           </div>
           <div style={{ padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #F1F5F9' }}>
             <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>{f.size}</span>
@@ -493,7 +493,7 @@ function AgentRunInner() {
                 width: 6, flexShrink: 0, cursor: 'col-resize',
                 background: 'transparent', position: 'relative', zIndex: 10,
               }}
-              onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#818CF8'; }}
+              onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#5B9BD5'; }}
               onMouseLeave={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#E2E8F0'; }}
             >
               <div style={{
@@ -521,10 +521,10 @@ function AgentRunInner() {
               <div style={{ display: 'flex', borderBottom: '1px solid #E2E8F0', background: '#fff', flexShrink: 0 }}>
                 {tabs.map(t => (
                   <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
-                    padding: '10px 18px', fontSize: 12.5, fontWeight: activeTab === t.id ? 600 : 500,
-                    color: activeTab === t.id ? '#1B2B6B' : '#9CA3AF',
+                    padding: '12px 20px', fontSize: 13, fontWeight: activeTab === t.id ? 600 : 500,
+                    color: activeTab === t.id ? 'var(--text-primary)' : '#9CA3AF',
                     background: 'none', border: 'none', cursor: 'pointer',
-                    borderBottom: activeTab === t.id ? '2px solid #4F46E5' : '2px solid transparent',
+                    borderBottom: activeTab === t.id ? '2px solid #2968B0' : '2px solid transparent',
                     marginBottom: -1,
                   }}>{t.label}</button>
                 ))}
@@ -534,10 +534,10 @@ function AgentRunInner() {
                 {!hasResults ? (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
                     <div style={{
-                      width: 64, height: 64, borderRadius: 16, background: '#EEF2FF', border: '1px solid #E0E7FF',
+                      width: 64, height: 64, borderRadius: 16, background: '#F0F7FF', border: '1px solid #DFEEFF',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16,
                     }}>
-                      <IconCpu size={28} color="#818CF8"/>
+                      <IconCpu size={28} color="#5B9BD5"/>
                     </div>
                     <div style={{ fontSize: 16, fontWeight: 700, color: '#94A3B8', marginBottom: 6 }}>Ready to run</div>
                     <div style={{ fontSize: 13, color: '#CBD5E1', maxWidth: 320, lineHeight: 1.6 }}>

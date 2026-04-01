@@ -37,7 +37,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: () => void }) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 14, marginTop: 24, paddingBottom: 8, borderBottom: '1px solid var(--border-light)' }}>
+    <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 14, marginTop: 24, paddingBottom: 8, borderBottom: '1px solid var(--border-light)' }}>
       {children}
     </div>
   );
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                   onClick={() => setSection(key)}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 9,
-                    textAlign: 'left', padding: '9px 12px', borderRadius: 10,
+                    textAlign: 'left', padding: '8px 12px', borderRadius: 8,
                     background: active ? 'var(--brand-50)' : 'transparent',
                     color: active ? 'var(--brand-600)' : 'var(--text-secondary)',
                     fontWeight: active ? 600 : 500, fontSize: 13,
@@ -111,21 +111,21 @@ export default function SettingsPage() {
                   {/* Avatar row */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid var(--border-light)' }}>
                     <div style={{ position: 'relative' }}>
-                      <div style={{ width: 72, height: 72, borderRadius: 18, background: 'linear-gradient(135deg,#4F46E5,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 800, color: '#fff' }}>SC</div>
+                      <div style={{ width: 72, height: 72, borderRadius: 18, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 700, color: '#fff' }}>SC</div>
                       <button style={{ position: 'absolute', bottom: -4, right: -4, width: 22, height: 22, borderRadius: '50%', background: 'var(--brand-600)', border: '2px solid var(--surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                        <span style={{ fontSize: 11, color: '#fff', fontWeight: 700 }}>+</span>
+                        <span style={{ fontSize: 12, color: '#fff', fontWeight: 600 }}>+</span>
                       </button>
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)' }}>Sarah Chen</div>
-                      <div style={{ fontSize: 12.5, color: 'var(--text-muted)', marginTop: 2 }}>Director of Pharmacy Network Management</div>
+                      <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>Sarah Chen</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Director of Pharmacy Network Management</div>
                       <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
                         <Badge variant="brand">Enterprise</Badge>
                         <Badge variant="success">Admin</Badge>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Subscriber ID</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Subscriber ID</div>
                       <div style={{ fontSize: 13, fontWeight: 600, fontFamily: 'monospace', color: 'var(--text-primary)' }}>ORG-28471</div>
                     </div>
                   </div>
@@ -186,8 +186,8 @@ export default function SettingsPage() {
                         <tr key={m.email}>
                           <td>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                              <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg,#4F46E5,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#fff', flexShrink: 0 }}>{m.initials}</div>
-                              <span style={{ fontWeight: 600 }}>{m.name}{m.you && <span style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 400, marginLeft: 5 }}>(You)</span>}</span>
+                              <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 600, color: '#fff', flexShrink: 0 }}>{m.initials}</div>
+                              <span style={{ fontWeight: 600 }}>{m.name}{m.you && <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 400, marginLeft: 5 }}>(You)</span>}</span>
                             </div>
                           </td>
                           <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>{m.email}</td>
@@ -196,8 +196,8 @@ export default function SettingsPage() {
                           <td>
                             {!m.you && (
                               <div style={{ display: 'flex', gap: 6 }}>
-                                <button className="btn-ghost" style={{ fontSize: 11 }}>Edit</button>
-                                <button className="btn-ghost" style={{ fontSize: 11, color: '#DC2626' }}>Remove</button>
+                                <button className="btn-ghost" style={{ fontSize: 12 }}>Edit</button>
+                                <button className="btn-ghost" style={{ fontSize: 12, color: '#DC2626' }}>Remove</button>
                               </div>
                             )}
                           </td>
@@ -240,7 +240,7 @@ export default function SettingsPage() {
                       </div>
                       <div style={{ display: 'flex', gap: 5 }}>
                         {n.delivery.map(d => (
-                          <span key={d} style={{ fontSize: 10.5, fontWeight: 600, padding: '2px 8px', borderRadius: 9999, background: notifs[i] ? '#EEF2FF' : 'var(--surface-2)', color: notifs[i] ? '#4F46E5' : 'var(--text-muted)', border: `1px solid ${notifs[i] ? '#C7D2FE' : 'var(--border)'}` }}>{d}</span>
+                          <span key={d} style={{ fontSize: 12, fontWeight: 600, padding: '2px 8px', borderRadius: 4, background: notifs[i] ? '#F0F7FF' : 'var(--surface-2)', color: notifs[i] ? '#2968B0' : 'var(--text-muted)' }}>{d}</span>
                         ))}
                       </div>
                     </div>
@@ -301,7 +301,7 @@ export default function SettingsPage() {
                         <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Arlington, VA · Chrome · Mar 31, 2026</div>
                         <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>MacBook Pro · IP: 192.168.1.42</div>
                       </div>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: '#10B981', background: '#D1FAE5', padding: '2px 9px', borderRadius: 9999, border: '1px solid #A7F3D0' }}>This device</span>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: '#10B981', background: '#D1FAE5', padding: '2px 8px', borderRadius: 4 }}>This device</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
@@ -336,22 +336,22 @@ export default function SettingsPage() {
                           <div style={{ width: 34, height: 34, borderRadius: 9, background: '#D1FAE5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <IconKey size={14} color="#10B981"/>
                           </div>
-                          <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>{k.name}</span>
+                          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{k.name}</span>
                         </div>
                         <Badge variant="success" dot>Active</Badge>
                       </div>
                       <div style={{ fontFamily: 'monospace', fontSize: 12, background: 'var(--surface-3)', borderRadius: 8, padding: '8px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                         <span style={{ color: 'var(--text-secondary)' }}>{k.key}</span>
                         <div style={{ display: 'flex', gap: 8 }}>
-                          <button onClick={() => copy(k.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11 }}>
+                          <button onClick={() => copy(k.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
                             {copied === k.id ? <><IconCheck size={11} color="#10B981"/> Copied</> : <><IconCopy size={11}/> Copy</>}
                           </button>
-                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11 }}>
+                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
                             <IconRefresh size={11}/> Rotate
                           </button>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', gap: 20, fontSize: 11.5, color: 'var(--text-muted)' }}>
+                      <div style={{ display: 'flex', gap: 20, fontSize: 12, color: 'var(--text-muted)' }}>
                         <span>Created: <strong style={{ color: 'var(--text-secondary)' }}>{k.created}</strong></span>
                         <span>Last used: <strong style={{ color: 'var(--text-secondary)' }}>{k.used}</strong></span>
                         <span>Total calls: <strong style={{ color: 'var(--text-secondary)' }}>{k.calls}</strong></span>
@@ -370,13 +370,13 @@ export default function SettingsPage() {
                         { plan: 'Professional', monthly: '100,000',   hourly: '1,000',     gql: true,  current: false },
                         { plan: 'Enterprise',   monthly: 'Unlimited', hourly: 'Unlimited', gql: true,  current: true  },
                       ].map(r => (
-                        <tr key={r.plan} style={{ background: r.current ? '#EEF2FF' : undefined }}>
+                        <tr key={r.plan} style={{ background: r.current ? '#F0F7FF' : undefined }}>
                           <td>
-                            <span style={{ fontWeight: r.current ? 700 : 500 }}>{r.plan}</span>
+                            <span style={{ fontWeight: r.current ? 600 : 500 }}>{r.plan}</span>
                             {r.current && <span style={{ marginLeft: 8 }}><Badge variant="brand">Current</Badge></span>}
                           </td>
-                          <td style={{ fontWeight: r.current ? 700 : 400 }}>{r.monthly}</td>
-                          <td style={{ fontWeight: r.current ? 700 : 400 }}>{r.hourly}</td>
+                          <td style={{ fontWeight: r.current ? 600 : 400 }}>{r.monthly}</td>
+                          <td style={{ fontWeight: r.current ? 600 : 400 }}>{r.hourly}</td>
                           <td>{r.gql ? <IconCheck size={14} color="#10B981"/> : <span style={{ color: 'var(--text-muted)' }}>—</span>}</td>
                         </tr>
                       ))}
@@ -403,15 +403,15 @@ export default function SettingsPage() {
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 28 }}>
                     {[
-                      { label: 'API Calls',         value: '1,241,847', sub: 'Unlimited (Enterprise)',  bar: 72,  color: '#4F46E5' },
+                      { label: 'API Calls',         value: '1,241,847', sub: 'Unlimited (Enterprise)',  bar: 72,  color: '#2968B0' },
                       { label: 'Agent Queries',      value: '482',       sub: 'Unlimited in Enterprise', bar: 0,   color: '#10B981' },
                       { label: 'Reports Generated',  value: '38',        sub: 'Unlimited in Enterprise', bar: 0,   color: '#06B6D4' },
-                      { label: 'Data Exports',       value: '14',        sub: 'Unlimited in Enterprise', bar: 0,   color: '#8B5CF6' },
+                      { label: 'Data Exports',       value: '14',        sub: 'Unlimited in Enterprise', bar: 0,   color: '#2968B0' },
                     ].map(u => (
                       <div key={u.label} style={{ padding: '16px 18px', borderRadius: 12, border: '1px solid var(--border-light)', background: 'var(--surface-2)' }}>
-                        <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 6 }}>{u.label}</div>
-                        <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 4 }}>{u.value}</div>
-                        <div style={{ fontSize: 11.5, color: '#10B981', fontWeight: 500, marginBottom: u.bar > 0 ? 10 : 0 }}>{u.sub}</div>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 6 }}>{u.label}</div>
+                        <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{u.value}</div>
+                        <div style={{ fontSize: 12, color: '#10B981', fontWeight: 500, marginBottom: u.bar > 0 ? 10 : 0 }}>{u.sub}</div>
                         {u.bar > 0 && <Progress value={u.bar} color={u.color} height={5}/>}
                       </div>
                     ))}
@@ -421,9 +421,9 @@ export default function SettingsPage() {
                   <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, height: 100, padding: '0 4px' }}>
                     {weeklyUsage.map((v, i) => (
                       <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, height: '100%', justifyContent: 'flex-end' }}>
-                        <div style={{ fontSize: 9.5, color: 'var(--text-muted)', fontWeight: 600 }}>{(v/1000).toFixed(0)}k</div>
-                        <div style={{ width: '100%', borderRadius: '5px 5px 0 0', background: weekDays[i] === 'Fri' ? '#4F46E5' : '#C7D2FE', height: `${(v/maxUsage)*80}px`, minHeight: 4 }}/>
-                        <div style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>{weekDays[i]}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>{(v/1000).toFixed(0)}k</div>
+                        <div style={{ width: '100%', borderRadius: '5px 5px 0 0', background: weekDays[i] === 'Fri' ? '#2968B0' : '#B8D5F5', height: `${(v/maxUsage)*80}px`, minHeight: 4 }}/>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{weekDays[i]}</div>
                       </div>
                     ))}
                   </div>
@@ -437,15 +437,15 @@ export default function SettingsPage() {
                 <CardBody style={{ padding: '24px 28px' }}>
                   <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 20 }}>Billing & Subscription</div>
 
-                  <div style={{ background: 'linear-gradient(135deg, #0F1A3E, #1B2B6B)', borderRadius: 14, padding: '22px 24px', marginBottom: 24 }}>
+                  <div style={{ background: 'var(--surface-2)', borderRadius: 14, padding: '24px 24px', marginBottom: 24, border: '1px solid var(--border)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                       <div>
-                        <div style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,.4)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 6 }}>Current Plan</div>
-                        <div style={{ fontSize: 24, fontWeight: 800, color: '#fff' }}>Enterprise Tier</div>
-                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginTop: 4 }}>$150,000 / year · Next billing: January 1, 2027</div>
-                        <div style={{ display: 'flex', gap: 10, marginTop: 12, flexWrap: 'wrap' }}>
+                        <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 6 }}>Current Plan</div>
+                        <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>Enterprise Tier</div>
+                        <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>$150,000 / year · Next billing: January 1, 2027</div>
+                        <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
                           {['33 Agents', 'Real-time data', '99.9% SLA', 'Unlimited API', 'Priority Support'].map(f => (
-                            <span key={f} style={{ fontSize: 10.5, fontWeight: 600, color: 'rgba(255,255,255,.6)', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', padding: '3px 9px', borderRadius: 9999 }}>{f}</span>
+                            <span key={f} style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', background: 'var(--surface-3, #F1F5F9)', padding: '4px 8px', borderRadius: 4 }}>{f}</span>
                           ))}
                         </div>
                       </div>
@@ -466,9 +466,9 @@ export default function SettingsPage() {
                       ].map(inv => (
                         <tr key={inv.period}>
                           <td style={{ fontWeight: 500 }}>{inv.period}</td>
-                          <td style={{ fontWeight: 700 }}>{inv.amount}</td>
+                          <td style={{ fontWeight: 600 }}>{inv.amount}</td>
                           <td><Badge variant={inv.status === 'Active' ? 'brand' : 'success'}>{inv.status}</Badge></td>
-                          <td><button className="btn-ghost" style={{ fontSize: 11.5 }}>Download PDF</button></td>
+                          <td><button className="btn-ghost" style={{ fontSize: 12 }}>Download PDF</button></td>
                         </tr>
                       ))}
                     </tbody>

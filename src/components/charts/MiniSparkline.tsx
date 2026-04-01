@@ -8,7 +8,7 @@ interface Props {
   height?: number;
 }
 
-export function MiniSparkline({ data, color = '#4F46E5', height = 28 }: Props) {
+export function MiniSparkline({ data, color = '#2968B0', height = 28 }: Props) {
   const chartData = data.map((v, i) => ({ i, v }));
   return (
     <ResponsiveContainer width={64} height={height}>

@@ -64,7 +64,7 @@ export default function CompliancePage() {
 
         {scanDone && (
           <div style={{
-            marginBottom: 14, padding: '10px 16px', borderRadius: 10,
+            marginBottom: 16, padding: '12px 16px', borderRadius: 8,
             background: '#D1FAE5', border: '1px solid #A7F3D0',
             display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669',
           }}>
@@ -78,28 +78,28 @@ export default function CompliancePage() {
 
           {/* Score dial */}
           <Card style={{
-            background: 'linear-gradient(135deg, #0F1A3E, #1B2B6B)',
-            border: '1px solid rgba(99,102,241,.3)',
+            background: 'var(--surface-2)',
+            border: '1px solid var(--border)',
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', padding: '28px 24px', gap: 12,
           }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,.45)', letterSpacing: '.06em', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '.06em', textTransform: 'uppercase' }}>
               Overall Score
             </div>
             <div style={{ position: 'relative', width: 110, height: 110 }}>
               <svg width="110" height="110" viewBox="0 0 120 120" style={{ transform: 'rotate(-90deg)' }}>
-                <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="14"/>
+                <circle cx="60" cy="60" r="48" fill="none" stroke="var(--border-light)" strokeWidth="14"/>
                 <circle cx="60" cy="60" r="48" fill="none" stroke="#10B981" strokeWidth="14"
                   strokeDasharray={`${(overallScore / 100) * 2 * Math.PI * 48} ${2 * Math.PI * 48}`}
                   strokeLinecap="round"/>
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: 28, fontWeight: 800, color: '#fff', lineHeight: 1 }}>{overallScore}</span>
-                <span style={{ fontSize: 10, color: 'rgba(255,255,255,.4)' }}>/ 100</span>
+                <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1 }}>{overallScore}</span>
+                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>/ 100</span>
               </div>
             </div>
             <Badge variant="success" dot>Compliant</Badge>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,.3)', textAlign: 'center', lineHeight: 1.4 }}>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', lineHeight: 1.4 }}>
               Updated Mar 31, 2026<br/>Next audit Apr 30
             </div>
           </Card>
@@ -123,16 +123,16 @@ export default function CompliancePage() {
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                         <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{m.label}</span>
                         <span style={{
-                          fontSize: 10, fontWeight: 700, color: sc.color, background: sc.bg,
-                          padding: '2px 7px', borderRadius: 9999, border: `1px solid ${sc.border}`,
+                          fontSize: 11, fontWeight: 600, color: sc.color, background: sc.bg,
+                          padding: '2px 8px', borderRadius: 4,
                         }}>
                           {sc.label}
                         </span>
                       </div>
                       <Progress value={m.score} color={sc.color} height={5}/>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{m.detail}</span>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: sc.color }}>{m.score}%</span>
+                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{m.detail}</span>
+                        <span style={{ fontSize: 12, fontWeight: 600, color: sc.color }}>{m.score}%</span>
                       </div>
                     </div>
                   );
@@ -173,14 +173,14 @@ export default function CompliancePage() {
                     <tr
                       key={i}
                       onClick={() => setSelected(isSelected ? null : i)}
-                      style={{ background: isSelected ? '#EEF2FF' : undefined, cursor: 'pointer' }}
+                      style={{ background: isSelected ? '#F0F7FF' : undefined, cursor: 'pointer' }}
                     >
                       <td style={{ fontWeight: 600 }}>{row.item}</td>
                       <td>
                         <span style={{
-                          display: 'inline-flex', alignItems: 'center', gap: 5,
-                          fontSize: 11, fontWeight: 700, color: sc.color, background: sc.bg,
-                          padding: '3px 9px', borderRadius: 9999, border: `1px solid ${sc.border}`,
+                          display: 'inline-flex', alignItems: 'center', gap: 4,
+                          fontSize: 12, fontWeight: 600, color: sc.color, background: sc.bg,
+                          padding: '4px 8px', borderRadius: 4,
                         }}>
                           <span style={{ width: 5, height: 5, borderRadius: '50%', background: sc.color, display: 'inline-block' }}/>
                           {sc.label}
@@ -189,7 +189,7 @@ export default function CompliancePage() {
                       <td style={{ color: 'var(--text-secondary)' }}>{row.count}</td>
                       <td style={{ color: 'var(--text-muted)' }}>{row.last}</td>
                       <td>
-                        <button className="btn-ghost" style={{ fontSize: 11.5, gap: 4 }}>
+                        <button className="btn-ghost" style={{ fontSize: 12, gap: 4 }}>
                           <IconInfo size={11}/> Details
                         </button>
                       </td>
@@ -203,9 +203,9 @@ export default function CompliancePage() {
             {selected !== null && (
               <div style={{
                 margin: '0 16px 16px', padding: '14px 16px', borderRadius: 12,
-                background: 'var(--surface-2)', border: '1px solid #C7D2FE',
+                background: 'var(--surface-2)', border: '1px solid #B8D5F5',
               }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>
                   {auditItems[selected].item} — Detail View
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
@@ -214,13 +214,13 @@ export default function CompliancePage() {
                     { label: 'Issues Found',     value: auditItems[selected].status === 'warning' ? '6' : '0' },
                     { label: 'Compliance Rate',  value: statusConfig[auditItems[selected].status as keyof typeof statusConfig].label === 'Pass' ? '99.8%' : '91.2%' },
                   ].map(m => (
-                    <div key={m.label} style={{ textAlign: 'center', padding: 10, background: 'var(--surface)', borderRadius: 10, border: '1px solid var(--border-light)' }}>
-                      <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)' }}>{m.value}</div>
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 500, marginTop: 2 }}>{m.label}</div>
+                    <div key={m.label} style={{ textAlign: 'center', padding: 12, background: 'var(--surface)', borderRadius: 8, border: '1px solid var(--border-light)' }}>
+                      <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{m.value}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, marginTop: 2 }}>{m.label}</div>
                     </div>
                   ))}
                 </div>
-                <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
+                <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
                   <button className="btn-primary" style={{ fontSize: 12, gap: 5 }}>
                     <IconChevronRight size={12} color="#fff"/> View Full Report
                   </button>

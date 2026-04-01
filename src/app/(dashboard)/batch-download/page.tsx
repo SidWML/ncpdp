@@ -40,7 +40,7 @@ export default function BatchDownloadPage() {
             <button className="btn-secondary" onClick={() => setAgentOpen(o => !o)} style={{ fontSize: 12, gap: 5 }}>
               <IconSparkles size={14}/> {agentOpen ? 'Hide' : 'Ask'} Agent
             </button>
-            <a href="#" style={{ fontSize: 12, color: '#4F46E5', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+            <a href="#" style={{ fontSize: 12, color: '#2968B0', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
               Download Instructions
             </a>
           </div>
@@ -52,9 +52,9 @@ export default function BatchDownloadPage() {
           {/* Search form */}
           <Card style={{ marginBottom: 16 }}>
             <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9' }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#1B2B6B' }}>Search Pharmacy</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Search Pharmacy</div>
             </div>
-            <CardBody style={{ padding: '18px 24px' }}>
+            <CardBody style={{ padding: '20px 24px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: 12 }}>
                 <div><FieldLabel>NCPDP ID</FieldLabel><TextInput placeholder="NCPDP ID"/></div>
                 <div><FieldLabel>Pharmacy Key</FieldLabel><TextInput placeholder="Pharmacy Key"/></div>
@@ -79,7 +79,7 @@ export default function BatchDownloadPage() {
                 <div><FieldLabel>Relationship</FieldLabel><MultiSelect options={RELATIONSHIPS} height={70}/></div>
                 <div><FieldLabel>Status</FieldLabel><Select><option>Active</option><option>Inactive</option><option>All</option></Select></div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 10, paddingTop: 16, borderTop: '1px solid #F1F5F9' }}>
                 <button className="btn-primary" onClick={() => setSearched(true)} style={{ gap: 6, fontSize: 13, padding: '7px 24px' }}>
                   <IconSearch size={14} color="#fff"/> Search
                 </button>
@@ -91,15 +91,15 @@ export default function BatchDownloadPage() {
           </Card>
 
           {/* Dual panel */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {/* Left: Search results */}
             <Card>
-              <div style={{ padding: '10px 16px', background: '#1B2B6B', borderRadius: '8px 8px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: '#fff' }}>Searched Pharmacies</span>
+              <div style={{ padding: '12px 16px', background: 'var(--surface-2)', borderRadius: '8px 8px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border)' }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Searched Pharmacies</span>
                 {searched && (
                   <button onClick={() => setSelected(RESULTS.map(r => r.ncpdp))} style={{
-                    padding: '3px 10px', borderRadius: 5, border: '1px solid #C7D2FE',
-                    background: '#EEF2FF', color: '#4F46E5', fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                    padding: '4px 12px', borderRadius: 4, border: 'none',
+                    background: '#F0F7FF', color: '#2968B0', fontSize: 12, fontWeight: 600, cursor: 'pointer',
                   }}>Select All</button>
                 )}
               </div>
@@ -109,7 +109,7 @@ export default function BatchDownloadPage() {
                     <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
                       <th style={{ width: 36, padding: '8px 12px' }}/>
                       {['Pharmacy Name','NCPDP ID','Store #','NPI'].map(h => (
-                        <th key={h} style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, fontSize: 11, color: '#475569' }}>{h}</th>
+                        <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 600, fontSize: 12, color: '#475569' }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -118,13 +118,13 @@ export default function BatchDownloadPage() {
                       <tr><td colSpan={5} style={{ textAlign: 'center', padding: 28, color: '#94A3B8', fontStyle: 'italic', fontSize: 12 }}>No records to display.</td></tr>
                     ) : RESULTS.map((r, i) => (
                       <tr key={r.ncpdp} style={{ background: i % 2 === 0 ? '#fff' : '#FAFAFA', borderTop: '1px solid #F1F5F9' }}>
-                        <td style={{ padding: '7px 12px', textAlign: 'center' }}>
+                        <td style={{ padding: '8px 12px', textAlign: 'center' }}>
                           <input type="checkbox" checked={selected.includes(r.ncpdp)} onChange={() => toggleSelect(r.ncpdp)} style={{ width: 14, height: 14, cursor: 'pointer' }}/>
                         </td>
-                        <td style={{ padding: '7px 10px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
-                        <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: '#4F46E5', fontWeight: 700, fontSize: 11 }}>{r.ncpdp}</td>
-                        <td style={{ padding: '7px 10px', color: '#64748B' }}>{r.store}</td>
-                        <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: '#64748B', fontSize: 11 }}>{r.npi}</td>
+                        <td style={{ padding: '8px 12px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
+                        <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#2968B0', fontWeight: 600, fontSize: 12 }}>{r.ncpdp}</td>
+                        <td style={{ padding: '8px 12px', color: '#64748B' }}>{r.store}</td>
+                        <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#64748B', fontSize: 12 }}>{r.npi}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -134,14 +134,14 @@ export default function BatchDownloadPage() {
 
             {/* Right: Selected */}
             <Card>
-              <div style={{ padding: '10px 16px', background: '#1B2B6B', borderRadius: '8px 8px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: '#fff' }}>
+              <div style={{ padding: '12px 16px', background: 'var(--surface-2)', borderRadius: '8px 8px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border)' }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                   Selected for Download <span style={{ fontWeight: 400, opacity: .7 }}>(max 50)</span>
                 </span>
-                <div style={{ display: 'flex', gap: 6 }}>
-                  <button onClick={() => setSelected([])} style={{ padding: '3px 10px', borderRadius: 5, border: '1px solid #C7D2FE', background: '#EEF2FF', color: '#4F46E5', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>Clear</button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button onClick={() => setSelected([])} style={{ padding: '4px 12px', borderRadius: 4, border: 'none', background: '#F0F7FF', color: '#2968B0', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Clear</button>
                   <button disabled={selected.length === 0} style={{
-                    padding: '3px 12px', borderRadius: 5, border: 'none', fontSize: 11, fontWeight: 700,
+                    padding: '4px 12px', borderRadius: 4, border: 'none', fontSize: 12, fontWeight: 600,
                     cursor: selected.length > 0 ? 'pointer' : 'default',
                     background: selected.length > 0 ? '#10B981' : '#6B7280', color: '#fff',
                     display: 'flex', alignItems: 'center', gap: 4,
@@ -153,7 +153,7 @@ export default function BatchDownloadPage() {
                   <thead>
                     <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
                       {['Pharmacy Name','NCPDP Provider ID','Remove'].map(h => (
-                        <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 600, fontSize: 11, color: '#475569' }}>{h}</th>
+                        <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 600, fontSize: 12, color: '#475569' }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -162,9 +162,9 @@ export default function BatchDownloadPage() {
                       <tr><td colSpan={3} style={{ textAlign: 'center', padding: 28, color: '#94A3B8', fontStyle: 'italic', fontSize: 12 }}>No records to display.</td></tr>
                     ) : selectedPharmacies.map((r, i) => (
                       <tr key={r.ncpdp} style={{ background: i % 2 === 0 ? '#fff' : '#FAFAFA', borderTop: '1px solid #F1F5F9' }}>
-                        <td style={{ padding: '7px 12px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
-                        <td style={{ padding: '7px 12px', fontFamily: 'monospace', fontWeight: 700, color: '#4F46E5', fontSize: 11 }}>{r.ncpdp}</td>
-                        <td style={{ padding: '7px 12px' }}>
+                        <td style={{ padding: '8px 12px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
+                        <td style={{ padding: '8px 12px', fontFamily: 'monospace', fontWeight: 600, color: '#2968B0', fontSize: 12 }}>{r.ncpdp}</td>
+                        <td style={{ padding: '8px 12px' }}>
                           <button onClick={() => setSelected(s => s.filter(x => x !== r.ncpdp))} style={{
                             width: 22, height: 22, borderRadius: 4, border: '1px solid #FECACA',
                             background: '#FEE2E2', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -175,8 +175,8 @@ export default function BatchDownloadPage() {
                   </tbody>
                 </table>
                 {selected.length > 0 && (
-                  <div style={{ padding: '6px 12px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', fontSize: 11, color: '#64748B', display: 'flex', justifyContent: 'space-between' }}>
-                    <span><strong style={{ color: '#4F46E5' }}>{selected.length}</strong> selected</span>
+                  <div style={{ padding: '8px 12px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', fontSize: 12, color: '#64748B', display: 'flex', justifyContent: 'space-between' }}>
+                    <span><strong style={{ color: '#2968B0' }}>{selected.length}</strong> selected</span>
                     <span>{50 - selected.length} slots remaining</span>
                   </div>
                 )}

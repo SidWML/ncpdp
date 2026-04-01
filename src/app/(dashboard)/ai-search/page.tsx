@@ -27,11 +27,11 @@ function detectAgent(input: string) {
   if (l.includes('fwa') || l.includes('fraud') || l.includes('waste') || l.includes('risk'))
     return { name: 'FWA Risk Scoring', color: '#D97706' };
   if (l.includes('closure') || l.includes('closed'))
-    return { name: 'Change Tracker', color: '#4F46E5' };
+    return { name: 'Change Tracker', color: '#2968B0' };
   if (l.includes('network') || l.includes('adequacy') || l.includes('coverage') || l.includes('gap'))
     return { name: 'Network Analyzer', color: '#059669' };
   if (l.includes('ownership') || l.includes('contract') || l.includes('transfer'))
-    return { name: 'Contract Intelligence', color: '#8B5CF6' };
+    return { name: 'Contract Intelligence', color: '#2968B0' };
   if (l.includes('report') || l.includes('export') || l.includes('generat'))
     return { name: 'Custom Report Builder', color: '#06B6D4' };
   if (l.includes('compliance') || l.includes('audit') || l.includes('score'))
@@ -41,20 +41,20 @@ function detectAgent(input: string) {
   if (l.includes('alert') || l.includes('critical') || l.includes('urgent'))
     return { name: 'Compliance Watchdog', color: '#DC2626' };
   if (l.includes('agent') || l.includes('top') || l.includes('most used'))
-    return { name: 'NCPDP Buddy', color: '#4F46E5' };
+    return { name: 'NCPDP Buddy', color: '#2968B0' };
   if (l.includes('api') || l.includes('usage') || l.includes('call'))
     return { name: 'Subscriber Insight', color: '#06B6D4' };
   if (l.includes('find') || l.includes('search') || l.includes('look') || l.includes('pharmacy') || l.includes('show'))
-    return { name: 'Pharmacy Finder', color: '#4F46E5' };
+    return { name: 'Pharmacy Finder', color: '#2968B0' };
   if (l.includes('predict') || l.includes('desert') || l.includes('forecast'))
-    return { name: 'Closure Prediction', color: '#8B5CF6' };
+    return { name: 'Closure Prediction', color: '#2968B0' };
   if (l.includes('state') || l.includes('geographic') || l.includes('map'))
     return { name: 'Network Analyzer', color: '#059669' };
   if (l.includes('batch') || l.includes('download') || l.includes('bulk'))
     return { name: 'Batch Optimizer', color: '#10B981' };
   if (l.includes('onboard') || l.includes('setup') || l.includes('start'))
     return { name: 'Onboarding Agent', color: '#06B6D4' };
-  return { name: 'NCPDP Buddy', color: '#4F46E5' };
+  return { name: 'NCPDP Buddy', color: '#2968B0' };
 }
 
 /* ── Response builder ─────────────────────────────────────────────── */
@@ -68,15 +68,15 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {results.map(p => (
-            <div key={p.id} style={{ padding: '11px 14px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
+            <div key={p.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.dea === 'Expired' ? 'danger' : 'warning'}>DEA {p.dea}</Badge>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 3 }}>{p.city}, {p.state} · NPI: {p.npi} · {p.networks} network{p.networks !== 1 ? 's' : ''} affected</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 3 }}>{p.city}, {p.state} · NPI: {p.npi} · {p.networks} network{p.networks !== 1 ? 's' : ''} affected</div>
             </div>
           ))}
-          <div style={{ padding: '9px 14px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 12, color: '#64748B' }}>Total affected across all states: <strong style={{ color: '#DC2626' }}>1,151</strong></span>
             <button className="btn-primary" style={{ fontSize: 11, padding: '4px 14px' }}>Export Full List</button>
           </div>
@@ -95,12 +95,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'FastRx Pharmacy',   city: 'Miami, FL',     score: 8.8, flags: ['Dispensing pattern', 'Ownership change'] },
             { name: 'QuickMeds #2041',   city: 'Houston, TX',   score: 8.6, flags: ['DEA mismatch'] },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '11px 14px', borderRadius: 10, background: '#FFFBF5', border: '1px solid #FDE68A', borderLeft: '3px solid #F59E0B' }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FFFBF5', border: '1px solid #FDE68A', borderLeft: '3px solid #F59E0B' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant="warning">Risk {p.score}</Badge>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 3 }}>{p.city} · {p.flags.join(' · ')}</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 3 }}>{p.city} · {p.flags.join(' · ')}</div>
             </div>
           ))}
         </div>
@@ -116,12 +116,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
           {complianceMetrics.map(m => {
             const isWarn = m.status === 'warning';
             return (
-              <div key={m.label} style={{ padding: '11px 14px', borderRadius: 10, background: isWarn ? '#FFFBF5' : '#F0FDF4', border: `1px solid ${isWarn ? '#FDE68A' : '#A7F3D0'}`, borderLeft: `3px solid ${isWarn ? '#F59E0B' : '#10B981'}` }}>
+              <div key={m.label} style={{ padding: '12px 16px', borderRadius: 8, background: isWarn ? '#FFFBF5' : '#F0FDF4', border: `1px solid ${isWarn ? '#FDE68A' : '#A7F3D0'}`, borderLeft: `3px solid ${isWarn ? '#F59E0B' : '#10B981'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{m.label}</span>
                   <Badge variant={isWarn ? 'warning' : 'success'}>{m.score}%</Badge>
                 </div>
-                <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>{m.detail}</div>
+                <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>{m.detail}</div>
               </div>
             );
           })}
@@ -134,7 +134,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Network analysis across 8 monitored states. Overall adequacy: **94.2%** — above CMS minimum of 90%. 2 states need attention:`,
       data: (
-        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
           <table className="data-table" style={{ margin: 0 }}>
             <thead><tr><th>State</th><th>Pharmacies</th><th>Adequacy</th><th>Status</th></tr></thead>
             <tbody>
@@ -163,12 +163,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Sunset Drugs',      city: 'Phoenix, AZ',  date: 'Mar 28', networks: 1, impact: 'Medium' },
             { name: 'Family Care Rx',    city: 'Dallas, TX',   date: 'Mar 27', networks: 0, impact: 'None' },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '11px 14px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${p.impact === 'High' ? '#DC2626' : p.impact === 'Medium' ? '#F59E0B' : '#94A3B8'}` }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${p.impact === 'High' ? '#DC2626' : p.impact === 'Medium' ? '#F59E0B' : '#94A3B8'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.impact === 'High' ? 'danger' : p.impact === 'Medium' ? 'warning' : 'neutral'}>{p.impact}</Badge>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>{p.city} · Closed {p.date} · {p.networks} network{p.networks !== 1 ? 's' : ''}</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>{p.city} · Closed {p.date} · {p.networks} network{p.networks !== 1 ? 's' : ''}</div>
             </div>
           ))}
         </div>
@@ -182,12 +182,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {alerts.map(a => (
-            <div key={a.id} style={{ padding: '11px 14px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${a.severity === 'critical' ? '#DC2626' : a.severity === 'warning' ? '#F59E0B' : '#3B82F6'}` }}>
+            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${a.severity === 'critical' ? '#DC2626' : a.severity === 'warning' ? '#F59E0B' : '#3B82F6'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{a.title}</span>
                 <Badge variant={a.severity === 'critical' ? 'danger' : a.severity === 'warning' ? 'warning' : 'info'}>{a.severity}</Badge>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>{a.pharmacy} · {a.location} · {a.time}</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>{a.pharmacy} · {a.location} · {a.time}</div>
             </div>
           ))}
         </div>
@@ -202,13 +202,13 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {top.map((a, i) => (
-            <div key={a.id} style={{ padding: '10px 14px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: '#C7D2FE', width: 20 }}>#{i + 1}</span>
+            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#B8D5F5', width: 20 }}>#{i + 1}</span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 12.5, fontWeight: 600, color: '#111827' }}>{a.name}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{a.name}</div>
                 <div style={{ fontSize: 11, color: '#94A3B8' }}>{a.category}</div>
               </div>
-              <span style={{ fontSize: 12, fontWeight: 700, color: '#4F46E5' }}>{a.uses.toLocaleString()}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#2968B0' }}>{a.uses.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -220,13 +220,13 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `API usage is **up 18% month-over-month** with 1.24M calls today. REST endpoints drive 67% of traffic.`,
       data: (
-        <div style={{ padding: '14px 16px', borderRadius: 10, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#0284C7', marginBottom: 8 }}>API Usage — March 2026</div>
           {[
             ['Calls Today', '1.24M'], ['Monthly Total', '28.4M'], ['REST Calls', '19.1M (67%)'],
             ['GraphQL Calls', '9.3M (33%)'], ['Avg Response Time', '48ms'], ['Error Rate', '0.02%'],
           ].map(([k, v]) => (
-            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, padding: '5px 0', borderBottom: '1px solid #F1F5F9' }}>
+            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '5px 0', borderBottom: '1px solid #F1F5F9' }}>
               <span style={{ color: '#64748B' }}>{k}</span>
               <span style={{ fontWeight: 600, color: '#111827' }}>{v}</span>
             </div>
@@ -246,8 +246,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { label: 'Warnings', count: '312', color: '#D97706', bg: '#FFFBF5', border: '#FDE68A' },
             { label: 'Failures', count: '47', color: '#DC2626', bg: '#FEF2F2', border: '#FECACA' },
           ].map(s => (
-            <div key={s.label} style={{ flex: 1, padding: '14px', borderRadius: 10, textAlign: 'center', background: s.bg, border: `1px solid ${s.border}` }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: s.color }}>{s.count}</div>
+            <div key={s.label} style={{ flex: 1, padding: '14px', borderRadius: 8, textAlign: 'center', background: s.bg, border: `1px solid ${s.border}` }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: s.color }}>{s.count}</div>
               <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>{s.label}</div>
             </div>
           ))}
@@ -260,18 +260,18 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Custom Report Builder is ready. Based on your query, I suggest a **Credential Expiry Report** for Q1 2026 covering 68,247 records.`,
       data: (
-        <div style={{ padding: '14px 16px', borderRadius: 10, background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
-          <div style={{ fontSize: 12.5, fontWeight: 700, color: '#2563EB', marginBottom: 8 }}>Suggested Report Config</div>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#2968B0', marginBottom: 8 }}>Suggested Report Config</div>
           {[
             ['Report Type', 'DEA Expiry — Q1 2026'], ['Date Range', 'Jan 1 – Mar 31, 2026'],
             ['Scope', 'All 68,247 pharmacies'], ['Est. Records', '~1,180 matches'], ['Formats', 'PDF, Excel, CSV'],
           ].map(([k, v]) => (
-            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, padding: '5px 0', borderBottom: '1px solid rgba(191,219,254,.5)' }}>
+            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '5px 0', borderBottom: '1px solid rgba(191,219,254,.5)' }}>
               <span style={{ color: '#64748B' }}>{k}</span>
               <span style={{ fontWeight: 600, color: '#111827' }}>{v}</span>
             </div>
           ))}
-          <button className="btn-primary" style={{ width: '100%', marginTop: 10, justifyContent: 'center', fontSize: 12.5 }}>Generate Report Now</button>
+          <button className="btn-primary" style={{ width: '100%', marginTop: 10, justifyContent: 'center', fontSize: 13 }}>Generate Report Now</button>
         </div>
       ),
     };
@@ -288,12 +288,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Pacific Health Rx',     city: 'San Diego, CA', date: 'Feb 20', priority: 'Low', networks: 1 },
             { name: 'Sunrise Holdings #3',   city: 'Phoenix, AZ', date: 'Feb 15', priority: 'Low', networks: 1 },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '11px 14px', borderRadius: 10, background: p.priority === 'High' ? '#FAF5FF' : '#FAFBFF', border: `1px solid ${p.priority === 'High' ? '#DDD6FE' : '#EEF1F8'}`, borderLeft: `3px solid ${p.priority === 'High' ? '#8B5CF6' : '#94A3B8'}` }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: p.priority === 'High' ? '#F0F7FF' : '#FAFBFF', border: `1px solid ${p.priority === 'High' ? '#B8D5F5' : '#EEF1F8'}`, borderLeft: `3px solid ${p.priority === 'High' ? '#2968B0' : '#94A3B8'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.priority === 'High' ? 'brand' : 'neutral'}>{p.priority}</Badge>
               </div>
-              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>{p.city} · {p.date} · {p.networks} contract{p.networks !== 1 ? 's' : ''}</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>{p.city} · {p.date} · {p.networks} contract{p.networks !== 1 ? 's' : ''}</div>
             </div>
           ))}
         </div>
@@ -305,7 +305,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Searched **68,247 pharmacy records**. Here are results matching your query:`,
       data: (
-        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
           <table className="data-table" style={{ margin: 0 }}>
             <thead><tr><th>Pharmacy</th><th>City</th><th>Type</th><th>DEA</th><th>Networks</th></tr></thead>
             <tbody>
@@ -352,7 +352,7 @@ interface Category {
 
 const CATEGORIES: Category[] = [
   {
-    key: 'webconnect', label: 'WebConnect', Icon: IconSearch, accent: '#4F46E5',
+    key: 'webconnect', label: 'WebConnect', Icon: IconSearch, accent: '#2968B0',
     questions: [
       'Find all specialty pharmacies in California',
       'Look up pharmacy by NCPDP ID 1234567',
@@ -392,7 +392,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'chow', label: 'CHOW Tracker', Icon: IconStore, accent: '#8B5CF6',
+    key: 'chow', label: 'CHOW Tracker', Icon: IconStore, accent: '#2968B0',
     questions: [
       'Show recent ownership changes this month',
       'Which ownership transfers affect active contracts?',
@@ -478,16 +478,16 @@ export default function AISearchPage() {
             {/* Logo mark */}
             <div style={{
               width: 72, height: 72, borderRadius: 22,
-              background: 'linear-gradient(145deg, #4F46E5, #7C3AED)',
+              background: 'linear-gradient(145deg, #2968B0, #3A7EC8)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 12px 40px rgba(79,70,229,.25), 0 0 0 1px rgba(79,70,229,.1)',
+              boxShadow: '0 12px 40px rgba(41,104,176,.25), 0 0 0 1px rgba(41,104,176,.1)',
               marginBottom: 20,
             }}>
               <IconSparkles size={34} color="#fff"/>
             </div>
 
             {/* Title */}
-            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-.5px' }}>
+            <h1 style={{ fontSize: 28, fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-.5px' }}>
               What can I help you find?
             </h1>
             <p style={{ fontSize: 14, color: '#64748B', margin: '6px 0 0', textAlign: 'center', lineHeight: 1.5, maxWidth: 460 }}>
@@ -508,7 +508,7 @@ export default function AISearchPage() {
                 onFocus={() => {}}
               >
                 <span style={{ color: '#94A3B8', display: 'flex', flexShrink: 0, marginRight: 10 }}>
-                  <IconSparkles size={18} color="#A5B4FC"/>
+                  <IconSparkles size={18} color="#B8D5F5"/>
                 </span>
                 <input
                   ref={inputRef}
@@ -526,8 +526,8 @@ export default function AISearchPage() {
                   onClick={() => send()}
                   disabled={!input.trim()}
                   style={{
-                    width: 42, height: 42, borderRadius: 10, border: 'none', cursor: 'pointer',
-                    background: input.trim() ? 'linear-gradient(135deg, #4F46E5, #7C3AED)' : '#F1F5F9',
+                    width: 42, height: 42, borderRadius: 8, border: 'none', cursor: 'pointer',
+                    background: input.trim() ? 'linear-gradient(135deg, #2968B0, #3A7EC8)' : '#F1F5F9',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'background .2s', flexShrink: 0,
                   }}
@@ -556,7 +556,7 @@ export default function AISearchPage() {
                         background: isActive ? '#fff' : 'transparent',
                         boxShadow: isActive ? '0 1px 4px rgba(15,23,42,.08)' : 'none',
                         color: isActive ? cat.accent : '#64748B',
-                        fontSize: 11.5, fontWeight: isActive ? 700 : 500,
+                        fontSize: 12, fontWeight: isActive ? 700 : 500,
                         transition: 'all .15s', whiteSpace: 'nowrap',
                       }}
                     >
@@ -576,12 +576,12 @@ export default function AISearchPage() {
                     style={{
                       width: '100%', textAlign: 'left', cursor: 'pointer',
                       display: 'flex', alignItems: 'center', gap: 10,
-                      padding: '11px 14px',
+                      padding: '12px 16px',
                       background: 'transparent', border: 'none',
                       borderBottom: i < activeCat.questions.length - 1 ? '1px solid #F1F5F9' : 'none',
                       borderRadius: i === 0 ? '10px 10px 0 0' : i === activeCat.questions.length - 1 ? '0 0 10px 10px' : 0,
                       transition: 'background .1s',
-                      fontSize: 13.5, color: '#334155', lineHeight: 1.4,
+                      fontSize: 14, color: '#334155', lineHeight: 1.4,
                     }}
                     onMouseEnter={e => { e.currentTarget.style.background = '#F8FAFC'; }}
                     onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
@@ -619,16 +619,16 @@ export default function AISearchPage() {
                     {/* Avatar */}
                     {msg.role === 'assistant' ? (
                       <div style={{
-                        width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-                        background: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
+                        width: 34, height: 34, borderRadius: 8, flexShrink: 0,
+                        background: 'linear-gradient(135deg, #2968B0, #3A7EC8)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 2px 8px rgba(79,70,229,.2)',
+                        boxShadow: '0 2px 8px rgba(41,104,176,.2)',
                       }}>
                         <IconSparkles size={17} color="#fff"/>
                       </div>
                     ) : (
                       <div style={{
-                        width: 34, height: 34, borderRadius: 10, flexShrink: 0,
+                        width: 34, height: 34, borderRadius: 8, flexShrink: 0,
                         background: 'linear-gradient(135deg, #E2E8F0, #CBD5E1)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
@@ -644,7 +644,7 @@ export default function AISearchPage() {
                         </span>
                         {msg.agent && msg.role === 'assistant' && (
                           <span style={{
-                            fontSize: 10.5, fontWeight: 600, color: msg.agent.color,
+                            fontSize: 11, fontWeight: 600, color: msg.agent.color,
                             background: msg.agent.color + '0D',
                             border: `1px solid ${msg.agent.color}20`,
                             padding: '2px 9px', borderRadius: 6,
@@ -655,7 +655,7 @@ export default function AISearchPage() {
                         )}
                         <span style={{ fontSize: 11, color: '#94A3B8' }}>{msg.time}</span>
                       </div>
-                      <div style={{ fontSize: 13.5, lineHeight: 1.7, color: '#334155' }}>
+                      <div style={{ fontSize: 14, lineHeight: 1.7, color: '#334155' }}>
                         {renderText(msg.text)}
                       </div>
                       {msg.data && <div style={{ marginTop: 12 }}>{msg.data}</div>}
@@ -669,10 +669,10 @@ export default function AISearchPage() {
                 <div style={{ padding: '16px 0', background: '#fff', borderBottom: '1px solid #F1F5F9' }}>
                   <div style={{ maxWidth: 700, margin: '0 auto', padding: '0 20px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                     <div style={{
-                      width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-                      background: 'linear-gradient(135deg,#4F46E5,#7C3AED)',
+                      width: 34, height: 34, borderRadius: 8, flexShrink: 0,
+                      background: 'linear-gradient(135deg,#2968B0,#3A7EC8)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: '0 2px 8px rgba(79,70,229,.2)',
+                      boxShadow: '0 2px 8px rgba(41,104,176,.2)',
                     }}>
                       <IconSparkles size={17} color="#fff"/>
                     </div>
@@ -680,7 +680,7 @@ export default function AISearchPage() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                         <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>dataQ.ai</span>
                         <span style={{
-                          fontSize: 10.5, fontWeight: 600, color: typingAgent.color,
+                          fontSize: 11, fontWeight: 600, color: typingAgent.color,
                           background: typingAgent.color + '0D', border: `1px solid ${typingAgent.color}20`,
                           padding: '2px 9px', borderRadius: 6,
                           display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -692,7 +692,7 @@ export default function AISearchPage() {
                         <div style={{ display: 'flex', gap: 4 }}>
                           {[0, 1, 2].map(j => (
                             <span key={j} style={{
-                              width: 7, height: 7, borderRadius: '50%', background: '#A5B4FC',
+                              width: 7, height: 7, borderRadius: '50%', background: '#B8D5F5',
                               display: 'inline-block', animation: `pdot 1.2s ease-in-out ${j * .2}s infinite`,
                             }}/>
                           ))}
@@ -718,7 +718,7 @@ export default function AISearchPage() {
                   padding: '4px 4px 4px 16px',
                 }}>
                   <span style={{ color: '#94A3B8', display: 'flex', flexShrink: 0, marginRight: 10 }}>
-                    <IconSparkles size={16} color="#A5B4FC"/>
+                    <IconSparkles size={16} color="#B8D5F5"/>
                   </span>
                   <input
                     type="text"
@@ -735,8 +735,8 @@ export default function AISearchPage() {
                     onClick={() => send()}
                     disabled={!input.trim() || typing}
                     style={{
-                      width: 38, height: 38, borderRadius: 10, border: 'none', cursor: 'pointer',
-                      background: input.trim() ? 'linear-gradient(135deg, #4F46E5, #7C3AED)' : '#F1F5F9',
+                      width: 38, height: 38, borderRadius: 8, border: 'none', cursor: 'pointer',
+                      background: input.trim() ? 'linear-gradient(135deg, #2968B0, #3A7EC8)' : '#F1F5F9',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'background .2s', flexShrink: 0,
                     }}

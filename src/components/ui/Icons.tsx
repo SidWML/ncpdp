@@ -80,7 +80,7 @@ export const IconUsers          = i(<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0
 export const IconCopy           = i(<><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></>);
 
 /* AI sparkles icon — filled, not stroked */
-export const IconSparkles = ({ size = 16, color = '#4F46E5', className = '' }: { size?: number; color?: string; className?: string }) => (
+export const IconSparkles = ({ size = 16, color = '#2968B0', className = '' }: { size?: number; color?: string; className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={color} className={className}>
     <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
     <path d="M20 3v4M22 5h-4" strokeWidth="0" />

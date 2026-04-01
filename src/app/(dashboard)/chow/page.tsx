@@ -61,17 +61,17 @@ export default function ChowPage() {
         <div style={{ display: 'flex', borderBottom: '2px solid #E2E8F0', background: '#fff', marginBottom: 16 }}>
           {([['processed', 'Processed', '15,086'], ['unprocessed', 'Unprocessed', '247']] as const).map(([key, label, count]) => (
             <button key={key} onClick={() => setQueue(key)} style={{
-              padding: '12px 20px', fontSize: 13, fontWeight: queue === key ? 700 : 500,
-              color: queue === key ? '#1B2B6B' : '#6B7280',
+              padding: '12px 20px', fontSize: 13, fontWeight: queue === key ? 600 : 500,
+              color: queue === key ? 'var(--text-primary)' : '#6B7280',
               background: 'none', border: 'none', cursor: 'pointer',
-              borderBottom: queue === key ? '2px solid #4F46E5' : '2px solid transparent',
+              borderBottom: queue === key ? '2px solid #2968B0' : '2px solid transparent',
               marginBottom: -2, display: 'flex', alignItems: 'center', gap: 8,
             }}>
               {label}
               <span style={{
-                fontSize: 11, fontWeight: 600, padding: '1px 7px', borderRadius: 9999,
-                background: queue === key ? '#EEF2FF' : '#F3F4F6',
-                color: queue === key ? '#4F46E5' : '#9CA3AF',
+                fontSize: 12, fontWeight: 600, padding: '2px 8px', borderRadius: 4,
+                background: queue === key ? '#F0F7FF' : '#F3F4F6',
+                color: queue === key ? '#2968B0' : '#9CA3AF',
               }}>{count}</span>
             </button>
           ))}
@@ -81,7 +81,7 @@ export default function ChowPage() {
         <div style={{ flex: 1, minWidth: 0 }}>
 
           {/* Header */}
-          <div style={{ fontSize: 15, fontWeight: 800, color: '#1B2B6B', marginBottom: 4 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
             Ownership Changed Pharmacies
           </div>
           <div style={{ fontSize: 12, color: '#94A3B8', marginBottom: 16 }}>
@@ -90,7 +90,7 @@ export default function ChowPage() {
 
           {/* Search form */}
           <Card style={{ marginBottom: 16 }}>
-            <CardBody style={{ padding: '18px 24px' }}>
+            <CardBody style={{ padding: '20px 24px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 12 }}>
                 <div><FieldLabel>NCPDP ID</FieldLabel><TextInput placeholder="NCPDP ID"/></div>
                 <div><FieldLabel>DBA Name</FieldLabel><TextInput placeholder="DBA Name"/></div>
@@ -109,17 +109,17 @@ export default function ChowPage() {
               </div>
 
               {/* Old / New pharmacy toggle */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 16, paddingTop: 10, borderTop: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 16, paddingTop: 12, borderTop: '1px solid #F1F5F9' }}>
                 {(['old', 'new'] as const).map(mode => (
                   <label key={mode} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
                     <div style={{
                       width: 18, height: 18, borderRadius: '50%',
-                      border: searchMode === mode ? '2px solid #4F46E5' : '2px solid #CBD5E1',
+                      border: searchMode === mode ? '2px solid #2968B0' : '2px solid #CBD5E1',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                      {searchMode === mode && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#4F46E5' }}/>}
+                      {searchMode === mode && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#2968B0' }}/>}
                     </div>
-                    <span style={{ fontWeight: searchMode === mode ? 700 : 500, color: searchMode === mode ? '#1B2B6B' : '#64748B' }}
+                    <span style={{ fontWeight: searchMode === mode ? 600 : 500, color: searchMode === mode ? 'var(--text-primary)' : '#64748B' }}
                       onClick={() => setSearchMode(mode)}>
                       {mode === 'old' ? 'Old Pharmacy' : 'New Pharmacy'}
                     </span>
@@ -139,7 +139,7 @@ export default function ChowPage() {
           </Card>
 
           {/* Results table — Old -> New pharmacy mapping */}
-          <div style={{ borderRadius: 10, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
+          <div style={{ borderRadius: 8, border: '1px solid #E2E8F0', overflow: 'hidden', background: '#fff' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
@@ -152,10 +152,10 @@ export default function ChowPage() {
                 {visible.map((r, i) => (
                   <tr key={`${r.oldNcpdp}-${r.oldClose}-${i}`}>
                     <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#6B7280' }}>{r.oldNcpdp}</td>
-                    <td><span style={{ color: '#4F46E5', fontWeight: 500, cursor: 'pointer' }}>{r.oldName}</span></td>
+                    <td><span style={{ color: '#2968B0', fontWeight: 500, cursor: 'pointer' }}>{r.oldName}</span></td>
                     <td style={{ color: '#9CA3AF' }}>{r.oldClose}</td>
                     <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#6B7280' }}>{r.newNcpdp}</td>
-                    <td><span style={{ color: '#4F46E5', fontWeight: 500, cursor: 'pointer' }}>{r.newName}</span></td>
+                    <td><span style={{ color: '#2968B0', fontWeight: 500, cursor: 'pointer' }}>{r.newName}</span></td>
                     <td style={{ color: '#9CA3AF' }}>{r.newOpen}</td>
                   </tr>
                 ))}
@@ -172,7 +172,7 @@ export default function ChowPage() {
                 style={{ padding: '4px 10px', borderRadius: 6, border: 'none', background: 'none', color: page === 0 ? '#CBD5E1' : '#64748B', fontSize: 12, cursor: page === 0 ? 'default' : 'pointer', fontWeight: 500 }}>
                 Previous
               </button>
-              <button style={{ width: 28, height: 28, borderRadius: 6, border: 'none', fontSize: 12, fontWeight: 600, background: '#4F46E5', color: '#fff', cursor: 'pointer' }}>{page + 1}</button>
+              <button style={{ width: 28, height: 28, borderRadius: 4, border: 'none', fontSize: 12, fontWeight: 600, background: '#2968B0', color: '#fff', cursor: 'pointer' }}>{page + 1}</button>
               <button onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1}
                 style={{ padding: '4px 10px', borderRadius: 6, border: 'none', background: 'none', color: page >= totalPages - 1 ? '#CBD5E1' : '#64748B', fontSize: 12, cursor: page >= totalPages - 1 ? 'default' : 'pointer', fontWeight: 500 }}>
                 Next

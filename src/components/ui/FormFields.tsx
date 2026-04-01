@@ -22,7 +22,7 @@ interface FieldLabelProps {
 
 export function FieldLabel({ children, required }: FieldLabelProps) {
   return (
-    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2B6B', marginBottom: 4 }}>
+    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>
       {children}
       {required && <span style={{ color: '#DC2626', marginLeft: 2 }}>*</span>}
     </label>
@@ -102,16 +102,16 @@ export function MultiSelect({ options, height = 96, value, onChange }: MultiSele
             onClick={() => toggle(o)}
             style={{
               display: 'flex', alignItems: 'center', gap: 8, padding: '5px 10px',
-              fontSize: 12, color: active ? '#1B2B6B' : '#475569', cursor: 'pointer',
-              background: active ? '#EEF2FF' : 'transparent',
+              fontSize: 12, color: active ? 'var(--text-primary)' : '#475569', cursor: 'pointer',
+              background: active ? '#F0F7FF' : 'transparent',
               fontWeight: active ? 600 : 400,
               transition: 'background .1s',
             }}
           >
             <div style={{
               width: 15, height: 15, borderRadius: 3, flexShrink: 0,
-              border: active ? '1.5px solid #4F46E5' : '1.5px solid #CBD5E1',
-              background: active ? '#4F46E5' : '#fff',
+              border: active ? '1.5px solid #2968B0' : '1.5px solid #CBD5E1',
+              background: active ? '#2968B0' : '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               {active && (

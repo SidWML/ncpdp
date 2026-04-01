@@ -18,22 +18,21 @@ interface NavItem {
   badgeColor?: string;
 }
 
-const navSections: { section: string; highlighted?: boolean; items: NavItem[] }[] = [
+const navSections: { section: string; items: NavItem[] }[] = [
     {
     section: 'Main',
     items: [
       { href: '/',             label: 'Dashboard',       icon: IconDashboard },
-      { href: '/ai-search',   label: 'AI Smart Search',  icon: IconLogoBrain, badge: 'AI', badgeColor: '#8B5CF6' },
-      { href: '/ai-reports',  label: 'AI Report Builder', icon: IconReport, badge: 'AI', badgeColor: '#2563EB' },
+      { href: '/ai-search',   label: 'AI Smart Search',  icon: IconLogoBrain, badge: 'AI', badgeColor: '#2968B0' },
+      { href: '/ai-reports',  label: 'AI Report Builder', icon: IconReport, badge: 'AI', badgeColor: '#2968B0' },
       { href: '/agents',       label: 'Agent Library',   icon: IconAgents, badge: '33' },
       { href: '/analytics',    label: 'Analytics',       icon: IconAnalytics },
-      { href: '/alerts',       label: 'Alerts',          icon: IconBell, badge: '47', badgeColor: '#EF4444' },
+      { href: '/alerts',       label: 'Alerts',          icon: IconBell, badge: '47', badgeColor: '#DC2626' },
     ],
   },
-  
+
   {
     section: 'Tools',
-    highlighted: true,
     items: [
       { href: '/search',        label: 'WebConnect',        icon: IconSearch },
       { href: '/reports',       label: 'OnDemand Query',    icon: IconReport },
@@ -72,9 +71,8 @@ const navSections: { section: string; highlighted?: boolean; items: NavItem[] }[
 export function Sidebar() {
   const path = usePathname();
   const [collapsed, setCollapsed] = useState(false);
-  const w = collapsed ? 60 : 240;
+  const w = collapsed ? 60 : 248;
 
-  // Sync CSS variable so layout responds to collapse
   React.useEffect(() => {
     document.documentElement.style.setProperty('--sidebar-w', `${w}px`);
   }, [w]);
@@ -102,7 +100,7 @@ export function Sidebar() {
           height: 56,
           display: 'flex',
           alignItems: 'center',
-          padding: '0 12px',
+          padding: '0 14px',
           justifyContent: collapsed ? 'center' : 'space-between',
           borderBottom: '1px solid rgba(255,255,255,.06)',
           flexShrink: 0,
@@ -113,7 +111,7 @@ export function Sidebar() {
             onClick={() => setCollapsed(false)}
             style={{
               background: 'rgba(255,255,255,.06)', border: 'none', cursor: 'pointer',
-              padding: 4, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 4, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -141,26 +139,17 @@ export function Sidebar() {
 
       {/* Nav */}
       <nav style={{ flex: 1, padding: '8px 8px', overflowY: 'auto', overflowX: 'hidden' }}>
-        {navSections.map(({ section, highlighted, items }) => (
+        {navSections.map(({ section, items }) => (
           <div key={section} style={{ marginBottom: 2 }}>
             {!collapsed && (
               <div style={{
-                fontSize: 10.5,
-                fontWeight: 600,
-                color: highlighted ? '#818CF8' : 'rgba(255,255,255,.25)',
+                fontSize: 11,
+                fontWeight: 500,
+                color: 'rgba(255,255,255,.25)',
                 letterSpacing: '.04em',
                 textTransform: 'uppercase',
-                padding: '12px 10px 4px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
+                padding: '14px 12px 6px',
               }}>
-                {highlighted && (
-                  <span style={{
-                    width: 5, height: 5, borderRadius: '50%', background: '#818CF8',
-                    display: 'inline-block', flexShrink: 0,
-                  }}/>
-                )}
                 {section}
               </div>
             )}
@@ -173,24 +162,23 @@ export function Sidebar() {
                   href={href}
                   className={`sidebar-item ${active ? 'active' : ''}`}
                   title={collapsed ? label : undefined}
-                  style={{ justifyContent: collapsed ? 'center' : undefined, marginBottom: 2 }}
+                  style={{ justifyContent: collapsed ? 'center' : undefined, marginBottom: 1 }}
                 >
-                  <span style={{ flexShrink: 0, color: active ? '#818CF8' : 'rgba(148,163,184,.7)', transition: 'color .12s' }}>
-                    <Icon size={16} strokeWidth={active ? 2.2 : 1.8}/>
+                  <span style={{ flexShrink: 0, color: active ? '#5B9BD5' : 'rgba(148,163,184,.7)', transition: 'color .12s' }}>
+                    <Icon size={16} strokeWidth={active ? 2 : 1.7}/>
                   </span>
                   {!collapsed && (
                     <>
                       <span style={{ flex: 1, lineHeight: 1 }}>{label}</span>
                       {badge && (
                         <span style={{
-                          background: badgeColor ? badgeColor : 'rgba(99,102,241,.25)',
-                          color: badgeColor ? '#fff' : '#a5b4fc',
+                          background: badgeColor ? badgeColor : 'rgba(41,104,176,.25)',
+                          color: badgeColor ? '#fff' : '#B8D5F5',
                           fontSize: 10,
-                          fontWeight: 700,
+                          fontWeight: 600,
                           padding: '1px 6px',
-                          borderRadius: 9999,
+                          borderRadius: 4,
                           lineHeight: 1.7,
-                          letterSpacing: 0,
                         }}>
                           {badge}
                         </span>
@@ -204,9 +192,7 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Bottom spacer */}
       <div style={{ height: 8, flexShrink: 0 }}/>
     </aside>
   );
 }
-

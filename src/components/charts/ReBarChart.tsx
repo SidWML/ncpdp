@@ -26,7 +26,7 @@ function CustomTooltip({ active, payload, label }: TipProps) {
   );
 }
 
-export function ReBarChart({ data, height = 140, color = '#4F46E5' }: Props) {
+export function ReBarChart({ data, height = 140, color = '#2968B0' }: Props) {
   const chartData = data.map(d => ({ name: d.label, value: d.value, color: d.color || color }));
   return (
     <ResponsiveContainer width="100%" height={height}>

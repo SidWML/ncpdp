@@ -55,7 +55,7 @@ export default function AlertsPage() {
         title="Alerts Center"
         subtitle="Real-time compliance & credential monitoring"
         actions={
-          <div style={{ display: 'flex', gap: 6 }}>
+          <div style={{ display: 'flex', gap: 8 }}>
             <button className="btn-secondary" style={{ fontSize: 12 }}>Configure Alerts</button>
             <button className="btn-primary" style={{ fontSize: 12 }}>Mark All Read</button>
           </div>
@@ -71,7 +71,7 @@ export default function AlertsPage() {
               onClick={() => setActiveFilter(c.label === 'Resolved' ? 'All' : c.label)}
               className="card"
               style={{
-                padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer',
+                padding: '16px 16px', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer',
                 background: activeFilter === c.label ? c.bg : 'var(--surface)',
                 border: activeFilter === c.label ? `1px solid ${c.border}` : '1px solid var(--border)',
                 textAlign: 'left', width: '100%',
@@ -85,7 +85,7 @@ export default function AlertsPage() {
                 <c.Icon size={18} color={c.color}/>
               </div>
               <div>
-                <div style={{ fontSize: 24, fontWeight: 800, color: c.color, lineHeight: 1 }}>{c.count}</div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: c.color, lineHeight: 1 }}>{c.count}</div>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500, marginTop: 2 }}>{c.label}</div>
               </div>
             </button>
@@ -100,14 +100,14 @@ export default function AlertsPage() {
               title="Alert Inbox"
               badge={<Badge variant="danger">{alerts.filter(a => !a.read).length} unread</Badge>}
               action={
-                <div style={{ display: 'flex', gap: 5 }}>
+                <div style={{ display: 'flex', gap: 4 }}>
                   {filters.map(f => (
                     <button
                       key={f}
                       onClick={() => setActiveFilter(f)}
                       style={{
-                        fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 9999,
-                        border: '1px solid', cursor: 'pointer',
+                        fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 4,
+                        cursor: 'pointer',
                         background: activeFilter === f ? 'var(--brand-600)' : 'transparent',
                         color: activeFilter === f ? '#fff' : 'var(--text-muted)',
                         borderColor: activeFilter === f ? 'var(--brand-600)' : 'var(--border)',
@@ -124,7 +124,7 @@ export default function AlertsPage() {
               {filtered.length === 0 ? (
                 <div style={{ padding: '40px 0', textAlign: 'center', color: 'var(--text-muted)' }}>
                   <IconShieldCheck size={28} color="var(--border)"/>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginTop: 10 }}>No alerts in this category</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginTop: 12 }}>No alerts in this category</div>
                 </div>
               ) : (
                 filtered.map(a => <AlertItem key={a.id} {...a}/>)
@@ -149,7 +149,7 @@ export default function AlertsPage() {
                   >
                     <div>
                       <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{label}</div>
-                      <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{desc}</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{desc}</div>
                     </div>
                     <button
                       onClick={() => toggle(i)}

@@ -20,14 +20,14 @@ const REPORT_MAP: Record<string, ReportData> = {
   credential: {
     title: 'Q1 2026 Credential Expiry Report', date: 'Mar 31, 2026', records: '68,247', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '68,247', color: '#4F46E5' },
+      { label: 'Total Pharmacies', value: '68,247', color: '#2968B0' },
       { label: 'Credentials Expiring', value: '234', color: '#F59E0B' },
       { label: 'Multi-Expiry Risk', value: '12', color: '#EF4444' },
       { label: 'States with Issues', value: '23', color: '#10B981' },
     ],
     sections: [
       { title: 'Expiring by Type', rows: [
-        { label: 'DEA Registration', value: '89', color: '#4F46E5' },
+        { label: 'DEA Registration', value: '89', color: '#2968B0' },
         { label: 'State License', value: '112', color: '#F59E0B' },
         { label: 'Accreditation', value: '33', color: '#10B981' },
       ]},
@@ -43,7 +43,7 @@ const REPORT_MAP: Record<string, ReportData> = {
   fwa: {
     title: 'FWA Attestation Status Report', date: 'Mar 31, 2026', records: '68,247', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '68,247', color: '#4F46E5' },
+      { label: 'Total Pharmacies', value: '68,247', color: '#2968B0' },
       { label: 'FWA Pass', value: '67,841', color: '#10B981' },
       { label: 'Under Review', value: '359', color: '#F59E0B' },
       { label: 'Failed', value: '47', color: '#EF4444' },
@@ -58,7 +58,7 @@ const REPORT_MAP: Record<string, ReportData> = {
       { title: 'Top Flags', rows: [
         { label: 'Billing anomaly', value: '142 pharmacies', color: '#DC2626' },
         { label: 'Dispensing pattern', value: '98 pharmacies', color: '#F59E0B' },
-        { label: 'Ownership change', value: '67 pharmacies', color: '#8B5CF6' },
+        { label: 'Ownership change', value: '67 pharmacies', color: '#2968B0' },
         { label: 'DEA mismatch', value: '52 pharmacies', color: '#F59E0B' },
       ]},
     ],
@@ -67,7 +67,7 @@ const REPORT_MAP: Record<string, ReportData> = {
     title: 'Network Adequacy Analysis', date: 'Mar 31, 2026', records: '68,247', states: '50',
     stats: [
       { label: 'Overall Adequacy', value: '94.2%', color: '#10B981' },
-      { label: 'States Passing', value: '45', color: '#4F46E5' },
+      { label: 'States Passing', value: '45', color: '#2968B0' },
       { label: 'States at Risk', value: '5', color: '#F59E0B' },
       { label: 'Coverage Gaps', value: '12 zones', color: '#EF4444' },
     ],
@@ -177,10 +177,10 @@ export default function AIReportsPage() {
           {/* Empty state */}
           {!hasMessages && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 24px' }}>
-              <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(145deg, #2563EB, #4F46E5)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(37,99,235,.25)', marginBottom: 18 }}>
+              <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(145deg, #2968B0, #3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(41,104,176,.25)', marginBottom: 18 }}>
                 <IconReport size={28} color="#fff"/>
               </div>
-              <h2 style={{ fontSize: 22, fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-.3px' }}>What report do you need?</h2>
+              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-.3px' }}>What report do you need?</h2>
               <p style={{ fontSize: 13, color: '#64748B', margin: '6px 0 0', textAlign: 'center', lineHeight: 1.5, maxWidth: 380 }}>
                 Describe your report in plain English. I'll pull data from all tools — compliance, network, FWA, pharmacy records — and generate it instantly.
               </p>
@@ -188,9 +188,9 @@ export default function AIReportsPage() {
               {/* Input */}
               <div style={{ width: '100%', maxWidth: 440, marginTop: 24 }}>
                 <div style={{ display: 'flex', alignItems: 'center', background: '#fff', border: '1px solid #E2E8F0', borderRadius: 14, boxShadow: '0 4px 24px rgba(15,23,42,.06)', padding: '4px 4px 4px 16px' }}>
-                  <span style={{ display: 'flex', marginRight: 10 }}><IconSparkles size={16} color="#A5B4FC"/></span>
+                  <span style={{ display: 'flex', marginRight: 10 }}><IconSparkles size={16} color="#B8D5F5"/></span>
                   <input type="text" placeholder="e.g. DEA expiry report by state for Q1..." value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 14, color: '#0F172A', padding: '11px 0' }}/>
-                  <button onClick={() => send()} disabled={!input.trim()} style={{ width: 40, height: 40, borderRadius: 10, border: 'none', cursor: 'pointer', background: input.trim() ? 'linear-gradient(135deg,#2563EB,#4F46E5)' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', flexShrink: 0 }}>
+                  <button onClick={() => send()} disabled={!input.trim()} style={{ width: 40, height: 40, borderRadius: 8, border: 'none', cursor: 'pointer', background: input.trim() ? 'linear-gradient(135deg,#2968B0,#3A7EC8)' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', flexShrink: 0 }}>
                     <IconSend size={15} color={input.trim() ? '#fff' : '#94A3B8'}/>
                   </button>
                 </div>
@@ -200,21 +200,21 @@ export default function AIReportsPage() {
               <div style={{ display: 'flex', gap: 6, marginTop: 14, alignItems: 'center' }}>
                 <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>Format:</span>
                 {['PDF', 'Excel', 'CSV', 'JSON', 'API'].map(f => (
-                  <button key={f} onClick={() => setFmt(f)} style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 6, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#4F46E5' : '#E2E8F0', background: fmt === f ? '#EEF2FF' : '#fff', color: fmt === f ? '#4F46E5' : '#94A3B8', transition: 'all .15s' }}>{f}</button>
+                  <button key={f} onClick={() => setFmt(f)} style={{ fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 6, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#2968B0' : '#E2E8F0', background: fmt === f ? '#F0F7FF' : '#fff', color: fmt === f ? '#2968B0' : '#94A3B8', transition: 'all .15s' }}>{f}</button>
                 ))}
               </div>
 
               {/* Templates */}
               <div style={{ width: '100%', maxWidth: 440, marginTop: 24 }}>
-                <div style={{ fontSize: 11, fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Templates</div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Templates</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {TEMPLATES.map(t => (
-                    <button key={t.label} onClick={() => send(t.query)} style={{ padding: '12px', textAlign: 'left', background: '#fff', border: '1px solid #E8ECF4', borderRadius: 10, cursor: 'pointer', transition: 'border-color .15s' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#C7D2FE'; }}
+                    <button key={t.label} onClick={() => send(t.query)} style={{ padding: '12px', textAlign: 'left', background: '#fff', border: '1px solid #E8ECF4', borderRadius: 8, cursor: 'pointer', transition: 'border-color .15s' }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8D5F5'; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = '#E8ECF4'; }}
                     >
-                      <div style={{ fontSize: 12.5, fontWeight: 600, color: '#0F172A' }}>{t.label}</div>
-                      <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>{t.desc}</div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: '#0F172A' }}>{t.label}</div>
+                      <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>{t.desc}</div>
                     </button>
                   ))}
                 </div>
@@ -229,7 +229,7 @@ export default function AIReportsPage() {
                 {msgs.map(m => (
                   <div key={m.id} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 14 }}>
                     {m.role === 'bot' ? (
-                      <div style={{ width: 30, height: 30, borderRadius: 9, flexShrink: 0, background: 'linear-gradient(135deg,#2563EB,#4F46E5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 30, height: 30, borderRadius: 9, flexShrink: 0, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <IconSparkles size={14} color="#fff"/>
                       </div>
                     ) : (
@@ -238,7 +238,7 @@ export default function AIReportsPage() {
                       </div>
                     )}
                     <div style={{ flex: 1, paddingTop: 2 }}>
-                      <div style={{ fontSize: 11, fontWeight: 700, color: m.role === 'bot' ? '#2563EB' : '#64748B', marginBottom: 3 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: m.role === 'bot' ? '#2968B0' : '#64748B', marginBottom: 3 }}>
                         {m.role === 'bot' ? 'Report Builder' : 'You'}
                       </div>
                       <div style={{ fontSize: 13, lineHeight: 1.6, color: '#334155' }}>{renderBold(m.text)}</div>
@@ -247,11 +247,11 @@ export default function AIReportsPage() {
                 ))}
                 {typing && (
                   <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 14 }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#2563EB,#4F46E5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <IconSparkles size={14} color="#fff"/>
                     </div>
                     <div style={{ paddingTop: 6, display: 'flex', gap: 4, alignItems: 'center' }}>
-                      {[0,1,2].map(j => <span key={j} style={{ width: 6, height: 6, borderRadius: '50%', background: '#A5B4FC', display: 'inline-block', animation: `pdot 1.2s ease-in-out ${j*.2}s infinite` }}/>)}
+                      {[0,1,2].map(j => <span key={j} style={{ width: 6, height: 6, borderRadius: '50%', background: '#B8D5F5', display: 'inline-block', animation: `pdot 1.2s ease-in-out ${j*.2}s infinite` }}/>)}
                       <span style={{ fontSize: 12, color: '#94A3B8', marginLeft: 6 }}>Generating report...</span>
                     </div>
                   </div>
@@ -263,12 +263,12 @@ export default function AIReportsPage() {
               <div style={{ padding: '8px 16px 14px', borderTop: '1px solid #F1F5F9', flexShrink: 0 }}>
                 <div style={{ display: 'flex', gap: 5, marginBottom: 8 }}>
                   {['PDF','Excel','CSV','JSON','API'].map(f => (
-                    <button key={f} onClick={() => setFmt(f)} style={{ padding: '3px 9px', borderRadius: 6, fontSize: 10.5, fontWeight: 600, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#4F46E5' : '#E2E8F0', background: fmt === f ? '#EEF2FF' : '#fff', color: fmt === f ? '#4F46E5' : '#94A3B8' }}>{f}</button>
+                    <button key={f} onClick={() => setFmt(f)} style={{ padding: '4px 8px', borderRadius: 6, fontSize: 12, fontWeight: 600, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#2968B0' : '#E2E8F0', background: fmt === f ? '#F0F7FF' : '#fff', color: fmt === f ? '#2968B0' : '#94A3B8' }}>{f}</button>
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Refine or describe another report..." style={{ flex: 1, padding: '9px 12px', borderRadius: 10, border: '1px solid #E2E8F0', fontSize: 13, outline: 'none', color: '#0F172A' }}/>
-                  <button onClick={() => send()} disabled={!input.trim() || typing} style={{ width: 38, height: 38, borderRadius: 10, background: input.trim() ? 'linear-gradient(135deg,#2563EB,#4F46E5)' : '#F1F5F9', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Refine or describe another report..." style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 13, outline: 'none', color: '#0F172A' }}/>
+                  <button onClick={() => send()} disabled={!input.trim() || typing} style={{ width: 38, height: 38, borderRadius: 8, background: input.trim() ? 'linear-gradient(135deg,#2968B0,#3A7EC8)' : '#F1F5F9', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <IconSend size={14} color={input.trim() ? '#fff' : '#94A3B8'}/>
                   </button>
                 </div>
@@ -284,7 +284,7 @@ export default function AIReportsPage() {
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <h2 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: 0 }}>{report.title}</h2>
+                  <h2 style={{ fontSize: 18, fontWeight: 700, color: '#0F172A', margin: 0 }}>{report.title}</h2>
                   <Badge variant="success" dot>Generated</Badge>
                 </div>
                 <div style={{ fontSize: 12, color: '#64748B', marginTop: 4 }}>
@@ -301,8 +301,8 @@ export default function AIReportsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: `repeat(${report.stats.length},1fr)`, gap: 10, marginBottom: 20 }}>
               {report.stats.map(s => (
                 <div key={s.label} style={{ padding: '16px', borderRadius: 12, background: '#fff', border: '1px solid #E8ECF4' }}>
-                  <div style={{ fontSize: 11, color: '#64748B', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: s.color }}>{s.value}</div>
+                  <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: 24, fontWeight: 700, color: s.color }}>{s.value}</div>
                 </div>
               ))}
             </div>
@@ -310,14 +310,14 @@ export default function AIReportsPage() {
             {/* Sections */}
             {report.sections.map((sec, si) => (
               <div key={si} style={{ background: '#fff', borderRadius: 12, border: '1px solid #E8ECF4', marginBottom: 14, overflow: 'hidden' }}>
-                <div style={{ padding: '12px 18px', borderBottom: '1px solid #F1F5F9', fontSize: 13, fontWeight: 700, color: '#0F172A' }}>
+                <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9', fontSize: 13, fontWeight: 600, color: '#0F172A' }}>
                   {sec.title}
                 </div>
                 <div style={{ padding: '6px 0' }}>
                   {sec.rows.map((row, ri) => (
                     <div key={ri} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 18px', borderBottom: ri < sec.rows.length - 1 ? '1px solid #F8FAFC' : 'none' }}>
                       <span style={{ fontSize: 13, color: '#334155', fontWeight: 500 }}>{row.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: row.color }}>{row.value}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: row.color }}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -325,7 +325,7 @@ export default function AIReportsPage() {
             ))}
 
             {/* Footer */}
-            <div style={{ display: 'flex', gap: 6, alignItems: 'center', color: '#94A3B8', fontSize: 11, marginTop: 8 }}>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', color: '#94A3B8', fontSize: 12, marginTop: 8 }}>
               <IconDatabase size={12} color="#94A3B8"/> Data sourced from 68,247 pharmacy records
               <span style={{ margin: '0 4px' }}>·</span>
               <IconShield size={12} color="#94A3B8"/> HIPAA compliant

@@ -10,7 +10,7 @@ const kits = [
     role: 'PBM Network Director',
     persona: 'Sarah Chen',
     avatar: 'SC',
-    gradient: 'linear-gradient(135deg, #4F46E5, #8B5CF6)',
+    gradient: 'linear-gradient(135deg, #2968B0, #3A7EC8)',
     desc: 'Manage pharmacy network compliance, coverage gaps, and contract renewals at scale.',
     agents: ['Network Analyzer', 'Compliance Watchdog', 'Pharmacy Finder', 'Change Tracker'],
     prompts: [
@@ -76,7 +76,7 @@ const kits = [
     role: 'IT / Integration Engineer',
     persona: 'David Kim',
     avatar: 'DK',
-    gradient: 'linear-gradient(135deg, #6366F1, #0EA5E9)',
+    gradient: 'linear-gradient(135deg, #3A7EC8, #0EA5E9)',
     desc: 'Set up API integrations, configure webhooks, and automate data pipelines.',
     agents: ['API Agent', 'Data Delivery Agent', 'Webhook Manager', 'Integration Assistant'],
     prompts: [
@@ -119,30 +119,30 @@ export default function StarterKitsPage() {
         {/* Intro banner */}
         <div style={{
           marginBottom: 16, padding: '16px 20px',
-          background: 'linear-gradient(135deg, #0F1A3E 0%, #1B2B6B 100%)',
-          borderRadius: 14, border: '1px solid rgba(99,102,241,.25)',
+          background: 'var(--surface-2)',
+          borderRadius: 14, border: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <div>
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginBottom: 4 }}>Jump-start your AI workflow</div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,.45)' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>Jump-start your AI workflow</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
               Each kit includes curated prompts, recommended agents, and step-by-step workflows tailored to your role.
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 10 }}>
+          <div style={{ display: 'flex', gap: 12 }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#818CF8' }}>4</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,.4)' }}>Roles</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#2968B0' }}>4</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Roles</div>
             </div>
-            <div style={{ width: 1, background: 'rgba(255,255,255,.08)' }}/>
+            <div style={{ width: 1, background: 'var(--border)' }}/>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#34D399' }}>24</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,.4)' }}>Prompts</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#34D399' }}>24</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Prompts</div>
             </div>
-            <div style={{ width: 1, background: 'rgba(255,255,255,.08)' }}/>
+            <div style={{ width: 1, background: 'var(--border)' }}/>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#F59E0B' }}>12</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,.4)' }}>Workflows</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#F59E0B' }}>12</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Workflows</div>
             </div>
           </div>
         </div>
@@ -161,13 +161,13 @@ export default function StarterKitsPage() {
                   width: 48, height: 48, borderRadius: 14, flexShrink: 0,
                   background: kit.gradient,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 15, fontWeight: 800, color: '#fff',
+                  fontSize: 15, fontWeight: 700, color: '#fff',
                 }}>
                   {kit.avatar}
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)' }}>{kit.role}</span>
+                    <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{kit.role}</span>
                     {tierBadge(kit.tier)}
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{kit.desc}</div>
@@ -178,12 +178,12 @@ export default function StarterKitsPage() {
 
                 {/* Agents */}
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Recommended Agents</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Recommended Agents</div>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {kit.agents.map(a => (
                       <span key={a} style={{
-                        fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 9999,
-                        background: '#EEF2FF', color: '#4F46E5', border: '1px solid #C7D2FE',
+                        fontSize: 12, fontWeight: 600, padding: '4px 8px', borderRadius: 4,
+                        background: '#F0F7FF', color: '#2968B0',
                       }}>{a}</span>
                     ))}
                   </div>
@@ -191,7 +191,7 @@ export default function StarterKitsPage() {
 
                 {/* Prompts */}
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Sample Prompts</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Sample Prompts</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                     {kit.prompts.slice(0, 4).map(p => (
                       <div
@@ -203,15 +203,15 @@ export default function StarterKitsPage() {
                           display: 'flex', alignItems: 'center', gap: 8,
                           transition: 'border-color .15s',
                         }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#C7D2FE')}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#B8D5F5')}
                         onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-light)')}
                       >
-                        <span style={{ color: '#818CF8', flexShrink: 0, fontSize: 11 }}>›</span>
+                        <span style={{ color: '#5B9BD5', flexShrink: 0, fontSize: 12 }}>›</span>
                         {p}
                       </div>
                     ))}
                     {kit.prompts.length > 4 && (
-                      <div style={{ fontSize: 11, color: '#4F46E5', fontWeight: 600, paddingLeft: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <div style={{ fontSize: 12, color: '#2968B0', fontWeight: 600, paddingLeft: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                         +{kit.prompts.length - 4} more prompts <IconChevronRight size={11}/>
                       </div>
                     )}
@@ -220,14 +220,14 @@ export default function StarterKitsPage() {
 
                 {/* Workflows */}
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Guided Workflows</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>Guided Workflows</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                     {kit.workflows.map(w => (
                       <div
                         key={w.label}
                         style={{
                           display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
-                          borderRadius: 10, border: '1px solid var(--border-light)', cursor: 'pointer',
+                          borderRadius: 8, border: '1px solid var(--border-light)', cursor: 'pointer',
                           background: 'var(--surface-2)',
                         }}
                       >
@@ -236,7 +236,7 @@ export default function StarterKitsPage() {
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{w.label}</div>
-                          <div style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>{w.steps} steps · {w.time}</div>
+                          <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{w.steps} steps · {w.time}</div>
                         </div>
                         <IconArrowRight size={13} color="var(--text-muted)"/>
                       </div>
@@ -265,7 +265,7 @@ export default function StarterKitsPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>Need a custom starter kit for your team?</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Need a custom starter kit for your team?</div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>NCPDP solution engineers can build role-specific kits tailored to your workflows.</div>
           </div>
           <button className="btn-primary" style={{ fontSize: 12, gap: 5 }}>

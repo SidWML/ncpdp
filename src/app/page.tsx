@@ -34,10 +34,10 @@ const sparkSets = [
 ];
 
 const healthMetrics = [
-  { label: 'DEA Compliance',   score: 98, color: '#10B981', detail: '64,238 active'            },
-  { label: 'Network Adequacy', score: 96, color: '#4F46E5', detail: '64 / 67 CMS standards'    },
-  { label: 'FWA Status',       score: 91, color: '#F59E0B', detail: '6 pharmacies under review' },
-  { label: 'NSA Readiness',    score: 99, color: '#06B6D4', detail: '38,522 validated'          },
+  { label: 'DEA Compliance',   score: 98, color: '#059669', detail: '64,238 active'            },
+  { label: 'Network Adequacy', score: 96, color: '#2968B0', detail: '64 / 67 CMS standards'    },
+  { label: 'FWA Status',       score: 91, color: '#D97706', detail: '6 pharmacies under review' },
+  { label: 'NSA Readiness',    score: 99, color: '#2563EB', detail: '38,522 validated'          },
 ];
 
 const recentChanges = [
@@ -59,36 +59,36 @@ export default function DashboardPage() {
         subtitle=""
         actions={
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-secondary" style={{ fontSize: 12 }}>Last 30 Days</button>
+            <button className="btn-secondary">Last 30 Days</button>
             <Link href="/reports" style={{ textDecoration: 'none' }}>
-              <button className="btn-primary" style={{ gap: 6, fontSize: 12 }}>
-                <IconDownload size={13} color="#fff"/> Export Report
+              <button className="btn-primary" style={{ gap: 6 }}>
+                <IconDownload size={14} color="#fff"/> Export Report
               </button>
             </Link>
           </div>
         }
       />
 
-      <main style={{ padding: '16px 20px 40px' }}>
+      <main style={{ padding: '24px 24px 48px' }}>
 
         {/* ── Greeting ── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-.4px' }}>
+            <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)', margin: 0, letterSpacing: '-.3px' }}>
               Good morning, Sarah
             </h1>
-            <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: '4px 0 0', fontWeight: 400 }}>
+            <p style={{ fontSize: 14, color: 'var(--text-muted)', margin: '4px 0 0' }}>
               Tuesday, March 31, 2026 · Here&apos;s your pharmacy network overview
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, fontWeight: 600, color: '#059669' }}>
-            <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: '50%', background: '#10B981', display: 'inline-block' }}/>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 500, color: '#059669' }}>
+            <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
             Real-time · Updated just now
           </div>
         </div>
 
         {/* ── Stat cards ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 24 }}>
           {stats.map((s, i) => (
             <StatCard
               key={s.id}
@@ -105,7 +105,7 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Row 1: charts ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
           <Card>
             <CardHeader
               title="Network Growth"
@@ -113,15 +113,15 @@ export default function DashboardPage() {
               action={<Badge variant="success" dot>Live</Badge>}
             />
             <CardBody>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 8 }}>
-                <span style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-.5px' }}>68,247</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#059669', background: '#ECFDF5', border: '1px solid #A7F3D0', padding: '2px 8px', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 3 }}>
-                  <IconTrendUp size={10} color="#059669"/> +2.2%
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 12 }}>
+                <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-.5px' }}>68,247</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: '#059669', background: '#ECFDF5', padding: '2px 8px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
+                  <IconTrendUp size={11} color="#059669"/> +2.2%
                 </span>
               </div>
               <ReAreaChart
                 data={networkTrend.map(d => ({ label: d.month, value: d.count }))}
-                color="#4F46E5"
+                color="#2968B0"
                 height={120}
                 yDomain={[65000, 69000]}
               />
@@ -134,11 +134,11 @@ export default function DashboardPage() {
               subtitle="DEA · License · Accreditation"
               action={
                 <Link href="/compliance" style={{ textDecoration: 'none' }}>
-                  <button className="btn-ghost" style={{ fontSize: 11.5 }}>Details</button>
+                  <button className="btn-ghost">Details</button>
                 </Link>
               }
             />
-            <CardBody style={{ padding: '12px 16px 16px' }}>
+            <CardBody style={{ padding: '14px 20px 20px' }}>
               <RePieChart
                 segments={credentialStatus}
                 innerRadius={52}
@@ -151,15 +151,15 @@ export default function DashboardPage() {
 
           <Card>
             <CardHeader title="Top States" subtitle="By pharmacy count"/>
-            <CardBody style={{ padding: '8px 16px 16px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <CardBody style={{ padding: '10px 20px 20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {stateBreakdown.map(s => (
                   <Progress
                     key={s.state}
                     value={s.pct}
                     label={`${s.state} · ${s.count.toLocaleString()}`}
                     color="var(--brand-600)"
-                    height={5}
+                    height={4}
                     showLabel
                   />
                 ))}
@@ -168,34 +168,31 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* ── Compliance health ribbon ── */}
-        <div style={{
+        {/* ── Compliance health — clean card ── */}
+        <div className="card" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4,1fr)',
-          gap: 12,
-          marginBottom: 20,
-          padding: '18px 22px',
-          background: 'linear-gradient(135deg, #0F1A3E 0%, #1B2B6B 100%)',
-          borderRadius: 14,
-          border: '1px solid rgba(99,102,241,.2)',
+          gap: 16,
+          marginBottom: 24,
+          padding: '20px 24px',
         }}>
           {healthMetrics.map(m => (
             <div key={m.label} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <div style={{ position: 'relative', width: 52, height: 52, flexShrink: 0 }}>
                 <svg width="52" height="52" viewBox="0 0 52 52" style={{ transform: 'rotate(-90deg)' }}>
-                  <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="5"/>
-                  <circle cx="26" cy="26" r="20" fill="none" stroke={m.color} strokeWidth="5"
+                  <circle cx="26" cy="26" r="20" fill="none" stroke="var(--border)" strokeWidth="4"/>
+                  <circle cx="26" cy="26" r="20" fill="none" stroke={m.color} strokeWidth="4"
                     strokeDasharray={`${(m.score/100)*2*Math.PI*20} ${2*Math.PI*20}`}
                     strokeLinecap="round"/>
                 </svg>
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, color: '#fff' }}>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
                   {m.score}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>{m.label}</div>
-                <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.45)', marginTop: 2 }}>{m.detail}</div>
-                <div style={{ marginTop: 5, height: 3, width: 84, background: 'rgba(255,255,255,.08)', borderRadius: 9999 }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.3 }}>{m.label}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{m.detail}</div>
+                <div style={{ marginTop: 6, height: 3, width: 84, background: 'var(--surface-3)', borderRadius: 9999 }}>
                   <div style={{ width: `${m.score}%`, height: '100%', background: m.color, borderRadius: 9999 }}/>
                 </div>
               </div>
@@ -204,7 +201,7 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Recent Network Changes ── */}
-        <Card style={{ marginBottom: 20 }}>
+        <Card style={{ marginBottom: 24 }}>
           <CardHeader
             title="Recent Network Changes"
             subtitle="Last 7 days · Tracked by AGT-05 Change Tracker"
@@ -225,11 +222,11 @@ export default function DashboardPage() {
               <tbody>
                 {recentChanges.map(r => (
                   <tr key={r.id}>
-                    <td style={{ fontWeight: 600 }}>{r.name}</td>
-                    <td style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)' }}>{r.id}</td>
-                    <td style={{ fontSize: 12 }}>{r.type}</td>
-                    <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>{r.date}</td>
-                    <td style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{r.impact}</td>
+                    <td style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{r.name}</td>
+                    <td style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)' }}>{r.id}</td>
+                    <td>{r.type}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{r.date}</td>
+                    <td>{r.impact}</td>
                     <td>
                       <Badge variant={r.badge as 'danger'|'warning'|'success'|'info'|'neutral'}>{r.label}</Badge>
                     </td>
@@ -238,18 +235,18 @@ export default function DashboardPage() {
               </tbody>
             </table>
             <div style={{
-              padding: '10px 20px',
+              padding: '12px 20px',
               borderTop: '1px solid var(--border-light)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: 11.5,
+              fontSize: 13,
               color: 'var(--text-muted)',
             }}>
               <span>Showing 5 of 47 changes · Powered by Change Tracker (AGT-05)</span>
               <Link href="/alerts" style={{ textDecoration: 'none' }}>
-                <button className="btn-ghost" style={{ fontSize: 11.5, gap: 4 }}>
-                  View All Changes <IconChevronRight size={11}/>
+                <button className="btn-ghost" style={{ gap: 4 }}>
+                  View All Changes <IconChevronRight size={12}/>
                 </button>
               </Link>
             </div>
@@ -257,7 +254,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* ── Row 2: alerts · agents · feed ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, alignItems: 'stretch' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, alignItems: 'stretch' }}>
 
           {/* Active Alerts */}
           <Card style={{ display: 'flex', flexDirection: 'column' }}>
@@ -266,27 +263,26 @@ export default function DashboardPage() {
               badge={<Badge variant="danger">47</Badge>}
               action={
                 <Link href="/alerts" style={{ textDecoration: 'none' }}>
-                  <button className="btn-ghost" style={{ fontSize: 11.5 }}>View all</button>
+                  <button className="btn-ghost">View all</button>
                 </Link>
               }
             />
-            <CardBody style={{ padding: '0 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <CardBody style={{ padding: '0 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
               <div style={{ flex: 1 }}>
                 {topAlerts.map(a => <AlertItem key={a.id} {...a}/>)}
               </div>
               <div style={{
-                marginTop: 12, marginBottom: 14, padding: '10px 14px',
-                background: 'var(--surface-2)', borderRadius: 10,
-                border: '1px solid var(--border-light)',
+                marginTop: 12, marginBottom: 16, padding: '12px 14px',
+                background: 'var(--surface-2)', borderRadius: 8,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)' }}>47 total alerts this month</div>
-                  <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 1 }}>2 critical · 3 unread · Updated now</div>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>47 total alerts this month</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 1 }}>2 critical · 3 unread · Updated now</div>
                 </div>
                 <Link href="/alerts" style={{ textDecoration: 'none' }}>
-                  <button className="btn-secondary" style={{ fontSize: 11, padding: '5px 10px', gap: 4 }}>
-                    <IconChevronRight size={11}/> Inbox
+                  <button className="btn-secondary" style={{ padding: '6px 12px', gap: 4 }}>
+                    <IconChevronRight size={12}/> Inbox
                   </button>
                 </Link>
               </div>
@@ -300,23 +296,23 @@ export default function DashboardPage() {
               subtitle="Most used this month"
               action={
                 <Link href="/agents" style={{ textDecoration: 'none' }}>
-                  <button className="btn-ghost" style={{ fontSize: 11.5 }}>All 33</button>
+                  <button className="btn-ghost">All 33</button>
                 </Link>
               }
             />
-            <CardBody style={{ padding: '8px 16px 14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <CardBody style={{ padding: '10px 20px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {topAgents.map(a => <AgentCard key={a.id} {...a} compact/>)}
               </div>
-              <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border-light)' }}>
-                <div style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6 }}>Categories</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
+              <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--border-light)' }}>
+                <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-muted)', marginBottom: 8 }}>Categories</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
                   {['Search', 'Network', 'Compliance', 'Analytics', 'Data'].map(cat => (
-                    <span key={cat} style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 9999, background: 'var(--surface-2)', color: 'var(--text-muted)', border: '1px solid var(--border-light)' }}>{cat}</span>
+                    <span key={cat} style={{ fontSize: 12, fontWeight: 500, padding: '3px 10px', borderRadius: 4, background: 'var(--surface-3)', color: 'var(--text-muted)' }}>{cat}</span>
                   ))}
                 </div>
                 <Link href="/agents" style={{ textDecoration: 'none' }}>
-                  <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center', fontSize: 12 }}>
+                  <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
                     Browse Agent Library →
                   </button>
                 </Link>
@@ -331,29 +327,29 @@ export default function DashboardPage() {
               subtitle="Platform activity stream"
               action={<Badge variant="info" dot>Streaming</Badge>}
             />
-            <CardBody style={{ padding: '10px 16px 0', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <CardBody style={{ padding: '12px 20px 0', flex: 1, display: 'flex', flexDirection: 'column' }}>
               <div style={{ flex: 1 }}>
                 <ActivityFeed/>
               </div>
               <div style={{
-                marginTop: 10, marginBottom: 14, padding: '9px 12px',
-                background: 'linear-gradient(135deg, rgba(79,70,229,.05), rgba(139,92,246,.05))',
-                borderRadius: 10, border: '1px solid rgba(79,70,229,.12)',
+                marginTop: 12, marginBottom: 16, padding: '10px 14px',
+                background: 'var(--surface-2)',
+                borderRadius: 8,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981', display: 'inline-block' }}/>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: '#4F46E5' }}>Live · 24 events today</span>
+                  <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
+                  <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>Live · 24 events today</span>
                 </div>
-                <span style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>Auto-refresh 30s</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Auto-refresh 30s</span>
               </div>
             </CardBody>
           </Card>
         </div>
 
         {/* ── Quick actions ── */}
-        <div className="card" style={{ marginTop: 14, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', marginRight: 4 }}>Quick Actions</span>
+        <div className="card" style={{ marginTop: 16, padding: '14px 24px', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-muted)', marginRight: 4 }}>Quick Actions</span>
           {[
             { label: 'Search Pharmacies', href: '/search'     },
             { label: 'Analytics',         href: '/analytics'  },
@@ -363,7 +359,7 @@ export default function DashboardPage() {
             { label: 'FWA Attestation',   href: '/fwa'        },
           ].map(({ label, href }) => (
             <Link key={href} href={href} style={{ textDecoration: 'none' }}>
-              <button className="btn-secondary" style={{ fontSize: 12 }}>{label}</button>
+              <button className="btn-secondary">{label}</button>
             </Link>
           ))}
         </div>

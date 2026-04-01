@@ -6,7 +6,10 @@
       "Bash(mkdir -p src/app/v2 src/app/v2/\\\\\\(workspace\\\\\\)/search src/app/v2/\\\\\\(workspace\\\\\\)/reports src/app/v2/\\\\\\(workspace\\\\\\)/compliance src/app/v2/\\\\\\(workspace\\\\\\)/admin src/app/v2/\\\\\\(workspace\\\\\\)/agents/run src/components/v2)",
       "Bash(ls -la src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx)",
       "Read(//c/projects/ncpdp/**)",
-      "Bash(wc -l src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx src/app/v2/page.tsx)"
+      "Bash(wc -l src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx src/app/v2/page.tsx)",
+      "Bash(find src/app/\\\\\\(dashboard\\\\\\) -name \"*.tsx\" -exec sed -i 's/#0D9488/#2968B0/g; s/#14B8A6/#3A7EC8/g; s/#2DD4BF/#5B9BD5/g; s/#99F6E4/#B8D5F5/g; s/#CCFBF1/#DFEEFF/g; s/#F0FDFA/#F0F7FF/g; s/#0F766E/#1E5690/g; s/#134E4A/#0F2E4E/g; s/#115E59/#1E5690/g' {} +)",
+      "Bash(find src/app/\\\\\\(dashboard\\\\\\) -name \"*.tsx\" -exec sed -i 's/rgba\\(13,148,136/rgba\\(41,104,176/g' {} +)",
+      "Bash(npx next:*)"
     ]
   }
 }

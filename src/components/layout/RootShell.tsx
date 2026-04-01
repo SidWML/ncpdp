@@ -25,7 +25,7 @@ export function RootShell({ children }: { children: React.ReactNode }) {
             maxWidth: 'calc(100vw - var(--sidebar-w))',
             overflowX: 'hidden',
             minWidth: 0,
-            paddingTop: 84,
+            paddingTop: 56,
             transition: 'margin-left .2s ease, width .2s ease, max-width .2s ease',
           }}
         >

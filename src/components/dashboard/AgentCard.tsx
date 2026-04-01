@@ -8,7 +8,7 @@ interface AgentCardProps {
   category: string;
   phase: string;
   priority: string;
-  icon: string; // kept for data shape but we render SVG
+  icon: string;
   desc: string;
   uses: number;
   compact?: boolean;
@@ -22,19 +22,18 @@ const priorityColor: Record<string, 'danger' | 'warning' | 'neutral'> = {
   P0: 'danger', P1: 'warning', P2: 'neutral',
 };
 const categoryColors: Record<string, { bg: string; text: string; icon: string }> = {
-  'Search & Discovery':      { bg: '#EEF2FF', text: '#4F46E5', icon: '#4F46E5' },
-  'Network Management':      { bg: '#ECFEFF', text: '#0891B2', icon: '#06B6D4' },
-  'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', icon: '#EF4444' },
-  'Data Delivery':           { bg: '#FFFBEB', text: '#B45309', icon: '#F59E0B' },
-  'Credentialing (resQ)':    { bg: '#ECFDF5', text: '#059669', icon: '#10B981' },
-  'Analytics & Prediction':  { bg: '#F5F3FF', text: '#6D28D9', icon: '#8B5CF6' },
-  'Claims & Routing':        { bg: '#EFF6FF', text: '#2563EB', icon: '#3B82F6' },
-  'NCPDP Internal':          { bg: '#FDF4FF', text: '#9333EA', icon: '#A855F7' },
+  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', icon: '#2968B0' },
+  'Network Management':      { bg: '#ECFEFF', text: '#0891B2', icon: '#0891B2' },
+  'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', icon: '#DC2626' },
+  'Data Delivery':           { bg: '#FFFBEB', text: '#B45309', icon: '#D97706' },
+  'Credentialing (resQ)':    { bg: '#ECFDF5', text: '#059669', icon: '#059669' },
+  'Analytics & Prediction':  { bg: '#EFF6FF', text: '#2563EB', icon: '#2563EB' },
+  'Claims & Routing':        { bg: '#F0F7FF', text: '#1E5690', icon: '#1E5690' },
+  'NCPDP Internal':          { bg: '#F5F3FF', text: '#6D28D9', icon: '#6D28D9' },
 };
 
-// Map each category to a small SVG icon
 function CategoryIcon({ category }: { category: string }) {
-  const color = categoryColors[category]?.icon || '#4F46E5';
+  const color = categoryColors[category]?.icon || '#2968B0';
   const icons: Record<string, React.ReactNode> = {
     'Search & Discovery':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>,
     'Network Management':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M12 11l-6.5 6M12 11l6.5 6"/></svg>,
@@ -59,16 +58,16 @@ export function AgentCard({ name, category, phase, priority, desc, uses, compact
         style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}
       >
         <div style={{
-          width: 32, height: 32, borderRadius: 8,
+          width: 32, height: 32, borderRadius: 6,
           background: catStyle.bg,
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
           <CategoryIcon category={category}/>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
-          <div style={{ fontSize: 11, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 1 }}>
-            <IconBarChart size={9} color="var(--text-muted)"/>
+          <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 1 }}>
+            <IconBarChart size={10} color="var(--text-muted)"/>
             {uses.toLocaleString()} uses
           </div>
         </div>
@@ -81,13 +80,12 @@ export function AgentCard({ name, category, phase, priority, desc, uses, compact
     <div
       className="card card-hover"
       onClick={onClick}
-      style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 12 }}
+      style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: 14 }}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
         <div style={{
-          width: 40, height: 40, borderRadius: 10,
+          width: 40, height: 40, borderRadius: 8,
           background: catStyle.bg,
-          border: `1px solid ${catStyle.text}20`,
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
           <CategoryIcon category={category}/>
@@ -99,26 +97,26 @@ export function AgentCard({ name, category, phase, priority, desc, uses, compact
       </div>
 
       <div>
-        <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{name}</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{name}</div>
         <span style={{
-          fontSize: 10,
-          fontWeight: 600,
+          fontSize: 12,
+          fontWeight: 500,
           color: catStyle.text,
           background: catStyle.bg,
-          padding: '2px 7px',
-          borderRadius: 9999,
+          padding: '2px 8px',
+          borderRadius: 4,
           display: 'inline-block',
-          marginBottom: 6,
+          marginBottom: 8,
         }}>{category}</span>
-        <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>{desc}</p>
+        <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>{desc}</p>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 4 }}>
-        <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
-          <IconBarChart size={10} color="var(--text-muted)"/>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
+          <IconBarChart size={11} color="var(--text-muted)"/>
           {uses.toLocaleString()} uses/mo
         </span>
-        <button className="btn-primary" style={{ fontSize: 12, padding: '5px 12px', borderRadius: 7, gap: 5 }}>
+        <button className="btn-primary" style={{ padding: '6px 14px', borderRadius: 6, gap: 5 }}>
           <IconPlay size={11} color="#fff"/>
           Launch
         </button>

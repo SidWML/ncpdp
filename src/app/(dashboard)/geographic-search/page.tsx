@@ -50,14 +50,14 @@ export default function GeographicSearchPage() {
           <Card style={{ marginBottom: 16 }}>
             <div style={{ padding: '14px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#1B2B6B' }}>Geographic Filter</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Geographic Filter</div>
                 <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 1 }}>Filter pharmacies by location and classification to analyze coverage</div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn-primary" onClick={() => setSearched(true)} style={{ gap: 6, fontSize: 12.5, padding: '7px 22px' }}>
+                <button className="btn-primary" onClick={() => setSearched(true)} style={{ gap: 6, fontSize: 12, padding: '8px 24px' }}>
                   <IconSearch size={13} color="#fff"/> Search
                 </button>
-                <button className="btn-secondary" style={{ gap: 6, fontSize: 12.5, padding: '7px 18px' }}>
+                <button className="btn-secondary" style={{ gap: 6, fontSize: 12, padding: '8px 20px' }}>
                   <IconRefresh size={13}/> Reset
                 </button>
               </div>
@@ -92,13 +92,13 @@ export default function GeographicSearchPage() {
               { label: 'States Meeting Adequacy', value: '3',   color: '#10B981', sub: 'coverage >= 100%' },
               { label: 'States Needing Review',   value: '5',   color: '#F59E0B', sub: 'coverage 90-99%'  },
               { label: 'Below Threshold',         value: '4',   color: '#EF4444', sub: 'coverage < 90%'   },
-              { label: 'Total Network Gap',       value: '466', color: '#4F46E5', sub: 'pharmacies needed' },
+              { label: 'Total Network Gap',       value: '466', color: '#2968B0', sub: 'pharmacies needed' },
             ].map(s => (
               <Card key={s.label}>
                 <CardBody style={{ padding: '14px 18px' }}>
-                  <div style={{ fontSize: 11, fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 4 }}>{s.label}</div>
-                  <div style={{ fontSize: 26, fontWeight: 800, color: s.color }}>{s.value}</div>
-                  <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>{s.sub}</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: 28, fontWeight: 700, color: s.color }}>{s.value}</div>
+                  <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>{s.sub}</div>
                 </CardBody>
               </Card>
             ))}
@@ -107,7 +107,7 @@ export default function GeographicSearchPage() {
           {/* Results table */}
           <Card>
             <div style={{ padding: '12px 18px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>Network Adequacy by State</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>Network Adequacy by State</div>
               <div style={{ display: 'flex', gap: 8 }}>
                 <Select style={{ width: 'auto', fontSize: 12, padding: '4px 8px' }}>
                   <option>All Relationships</option><option>CVS CAREMARK</option><option>EXPRESS SCRIPTS</option><option>OPTUMRX</option>
@@ -128,7 +128,7 @@ export default function GeographicSearchPage() {
                   {GEO_DATA.map(r => (
                     <tr key={r.code}>
                       <td style={{ fontWeight: 500 }}>{r.state}</td>
-                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#4F46E5', fontSize: 12.5 }}>{r.code}</td>
+                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 12 }}>{r.code}</td>
                       <td>{r.total.toLocaleString()}</td>
                       <td>{r.required.toLocaleString()}</td>
                       <td style={{ fontWeight: 600, color: r.coverage >= 100 ? '#10B981' : r.coverage >= 90 ? '#D97706' : '#DC2626' }}>

@@ -88,11 +88,11 @@ export default function APIPage() {
         title="API Access"
         subtitle="REST · GraphQL · Webhooks — programmatic pharmacy data access"
         actions={
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button className="btn-secondary" style={{ fontSize: 12, gap: 5 }}>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button className="btn-secondary" style={{ fontSize: 12, gap: 4 }}>
               <IconExternalLink size={13}/> API Docs
             </button>
-            <button className="btn-primary" style={{ fontSize: 12, gap: 5 }}>
+            <button className="btn-primary" style={{ fontSize: 12, gap: 4 }}>
               <IconPlus size={13} color="#fff"/> New API Key
             </button>
           </div>
@@ -101,16 +101,16 @@ export default function APIPage() {
       <main style={{ padding: '16px 20px 40px' }}>
 
         {/* Usage stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
           {[
-            { label: 'Calls Today',    value: '1.24M',   pct: 67,  color: '#4F46E5' },
+            { label: 'Calls Today',    value: '1.24M',   pct: 67,  color: '#2968B0' },
             { label: 'Avg Latency',    value: '182ms',   pct: 36,  color: '#10B981' },
             { label: 'Success Rate',   value: '99.94%',  pct: 100, color: '#10B981' },
             { label: 'Monthly Quota',  value: '67% used',pct: 67,  color: '#D97706' },
           ].map(s => (
-            <div key={s.label} className="card" style={{ padding: '14px 16px' }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 4 }}>{s.label}</div>
-              <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 6 }}>{s.value}</div>
+            <div key={s.label} className="card" style={{ padding: '16px 16px' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 4 }}>{s.label}</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>{s.value}</div>
               <Progress value={s.pct} color={s.color} height={4}/>
             </div>
           ))}
@@ -123,24 +123,24 @@ export default function APIPage() {
             <CardHeader
               title="API Keys"
               subtitle="Manage your authentication credentials"
-              action={<button className="btn-ghost" style={{ fontSize: 11.5, gap: 4 }}><IconPlus size={11}/> New Key</button>}
+              action={<button className="btn-ghost" style={{ fontSize: 12, gap: 4 }}><IconPlus size={12}/> New Key</button>}
             />
             <CardBody style={{ padding: '8px 16px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {apiKeys.map(k => (
-                <div key={k.name} style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid var(--border-light)', background: 'var(--surface-2)' }}>
+                <div key={k.name} style={{ padding: '12px 16px', borderRadius: 12, border: '1px solid var(--border-light)', background: 'var(--surface-2)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <div style={{ width: 28, height: 28, borderRadius: 8, background: k.status === 'active' ? '#D1FAE5' : 'var(--surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <IconKey size={13} color={k.status === 'active' ? '#10B981' : 'var(--text-muted)'}/>
                       </div>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{k.name}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{k.name}</span>
                     </div>
                     <Badge variant={k.status === 'active' ? 'success' : 'neutral'} dot={k.status === 'active'}>
                       {k.status === 'active' ? 'Active' : 'Inactive'}
                     </Badge>
                   </div>
                   <div
-                    style={{ fontFamily: 'monospace', fontSize: 11, color: 'var(--text-muted)', background: 'var(--surface-3)', padding: '6px 10px', borderRadius: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, cursor: 'pointer' }}
+                    style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--text-muted)', background: 'var(--surface-3)', padding: '8px 12px', borderRadius: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, cursor: 'pointer' }}
                     onClick={() => setShowKey(showKey === k.name ? null : k.name)}
                   >
                     <span>{showKey === k.name ? k.key.replace(/•+/, 'sk_real_key_hidden_for_display') : k.key}</span>
@@ -151,7 +151,7 @@ export default function APIPage() {
                       {copied === k.name ? <IconCheck size={12} color="#10B981"/> : <IconCopy size={12}/>}
                     </button>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-muted)' }}>
                     <span>Created {k.created}</span>
                     <span>Last used {k.lastUsed} · {k.calls} calls</span>
                   </div>
@@ -174,13 +174,13 @@ export default function APIPage() {
                     <div
                       style={{
                         width: '100%', borderRadius: '4px 4px 0 0',
-                        background: d.label === 'Fri' ? '#4F46E5' : '#C7D2FE',
+                        background: d.label === 'Fri' ? '#2968B0' : '#B8D5F5',
                         height: `${(d.value / maxCalls) * 100}%`,
                         minHeight: 4,
                         transition: 'height .3s',
                       }}
                     />
-                    <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{d.label}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{d.label}</div>
                   </div>
                 ))}
               </div>
@@ -191,9 +191,9 @@ export default function APIPage() {
                   { label: 'Peak Day',        value: 'Friday' },
                   { label: 'Peak Hour',       value: '10–11 AM ET' },
                 ].map(m => (
-                  <div key={m.label} style={{ padding: '8px 10px', borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border-light)' }}>
-                    <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{m.label}</div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{m.value}</div>
+                  <div key={m.label} style={{ padding: '8px 12px', borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border-light)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{m.label}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{m.value}</div>
                   </div>
                 ))}
               </div>
@@ -223,12 +223,12 @@ export default function APIPage() {
                     return (
                       <tr key={ep.path}>
                         <td>
-                          <span style={{ fontSize: 10, fontWeight: 800, color: mc.color, background: mc.bg, padding: '2px 6px', borderRadius: 4, letterSpacing: '.04em' }}>
+                          <span style={{ fontSize: 11, fontWeight: 700, color: mc.color, background: mc.bg, padding: '2px 8px', borderRadius: 4, letterSpacing: '.04em' }}>
                             {ep.method}
                           </span>
                         </td>
-                        <td style={{ fontFamily: 'monospace', fontSize: 11.5, color: '#4F46E5' }}>{ep.path}</td>
-                        <td style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{ep.desc}</td>
+                        <td style={{ fontFamily: 'monospace', fontSize: 12, color: '#2968B0' }}>{ep.path}</td>
+                        <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>{ep.desc}</td>
                         <td style={{ fontSize: 12, fontWeight: 600 }}>{ep.calls}</td>
                       </tr>
                     );
@@ -253,10 +253,10 @@ export default function APIPage() {
                     key={lang}
                     onClick={() => setCodeLang(lang)}
                     style={{
-                      fontSize: 11, fontWeight: 600, padding: '4px 12px', borderRadius: 8, cursor: 'pointer',
-                      background: codeLang === lang ? '#0F1A3E' : 'var(--surface-2)',
-                      color: codeLang === lang ? '#818CF8' : 'var(--text-muted)',
-                      border: `1px solid ${codeLang === lang ? 'rgba(99,102,241,.3)' : 'var(--border)'}`,
+                      fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 8, cursor: 'pointer',
+                      background: codeLang === lang ? '#F0F7FF' : 'var(--surface-2)',
+                      color: codeLang === lang ? '#2968B0' : 'var(--text-muted)',
+                      border: `1px solid ${codeLang === lang ? 'rgba(41,104,176,.3)' : 'var(--border)'}`,
                       transition: 'all .15s',
                       textTransform: 'capitalize',
                     }}
@@ -264,32 +264,32 @@ export default function APIPage() {
                 ))}
                 <button
                   onClick={() => copyToClipboard(codeExamples[codeLang], 'code')}
-                  style={{ marginLeft: 'auto', background: 'none', border: '1px solid var(--border)', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11 }}
+                  style={{ marginLeft: 'auto', background: 'none', border: '1px solid var(--border)', borderRadius: 8, padding: '4px 12px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}
                 >
                   {copied === 'code' ? <><IconCheck size={11} color="#10B981"/> Copied</> : <><IconCopy size={11}/> Copy</>}
                 </button>
               </div>
 
               <pre style={{
-                background: '#0F1A3E', color: '#A5B4FC', fontSize: 11.5,
-                lineHeight: 1.7, padding: '14px 16px', borderRadius: 12,
+                background: 'var(--surface-2)', color: 'var(--text-primary)', fontSize: 12,
+                lineHeight: 1.7, padding: '16px 16px', borderRadius: 12,
                 overflow: 'auto', fontFamily: 'monospace', margin: 0,
-                border: '1px solid rgba(99,102,241,.2)',
+                border: '1px solid var(--border)',
                 maxHeight: 200,
               }}>
                 {codeExamples[codeLang]}
               </pre>
 
-              <div style={{ marginTop: 12, padding: '10px 12px', borderRadius: 10, background: 'var(--surface-2)', border: '1px solid var(--border-light)' }}>
-                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 4 }}>Rate Limits</div>
-                <div style={{ display: 'flex', gap: 16, fontSize: 11, color: 'var(--text-secondary)' }}>
+              <div style={{ marginTop: 12, padding: '12px 12px', borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border-light)' }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 4 }}>Rate Limits</div>
+                <div style={{ display: 'flex', gap: 16, fontSize: 12, color: 'var(--text-secondary)' }}>
                   <span>Essential: <strong>1,000/hr</strong></span>
                   <span>Professional: <strong>10,000/hr</strong></span>
                   <span>Enterprise: <strong>Unlimited</strong></span>
                 </div>
               </div>
 
-              <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center', fontSize: 12, marginTop: 10, gap: 5 }}>
+              <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center', fontSize: 12, marginTop: 12, gap: 4 }}>
                 <IconExternalLink size={12}/> Full API Documentation
               </button>
             </CardBody>

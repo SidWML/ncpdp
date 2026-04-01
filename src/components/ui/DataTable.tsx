@@ -67,8 +67,8 @@ export function DataTable<T>({ columns, data, pageSize = 20 }: DataTableProps<T>
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.getCanSort() && (
                         <svg width="7" height="10" viewBox="0 0 7 10" style={{ flexShrink: 0, opacity: header.column.getIsSorted() ? 1 : 0.3 }}>
-                          <path d="M3.5 0L6.5 3.5H0.5L3.5 0Z" fill={header.column.getIsSorted() === 'asc' ? '#4F46E5' : '#9CA3AF'}/>
-                          <path d="M3.5 10L0.5 6.5H6.5L3.5 10Z" fill={header.column.getIsSorted() === 'desc' ? '#4F46E5' : '#9CA3AF'}/>
+                          <path d="M3.5 0L6.5 3.5H0.5L3.5 0Z" fill={header.column.getIsSorted() === 'asc' ? '#2968B0' : '#9CA3AF'}/>
+                          <path d="M3.5 10L0.5 6.5H6.5L3.5 10Z" fill={header.column.getIsSorted() === 'desc' ? '#2968B0' : '#9CA3AF'}/>
                         </svg>
                       )}
                     </span>
@@ -93,7 +93,7 @@ export function DataTable<T>({ columns, data, pageSize = 20 }: DataTableProps<T>
                     borderBottom: '1px solid #F3F4F6',
                     transition: 'background .08s',
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#F3F4FF')}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#F0F7FF')}
                   onMouseLeave={e => (e.currentTarget.style.background = ri % 2 === 1 ? '#FAFAFA' : '#fff')}
                 >
                   {row.getVisibleCells().map((cell, ci) => (
@@ -126,7 +126,7 @@ export function DataTable<T>({ columns, data, pageSize = 20 }: DataTableProps<T>
           {Array.from({ length: Math.min(pageCount, 5) }, (_, i) => (
             <button key={i} onClick={() => table.setPageIndex(i)} style={{
               width: 28, height: 28, borderRadius: 6, border: 'none', fontSize: 12, fontWeight: 600,
-              background: i === pageIndex ? '#4F46E5' : 'transparent',
+              background: i === pageIndex ? '#2968B0' : 'transparent',
               color: i === pageIndex ? '#fff' : '#6B7280',
               cursor: 'pointer',
             }}>{i + 1}</button>
@@ -135,7 +135,7 @@ export function DataTable<T>({ columns, data, pageSize = 20 }: DataTableProps<T>
           {pageCount > 5 && (
             <button onClick={() => table.setPageIndex(pageCount - 1)} style={{
               width: 28, height: 28, borderRadius: 6, border: 'none', fontSize: 12, fontWeight: 600,
-              background: pageIndex === pageCount - 1 ? '#4F46E5' : 'transparent',
+              background: pageIndex === pageCount - 1 ? '#2968B0' : 'transparent',
               color: pageIndex === pageCount - 1 ? '#fff' : '#6B7280',
               cursor: 'pointer',
             }}>{pageCount}</button>
@@ -175,7 +175,7 @@ export function EmptyState({ icon, title, subtitle }: EmptyStateProps) {
     }}>
       <div style={{
         width: 48, height: 48, borderRadius: 12,
-        background: '#EEF2FF', border: '1px solid #E0E7FF',
+        background: '#F0F7FF', border: '1px solid #DFEEFF',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         margin: '0 auto 12px',
       }}>
@@ -192,7 +192,7 @@ export const CellText = ({ children, bold }: { children: React.ReactNode; bold?:
   <span style={{ fontWeight: bold ? 500 : 400, color: '#111827' }}>{children}</span>
 );
 export const CellMono = ({ children }: { children: React.ReactNode }) => (
-  <span style={{ fontFamily: 'ui-monospace, monospace', color: '#4F46E5', fontWeight: 500, fontSize: 12.5 }}>{children}</span>
+  <span style={{ fontFamily: 'ui-monospace, monospace', color: '#2968B0', fontWeight: 500, fontSize: 13 }}>{children}</span>
 );
 export const CellMuted = ({ children }: { children: React.ReactNode }) => (
   <span style={{ color: '#6B7280' }}>{children}</span>
@@ -205,8 +205,8 @@ export const CellStatus = ({ active }: { active: boolean }) => (
 );
 export const CellViewBtn = ({ onClick }: { onClick?: () => void }) => (
   <button onClick={onClick} style={{
-    padding: '2px 8px', borderRadius: 5, border: '1px solid #E5E7EB',
-    background: '#fff', color: '#4F46E5', fontSize: 11, fontWeight: 500,
+    padding: '2px 8px', borderRadius: 6, border: '1px solid #E5E7EB',
+    background: '#fff', color: '#2968B0', fontSize: 12, fontWeight: 500,
     cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 3,
   }}>
     View <IconExternalLink size={9}/>

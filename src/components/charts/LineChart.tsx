@@ -18,7 +18,7 @@ interface LineChartProps {
 export function LineChart({
   data,
   height = 100,
-  color = '#4F46E5',
+  color = '#2968B0',
   fillOpacity = 0.12,
   showDots = true,
   showLabels = true,

@@ -19,7 +19,8 @@
       "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\" -H \"Content-Type: application/json\" -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Reply with just: hello\"}]}]}')",
       "Bash(curl -s 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI' -H 'Content-Type: application/json' -d '{:*)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['candidates'][0]['content']['parts'][0]['text'][:500]\\)\")",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(node -e:*)"
     ]
   }
 }

@@ -1,7 +1,7 @@
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-const SYSTEM_PROMPT = `You are the AI engine powering dataQ.ai — NCPDP's pharmacy network intelligence platform.
+const SYSTEM_PROMPT = `You are the AI engine powering DataSolutions.ai — NCPDP's pharmacy network intelligence platform.
 
 ## Facts you MUST use (never invent different numbers):
 - Total pharmacies in database: 81,500
@@ -10,11 +10,29 @@ const SYSTEM_PROMPT = `You are the AI engine powering dataQ.ai — NCPDP's pharm
 - State license compliance: 99%
 - Overall compliance score: 94/100
 - Network adequacy: 94.2% across 50 states
-- API calls: 200K/day
+- API calls: 200K/day (total historical: 5,891,662)
 - Compounding pharmacies: 2,840 total (CA: 512, TX: 347, FL: 296, NY: 231)
 - Specialty pharmacies in CA: 512
 - Active alerts: 2 subscriptions nearing expiration
 - Recent ownership changes: 18 this month
+
+## Real production metrics (2022-2023 Power BI data):
+- Total API calls: 5,891,662
+- Total documents processed: 519,867
+- Number of closed pharmacies: 3,022
+- Number of new pharmacies: 4,612
+- Total Change of Ownerships processed: 1,128
+- Pharmacies credentialed in resQ: 14,121
+- Total Relationship changes: 14,598
+- Pharmacies updated: 139,328
+- Total logins: 926,280
+Use these real numbers when queries relate to historical data, API usage, CHOW, credentialing, or platform activity.
+
+## NCPDP ID lookup rules:
+- When a user looks up a SPECIFIC NCPDP ID, return ONLY 1 row — the single matching pharmacy
+- Show a detailed profile with all fields filled in (phone, type, DEA, status)
+- The stats should reflect single-pharmacy metrics (Profile Score, Credential Count, Network Count, etc.)
+- Charts should show that pharmacy's credential timeline, not aggregate data
 
 ## State pharmacy counts (top 8):
 CA: 10,120 | TX: 8,640 | FL: 7,620 | NY: 7,080 | OH: 5,060 | PA: 4,780 | IL: 4,510 | GA: 3,530
@@ -156,6 +174,62 @@ export async function queryGemini(userMessage: string): Promise<GeminiResponse |
     return parsed;
   } catch (err) {
     console.error('Gemini query failed:', err);
+    return null;
+  }
+}
+
+/* ── Report Builder — separate schema for report generation ──────── */
+const REPORT_PROMPT = `You are the AI Report Builder for DataSolutions.ai — NCPDP's pharmacy data platform with 81,500 pharmacy records.
+
+Generate a pharmacy report based on the user's description. Use these real numbers:
+- Total pharmacies: 81,500. FWA: 90% attested (73,350). DEA: 98% (76,425 active). State license: 99%.
+- State counts: CA: 10,120 | TX: 8,640 | FL: 7,620 | NY: 7,080 | OH: 5,060 | PA: 4,780
+- Historical: 5.89M API calls, 519,867 docs processed, 3,022 closed, 4,612 new, 1,128 CHOW, 14,121 credentialed in resQ, 139,328 updated, 926,280 logins
+- This is a DEMO — ALWAYS generate a complete report, never say "cannot" or "no data"
+- NEVER use **bold** markdown — only plain text in all fields
+- Colors MUST have # prefix (e.g. "#DC2626")
+
+Respond with ONLY valid JSON:
+{"replyText":"2-3 sentences with **bold** key numbers about the generated report","title":"Report Title","date":"Apr 7, 2026","records":"81,500","states":"50","stats":[{"label":"str","value":"str","color":"#hex"}],"sections":[{"title":"Section Name","rows":[{"label":"str","value":"str","color":"#hex"}]}]}
+
+Provide 3-4 stats, 2-3 sections with 3-5 rows each.`;
+
+export interface GeminiReportResponse {
+  replyText: string;
+  title: string;
+  date: string;
+  records: string;
+  states: string;
+  stats: { label: string; value: string; color: string }[];
+  sections: { title: string; rows: { label: string; value: string; color: string }[] }[];
+}
+
+export async function queryGeminiReport(userMessage: string): Promise<GeminiReportResponse | null> {
+  if (!GEMINI_API_KEY) return null;
+  try {
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: REPORT_PROMPT + '\n\nUser query: ' + userMessage }] }],
+        generationConfig: { temperature: 0.4, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } },
+      }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const candidate = data?.candidates?.[0];
+    if (candidate?.finishReason === 'MAX_TOKENS') return null;
+    const text = candidate?.content?.parts?.[0]?.text;
+    if (!text) return null;
+    const parsed = JSON.parse(text) as GeminiReportResponse;
+    if (!parsed.title || !parsed.stats) return null;
+    // Fix colors
+    const fixHex = (c: string) => c && !c.startsWith('#') ? '#' + c : c;
+    parsed.stats = parsed.stats.map(s => ({ ...s, color: fixHex(s.color) }));
+    parsed.sections = (parsed.sections || []).map(sec => ({ ...sec, rows: sec.rows.map(r => ({ ...r, color: fixHex(r.color) })) }));
+    return parsed;
+  } catch (err) {
+    console.error('Gemini report query failed:', err);
     return null;
   }
 }

@@ -6,6 +6,8 @@ import {
   IconSparkles, IconSend, IconDownload, IconCheck, IconReport,
   IconUser, IconRefresh, IconDatabase, IconShield, IconBarChart,
 } from '@/components/ui/Icons';
+import { queryGeminiReport } from '@/lib/gemini';
+import type { GeminiReportResponse } from '@/lib/gemini';
 
 /* ── Types ─────────────────────────────────────────────────────────── */
 interface Msg { id: number; role: 'user' | 'bot'; text: string }
@@ -145,19 +147,27 @@ export default function AIReportsPage() {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs, typing]);
 
-  function send(text?: string) {
+  async function send(text?: string) {
     const t = (text || input).trim();
     if (!t || typing) return;
     setInput('');
     setMsgs(m => [...m, { id: Date.now(), role: 'user', text: t }]);
     setTyping(true);
 
-    setTimeout(() => {
-      const { key, reply } = detectReport(t);
-      setReport(REPORT_MAP[key] || DEFAULT_REPORT);
+    // Try Gemini first
+    const gemini = await queryGeminiReport(t);
+    if (gemini) {
+      setReport({ title: gemini.title, date: gemini.date, records: gemini.records, states: gemini.states, stats: gemini.stats, sections: gemini.sections });
       setTyping(false);
-      setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: reply }]);
-    }, 1200 + Math.random() * 500);
+      setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: gemini.replyText }]);
+      return;
+    }
+
+    // Fallback to static
+    const { key, reply } = detectReport(t);
+    setReport(REPORT_MAP[key] || DEFAULT_REPORT);
+    setTyping(false);
+    setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: reply }]);
   }
 
   function renderBold(text: string) {
@@ -168,7 +178,7 @@ export default function AIReportsPage() {
 
   return (
     <>
-      <Topbar title="AI Report Builder" subtitle="Describe what you need — generate instant reports from all dataQ.ai data" />
+      <Topbar title="AI Report Builder" subtitle="Describe what you need — generate instant reports from all DataSolutions.ai data" />
       <main style={{ display: 'flex', height: 'calc(100vh - 84px)', background: '#FAFBFF' }}>
 
         {/* ── LEFT: Chat panel ──────────────────────────────── */}

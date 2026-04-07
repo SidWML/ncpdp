@@ -1,4 +1,4 @@
-// dataQ.ai Design Tokens — NCPDP Corporate Blue palette
+// DataSolutions.ai Design Tokens — NCPDP Corporate Blue palette
 export const colors = {
   brand: {
     50:  '#F0F7FF',

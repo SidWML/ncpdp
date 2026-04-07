@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'dataQ.ai — Pharmacy Data Intelligence Platform',
+  title: 'DataSolutions.ai — Pharmacy Data Intelligence Platform',
   description: 'AI-powered pharmacy network management, credentialing, and compliance monitoring by NCPDP.',
 };
 

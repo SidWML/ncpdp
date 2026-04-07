@@ -32,7 +32,7 @@ export function SidebarV3() {
           <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 12h12M3 19h8" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/></svg>
           </div>
-          {!col && <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-.3px' }}>dataQ<span style={{ color: '#A5B4FC' }}>.ai</span></span>}
+          {!col && <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-.3px' }}>DataSolutions<span style={{ color: '#A5B4FC' }}>.ai</span></span>}
         </Link>
         {!col && (
           <button onClick={() => setCol(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', borderRadius: 6 }}>

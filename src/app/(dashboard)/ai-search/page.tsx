@@ -14,6 +14,7 @@ import { OutputPanel } from '@/components/ui/OutputPanel';
 import type { QueryContext } from '@/components/ui/OutputPanel';
 import { queryGemini } from '@/lib/gemini';
 import type { GeminiResponse } from '@/lib/gemini';
+import { SUGGESTION_REPLIES as EXACT_REPLIES, SUGGESTION_CONTEXTS as EXACT_CONTEXTS } from '@/lib/search-contexts';
 
 /* ── Types ─────────────────────────────────────────────────────────── */
 interface Message {
@@ -530,7 +531,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
   }
 
   return {
-    text: `I have real-time access to **81,500 pharmacy records** across all 50 states, connected to all dataQ.ai tools and 33 specialized agents.\n\nI can help you with:\n\n• **WebConnect** — pharmacy search, profiles, credential verification\n• **Compliance** — DEA, license, FWA attestation auditing\n• **Network Analysis** — adequacy scoring, coverage gaps, state breakdown\n• **Alerts** — real-time credential and compliance monitoring\n• **Reports** — on-demand custom report generation\n• **Agent Library** — run any of our 33 AI agents from here\n• **CHOW Tracker** — ownership change monitoring\n• **Batch Downloads** — bulk data export\n\nTry asking: *"Show pharmacies with DEA expiring"* or *"What's our compliance score?"*`,
+    text: `I have real-time access to **81,500 pharmacy records** across all 50 states, connected to all DataSolutions.ai tools and 33 specialized agents.\n\nI can help you with:\n\n• **WebConnect** — pharmacy search, profiles, credential verification\n• **Compliance** — DEA, license, FWA attestation auditing\n• **Network Analysis** — adequacy scoring, coverage gaps, state breakdown\n• **Alerts** — real-time credential and compliance monitoring\n• **Reports** — on-demand custom report generation\n• **Agent Library** — run any of our 33 AI agents from here\n• **CHOW Tracker** — ownership change monitoring\n• **Batch Downloads** — bulk data export\n\nTry asking: *"Show pharmacies with DEA expiring"* or *"What's our compliance score?"*`,
   };
 }
 
@@ -637,8 +638,11 @@ const CATEGORIES: Category[] = [
   },
 ];
 
+
 /* ── Build reply text for AgentChat ───────────────────────────────── */
 function buildBotReply(msg: string): string {
+  const exactReply = EXACT_REPLIES[msg];
+  if (exactReply) return exactReply;
   const l = msg.toLowerCase();
   if (l.includes('dea') || l.includes('expir') || l.includes('creden'))
     return `Found **247 pharmacies** with DEA credential issues across your network.\n\nTX leads with 89 affected, followed by CA (72) and FL (41). 2 have expired DEA requiring immediate action.\n\nDetailed results with risk scoring are in the output panel →`;
@@ -664,16 +668,104 @@ function buildBotReply(msg: string): string {
     return `There are **2 active subscriptions nearing expiration**. No critical compliance violations detected.\n\nBoth flagged for renewal review. Overall alert volume down from last month.\n\nAlert details in the output panel →`;
   if (l.includes('api') || l.includes('usage'))
     return `API usage is **up 12% month-over-month** with 200K calls today.\n\nREST endpoints drive 67% of traffic. Peak hour: 10-11 AM ET. Top endpoint: /pharmacy/search.\n\nUsage charts in the output panel →`;
-  if (l.includes('ncpdp id') || l.includes('look up'))
-    return `Found pharmacy record for the requested NCPDP ID.\n\nProfile includes DBA name, NPI, DEA status, network memberships, and credential history.\n\nFull profile in the output panel →`;
-  if (l.includes('24/7') || l.includes('24 hour'))
-    return `Found **38 pharmacies** open 24/7 near the requested area.\n\nIncludes major chains (CVS, Walgreens, HEB) and independents. Filtered from 81,500 records.\n\nResults table in the output panel →`;
+  if (l.includes('ncpdp id') || l.includes('look up')) {
+    const idMatch = msg.match(/\b(\d{7})\b/);
+    const id = idMatch ? idMatch[1] : '0512345';
+    const found = pharmacyResults.find(p => p.id === id);
+    const name = found?.name || 'Option Care Health';
+    return `Found **${name}** (NCPDP ID: ${id}).\n\nSingle pharmacy profile loaded with credentials, network memberships, and compliance history.\n\nFull profile details in the output panel →`;
+  }
+  if (l.includes('24/7') || l.includes('24 hour')) {
+    const cityMatch = msg.toLowerCase().match(/(?:near|in)\s+([a-z\s]+?)(?:,|\s+tx|\s+ca|\s+fl|$)/i);
+    const city = cityMatch ? cityMatch[1].trim() : 'Houston';
+    return `Found **38 pharmacies** open 24/7 near ${city}.\n\nCVS (14 locations), Walgreens (12), HEB (6), Kroger (4), and 2 independents. All have valid DEA.\n\nFull list in the output panel →`;
+  }
   return `Searched **81,500 pharmacy records** based on your query.\n\nFound 247 matching results with detailed profiles, credential status, and network memberships.\n\nFull results with charts, SQL, and export options in the output panel →`;
 }
 
+
 /* ── Build query-specific output context ──────────────────────────── */
 function buildQueryContext(msg: string): QueryContext {
+  // First try exact suggestion match
+  const exact = EXACT_CONTEXTS[msg];
+  if (exact) return exact;
+
   const l = msg.toLowerCase();
+
+  /* NCPDP ID Lookup — single pharmacy profile */
+  if (l.includes('ncpdp id') || l.includes('ncpdp provider') || l.match(/look\s*up.*\d{7}/)) {
+    const idMatch = msg.match(/\b(\d{7})\b/);
+    const id = idMatch ? idMatch[1] : '0512345';
+    const found = pharmacyResults.find(p => p.id === id);
+    const row = found
+      ? { ncpdp: found.id, name: found.name, city: found.city, state: found.state, type: found.type, status: 'Active', dea: found.dea === 'Active' ? 'Valid' : found.dea, phone: '—' }
+      : { ncpdp: '0512345', name: 'Option Care Health', city: 'Los Angeles', state: 'CA', type: 'Specialty', status: 'Active', dea: 'Valid', phone: '(213) 482-0198' };
+    return {
+      rows: [row],
+      sql: `SELECT p.ncpdp_id, p.pharmacy_name, p.city, p.state, p.provider_type,\n       c.dea_status, c.license_status, c.dea_expires, n.network_count\nFROM pharmacies p\nJOIN credentials c ON p.ncpdp_id = c.ncpdp_id\nLEFT JOIN (SELECT ncpdp_id, COUNT(*) AS network_count FROM network_memberships GROUP BY ncpdp_id) n ON p.ncpdp_id = n.ncpdp_id\nWHERE p.ncpdp_id = '${id}'`,
+      insights: [
+        { text: `Pharmacy ${row.name} found — NCPDP ID ${id}`, type: 'success' as const },
+        { text: `DEA status: ${row.dea} · Type: ${row.type}`, type: 'info' as const },
+      ],
+      stats: [
+        { label: 'NCPDP ID', value: id, color: '#2968B0', bg: '#F0F7FF' },
+        { label: 'Profile Score', value: '94', color: '#059669', bg: '#ECFDF5' },
+        { label: 'Credentials', value: '4', color: '#334155', bg: '#F8FAFC' },
+        { label: 'Networks', value: String(found?.networks || 5), color: '#2968B0', bg: '#F0F7FF' },
+      ],
+      barData: [{ label: 'DEA', value: 1 }, { label: 'License', value: 1 }, { label: 'FWA', value: 1 }, { label: 'Medicare', value: 1 }],
+      barLabel: 'Credential Status',
+      pieData: [{ name: 'Active', value: 3, color: '#059669' }, { name: 'Expiring', value: 1, color: '#F59E0B' }],
+      pieLabel: 'Credential Health',
+      trendData: [{ month: 'Oct', primary: 92, secondary: 0 }, { month: 'Nov', primary: 93, secondary: 0 }, { month: 'Dec', primary: 94, secondary: 1 }, { month: 'Jan', primary: 94, secondary: 0 }, { month: 'Feb', primary: 94, secondary: 0 }, { month: 'Mar', primary: 94, secondary: 1 }],
+      trendLabel: 'Profile Score (6 months)',
+      trendKeys: ['Score', 'Alerts'],
+      totalResults: 1, execTime: '0.12s',
+      canvasLabel: `Profile: ${row.name}`,
+      followUps: ['Show credential history', 'View network memberships', 'Run compliance audit', 'Check FWA attestation'],
+      chatInsights: [{ icon: 'stat' as const, text: `${row.name} — ${row.city}, ${row.state}`, color: '#059669' }, { icon: 'info' as const, text: `DEA: ${row.dea} · ${row.type} pharmacy · ${found?.networks || 5} networks`, color: '#2968B0' }],
+    };
+  }
+
+  /* 24/7 Pharmacies */
+  if (l.includes('24/7') || l.includes('24 hour') || l.includes('open late')) {
+    const cityMatch = l.match(/(?:near|in)\s+([a-z\s]+?)(?:,|\s+tx|\s+ca|\s+fl|$)/i);
+    const city = cityMatch ? cityMatch[1].trim() : 'Houston';
+    const stCode = l.includes('houston') || l.includes(' tx') ? 'TX' : l.includes('miami') || l.includes(' fl') ? 'FL' : l.includes('los angeles') || l.includes(' ca') ? 'CA' : 'TX';
+    return {
+      rows: [
+        { ncpdp: '0481201', name: 'CVS Pharmacy #4182',         city: 'Houston',     state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(713) 524-3800' },
+        { ncpdp: '0492310', name: 'Walgreens #12044',           city: 'Houston',     state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(713) 661-2490' },
+        { ncpdp: '0503412', name: 'HEB Pharmacy #0281',         city: 'Sugar Land',  state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(281) 242-7100' },
+        { ncpdp: '0514523', name: 'Walgreens #05918',           city: 'Katy',        state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(281) 391-2830' },
+        { ncpdp: '0525634', name: 'CVS Pharmacy #6891',         city: 'Pearland',    state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(281) 485-9120' },
+        { ncpdp: '0536745', name: 'Kroger Pharmacy #0542',      city: 'Houston',     state: 'TX', type: 'Retail', status: 'Active', dea: 'Valid', phone: '(713) 789-4200' },
+      ],
+      sql: `SELECT p.ncpdp_id, p.pharmacy_name, p.city, p.state, p.phone,\n       p.hours_of_operation, c.dea_status\nFROM pharmacies p\nJOIN credentials c ON p.ncpdp_id = c.ncpdp_id\nWHERE p.state = '${stCode}'\n  AND p.hours_of_operation LIKE '%24/7%'\n  AND p.city ILIKE '%${city}%'\n  AND c.status = 'Active'\nORDER BY p.pharmacy_name ASC`,
+      insights: [
+        { text: `38 pharmacies operating 24/7 found near ${city}, ${stCode}`, type: 'success' as const },
+        { text: 'All 6 displayed pharmacies have valid DEA and active credentials', type: 'success' as const },
+        { text: 'CVS and Walgreens account for 68% of 24/7 locations in this area', type: 'info' as const },
+      ],
+      stats: [
+        { label: '24/7 Pharmacies', value: '38', color: '#059669', bg: '#ECFDF5' },
+        { label: 'Area', value: `${city}, ${stCode}`, color: '#2968B0', bg: '#F0F7FF' },
+        { label: 'All DEA Valid', value: '100%', color: '#059669', bg: '#ECFDF5' },
+        { label: 'Avg Networks', value: '6.3', color: '#334155', bg: '#F8FAFC' },
+      ],
+      barData: [{ label: 'CVS', value: 14 }, { label: 'Walgreens', value: 12 }, { label: 'HEB', value: 6 }, { label: 'Kroger', value: 4 }, { label: 'Independent', value: 2 }],
+      barLabel: `24/7 Pharmacies by Chain (${city})`,
+      pieData: [{ name: 'Retail', value: 32, color: '#2968B0' }, { name: 'Specialty', value: 4, color: '#10B981' }, { name: 'Compounding', value: 2, color: '#F59E0B' }],
+      pieLabel: '24/7 Pharmacy Types',
+      trendData: [{ month: 'Oct', primary: 34, secondary: 2 }, { month: 'Nov', primary: 35, secondary: 1 }, { month: 'Dec', primary: 35, secondary: 3 }, { month: 'Jan', primary: 36, secondary: 1 }, { month: 'Feb', primary: 37, secondary: 2 }, { month: 'Mar', primary: 38, secondary: 1 }],
+      trendLabel: `24/7 Pharmacy Count (${city} area)`,
+      trendKeys: ['Open 24/7', 'Newly Added'],
+      totalResults: 38, execTime: '0.41s',
+      canvasLabel: `38 pharmacies open 24/7`,
+      followUps: [`Show only CVS locations`, `Filter ${city} metro only`, 'Export 24/7 pharmacy list', 'Show pharmacies with drive-through'],
+      chatInsights: [{ icon: 'stat' as const, text: `38 pharmacies open 24/7 near ${city}, ${stCode}`, color: '#059669' }, { icon: 'location' as const, text: `CVS and Walgreens cover 68% of 24/7 locations`, color: '#2968B0' }, { icon: 'info' as const, text: 'All locations have valid DEA and active state licenses', color: '#059669' }],
+    };
+  }
 
   /* DEA / Credentials */
   if (l.includes('dea') || l.includes('expir') || l.includes('creden')) return {
@@ -1079,9 +1171,10 @@ export default function AISearchPage() {
   }
 
   async function handleBotReply(msg: string): Promise<string> {
-    // Add conversation context for follow-ups
-    const contextPrefix = lastQueryRef.current
-      ? `Previous query was: "${lastQueryRef.current}". This is a follow-up. `
+    // Save previous query BEFORE overwriting — needed for follow-up context
+    const prevQuery = lastQueryRef.current;
+    const contextPrefix = prevQuery
+      ? `Previous query was: "${prevQuery}". This is a follow-up. `
       : '';
     lastQueryRef.current = msg;
 
@@ -1097,19 +1190,20 @@ export default function AISearchPage() {
       return gemini.replyText;
     }
 
-    // Fallback to static — check if this query matches a specific handler
+    // Fallback to static — try matching the current message first
     lastGeminiRef.current = null;
     const ctx = buildQueryContext(msg);
     const isGenericFallback = ctx.canvasLabel === '247 results found';
 
-    // If it's a generic fallback and we have a previous context, reuse it
-    // (this happens when follow-up chip text doesn't match any specific handler)
+    // If current message doesn't match anything specific but we have previous context,
+    // this is a follow-up chip — keep showing previous results with a refined reply
     if (isGenericFallback && lastCtxRef.current) {
-      setQueryCtx(lastCtxRef.current);
+      // Don't update queryCtx or queryKey — keep showing previous panel data
       setShowOutput(true);
-      return buildBotReply(lastQueryRef.current || msg);
+      return `Applied filter: **${msg}**\n\nRefined the previous results based on your selection. Updated data is in the output panel →`;
     }
 
+    // New specific query — update everything
     lastCtxRef.current = ctx;
     setQueryCtx(ctx);
     setQueryKey(k => k + 1);
@@ -1117,7 +1211,7 @@ export default function AISearchPage() {
     return buildBotReply(msg);
   }
 
-  function handleBotReplied(msg: string) {
+  function handleBotReplied(_msg: string) {
     const g = lastGeminiRef.current;
     if (g) {
       return {
@@ -1126,13 +1220,16 @@ export default function AISearchPage() {
         canvasLabel: g.canvasLabel,
       };
     }
-    // Use current queryCtx (which may be the reused previous context)
-    const ctx = lastCtxRef.current || buildQueryContext(msg);
-    return {
-      insights: ctx.chatInsights,
-      followUps: ctx.followUps,
-      canvasLabel: ctx.canvasLabel,
-    };
+    // Use the preserved previous context for follow-ups
+    const ctx = lastCtxRef.current;
+    if (ctx) {
+      return {
+        insights: ctx.chatInsights,
+        followUps: ctx.followUps,
+        canvasLabel: ctx.canvasLabel,
+      };
+    }
+    return undefined;
   }
 
   function handleGetInsights(msg: string) {
@@ -1173,7 +1270,7 @@ export default function AISearchPage() {
     <>
       <Topbar
         title="AI Smart Search"
-        subtitle="Unified AI intelligence across all dataQ.ai tools and data"
+        subtitle="Unified AI intelligence across all DataSolutions.ai tools and data"
         actions={hasQueried ? (
           <button
             className={showOutput ? 'btn-primary' : 'btn-secondary'}
@@ -1207,7 +1304,7 @@ export default function AISearchPage() {
                 What can I help you find?
               </h1>
               <p style={{ fontSize: 14, color: '#64748B', margin: '6px 0 0', textAlign: 'center', lineHeight: 1.5, maxWidth: 440 }}>
-                Search across 81,500 pharmacy records, 33 AI agents, and all dataQ.ai tools
+                Search across 81,500 pharmacy records, 33 AI agents, and all DataSolutions.ai tools
               </p>
 
               {/* Search bar */}

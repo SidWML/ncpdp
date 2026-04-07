@@ -53,7 +53,7 @@ export default function ReportsPage() {
     <>
       <Topbar
         title="OnDemand Query"
-        subtitle="dataQ OnDemand — pharmacy data reporting with advanced filters"
+        subtitle="DataSolutions OnDemand — pharmacy data reporting with advanced filters"
         actions={
           <button className="btn-secondary" style={{ fontSize: 12, gap: 5 }}>
             <IconDownload size={13}/> Download All
@@ -63,7 +63,7 @@ export default function ReportsPage() {
       <main style={{ padding: '16px 20px 40px' }}>
         <Card style={{ marginBottom: 16 }}>
           <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9' }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>dataQ OnDemand</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>DataSolutions OnDemand</div>
           </div>
           <CardBody style={{ padding: '16px 20px 20px' }}>
             <Accordion title="Relationship & Provider" defaultOpen>

@@ -617,10 +617,12 @@ function AgentRunInner() {
   }
 
   const lastAgentQueryRef = useRef<string>('');
+  const lastAgentCtxRef = useRef<QueryContext | null>(null);
 
   async function handleBotReply(msg: string): Promise<string> {
-    const contextPrefix = lastAgentQueryRef.current
-      ? `Previous query: "${lastAgentQueryRef.current}". This is a follow-up. `
+    const prevQuery = lastAgentQueryRef.current;
+    const contextPrefix = prevQuery
+      ? `Previous query: "${prevQuery}". This is a follow-up. `
       : '';
     lastAgentQueryRef.current = msg;
 
@@ -629,20 +631,22 @@ function AgentRunInner() {
     if (gemini) {
       lastGeminiRef.current = gemini;
       const ctx = geminiToCtx(gemini);
+      lastAgentCtxRef.current = ctx;
       setDynamicCtx(ctx);
       setQueryKey(k => k + 1);
       setHasResults(true);
       setShowOutput(true);
       return gemini.replyText;
     }
-    // Fallback — reuse previous context if available (for follow-up chips)
+    // Fallback — reuse previous context for follow-up chips
     lastGeminiRef.current = null;
-    if (dynamicCtx) {
+    if (lastAgentCtxRef.current) {
       setHasResults(true);
       setShowOutput(true);
-      return `Refined results based on your follow-up: "${msg}"\n\nUpdated data is available in the output panel.`;
+      return `Applied filter: **${msg}**\n\nRefined the previous results based on your selection. Updated data is in the output panel →`;
     }
     const fallbackCtx = makeCtx(sql, RESULT_ROWS);
+    lastAgentCtxRef.current = fallbackCtx;
     setDynamicCtx(fallbackCtx);
     setQueryKey(k => k + 1);
     setHasResults(true);
@@ -650,16 +654,18 @@ function AgentRunInner() {
     return `Analyzed **81,500** pharmacy records based on your query.\n\nResults are ready in the output panel with detailed breakdowns, charts, and export options.`;
   }
 
-  function handleBotReplied(msg: string) {
+  function handleBotReplied(_msg: string) {
     const g = lastGeminiRef.current;
     if (g) return { insights: g.chatInsights, followUps: g.followUps, canvasLabel: g.canvasLabel };
+    const ctx = lastAgentCtxRef.current;
+    if (ctx) return { insights: ctx.chatInsights, followUps: ctx.followUps, canvasLabel: ctx.canvasLabel };
     return {
       insights: [
         { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#059669' },
         { icon: 'info' as const, text: `Agent: ${agent.name} (${agent.category})`, color: '#2968B0' },
       ],
       followUps: agentSuggestions.slice(0, 4),
-      canvasLabel: '247 results found',
+      canvasLabel: 'View results',
     };
   }
 

@@ -159,7 +159,7 @@ export default function SettingsPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Team Members</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Manage who has access to your dataQ.ai organization</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Manage who has access to your DataSolutions.ai organization</div>
                     </div>
                     <button className="btn-primary" style={{ gap: 5, fontSize: 12 }}>
                       <IconPlus size={13} color="#fff"/> Invite Member
@@ -319,7 +319,7 @@ export default function SettingsPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>API Keys</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Manage authentication credentials for the dataQ.ai API</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Manage authentication credentials for the DataSolutions.ai API</div>
                     </div>
                     <button className="btn-primary" style={{ gap: 5, fontSize: 12 }}>
                       <IconPlus size={13} color="#fff"/> Generate New Key

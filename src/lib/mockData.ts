@@ -1,4 +1,4 @@
-// Mock data for dataQ.ai dashboard demo
+// Mock data for DataSolutions.ai dashboard demo
 
 export const stats = [
   {

@@ -144,7 +144,7 @@ export function SidebarV2() {
               <img src="/logo.png" alt="NCPDP" width={30} height={30} style={{ borderRadius: 4 }}/>
               <div>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-.4px', lineHeight: 1 }}>
-                  dataQ<span style={{ color: '#818CF8' }}>.ai</span>
+                  DataSolutions<span style={{ color: '#818CF8' }}>.ai</span>
                 </div>
                 <div style={{ fontSize: 9, color: 'rgba(255,255,255,.35)', fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', marginTop: 1 }}>
                   by NCPDP

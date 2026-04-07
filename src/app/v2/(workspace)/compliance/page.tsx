@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/Badge';
    ═══════════════════════════════════════════════════════════════════ */
 
 const HEALTH_SCORES = [
-  { label: 'DEA Compliance', score: 98, total: '68,247', issues: '1,168 expiring', color: '#059669' },
+  { label: 'DEA Compliance', score: 98, total: '81,500', issues: '1,168 expiring', color: '#059669' },
   { label: 'Network Adequacy', score: 96, total: '42 networks', issues: '3 below threshold', color: '#059669' },
   { label: 'FWA Status', score: 91, total: '38,569', issues: '3,412 pending', color: '#D97706' },
   { label: 'NSA Readiness', score: 99, total: '12 filings', issues: '1 upcoming', color: '#059669' },
@@ -85,13 +85,13 @@ const PAST_SUBMISSIONS = [
 const ALERT_ITEMS = [
   { id: 1, severity: 'critical', icon: IconAlertTriangle, title: 'DEA License Expired — CareRx Pharmacy #0842',             desc: 'DEA registration expired on Mar 29. Pharmacy must cease dispensing controlled substances until renewed.', time: '2h ago',  ncpdp: '1234567' },
   { id: 2, severity: 'critical', icon: IconAlertTriangle, title: 'FWA Attestation Overdue — 6 Pharmacies',                   desc: 'Midwest Chain #44, SunHealth Compounding, and 4 others have missed their FWA attestation deadline.',     time: '3h ago',  ncpdp: 'Multiple' },
-  { id: 3, severity: 'critical', icon: IconShield,        title: 'Network Adequacy Below Threshold — Montana',               desc: 'Rural pharmacy count has fallen below CMS-mandated minimum. 2 counties now underserved.',                time: '5h ago',  ncpdp: 'N/A' },
+  { id: 3, severity: 'critical', icon: IconShield,        title: 'Network Adequacy Below Threshold — Montana',               desc: 'Rural pharmacy count has fallen below mandated minimum. 2 counties now underserved.',                time: '5h ago',  ncpdp: 'N/A' },
   { id: 4, severity: 'warning',  icon: IconCalendar,      title: 'State License Expiring — Valley Rx Solutions #2',          desc: 'State pharmacy license expires in 17 days. Renewal application has not been received.',                  time: '6h ago',  ncpdp: '3987234' },
   { id: 5, severity: 'warning',  icon: IconKey,           title: 'Accreditation Due — Sunrise Compounding Ctr',              desc: 'ACHC accreditation expires in 24 days. Surveyor visit not yet scheduled.',                               time: '8h ago',  ncpdp: '5021847' },
   { id: 6, severity: 'warning',  icon: IconCalendar,      title: 'NSA Q1 2026 Filing Deadline Approaching',                  desc: 'No Surprises Act quarterly filing due April 15. Report generation recommended within 7 days.',           time: '12h ago', ncpdp: 'N/A' },
   { id: 7, severity: 'info',     icon: IconInfo,          title: 'Credential Audit Completed — AGT-12',                      desc: '89 DEA expirations and 112 license renewals identified across 32 states.',                               time: '1d ago',  ncpdp: 'N/A' },
   { id: 8, severity: 'info',     icon: IconCheck,         title: 'Weekly Network Change Report Available',                    desc: '247 pharmacy changes flagged across 12 states. 14 closures, 31 new openings, 202 profile updates.',      time: '1d ago',  ncpdp: 'N/A' },
-  { id: 9, severity: 'info',     icon: IconFileCheck,     title: 'Q4 2025 NSA Filing Accepted by CMS',                       desc: 'Confirmation ID CMS-NSA-2025Q4-48291. Filing covered 38,104 pharmacies.',                                time: '2d ago',  ncpdp: 'N/A' },
+  { id: 9, severity: 'info',     icon: IconFileCheck,     title: 'Q4 2025 NSA Filing Accepted',                       desc: 'Confirmation ID CMS-NSA-2025Q4-48291. Filing covered 38,104 pharmacies.',                                time: '2d ago',  ncpdp: 'N/A' },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -391,7 +391,7 @@ export default function CompliancePage() {
             <div>
               {/* Step Indicator */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginBottom: 24 }}>
-                {['Select Period', 'Validate Data', 'Review Report', 'Submit to CMS'].map((s, i) => (
+                {['Select Period', 'Validate Data', 'Review Report', 'Submit Filing'].map((s, i) => (
                   <React.Fragment key={s}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <div style={{
@@ -557,7 +557,7 @@ export default function CompliancePage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <button className="v2b v2b-s" style={{ fontSize: 13 }} onClick={() => setNsaStep(1)}>Back</button>
                     <button className="v2b v2b-p" style={{ fontSize: 13 }} onClick={() => setNsaStep(3)}>
-                      Submit to CMS <IconChevronRight size={12} />
+                      Submit Filing <IconChevronRight size={12} />
                     </button>
                   </div>
                 </div>
@@ -571,7 +571,7 @@ export default function CompliancePage() {
                       <IconFileCheck size={48} color="var(--v2-primary)" />
                       <h3 className="v2-title" style={{ fontSize: 16, marginTop: 16, marginBottom: 8 }}>Ready to Submit</h3>
                       <p style={{ fontSize: 13, color: 'var(--v2-text-2)', maxWidth: 440, margin: '0 auto 20px' }}>
-                        You are about to submit the No Surprises Act Q1 2026 report to CMS containing
+                        You are about to submit the No Surprises Act Q1 2026 report to containing
                         data for <strong>38,569 pharmacies</strong> across <strong>48 states</strong>.
                         This action cannot be undone.
                       </p>
@@ -592,10 +592,10 @@ export default function CompliancePage() {
                       </div>
                       <h3 className="v2-title" style={{ fontSize: 16, marginBottom: 6 }}>Successfully Submitted</h3>
                       <p style={{ fontSize: 13, color: 'var(--v2-text-2)', marginBottom: 16 }}>
-                        Your No Surprises Act Q1 2026 report has been submitted to CMS.
+                        Your No Surprises Act Q1 2026 report has been submitted successfully.
                       </p>
                       <div className="v2c" style={{ display: 'inline-block', padding: '12px 24px', textAlign: 'left', boxShadow: 'var(--v2-shadow-md)' }}>
-                        <div style={{ fontSize: 11, color: 'var(--v2-text-3)', marginBottom: 4 }}>CMS Confirmation ID</div>
+                        <div style={{ fontSize: 11, color: 'var(--v2-text-3)', marginBottom: 4 }}>Confirmation ID</div>
                         <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'monospace', color: 'var(--v2-primary)' }}>CMS-NSA-2026Q1-59302</div>
                       </div>
                       <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', gap: 10 }}>

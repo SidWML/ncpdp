@@ -109,7 +109,7 @@ console.log(\`Found \${data.total} pharmacies\`);`,
 // Data feed cards
 // -------------------------------------------------------------------
 const DATA_FEEDS = [
-  { name: 'Pharmacy Database Weekly', format: 'CSV / SFTP',    freq: 'Weekly - Mondays',  records: '68,247', status: 'Active',   color: '#059669' },
+  { name: 'Pharmacy Database Weekly', format: 'CSV / SFTP',    freq: 'Weekly - Mondays',  records: '81,500', status: 'Active',   color: '#059669' },
   { name: 'Credential Updates',       format: 'JSON / API',    freq: 'Real-time',         records: '~240/day', status: 'Active', color: '#6366F1' },
   { name: 'Network Changes',          format: 'XML / SFTP',    freq: 'Daily',             records: '~1,800',  status: 'Active',  color: '#2563EB' },
   { name: 'Compliance Alerts',        format: 'JSON / Webhook',freq: 'Real-time',         records: '~47/day', status: 'Active',  color: '#DC2626' },

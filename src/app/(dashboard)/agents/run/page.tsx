@@ -8,13 +8,18 @@ import { agents } from '@/lib/mockData';
 import {
   IconSearch, IconCpu, IconShield, IconDatabase,
   IconNetwork, IconBarChart, IconCheck, IconZap, IconSparkles,
-  IconChevronRight, IconReport, IconDownload, IconCode, IconCopy,
+  IconChevronRight, IconReport, IconDownload, IconCode, IconCopy, IconX,
+  IconAlertTriangle,
 } from '@/components/ui/Icons';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, AreaChart, Area,
 } from 'recharts';
 import { AgentChat } from '@/components/ui/AgentChat';
+import { SqlTab as SharedSqlTab, ChartsTab as SharedChartsTab, ExportTab as SharedExportTab, OutputPanel } from '@/components/ui/OutputPanel';
+import type { ResultRow as SharedResultRow, QueryContext } from '@/components/ui/OutputPanel';
+import { queryGemini } from '@/lib/gemini';
+import type { GeminiResponse } from '@/lib/gemini';
 import { useCallback, useRef } from 'react';
 
 /* ── Category helpers ────────────────────────────────────────────── */
@@ -47,18 +52,18 @@ const suggestions: Record<string, string[]> = {
   'Search & Discovery': [
     'Find all pharmacies in Texas with expiring DEA registrations',
     'Show retail pharmacies in Miami within 10 miles',
-    'List specialty pharmacies with URAC accreditation in CA',
+    'List specialty pharmacies with ACHC accreditation in CA',
     'Find LTC pharmacies added in the last 30 days',
   ],
   'Compliance & Regulatory': [
     'Show all pharmacies with expired DEA in the South region',
     'List critical compliance alerts from the past 7 days',
     'Which pharmacies have incomplete FWA attestations?',
-    'Find No Surprises Act violations in Q1 2026',
+    'List independent pharmacies missing FWA attestation for 2026',
   ],
   'Network Management': [
     'Analyze network coverage gaps in Southeast states',
-    'Show CMS adequacy status for all contracted networks',
+    'Show adequacy status for all contracted networks',
     'Which states fall below 90% network adequacy?',
     'Compare network composition for Q1 vs Q4 2025',
   ],
@@ -72,7 +77,7 @@ const suggestions: Record<string, string[]> = {
     'Build a feed of all specialty pharmacies with DEA status',
     'Export network changes from the past 30 days',
     'Configure daily compliance alert delivery for Aetna',
-    'Create e-prescribing router feed for BlueCross',
+    'Build daily profile change feed for BlueCross',
   ],
   'Credentialing (resQ)': [
     'Check credentialing status for Wellness Pharmacy #0842',
@@ -118,18 +123,52 @@ type Tab = 'results' | 'sql' | 'charts' | 'export';
 
 /* ── Shared result data ──────────────────────────────────────────── */
 const RESULT_ROWS = [
-  { ncpdp: '1234567', name: 'CareRx Pharmacy #0842',       city: 'Los Angeles', state: 'CA', type: 'Retail',      status: 'Active',   dea: 'Valid',    phone: '(213) 555-0198' },
-  { ncpdp: '2345678', name: 'SpecialtyRx Partners LLC',     city: 'Houston',     state: 'TX', type: 'Specialty',   status: 'Active',   dea: 'Expiring', phone: '(713) 555-0412' },
-  { ncpdp: '3456789', name: 'MediCare Express Pharmacy',    city: 'Phoenix',     state: 'AZ', type: 'Retail',      status: 'Active',   dea: 'Valid',    phone: '(602) 555-0837' },
-  { ncpdp: '4567890', name: 'Coastal Health Pharmacy',      city: 'Miami',       state: 'FL', type: 'Compounding', status: 'Active',   dea: 'Valid',    phone: '(305) 555-0291' },
-  { ncpdp: '5678901', name: 'Alpine Specialty Dispensary',  city: 'Denver',      state: 'CO', type: 'Specialty',   status: 'Inactive', dea: 'Expired',  phone: '(720) 555-0543' },
-  { ncpdp: '6789012', name: 'Midwest Chain Pharmacy #44',   city: 'Chicago',     state: 'IL', type: 'Chain',       status: 'Active',   dea: 'Valid',    phone: '(312) 555-0871' },
-  { ncpdp: '7890123', name: 'SunHealth Compounding Center', city: 'Orlando',     state: 'FL', type: 'Compounding', status: 'Active',   dea: 'Valid',    phone: '(407) 555-0654' },
-  { ncpdp: '8901234', name: 'Pacific Infusion Services',    city: 'Seattle',     state: 'WA', type: 'Infusion',    status: 'Active',   dea: 'Valid',    phone: '(206) 555-0923' },
-  { ncpdp: '9012345', name: 'Capital Area Pharmacy Group',  city: 'Washington',  state: 'DC', type: 'Retail',      status: 'Active',   dea: 'Valid',    phone: '(202) 555-0182' },
-  { ncpdp: '0123456', name: 'Northeast Specialty Rx',       city: 'Boston',      state: 'MA', type: 'Specialty',   status: 'Inactive', dea: 'Expiring', phone: '(617) 555-0764' },
+  { ncpdp: '0512345', name: 'Option Care Health',            city: 'Los Angeles', state: 'CA', type: 'Specialty',    status: 'Active',   dea: 'Valid',    phone: '(213) 482-0198' },
+  { ncpdp: '2810042', name: 'Accredo Health Group',          city: 'Houston',     state: 'TX', type: 'Specialty',    status: 'Active',   dea: 'Expiring', phone: '(713) 654-4120' },
+  { ncpdp: '3401298', name: 'BioScrip Infusion Services',   city: 'Phoenix',     state: 'AZ', type: 'Infusion',     status: 'Active',   dea: 'Valid',    phone: '(602) 285-8370' },
+  { ncpdp: '5920187', name: 'Genoa Healthcare Pharmacy',    city: 'Miami',       state: 'FL', type: 'Specialty',    status: 'Active',   dea: 'Valid',    phone: '(305) 374-2910' },
+  { ncpdp: '0412893', name: 'Coram CVS Specialty Infusion', city: 'Denver',      state: 'CO', type: 'Infusion',     status: 'Inactive', dea: 'Expired',  phone: '(720) 891-5430' },
+  { ncpdp: '1209834', name: 'Kindred Healthcare Pharmacy',  city: 'Chicago',     state: 'IL', type: 'Long-Term Care', status: 'Active', dea: 'Valid',    phone: '(312) 476-8710' },
+  { ncpdp: '6701245', name: 'Shields Health Solutions',      city: 'Boston',      state: 'MA', type: 'Specialty',    status: 'Active',   dea: 'Valid',    phone: '(617) 610-7640' },
+  { ncpdp: '4519827', name: 'ProCare Pharmacy',             city: 'Seattle',     state: 'WA', type: 'Specialty',    status: 'Active',   dea: 'Valid',    phone: '(206) 832-9230' },
+  { ncpdp: '3290156', name: 'OnePoint Patient Care',        city: 'Atlanta',     state: 'GA', type: 'Long-Term Care', status: 'Active', dea: 'Valid',    phone: '(404) 753-6890' },
+  { ncpdp: '7623041', name: 'Orsini Specialty Pharmacy',    city: 'New York',    state: 'NY', type: 'Specialty',    status: 'Inactive', dea: 'Expiring', phone: '(212) 389-4470' },
 ];
 type ResultRow = typeof RESULT_ROWS[number];
+
+/* ── Detail drawer data ─────────────────────────────────────────── */
+const PHARMACY_DETAILS: Record<string, {
+  legalName: string; dba: string; npi: string; taxId: string;
+  address: string; hours: string; opened: string;
+  services: string[]; networks: { name: string; status: string }[];
+  credentials: { type: string; status: string; expires: string }[];
+  riskScore: number; profileScore: number;
+}> = {
+  '0512345': {
+    legalName: 'Option Care Health Inc.', dba: 'Option Care Health', npi: '1700186859', taxId: '**-***4521',
+    address: '3880 Kilroy Airport Way, Long Beach, CA 90806', hours: 'Mon-Fri 8AM-6PM', opened: '2008-03-15',
+    services: ['Specialty Dispensing', 'Infusion Services', 'Oncology', 'Patient Hub'],
+    networks: [{ name: 'Aetna', status: 'Active' }, { name: 'Express Scripts', status: 'Active' }, { name: 'OptumRx', status: 'Active' }],
+    credentials: [{ type: 'DEA Registration', status: 'Valid', expires: '2027-06-30' }, { type: 'State License', status: 'Active', expires: '2026-12-31' }, { type: 'FWA Attestation', status: 'Complete', expires: '2026-09-15' }],
+    riskScore: 12, profileScore: 94,
+  },
+  '2810042': {
+    legalName: 'Accredo Health Group Inc.', dba: 'Accredo Health Group', npi: '1346374806', taxId: '**-***8734',
+    address: '2500 CityWest Blvd, Houston, TX 77042', hours: 'Mon-Fri 7AM-7PM', opened: '2012-08-22',
+    services: ['Specialty Dispensing', 'Prior Auth Support', 'Cold Chain', 'Patient Hub'],
+    networks: [{ name: 'OptumRx', status: 'Active' }, { name: 'Humana', status: 'Active' }],
+    credentials: [{ type: 'DEA Registration', status: 'Expiring', expires: '2026-05-15' }, { type: 'State License', status: 'Active', expires: '2027-03-31' }, { type: 'ACHC Accreditation', status: 'Active', expires: '2027-01-20' }],
+    riskScore: 58, profileScore: 87,
+  },
+  '0412893': {
+    legalName: 'Coram Healthcare Corporation', dba: 'Coram CVS Specialty Infusion', npi: '1518067230', taxId: '**-***2190',
+    address: '7700 E Colfax Ave, Denver, CO 80220', hours: 'Closed', opened: '2016-11-01',
+    services: ['Specialty Infusion', 'Home Infusion'],
+    networks: [{ name: 'Aetna', status: 'Terminated' }, { name: 'Express Scripts', status: 'Terminated' }],
+    credentials: [{ type: 'DEA Registration', status: 'Expired', expires: '2025-12-31' }, { type: 'State License', status: 'Expired', expires: '2025-09-30' }],
+    riskScore: 92, profileScore: 31,
+  },
+};
 
 const BAR_DATA = [
   { state: 'TX', count: 89 }, { state: 'CA', count: 72 }, { state: 'FL', count: 41 },
@@ -144,31 +183,272 @@ const PIE_DATA = [
   { name: 'Infusion',         value: 9,   color: '#2968B0' },
 ];
 const TREND_DATA = [
-  { month: 'Oct', active: 64200, new: 320, closed: 180 },
-  { month: 'Nov', active: 64900, new: 410, closed: 210 },
-  { month: 'Dec', active: 65400, new: 380, closed: 190 },
-  { month: 'Jan', active: 66100, new: 520, closed: 240 },
-  { month: 'Feb', active: 67200, new: 610, closed: 290 },
-  { month: 'Mar', active: 68247, new: 580, closed: 310 },
+  { month: 'Oct', active: 78200, new: 420, closed: 180 },
+  { month: 'Nov', active: 79100, new: 510, closed: 210 },
+  { month: 'Dec', active: 79800, new: 480, closed: 190 },
+  { month: 'Jan', active: 80200, new: 620, closed: 240 },
+  { month: 'Feb', active: 80900, new: 710, closed: 290 },
+  { month: 'Mar', active: 81500, new: 680, closed: 310 },
 ];
 
+/* ── AI Insights Banner ─────────────────────────────────────────── */
+function InsightsBanner() {
+  const [dismissed, setDismissed] = useState<Set<number>>(new Set());
+  const insights = [
+    { id: 0, icon: <IconAlertTriangle size={14} color="#DC2626"/>, text: '2 pharmacies have expired DEA registrations requiring immediate action', severity: 'danger', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B' },
+    { id: 1, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>, text: '72% of results are from TX/CA — geographic concentration risk', severity: 'warning', bg: '#FFF7ED', border: '#FDE68A', color: '#92400E' },
+    { id: 2, icon: <IconBarChart size={14} color="#059669"/>, text: '88% active rate across matched pharmacies (above 85% benchmark)', severity: 'success', bg: '#ECFDF5', border: '#A7F3D0', color: '#065F46' },
+    { id: 3, icon: <IconShield size={14} color="#2968B0"/>, text: '1 pharmacy has incomplete FWA attestation — compliance gap', severity: 'info', bg: '#F0F7FF', border: '#B8D5F5', color: '#1E40AF' },
+  ];
+
+  const visible = insights.filter(i => !dismissed.has(i.id));
+  if (visible.length === 0) return null;
+
+  return (
+    <div style={{
+      marginBottom: 16, padding: '14px 16px', borderRadius: 12,
+      background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 50%, #FAFBFC 100%)',
+      border: '1px solid #E8EFF8',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{
+            width: 24, height: 24, borderRadius: 7,
+            background: 'linear-gradient(135deg, #2968B0, #5B9BD5)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <IconSparkles size={13} color="#fff"/>
+          </div>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>AI Analysis</span>
+          <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500 }}>
+            {visible.length} insight{visible.length !== 1 ? 's' : ''} detected
+          </span>
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+        {visible.map(ins => (
+          <div
+            key={ins.id}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
+              borderRadius: 8, background: ins.bg, border: `1px solid ${ins.border}`,
+              transition: 'transform .12s',
+              cursor: 'default',
+            }}
+          >
+            <span style={{ flexShrink: 0 }}>{ins.icon}</span>
+            <span style={{ fontSize: 12, color: ins.color, lineHeight: 1.4, flex: 1 }}>{ins.text}</span>
+            <button
+              onClick={() => setDismissed(d => new Set([...d, ins.id]))}
+              style={{ flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer', padding: 2, opacity: 0.4, transition: 'opacity .12s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.4')}
+            >
+              <IconX size={11} color={ins.color}/>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Pharmacy Detail Drawer ─────────────────────────────────────── */
+function PharmacyDrawer({ row, onClose }: { row: ResultRow; onClose: () => void }) {
+  const detail = PHARMACY_DETAILS[row.ncpdp];
+
+  const statusColor = (s: string) =>
+    s === 'Active' || s === 'Valid' || s === 'Complete' ? '#059669' :
+    s === 'Expiring' || s === 'Pending' ? '#D97706' :
+    '#DC2626';
+
+  return (
+    <div style={{
+      position: 'fixed', top: 0, right: 0, bottom: 0, width: 440,
+      background: '#fff', boxShadow: '-8px 0 32px rgba(0,0,0,0.08)',
+      zIndex: 100, display: 'flex', flexDirection: 'column',
+      animation: 'slideInRight .2s ease-out',
+    }}>
+      {/* Header */}
+      <div style={{
+        padding: '16px 20px', borderBottom: '1px solid #E2E8F0',
+        display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0,
+      }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#1E293B' }}>{row.name}</div>
+          <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+            NCPDP {row.ncpdp} · {row.city}, {row.state}
+          </div>
+        </div>
+        <button
+          onClick={onClose}
+          style={{
+            width: 32, height: 32, borderRadius: 8, border: '1px solid #E2E8F0',
+            background: '#fff', cursor: 'pointer', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <IconX size={14} color="#64748B"/>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 20px' }}>
+        {/* Risk + Profile scores */}
+        {detail && (
+          <>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
+              <div style={{
+                padding: '12px 14px', borderRadius: 10,
+                background: detail.riskScore > 60 ? '#FEF2F2' : detail.riskScore > 30 ? '#FFF7ED' : '#ECFDF5',
+                border: `1px solid ${detail.riskScore > 60 ? '#FECACA' : detail.riskScore > 30 ? '#FDE68A' : '#A7F3D0'}`,
+              }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>Risk Score</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: detail.riskScore > 60 ? '#DC2626' : detail.riskScore > 30 ? '#D97706' : '#059669', marginTop: 2 }}>
+                  {detail.riskScore}
+                  <span style={{ fontSize: 12, fontWeight: 500, color: '#94A3B8' }}>/100</span>
+                </div>
+              </div>
+              <div style={{
+                padding: '12px 14px', borderRadius: 10,
+                background: '#F0F7FF', border: '1px solid #B8D5F5',
+              }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>Profile Score</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#2968B0', marginTop: 2 }}>
+                  {detail.profileScore}
+                  <span style={{ fontSize: 12, fontWeight: 500, color: '#94A3B8' }}>%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Info grid */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 8 }}>Details</div>
+              {[
+                { label: 'Legal Name', value: detail.legalName },
+                { label: 'NPI', value: detail.npi },
+                { label: 'Address', value: detail.address },
+                { label: 'Hours', value: detail.hours },
+                { label: 'Type', value: row.type },
+                { label: 'Phone', value: row.phone },
+              ].map(item => (
+                <div key={item.label} style={{ display: 'flex', padding: '6px 0', borderBottom: '1px solid #F3F4F6' }}>
+                  <span style={{ width: 100, fontSize: 12, color: '#94A3B8', fontWeight: 500, flexShrink: 0 }}>{item.label}</span>
+                  <span style={{ fontSize: 12, color: '#1E293B', fontWeight: 500 }}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Credentials */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 8 }}>Credentials</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {detail.credentials.map((c, i) => (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '8px 12px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #F3F4F6',
+                  }}>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#1E293B' }}>{c.type}</div>
+                      <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 1 }}>Expires {c.expires}</div>
+                    </div>
+                    <span style={{
+                      padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+                      color: statusColor(c.status),
+                      background: `${statusColor(c.status)}14`,
+                    }}>
+                      {c.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Networks */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 8 }}>Networks</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {detail.networks.map((n, i) => (
+                  <span key={i} style={{
+                    padding: '4px 10px', borderRadius: 6, fontSize: 12, fontWeight: 500,
+                    border: `1px solid ${statusColor(n.status)}40`,
+                    color: statusColor(n.status),
+                    background: `${statusColor(n.status)}0A`,
+                  }}>
+                    {n.name} · {n.status}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 8 }}>Services</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {detail.services.map((s, i) => (
+                  <span key={i} style={{
+                    padding: '4px 10px', borderRadius: 6, fontSize: 12, fontWeight: 500,
+                    background: '#F3F4F6', color: '#475569',
+                  }}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {!detail && (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: '#94A3B8' }}>
+            <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>Basic Info</div>
+            <div style={{ fontSize: 12, lineHeight: 1.6 }}>
+              {row.name}<br/>
+              {row.city}, {row.state} · {row.type}<br/>
+              Phone: {row.phone}<br/>
+              DEA: {row.dea} · Status: {row.status}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer actions */}
+      <div style={{
+        padding: '12px 20px', borderTop: '1px solid #E2E8F0', flexShrink: 0,
+        display: 'flex', gap: 8,
+      }}>
+        <button className="btn-primary" style={{ flex: 1, fontSize: 12, justifyContent: 'center' }}>
+          <IconShield size={13} color="#fff"/> Run Audit
+        </button>
+        <button className="btn-secondary" style={{ flex: 1, fontSize: 12, justifyContent: 'center' }}>
+          <IconBarChart size={13}/> Compare
+        </button>
+      </div>
+
+      <style>{`@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
+    </div>
+  );
+}
+
 /* ── Results Tab ─────────────────────────────────────────────────── */
-function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: ResultRow[] }) {
+function ResultsTab({ agentName, resultRows, onRowClick }: { agentName: string; resultRows: ResultRow[]; onRowClick: (row: ResultRow) => void }) {
   const deaBadge = (s: string) =>
     s === 'Valid' ? <Badge variant="success">Valid</Badge> :
-    s === 'Expiring' ? <Badge variant="warning">Expiring</Badge> :
-    <Badge variant="danger">Expired</Badge>;
+    s === 'Expiring' ? <span className="badge-pulse-warning"><Badge variant="warning">Expiring</Badge></span> :
+    <span className="badge-pulse-danger"><Badge variant="danger">Expired</Badge></span>;
 
   return (
     <div>
+      {/* AI Insights Banner */}
+      <InsightsBanner/>
+
       {/* Summary strip */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginBottom: 18 }}>
         {[
           { label: 'Records Found',  value: '247',    color: '#2968B0', bg: '#F0F7FF' },
           { label: 'Execution Time', value: '0.83s',  color: '#10B981', bg: '#ECFDF5' },
-          { label: 'Records Scanned',value: '68,247', color: '#334155', bg: '#F8FAFC' },
+          { label: 'Records Scanned',value: '81,500', color: '#334155', bg: '#F8FAFC' },
           { label: 'Active',         value: '218',    color: '#10B981', bg: '#ECFDF5' },
-          { label: 'Inactive',       value: '29',     color: '#EF4444', bg: '#FEF2F2' },
+          { label: 'At Risk',        value: '29',     color: '#EF4444', bg: '#FEF2F2' },
         ].map(s => (
           <div key={s.label} style={{ padding: '12px 16px', borderRadius: 8, background: s.bg, textAlign: 'center' }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>{s.label}</div>
@@ -182,14 +462,20 @@ function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: 
         <table>
           <thead>
             <tr>
-              {['NCPDP ID','Pharmacy Name','City','State','Type','DEA','Phone','Status'].map(h => (
+              {['NCPDP ID','Pharmacy Name','City','State','Type','DEA','Phone','Status',''].map(h => (
                 <th key={h}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {resultRows.map(r => (
-              <tr key={r.ncpdp}>
+              <tr
+                key={r.ncpdp}
+                onClick={() => onRowClick(r)}
+                style={{ cursor: 'pointer', transition: 'background .08s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#F0F7FF')}
+                onMouseLeave={e => (e.currentTarget.style.background = '')}
+              >
                 <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
                 <td style={{ fontWeight: 500 }}>{r.name}</td>
                 <td style={{ color: '#64748B' }}>{r.city}</td>
@@ -200,6 +486,15 @@ function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: 
                 <td>{deaBadge(r.dea)}</td>
                 <td style={{ color: '#94A3B8', fontSize: 13 }}>{r.phone}</td>
                 <td><Badge variant={r.status === 'Active' ? 'success' : 'neutral'}>{r.status}</Badge></td>
+                <td>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 3,
+                    fontSize: 11, color: '#94A3B8', fontWeight: 500,
+                    opacity: 0.6, transition: 'opacity .12s',
+                  }}>
+                    View <IconChevronRight size={10}/>
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -212,174 +507,51 @@ function ResultsTab({ agentName, resultRows }: { agentName: string; resultRows: 
   );
 }
 
-/* ── SQL Tab ──────────────────────────────────────────────────────── */
-function SqlTab({ sql }: { sql: string }) {
-  const [copied, setCopied] = useState(false);
-  return (
-    <div>
-      <div style={{ position: 'relative' }}>
-        <pre style={{
-          background: 'var(--surface-2)', color: 'var(--text-primary)',
-          fontFamily: 'ui-monospace, "Cascadia Code", Menlo, monospace',
-          fontSize: 13, lineHeight: 1.7, padding: '24px 28px',
-          borderRadius: 12, overflowX: 'auto', margin: 0,
-          border: '1px solid var(--border)',
-        }}>{sql}</pre>
-        <button onClick={() => { navigator.clipboard.writeText(sql).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1800); }} style={{
-          position: 'absolute', top: 12, right: 14,
-          background: copied ? '#059669' : 'rgba(41,104,176,.15)',
-          border: '1px solid rgba(41,104,176,.25)', borderRadius: 6,
-          padding: '4px 16px', fontSize: 12, fontWeight: 600,
-          color: copied ? '#fff' : '#2968B0', cursor: 'pointer',
-          display: 'flex', alignItems: 'center', gap: 5,
-        }}>
-          <IconCopy size={12}/> {copied ? 'Copied!' : 'Copy SQL'}
-        </button>
-      </div>
-      <div style={{ marginTop: 12, padding: '10px 16px', background: '#fff', borderRadius: 8, border: '1px solid #E2E8F0', display: 'flex', gap: 20, fontSize: 12, color: '#64748B' }}>
-        <span>Execution: <strong style={{ color: '#10B981' }}>0.83s</strong></span>
-        <span>Scanned: <strong style={{ color: '#334155' }}>68,247</strong></span>
-        <span>Returned: <strong style={{ color: '#2968B0' }}>247 rows</strong></span>
-        <span>Engine: <strong style={{ color: '#334155' }}>PostgreSQL 16</strong></span>
-      </div>
-    </div>
-  );
+/* ── Helper: build a default QueryContext from local data ─────────── */
+function makeCtx(sql: string, rows: ResultRow[]): QueryContext {
+  return {
+    rows: rows as SharedResultRow[],
+    sql,
+    insights: [
+      { text: '2 pharmacies have expired DEA registrations requiring immediate action', type: 'danger' },
+      { text: '88% active rate across matched pharmacies (above 85% benchmark)', type: 'success' },
+      { text: '1 pharmacy has incomplete FWA attestation — compliance gap', type: 'info' },
+    ],
+    stats: [
+      { label: 'Records Found', value: '247', color: '#2968B0', bg: '#F0F7FF' },
+      { label: 'Execution Time', value: '0.83s', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'Records Scanned', value: '81,500', color: '#334155', bg: '#F8FAFC' },
+      { label: 'Active', value: '218', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'At Risk', value: '29', color: '#EF4444', bg: '#FEF2F2' },
+    ],
+    barData: BAR_DATA.map(d => ({ label: d.state, value: d.count })),
+    barLabel: 'Results by State',
+    pieData: PIE_DATA,
+    pieLabel: 'Distribution by Type',
+    trendData: TREND_DATA.map(d => ({ month: d.month, primary: d.new, secondary: d.closed })),
+    trendLabel: 'Network Trend (6 months)',
+    trendKeys: ['New', 'Closed'],
+    totalResults: 247,
+    execTime: '0.83s',
+    canvasLabel: '247 results found',
+    followUps: ['Filter to active only', 'Show expired DEA', 'View compliance report', 'Compare by state'],
+    chatInsights: [{ icon: 'warning' as const, text: '2 pharmacies have expired DEA licenses', color: '#DC2626' }, { icon: 'location' as const, text: 'Most results concentrated in Texas region', color: '#2968B0' }, { icon: 'stat' as const, text: '88% of matched pharmacies are currently active', color: '#059669' }],
+  };
 }
 
-/* ── Charts Tab ──────────────────────────────────────────────────── */
-function ChartsTab() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {/* Bar chart — Results by State */}
-      <div style={{ padding: '18px 20px', borderRadius: 12, border: '1px solid #E2E8F0', background: '#fff' }}>
-        <div style={{ fontSize: 14, fontWeight: 700, color: '#1E293B', marginBottom: 16 }}>Results by State</div>
-        <div style={{ width: '100%', height: 260 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={BAR_DATA} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9"/>
-              <XAxis dataKey="state" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
-              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
-              <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-              <Bar dataKey="count" fill="#2968B0" radius={[4, 4, 0, 0]} barSize={32}/>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        {/* Pie chart — Distribution by Type */}
-        <div style={{ padding: '18px 20px', borderRadius: 12, border: '1px solid #E2E8F0', background: '#fff' }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#1E293B', marginBottom: 16 }}>Distribution by Type</div>
-          <div style={{ width: '100%', height: 240 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={PIE_DATA} cx="50%" cy="50%" innerRadius={50} outerRadius={85} paddingAngle={3} dataKey="value">
-                  {PIE_DATA.map(d => <Cell key={d.name} fill={d.color}/>)}
-                </Pie>
-                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 12 }}/>
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Area chart — Trend over time */}
-        <div style={{ padding: '18px 20px', borderRadius: 12, border: '1px solid #E2E8F0', background: '#fff' }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#1E293B', marginBottom: 16 }}>Network Trend (6 months)</div>
-          <div style={{ width: '100%', height: 240 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={TREND_DATA} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9"/>
-                <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
-                <YAxis tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
-                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-                <Area type="monotone" dataKey="new" stackId="1" stroke="#10B981" fill="#D1FAE5" strokeWidth={2}/>
-                <Area type="monotone" dataKey="closed" stackId="2" stroke="#EF4444" fill="#FEE2E2" strokeWidth={2}/>
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+/* ── SQL Tab (shared) ─────────────────────────────────────────────── */
+function SqlTab({ sql, resultRows }: { sql: string; resultRows: ResultRow[] }) {
+  return <SharedSqlTab ctx={makeCtx(sql, resultRows)}/>;
 }
 
-/* ── Export Tab ───────────────────────────────────────────────────── */
+/* ── Charts Tab (shared) ──────────────────────────────────────────── */
+function ChartsTab({ sql, resultRows }: { sql: string; resultRows: ResultRow[] }) {
+  return <SharedChartsTab ctx={makeCtx(sql, resultRows)}/>;
+}
+
+/* ── Export Tab (shared) ──────────────────────────────────────────── */
 function ExportTab({ agentName, resultRows, sql }: { agentName: string; resultRows: ResultRow[]; sql: string }) {
-  const [downloading, setDownloading] = useState<string | null>(null);
-
-  function downloadCSV() {
-    setDownloading('csv');
-    const headers = ['NCPDP ID','Pharmacy Name','City','State','Type','DEA Status','Status','Phone'];
-    const csvRows = [
-      headers.join(','),
-      ...resultRows.map(r => [r.ncpdp, `"${r.name}"`, r.city, r.state, r.type, r.dea, r.status, r.phone].join(',')),
-    ];
-    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `${agentName.replace(/\s+/g, '_')}_results.csv`; a.click();
-    URL.revokeObjectURL(url);
-    setTimeout(() => setDownloading(null), 1000);
-  }
-
-  function downloadJSON() {
-    setDownloading('json');
-    const blob = new Blob([JSON.stringify(resultRows, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `${agentName.replace(/\s+/g, '_')}_results.json`; a.click();
-    URL.revokeObjectURL(url);
-    setTimeout(() => setDownloading(null), 1000);
-  }
-
-  function downloadSQL() {
-    setDownloading('sql');
-    const blob = new Blob([sql], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `${agentName.replace(/\s+/g, '_')}_query.sql`; a.click();
-    URL.revokeObjectURL(url);
-    setTimeout(() => setDownloading(null), 1000);
-  }
-
-  function copyEndpoint() {
-    setDownloading('api');
-    navigator.clipboard.writeText(`https://api.dataq.ai/v1/agents/${agentName.toLowerCase().replace(/\s+/g, '-')}/results?format=json&limit=247`).catch(() => {});
-    setTimeout(() => setDownloading(null), 1500);
-  }
-
-  const formats = [
-    { key: 'csv',  icon: <IconReport size={22} color="#2968B0"/>,  label: 'CSV',             desc: 'Comma-separated values. Compatible with Excel, Google Sheets, and any data tool.', size: `~${(resultRows.length * 120 / 1024).toFixed(0)} KB`, action: 'Download CSV',     fn: downloadCSV,   gradient: '#F0F7FF' },
-    { key: 'json', icon: <IconCode size={22} color="#10B981"/>,    label: 'JSON',            desc: 'Structured JSON array. Ideal for programmatic access and API integrations.',        size: `~${(resultRows.length * 200 / 1024).toFixed(0)} KB`, action: 'Download JSON',    fn: downloadJSON,  gradient: '#ECFDF5' },
-    { key: 'sql',  icon: <IconDatabase size={22} color="#F59E0B"/>,label: 'SQL Query',       desc: 'Download the generated SQL query to run directly against your database.',           size: '~1 KB',                                              action: 'Download SQL',     fn: downloadSQL,   gradient: '#FFF7ED' },
-    { key: 'api',  icon: <IconNetwork size={22} color="#2968B0"/>, label: 'API Endpoint',    desc: 'Copy the REST endpoint URL to fetch these results programmatically.',               size: 'Live',                                               action: 'Copy Endpoint',    fn: copyEndpoint,  gradient: '#F0F7FF' },
-  ];
-
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-      {formats.map(f => (
-        <div key={f.key} style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid #E2E8F0', background: '#fff' }}>
-          <div style={{ padding: '16px 20px', background: f.gradient }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-              {f.icon}
-              <div style={{ fontSize: 15, fontWeight: 700, color: '#1E293B' }}>{f.label}</div>
-            </div>
-            <div style={{ fontSize: 13, color: '#64748B', lineHeight: 1.5 }}>{f.desc}</div>
-          </div>
-          <div style={{ padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #F1F5F9' }}>
-            <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>{f.size}</span>
-            <button onClick={f.fn} disabled={downloading === f.key} className="btn-primary" style={{ fontSize: 12, padding: '6px 16px', gap: 5 }}>
-              {downloading === f.key
-                ? (f.key === 'api' ? 'Copied!' : 'Downloading...')
-                : <><IconDownload size={12} color="#fff"/> {f.action}</>
-              }
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  return <SharedExportTab title={agentName} ctx={makeCtx(sql, resultRows)}/>;
 }
 
 /* ── Main inner component ────────────────────────────────────────── */
@@ -392,10 +564,13 @@ function AgentRunInner() {
   const sql = sqlByCategory[agent.category] ?? sqlByCategory['default'];
 
   const [activeTab, setActiveTab] = useState<Tab>('results');
-  const [sqlCopied, setSqlCopied] = useState(false);
   const [chatWidth, setChatWidth] = useState(480);
   const [showOutput, setShowOutput] = useState(false);
   const [hasResults, setHasResults] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<ResultRow | null>(null);
+  const [dynamicCtx, setDynamicCtx] = useState<QueryContext | null>(null);
+  const [queryKey, setQueryKey] = useState(0);
+  const lastGeminiRef = useRef<GeminiResponse | null>(null);
   const dragging = useRef(false);
   const startX = useRef(0);
   const startW = useRef(420);
@@ -431,9 +606,64 @@ function AgentRunInner() {
     { id: 'export',  label: 'Export' },
   ];
 
-  function handleBotReply(msg: string) {
-    setTimeout(() => setHasResults(true), 0);
-    return `Analyzed 68,247 pharmacy records across 50 states.\nFound 247 matching results for: "${msg.slice(0, 80)}${msg.length > 80 ? '...' : ''}"`;
+  function geminiToCtx(g: GeminiResponse): QueryContext {
+    return {
+      rows: g.rows as SharedResultRow[], sql: g.sql, insights: g.insights, stats: g.stats,
+      barData: g.barData, barLabel: g.barLabel, pieData: g.pieData, pieLabel: g.pieLabel,
+      trendData: g.trendData, trendLabel: g.trendLabel, trendKeys: g.trendKeys,
+      totalResults: g.totalResults, execTime: g.execTime,
+      followUps: g.followUps, canvasLabel: g.canvasLabel, chatInsights: g.chatInsights,
+    };
+  }
+
+  async function handleBotReply(msg: string): Promise<string> {
+    const agentContext = `You are the "${agent.name}" agent (${agent.category}). ${agent.desc}. Focus your response on this agent's specialty.`;
+    const gemini = await queryGemini(agentContext + ' ' + msg);
+    if (gemini) {
+      lastGeminiRef.current = gemini;
+      const ctx = geminiToCtx(gemini);
+      setDynamicCtx(ctx);
+      setQueryKey(k => k + 1);
+      setHasResults(true);
+      setShowOutput(true);
+      return gemini.replyText;
+    }
+    // Fallback — use static default context
+    lastGeminiRef.current = null;
+    const fallbackCtx = makeCtx(sql, RESULT_ROWS);
+    setDynamicCtx(fallbackCtx);
+    setQueryKey(k => k + 1);
+    setHasResults(true);
+    setShowOutput(true);
+    return `Analyzed **81,500** pharmacy records based on your query.\n\nResults are ready in the output panel with detailed breakdowns, charts, and export options.`;
+  }
+
+  function handleBotReplied(msg: string) {
+    const g = lastGeminiRef.current;
+    if (g) return { insights: g.chatInsights, followUps: g.followUps, canvasLabel: g.canvasLabel };
+    return {
+      insights: [
+        { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#059669' },
+        { icon: 'info' as const, text: `Agent: ${agent.name} (${agent.category})`, color: '#2968B0' },
+      ],
+      followUps: agentSuggestions.slice(0, 4),
+      canvasLabel: '247 results found',
+    };
+  }
+
+  function handleGetInsights() {
+    return [
+      { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#059669' },
+      { icon: 'info' as const, text: `Agent: ${agent.name}`, color: '#2968B0' },
+    ];
+  }
+
+  function handleGetFollowUps() {
+    return agentSuggestions.slice(0, 4);
+  }
+
+  function handleGetCanvasLabel() {
+    return 'View results';
   }
 
   function handleOpenCanvas() {
@@ -459,9 +689,8 @@ function AgentRunInner() {
       />
       <main style={{ display: 'flex', height: `calc(100vh - var(--topbar-h))` }}>
 
-        {/* ── LEFT: Chat ── */}
+        {/* LEFT: Chat */}
         <div style={{ display: 'flex', flexDirection: 'column', width: showOutput ? chatWidth : '100%', flexShrink: showOutput ? 0 : undefined, flex: showOutput ? undefined : 1, minHeight: 0, overflow: 'hidden', transition: 'width .2s ease' }}>
-          {/* Back link */}
           <div style={{ padding: '8px 18px', borderBottom: '1px solid #F3F4F6', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
             <Link href="/agents" style={{ display: 'flex', alignItems: 'center', gap: 5, textDecoration: 'none', color: '#9CA3AF', fontSize: 12, fontWeight: 500 }}>
               <span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><IconChevronRight size={12}/></span>
@@ -469,15 +698,18 @@ function AgentRunInner() {
             </Link>
           </div>
 
-          {/* Chat area — uses AgentChat internally but we build inline for tighter integration */}
           <AgentChat
             agentName={agent.name}
             agentId={agent.id.toUpperCase()}
             gradient={cc.gradient}
             icon={catIcon(agent.category, 18)}
-            welcomeMessage={`Hi Sarah! I'm ${agent.name}. ${agent.desc}\n\nAsk me anything or pick a suggested query below to get started.`}
+            welcomeMessage={`Hi! I'm ${agent.name}. ${agent.desc}\n\nI can search, analyze, and compare data across 81,500 pharmacy records. Ask me anything or pick a query below.`}
             suggestions={agentSuggestions}
             getBotReply={handleBotReply}
+            getInsights={handleGetInsights}
+            getFollowUps={handleGetFollowUps}
+            getCanvasLabel={handleGetCanvasLabel}
+            onBotReplied={handleBotReplied}
             onOpenCanvas={handleOpenCanvas}
             hideHeader
             fluid
@@ -486,7 +718,7 @@ function AgentRunInner() {
 
         {showOutput && (
           <>
-            {/* ── Resize handle ── */}
+            {/* Resize handle */}
             <div
               onMouseDown={onMouseDown}
               style={{
@@ -512,11 +744,8 @@ function AgentRunInner() {
               </div>
             </div>
 
-            {/* ── RIGHT: Results panel ── */}
+            {/* RIGHT: Results panel */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#FAFBFC', minWidth: 0 }}>
-
-
-
               {/* Tabs */}
               <div style={{ display: 'flex', borderBottom: '1px solid #E2E8F0', background: '#fff', flexShrink: 0 }}>
                 {tabs.map(t => (
@@ -544,11 +773,48 @@ function AgentRunInner() {
                       Send a message in the chat to run this agent. Results will appear here.
                     </div>
                   </div>
+                ) : dynamicCtx ? (
+                  /* Gemini-powered dynamic output */
+                  <React.Fragment key={queryKey}>
+                    {activeTab === 'results' && (
+                      <div>
+                        {/* Insights */}
+                        <div style={{ marginBottom: 16, padding: '14px 16px', borderRadius: 12, background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 50%, #FAFBFC 100%)', border: '1px solid #E8EFF8' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 10 }}>
+                            <IconSparkles size={12} color="#2968B0"/> AI Insights
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {dynamicCtx.insights.map((ins, i) => (
+                              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: ins.type === 'danger' ? '#FEF2F2' : ins.type === 'warning' ? '#FFF7ED' : ins.type === 'success' ? '#ECFDF5' : '#F0F7FF', border: `1px solid ${ins.type === 'danger' ? '#FECACA' : ins.type === 'warning' ? '#FDE68A' : ins.type === 'success' ? '#A7F3D0' : '#B8D5F5'}`, fontSize: 12, color: ins.type === 'danger' ? '#991B1B' : ins.type === 'warning' ? '#92400E' : ins.type === 'success' ? '#065F46' : '#1E40AF', lineHeight: 1.4 }}>
+                                {ins.type === 'danger' ? <IconAlertTriangle size={14} color="#DC2626"/> : <IconBarChart size={14} color={ins.type === 'success' ? '#059669' : '#2968B0'}/>}
+                                <span style={{ flex: 1 }}>{ins.text}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Stats */}
+                        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${dynamicCtx.stats.length},1fr)`, gap: 10, marginBottom: 18 }}>
+                          {dynamicCtx.stats.map(s => (
+                            <div key={s.label} style={{ padding: '12px 16px', borderRadius: 8, background: s.bg, textAlign: 'center' }}>
+                              <div style={{ fontSize: 11, fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>{s.label}</div>
+                              <div style={{ fontSize: 20, fontWeight: 700, color: s.color, marginTop: 4 }}>{s.value}</div>
+                            </div>
+                          ))}
+                        </div>
+                        {/* Table */}
+                        <ResultsTab agentName={agent.name} resultRows={dynamicCtx.rows as ResultRow[]} onRowClick={setSelectedRow}/>
+                      </div>
+                    )}
+                    {activeTab === 'sql' && <SharedSqlTab ctx={dynamicCtx}/>}
+                    {activeTab === 'charts' && <SharedChartsTab ctx={dynamicCtx}/>}
+                    {activeTab === 'export' && <SharedExportTab title={agent.name} ctx={dynamicCtx}/>}
+                  </React.Fragment>
                 ) : (
+                  /* Static fallback */
                   <>
-                    {activeTab === 'results' && <ResultsTab agentName={agent.name} resultRows={RESULT_ROWS}/>}
-                    {activeTab === 'sql' && <SqlTab sql={sql}/>}
-                    {activeTab === 'charts' && <ChartsTab/>}
+                    {activeTab === 'results' && <ResultsTab agentName={agent.name} resultRows={RESULT_ROWS} onRowClick={setSelectedRow}/>}
+                    {activeTab === 'sql' && <SqlTab sql={sql} resultRows={RESULT_ROWS}/>}
+                    {activeTab === 'charts' && <ChartsTab sql={sql} resultRows={RESULT_ROWS}/>}
                     {activeTab === 'export' && <ExportTab agentName={agent.name} resultRows={RESULT_ROWS} sql={sql}/>}
                   </>
                 )}
@@ -556,7 +822,29 @@ function AgentRunInner() {
             </div>
           </>
         )}
+
+        {/* Pharmacy Detail Drawer */}
+        {selectedRow && (
+          <>
+            <div
+              onClick={() => setSelectedRow(null)}
+              style={{
+                position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.15)',
+                zIndex: 99, animation: 'fadeIn .15s ease-out',
+              }}
+            />
+            <PharmacyDrawer row={selectedRow} onClose={() => setSelectedRow(null)}/>
+          </>
+        )}
       </main>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .badge-pulse-warning { animation: pulseWarning 2s ease-in-out infinite; display: inline-flex; }
+        .badge-pulse-danger { animation: pulseDanger 2s ease-in-out infinite; display: inline-flex; }
+        @keyframes pulseWarning { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.1); } }
+        @keyframes pulseDanger { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+      `}</style>
     </>
   );
 }

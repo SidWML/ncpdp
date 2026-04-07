@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Topbar } from '@/components/layout/Topbar';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { FieldLabel, TextInput, Select, MultiSelect, DateRange, SectionTitle } from '@/components/ui/FormFields';
+import { FieldLabel, TextInput, Select, MultiSelect, DateRange, Accordion } from '@/components/ui/FormFields';
 import { IconSearch, IconRefresh, IconDownload, IconSparkles, IconGlobe } from '@/components/ui/Icons';
 import { AgentChat } from '@/components/ui/AgentChat';
 import { DISPENSER_CLASSES, PROVIDER_TYPES, RELATIONSHIPS, US_STATES, SERVICES } from '@/lib/filter-options';
@@ -62,27 +62,33 @@ export default function GeographicSearchPage() {
                 </button>
               </div>
             </div>
-            <CardBody style={{ padding: '20px 24px 24px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 14 }}>
-                <div><FieldLabel>Pharmacy DBA Name</FieldLabel><TextInput placeholder="Pharmacy DBA Name"/></div>
-                <div><FieldLabel>Address</FieldLabel><TextInput placeholder="Address"/></div>
-                <div><FieldLabel>Dispenser Class</FieldLabel><MultiSelect options={DISPENSER_CLASSES} height={88}/></div>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 14 }}>
-                <div><FieldLabel>Store Number</FieldLabel><TextInput placeholder="Store Number"/></div>
-                <div><FieldLabel>City</FieldLabel><TextInput placeholder="City"/></div>
-                <div><FieldLabel>Provider Type</FieldLabel><MultiSelect options={PROVIDER_TYPES} height={88}/></div>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 14 }}>
-                <DateRange label="Open Date"/>
-                <div><FieldLabel>State</FieldLabel><MultiSelect options={US_STATES} height={88}/></div>
-                <div><FieldLabel>Relationship</FieldLabel><MultiSelect options={RELATIONSHIPS} height={88}/></div>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-                <DateRange label="Close Date"/>
-                <div><FieldLabel>ZIP</FieldLabel><TextInput placeholder="ZIP Code"/></div>
-                <div><FieldLabel>Status</FieldLabel><Select><option>Active</option><option>Inactive</option><option>All</option></Select></div>
-              </div>
+            <CardBody style={{ padding: '16px 20px 20px' }}>
+              <Accordion title="Search Criteria" defaultOpen>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div><FieldLabel>Pharmacy DBA Name</FieldLabel><TextInput placeholder="Pharmacy DBA Name"/></div>
+                  <div><FieldLabel>Address</FieldLabel><TextInput placeholder="Address"/></div>
+                  <div><FieldLabel>Store Number</FieldLabel><TextInput placeholder="Store Number"/></div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                  <div><FieldLabel>City</FieldLabel><TextInput placeholder="City"/></div>
+                  <div><FieldLabel>State</FieldLabel><MultiSelect options={US_STATES} height={88}/></div>
+                  <div><FieldLabel>ZIP</FieldLabel><TextInput placeholder="ZIP Code"/></div>
+                </div>
+              </Accordion>
+              <Accordion title="Classification">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                  <div><FieldLabel>Dispenser Class</FieldLabel><MultiSelect options={DISPENSER_CLASSES} height={88}/></div>
+                  <div><FieldLabel>Provider Type</FieldLabel><MultiSelect options={PROVIDER_TYPES} height={88}/></div>
+                  <div><FieldLabel>Relationship</FieldLabel><MultiSelect options={RELATIONSHIPS} height={88}/></div>
+                </div>
+              </Accordion>
+              <Accordion title="Date Ranges & Status">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                  <DateRange label="Open Date"/>
+                  <DateRange label="Close Date"/>
+                  <div><FieldLabel>Status</FieldLabel><Select><option>Active</option><option>Inactive</option><option>All</option></Select></div>
+                </div>
+              </Accordion>
             </CardBody>
           </Card>
 
@@ -156,12 +162,12 @@ export default function GeographicSearchPage() {
             agentId="AGT-03"
             gradient="linear-gradient(135deg,#10B981,#06B6D4)"
             icon={<IconGlobe size={18} color="#fff"/>}
-            welcomeMessage="Hi Sarah! I'm your Network Analyzer Agent. I can analyze geographic coverage, identify pharmacy deserts, and generate network adequacy reports for CMS. What coverage area should I analyze?"
+            welcomeMessage="Hi Sarah! I'm your Network Analyzer Agent. I can analyze geographic coverage, identify pharmacy deserts, and generate network adequacy reports for regulatory. What coverage area should I analyze?"
             suggestions={[
               'Identify coverage gaps in rural California zip codes',
               'Which states are below 90% network adequacy threshold?',
               'Show specialty pharmacy deserts in the midwest',
-              'Generate a network adequacy report for CMS submission',
+              'Generate a network adequacy report for regulatory submission',
               'Find all counties without a 24/7 pharmacy within 15 miles',
             ]}
           />

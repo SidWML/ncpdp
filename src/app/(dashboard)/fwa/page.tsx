@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/Icons';
 
 const attestationStats = [
-  { label: 'Attestation Required',  value: '68,247', color: '#2968B0', bg: '#F0F7FF', border: '#B8D5F5' },
-  { label: 'Completed',             value: '62,184', color: '#10B981', bg: '#ECFDF5', border: '#A7F3D0' },
+  { label: 'Attestation Required',  value: '81,500', color: '#2968B0', bg: '#F0F7FF', border: '#B8D5F5' },
+  { label: 'Completed',             value: '73,350', color: '#10B981', bg: '#ECFDF5', border: '#A7F3D0' },
   { label: 'Pending (In Progress)', value: '4,891',  color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
   { label: 'Overdue',               value: '1,172',  color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
 ];
@@ -54,7 +54,7 @@ export default function FWAPage() {
     setTimeout(() => { setSending(false); setSent(true); setSelected([]); }, 1200);
   }
 
-  const completionPct = Math.round((62184 / 68247) * 100);
+  const completionPct = Math.round((73350 / 81500) * 100);
 
   return (
     <>
@@ -115,7 +115,7 @@ export default function FWAPage() {
             <CardBody style={{ padding: '16px 20px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 12 }}>
                 <span style={{ fontSize: 48, fontWeight: 700, color: '#2968B0', lineHeight: 1 }}>{completionPct}%</span>
-                <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>62,184 of 68,247 pharmacies</span>
+                <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>73,350 of 81,500 pharmacies</span>
               </div>
               <Progress value={completionPct} color="#2968B0" height={10}/>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 12, color: 'var(--text-muted)' }}>
@@ -125,7 +125,7 @@ export default function FWAPage() {
 
               <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { label: 'Completed', count: 62184, color: '#10B981', pct: 91.1 },
+                  { label: 'Completed', count: 73350, color: '#10B981', pct: 91.1 },
                   { label: 'In Progress', count: 4891, color: '#D97706', pct: 7.2  },
                   { label: 'Overdue',   count: 1172,  color: '#DC2626', pct: 1.7   },
                 ].map(b => (

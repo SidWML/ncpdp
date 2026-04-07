@@ -6,7 +6,7 @@ import { Card, CardBody } from '@/components/ui/Card';
 import {
   IconDownload, IconRefresh, IconSearch,
 } from '@/components/ui/Icons';
-import { FieldLabel, TextInput, Select, DateRange } from '@/components/ui/FormFields';
+import { FieldLabel, TextInput, Select, DateRange, Accordion } from '@/components/ui/FormFields';
 import {
   DISPENSER_CLASSES, PROVIDER_TYPES, RELATIONSHIPS, SERVICES,
   ORDER_BY_OPTIONS,
@@ -65,48 +65,53 @@ export default function ReportsPage() {
           <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9' }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>dataQ OnDemand</div>
           </div>
-          <CardBody style={{ padding: '18px 24px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
-              <div><FieldLabel>Relationship Type</FieldLabel><Select><option>--All--</option><option>Member</option><option>Network</option><option>Preferred</option></Select></div>
-              <div><FieldLabel>Provider Type</FieldLabel><Select><option>--Select Provider Type--</option>{PROVIDER_TYPES.map(o => <option key={o}>{o}</option>)}</Select></div>
-              <div><FieldLabel>Languages</FieldLabel><Select><option>--Select--</option><option>English</option><option>Spanish</option><option>Chinese</option><option>French</option></Select></div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 6 }}>
-              <div><FieldLabel>Group Keys</FieldLabel><TextInput placeholder="Enter group key(s)"/></div>
-              <div><FieldLabel>Payment Center</FieldLabel><Select><option>--All--</option><option>CVS CAREMARK</option><option>EXPRESS SCRIPTS</option><option>OPTUMRX</option></Select></div>
-              <div><FieldLabel>City</FieldLabel><TextInput placeholder="City"/></div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/><span style={{ fontSize: 12, fontWeight: 600, color: '#94A3B8', padding: '0 4px' }}>OR</span><div style={{ flex: 1, height: 1, background: '#E2E8F0' }}/>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
-              <div><FieldLabel>Relationship Name</FieldLabel><Select><option>--All--</option>{RELATIONSHIPS.map(o => <option key={o}>{o}</option>)}</Select></div>
-              <div><FieldLabel>Parent Organization</FieldLabel><Select><option>--All--</option><option>CVS Health</option><option>Walgreens Boots Alliance</option><option>Rite Aid</option></Select></div>
-              <div><FieldLabel>State</FieldLabel><Select><option>--Select--</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>California</option><option>Colorado</option><option>Florida</option><option>Georgia</option><option>Illinois</option><option>Michigan</option><option>New York</option><option>Ohio</option><option>Pennsylvania</option><option>Texas</option><option>Washington</option></Select></div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
-              <div><FieldLabel>Dispenser Class</FieldLabel><Select><option>--All--</option>{DISPENSER_CLASSES.map(o => <option key={o}>{o}</option>)}</Select></div>
-              <div><FieldLabel>Services Available</FieldLabel><Select><option>--Select Service--</option>{SERVICES.map(o => <option key={o}>{o}</option>)}</Select></div>
-              <div><FieldLabel>Zip</FieldLabel><TextInput placeholder="ZIP Code"/></div>
-              <div><FieldLabel>County Code</FieldLabel><TextInput placeholder="County Code"/></div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '180px 180px 180px 1fr', gap: 14, alignItems: 'end', marginBottom: 14 }}>
-              <div><FieldLabel>24/7</FieldLabel><Select><option>--All--</option><option>Yes</option><option>No</option></Select></div>
-              <div><FieldLabel>MSA</FieldLabel><TextInput placeholder="MSA Code"/></div>
-              <div><FieldLabel>PMSA</FieldLabel><TextInput placeholder="PMSA Code"/></div>
-              <div style={{ paddingBottom: 6 }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#334155', cursor: 'pointer' }}>
-                  <input type="checkbox" style={{ width: 14, height: 14 }}/> Include Inactive Relation
-                </label>
+          <CardBody style={{ padding: '16px 20px 20px' }}>
+            <Accordion title="Relationship & Provider" defaultOpen>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 12 }}>
+                <div><FieldLabel>Relationship Type</FieldLabel><Select><option>--All--</option><option>Member</option><option>Network</option><option>Preferred</option></Select></div>
+                <div><FieldLabel>Provider Type</FieldLabel><Select><option>--Select Provider Type--</option>{PROVIDER_TYPES.map(o => <option key={o}>{o}</option>)}</Select></div>
+                <div><FieldLabel>Languages</FieldLabel><Select><option>--Select--</option><option>English</option><option>Spanish</option><option>Chinese</option><option>French</option></Select></div>
               </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
-              <DateRange label="Relationship Start"/><DateRange label="Relationship End"/><DateRange label="Open Date"/><DateRange label="Close Date"/>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 14, marginBottom: 20 }}>
-              <div><FieldLabel>Order By</FieldLabel><Select value={orderBy} onChange={e => setOrderBy(e.target.value)}>{ORDER_BY_OPTIONS.map(o => <option key={o}>{o}</option>)}</Select></div>
-              <div><FieldLabel>Status</FieldLabel><Select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}><option>Active NCPDP IDs</option><option>Inactive NCPDP IDs</option><option>All NCPDP IDs</option></Select></div>
-            </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
+                <div><FieldLabel>Group Keys</FieldLabel><TextInput placeholder="Enter group key(s)"/></div>
+                <div><FieldLabel>Payment Center</FieldLabel><Select><option>--All--</option><option>CVS CAREMARK</option><option>EXPRESS SCRIPTS</option><option>OPTUMRX</option></Select></div>
+                <div><FieldLabel>Relationship Name</FieldLabel><Select><option>--All--</option>{RELATIONSHIPS.map(o => <option key={o}>{o}</option>)}</Select></div>
+              </div>
+            </Accordion>
+            <Accordion title="Location & Classification">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 12 }}>
+                <div><FieldLabel>Parent Organization</FieldLabel><Select><option>--All--</option><option>CVS Health</option><option>Walgreens Boots Alliance</option><option>Rite Aid</option></Select></div>
+                <div><FieldLabel>State</FieldLabel><Select><option>--Select--</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>California</option><option>Colorado</option><option>Florida</option><option>Georgia</option><option>Illinois</option><option>Michigan</option><option>New York</option><option>Ohio</option><option>Pennsylvania</option><option>Texas</option><option>Washington</option></Select></div>
+                <div><FieldLabel>City</FieldLabel><TextInput placeholder="City"/></div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14 }}>
+                <div><FieldLabel>Dispenser Class</FieldLabel><Select><option>--All--</option>{DISPENSER_CLASSES.map(o => <option key={o}>{o}</option>)}</Select></div>
+                <div><FieldLabel>Services Available</FieldLabel><Select><option>--Select Service--</option>{SERVICES.map(o => <option key={o}>{o}</option>)}</Select></div>
+                <div><FieldLabel>Zip</FieldLabel><TextInput placeholder="ZIP Code"/></div>
+                <div><FieldLabel>County Code</FieldLabel><TextInput placeholder="County Code"/></div>
+              </div>
+            </Accordion>
+            <Accordion title="Additional Filters">
+              <div style={{ display: 'grid', gridTemplateColumns: '180px 180px 180px 1fr', gap: 14, alignItems: 'end' }}>
+                <div><FieldLabel>24/7</FieldLabel><Select><option>--All--</option><option>Yes</option><option>No</option></Select></div>
+                <div><FieldLabel>MSA</FieldLabel><TextInput placeholder="MSA Code"/></div>
+                <div><FieldLabel>PMSA</FieldLabel><TextInput placeholder="PMSA Code"/></div>
+                <div style={{ paddingBottom: 6 }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#334155', cursor: 'pointer' }}>
+                    <input type="checkbox" style={{ width: 14, height: 14 }}/> Include Inactive Relation
+                  </label>
+                </div>
+              </div>
+            </Accordion>
+            <Accordion title="Date Ranges & Output">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14, marginBottom: 12 }}>
+                <DateRange label="Relationship Start"/><DateRange label="Relationship End"/><DateRange label="Open Date"/><DateRange label="Close Date"/>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 14 }}>
+                <div><FieldLabel>Order By</FieldLabel><Select value={orderBy} onChange={e => setOrderBy(e.target.value)}>{ORDER_BY_OPTIONS.map(o => <option key={o}>{o}</option>)}</Select></div>
+                <div><FieldLabel>Status</FieldLabel><Select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}><option>Active NCPDP IDs</option><option>Inactive NCPDP IDs</option><option>All NCPDP IDs</option></Select></div>
+              </div>
+            </Accordion>
             <div style={{ display: 'flex', justifyContent: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid #F1F5F9' }}>
               <button className="btn-primary" onClick={handleViewReport} disabled={reporting} style={{ gap: 6, padding: '8px 28px', minWidth: 130 }}>
                 {reporting ? <><IconRefresh size={14} color="#fff"/> Querying...</> : <><IconSearch size={14} color="#fff"/> View Report</>}

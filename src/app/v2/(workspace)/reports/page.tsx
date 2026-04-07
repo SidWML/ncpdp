@@ -73,7 +73,7 @@ const GROWTH_TREND = [
   { month: 'Aug 25', total: 65100 }, { month: 'Sep 25', total: 65500 },
   { month: 'Oct 25', total: 65800 }, { month: 'Nov 25', total: 66100 },
   { month: 'Dec 25', total: 66700 }, { month: 'Jan 26', total: 67200 },
-  { month: 'Feb 26', total: 67800 }, { month: 'Mar 26', total: 68247 },
+  { month: 'Feb 26', total: 67800 }, { month: 'Mar 26', total: 81500 },
 ];
 
 const COVERAGE_BY_STATE = [
@@ -466,7 +466,7 @@ export default function ReportsPage() {
                   if (msg.toLowerCase().includes('growth') || msg.toLowerCase().includes('network')) {
                     return 'Analyzed network growth data across all 50 states.\n\nNet pharmacy additions: +1,849 over the last 6 months. Top growth states: CA (+48), TX (+37), FL (+29).\n\nThe preview panel shows the full state-by-state breakdown.';
                   }
-                  return `Analyzed 68,247 pharmacy records across 50 states.\nBuilding report for: "${msg.slice(0, 80)}${msg.length > 80 ? '...' : ''}".\n\nThe preview panel has been updated with the results.`;
+                  return `Analyzed 81,500 pharmacy records across 50 states.\nBuilding report for: "${msg.slice(0, 80)}${msg.length > 80 ? '...' : ''}".\n\nThe preview panel has been updated with the results.`;
                 }}
                 hideHeader={false}
                 fluid
@@ -482,7 +482,7 @@ export default function ReportsPage() {
                     AI-Generated Report
                   </div>
                   <h2 className="v2-title" style={{ fontSize: 18, marginBottom: 4 }}>Q1 2026 Credential Expiry Report</h2>
-                  <div className="v2-sub">Generated Mar 31, 2026 at 2:45 PM — 68,247 records analyzed</div>
+                  <div className="v2-sub">Generated Mar 31, 2026 at 2:45 PM — 81,500 records analyzed</div>
                 </div>
                 <button className="v2b v2b-g" style={{ fontSize: 11, display: 'flex', alignItems: 'center', gap: 5 }}>
                   <IconDownload size={11}/> Download PDF

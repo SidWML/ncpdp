@@ -85,7 +85,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Network Performance Overview</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>68,247 pharmacies · 50 states · Real-time data</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>81,500 pharmacies · 50 states · Real-time data</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)' }}>Period:</span>
@@ -109,9 +109,9 @@ export default function AnalyticsPage() {
         {/* ── KPI cards ── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
           {[
-            { label: 'Total Network',    value: '68,247', sub: '+312 this month',        bar: 72,  color: '#2968B0', delta: '+0.5%', green: true  },
+            { label: 'Total Network',    value: '81,500', sub: '+312 this month',        bar: 72,  color: '#2968B0', delta: '+0.5%', green: true  },
             { label: 'Credential Score', value: 'A−',     sub: '↑ from B+ last quarter', bar: 87,  color: '#10B981', delta: '+1.3%', green: true  },
-            { label: 'Network Adequacy', value: '97.2%',  sub: '48 / 50 states meet CMS', bar: 97, color: '#2968B0', delta: '+0.4%', green: true  },
+            { label: 'Network Adequacy', value: '97.2%',  sub: '48 / 50 states meet threshold', bar: 97, color: '#2968B0', delta: '+0.4%', green: true  },
             { label: 'Profile Complete', value: '84%',    sub: '↑ 4% this quarter',      bar: 84,  color: '#F59E0B', delta: '+4%',   green: true  },
           ].map(k => (
             <div key={k.label} className="card" style={{ padding: '18px 20px' }}>
@@ -188,7 +188,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 14, marginBottom: 16 }}>
 
           <Card>
-            <CardHeader title="Coverage by State" subtitle="CMS network adequacy — Q1 2026"/>
+            <CardHeader title="Coverage by State" subtitle="network adequacy — Q1 2026"/>
             <CardBody style={{ padding: 0 }}>
               <table className="data-table">
                 <thead>
@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
           </Card>
 
           <Card>
-            <CardHeader title="Compliance Targets" subtitle="vs CMS benchmarks — Q1"/>
+            <CardHeader title="Compliance Targets" subtitle="vs industry benchmarks — Q1"/>
             <CardBody style={{ padding: '16px 20px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
               {complianceTargets.map(c => (
                 <div key={c.label}>

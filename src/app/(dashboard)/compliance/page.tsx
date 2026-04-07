@@ -12,10 +12,10 @@ const overallScore = 94;
 const auditItems = [
   { item: 'DEA Registration Verification',  status: 'pass',    count: '64,238 active',    last: 'Mar 31, 2026' },
   { item: 'State License Currency',         status: 'pass',    count: '67,079 current',   last: 'Mar 31, 2026' },
-  { item: 'URAC Accreditation',             status: 'pass',    count: '12,840 accredited', last: 'Mar 30, 2026' },
+  { item: 'ACHC Accreditation',             status: 'pass',    count: '12,840 accredited', last: 'Mar 30, 2026' },
   { item: 'FWA Attestation Collection',     status: 'warning', count: '6 pending review', last: 'Mar 29, 2026' },
   { item: 'No Surprises Act Reporting',     status: 'warning', count: '12 reports due',   last: 'Mar 28, 2026' },
-  { item: 'CMS Network Adequacy Standards', status: 'pass',    count: '96% compliance',   last: 'Mar 31, 2026' },
+  { item: 'Network Adequacy Standards', status: 'pass',    count: '96% compliance',   last: 'Mar 31, 2026' },
   { item: 'Medicare Part D Enrollment',     status: 'pass',    count: '41,200 verified',  last: 'Mar 30, 2026' },
   { item: 'Medicaid Provider Enrollment',   status: 'pass',    count: '38,950 current',   last: 'Mar 30, 2026' },
 ];
@@ -41,7 +41,7 @@ export default function CompliancePage() {
     <>
       <Topbar
         title="Compliance Dashboard"
-        subtitle="CMS · DEA · FWA · No Surprises Act · Accreditation"
+        subtitle="DEA · FWA · Accreditation"
         actions={
           <div style={{ display: 'flex', gap: 6 }}>
             <button className="btn-secondary" style={{ fontSize: 12, gap: 5 }}>
@@ -69,7 +69,7 @@ export default function CompliancePage() {
             display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669',
           }}>
             <IconCheck size={16} color="#059669"/>
-            Compliance scan complete — 68,247 records reviewed, 18 items flagged for review
+            Compliance scan complete — 81,500 records reviewed, 18 items flagged for review
           </div>
         )}
 
@@ -210,7 +210,7 @@ export default function CompliancePage() {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
                   {[
-                    { label: 'Records Checked',  value: '68,247' },
+                    { label: 'Records Checked',  value: '81,500' },
                     { label: 'Issues Found',     value: auditItems[selected].status === 'warning' ? '6' : '0' },
                     { label: 'Compliance Rate',  value: statusConfig[auditItems[selected].status as keyof typeof statusConfig].label === 'Pass' ? '99.8%' : '91.2%' },
                   ].map(m => (

@@ -20,18 +20,18 @@ const AVATAR_COLORS = [
 
 // -- Pharmacy data
 const PHARMACIES = [
-  { id: '0542187', name: 'Valley Care Pharmacy', city: 'Phoenix', state: 'AZ', type: 'Community', dea: 'Active', npi: '1234567890', phone: '(602) 555-0142', address: '1420 N Central Ave', zip: '85004', parent: 'Independent', open: '03/15/2008' },
-  { id: '0891234', name: 'Sunrise Health Rx', city: 'San Diego', state: 'CA', type: 'Specialty', dea: 'Active', npi: '2345678901', phone: '(619) 555-0198', address: '8880 Rio San Diego Dr', zip: '92108', parent: 'CVS Health', open: '11/22/2012' },
-  { id: '1032456', name: 'MedExpress Pharmacy', city: 'Dallas', state: 'TX', type: 'Mail Service', dea: 'Expiring', npi: '3456789012', phone: '(214) 555-0265', address: '3200 Main St', zip: '75226', parent: 'Optum Rx', open: '06/01/2015' },
-  { id: '0673891', name: 'PharmaPlus Solutions', city: 'Chicago', state: 'IL', type: 'Community', dea: 'Active', npi: '4567890123', phone: '(312) 555-0334', address: '500 W Madison St', zip: '60661', parent: 'Walgreens', open: '01/10/2005' },
-  { id: '1245678', name: 'CareFirst Rx', city: 'Miami', state: 'FL', type: 'Long-Term Care', dea: 'Active', npi: '5678901234', phone: '(305) 555-0411', address: '200 S Biscayne Blvd', zip: '33131', parent: 'Independent', open: '09/18/2018' },
-  { id: '0987654', name: 'Northwest Compounding', city: 'Seattle', state: 'WA', type: 'Compounding', dea: 'Expired', npi: '6789012345', phone: '(206) 555-0523', address: '4001 Aurora Ave N', zip: '98103', parent: 'Independent', open: '04/05/2010' },
-  { id: '0456321', name: 'Heritage Drug Store', city: 'Boston', state: 'MA', type: 'Community', dea: 'Active', npi: '7890123456', phone: '(617) 555-0688', address: '75 State St', zip: '02109', parent: 'Rite Aid', open: '08/22/1998' },
-  { id: '1178432', name: 'Pacific Specialty Rx', city: 'Portland', state: 'OR', type: 'Specialty', dea: 'Active', npi: '8901234567', phone: '(503) 555-0741', address: '1022 SW Salmon St', zip: '97205', parent: 'Cigna Healthcare', open: '02/14/2020' },
-  { id: '0334567', name: 'Central Infusion Care', city: 'Denver', state: 'CO', type: 'Home Infusion', dea: 'Active', npi: '9012345678', phone: '(720) 555-0812', address: '1700 Broadway', zip: '80290', parent: 'Independent', open: '07/30/2016' },
-  { id: '0765432', name: 'Greenfield Pharmacy', city: 'Atlanta', state: 'GA', type: 'Community', dea: 'Expiring', npi: '0123456789', phone: '(404) 555-0999', address: '3393 Peachtree Rd NE', zip: '30326', parent: 'Independent', open: '12/01/2011' },
-  { id: '1456789', name: 'Metro Health Drugs', city: 'New York', state: 'NY', type: 'Community', dea: 'Active', npi: '1122334455', phone: '(212) 555-1020', address: '420 Lexington Ave', zip: '10170', parent: 'CVS Health', open: '05/19/2003' },
-  { id: '0298765', name: 'SunCoast Rx Center', city: 'Tampa', state: 'FL', type: 'Specialty', dea: 'Active', npi: '2233445566', phone: '(813) 555-1155', address: '100 N Tampa St', zip: '33602', parent: 'Walgreens', open: '10/08/2017' },
+  { id: '0512345', name: 'Option Care Health', city: 'Los Angeles', state: 'CA', type: 'Specialty', dea: 'Active', npi: '1700186859', phone: '(213) 482-0198', address: '3880 Kilroy Airport Way', zip: '90806', parent: 'Option Care Health Inc.', open: '03/15/2008' },
+  { id: '0534567', name: 'Diplomat Pharmacy', city: 'San Diego', state: 'CA', type: 'Specialty', dea: 'Active', npi: '1437262858', phone: '(619) 231-4120', address: '8880 Rio San Diego Dr', zip: '92108', parent: 'UnitedHealth Group', open: '11/22/2012' },
+  { id: '2810042', name: 'Accredo Health Group', city: 'Houston', state: 'TX', type: 'Specialty', dea: 'Active', npi: '1346374806', phone: '(713) 654-4120', address: '2500 CityWest Blvd', zip: '77042', parent: 'Evernorth Health', open: '06/01/2015' },
+  { id: '1209834', name: 'Kindred Healthcare Pharmacy', city: 'Chicago', state: 'IL', type: 'Long-Term Care', dea: 'Active', npi: '1790081453', phone: '(312) 476-8710', address: '222 Merchandise Mart Plaza', zip: '60654', parent: 'Humana Inc.', open: '01/10/2005' },
+  { id: '5920187', name: 'Genoa Healthcare Pharmacy', city: 'Miami', state: 'FL', type: 'Specialty', dea: 'Active', npi: '1629187402', phone: '(305) 374-2910', address: '1500 NW 12th Ave', zip: '33136', parent: 'Optum Rx', open: '09/18/2018' },
+  { id: '4519827', name: 'ProCare Pharmacy', city: 'Seattle', state: 'WA', type: 'Specialty', dea: 'Active', npi: '1184756923', phone: '(206) 832-9230', address: '1201 3rd Ave', zip: '98101', parent: 'Independent', open: '04/05/2010' },
+  { id: '6701245', name: 'Shields Health Solutions', city: 'Boston', state: 'MA', type: 'Specialty', dea: 'Active', npi: '1437262858', phone: '(617) 610-7640', address: '30 Rowes Wharf', zip: '02110', parent: 'Shields Health', open: '08/22/1998' },
+  { id: '0412893', name: 'Coram CVS Specialty Infusion', city: 'Denver', state: 'CO', type: 'Home Infusion', dea: 'Active', npi: '1518067230', phone: '(720) 891-5430', address: '7700 E Colfax Ave', zip: '80220', parent: 'CVS Health', open: '07/30/2016' },
+  { id: '3290156', name: 'OnePoint Patient Care', city: 'Atlanta', state: 'GA', type: 'Long-Term Care', dea: 'Active', npi: '1122334455', phone: '(404) 753-6890', address: '3625 Cumberland Blvd', zip: '30339', parent: 'Independent', open: '12/01/2011' },
+  { id: '7623041', name: 'Orsini Specialty Pharmacy', city: 'New York', state: 'NY', type: 'Specialty', dea: 'Active', npi: '0123456789', phone: '(212) 389-4470', address: '787 7th Ave', zip: '10019', parent: 'Independent', open: '05/19/2003' },
+  { id: '8832014', name: 'AdhereHealth Pharmacy', city: 'Nashville', state: 'TN', type: 'Specialty', dea: 'Active', npi: '2233445566', phone: '(615) 921-3420', address: '1033 Demonbreun St', zip: '37203', parent: 'AdhereHealth LLC', open: '02/14/2020' },
+  { id: '0501234', name: 'CarePharma Holdings', city: 'Tampa', state: 'FL', type: 'Specialty', dea: 'Active', npi: '1184756923', phone: '(813) 284-1155', address: '100 N Tampa St', zip: '33602', parent: 'CarePharma LLC', open: '10/08/2017' },
 ];
 
 // -- Ownership changes data
@@ -54,7 +54,7 @@ const OWNERSHIP_CHANGES_UNPROCESSED = [
 // -- Geographic adequacy data
 const GEO_STATS = [
   { label: 'States Analyzed', value: '50', sub: 'All US states', color: '#6366F1' },
-  { label: 'CMS Adequate', value: '44', sub: '88% meeting criteria', color: '#059669' },
+  { label: 'Adequate', value: '44', sub: '88% meeting criteria', color: '#059669' },
   { label: 'Coverage Gaps', value: '12', sub: 'Counties below threshold', color: '#D97706' },
   { label: 'Avg Coverage', value: '94.2%', sub: '+1.3% vs last quarter', color: '#3B82F6' },
 ];
@@ -156,7 +156,7 @@ export default function SearchPage() {
             Search the NCPDP Database
           </h1>
           <p style={{ fontSize: 13.5, color: 'var(--v3-text-3)', margin: '0 0 24px', lineHeight: 1.5 }}>
-            68,247 pharmacies across all 50 states. Ask anything or use filters below.
+            81,500 pharmacies across all 50 states. Ask anything or use filters below.
           </p>
 
           {/* AI Prompt input */}

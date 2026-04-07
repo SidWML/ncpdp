@@ -15,7 +15,7 @@ import {
 /* Data */
 const TREND = [
   { m: 'Oct', v: 65800 }, { m: 'Nov', v: 66100 }, { m: 'Dec', v: 66700 },
-  { m: 'Jan', v: 67200 }, { m: 'Feb', v: 67800 }, { m: 'Mar', v: 68247 },
+  { m: 'Jan', v: 67200 }, { m: 'Feb', v: 67800 }, { m: 'Mar', v: 81500 },
 ];
 const CRED = [
   { name: 'Active', value: 64238, color: '#10B981' },
@@ -44,7 +44,7 @@ const CHANGES = [
 ];
 const HEALTH = [
   { l: 'DEA Compliance',   v: 98, c: '#059669', total: '64,238 active' },
-  { l: 'Network Adequacy', v: 96, c: '#059669', total: '64/67 CMS pass' },
+  { l: 'Network Adequacy', v: 96, c: '#059669', total: '64/67 pass' },
   { l: 'FWA Attestation',  v: 91, c: '#D97706', total: '6 under review' },
   { l: 'NSA Readiness',    v: 99, c: '#059669', total: '38,522 validated' },
 ];
@@ -77,7 +77,7 @@ export default function DashboardV2() {
           </div>
           <div style={{ display: 'flex', gap: 24 }}>
             {[
-              { l: 'Pharmacies', v: '68,247', d: '+312', up: true },
+              { l: 'Pharmacies', v: '81,500', d: '+312', up: true },
               { l: 'Compliant', v: '94.2%', d: '+1.3%', up: true },
               { l: 'Alerts', v: '47', d: '-8', up: false },
               { l: 'API Calls', v: '1.24M', d: '+18%', up: true },
@@ -125,7 +125,7 @@ export default function DashboardV2() {
               <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--v2-text)' }}>Network Growth</div>
               <span className="v2g v2g-ok" style={{ fontSize: 10 }}>Live</span>
             </div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--v2-text)', letterSpacing: '-.3px', marginBottom: 6 }}>68,247</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--v2-text)', letterSpacing: '-.3px', marginBottom: 6 }}>81,500</div>
             <div style={{ height: 80 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={TREND} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>

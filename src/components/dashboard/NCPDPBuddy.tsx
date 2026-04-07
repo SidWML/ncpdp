@@ -139,14 +139,14 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
   /* ── Network / adequacy ── */
   if (l.includes('network') || l.includes('adequacy') || l.includes('coverage') || l.includes('california') || l.includes(' ca ') || l.includes('ca?')) {
     return {
-      text: `California network adequacy: **94.2%** — above CMS minimum threshold of 90%. Rural access in Kern County is borderline at 79%. Recommendation: add 2 specialty pharmacies near Bakersfield.`,
+      text: `California network adequacy: **94.2%** — above minimum threshold of 90%. Rural access in Kern County is borderline at 79%. Recommendation: add 2 specialty pharmacies near Bakersfield.`,
       data: (
         <div style={{ marginTop: 8, background: '#F0FDF4', border: '1px solid #A7F3D0', borderRadius: 10, padding: '10px 12px' }}>
           <div style={{ fontSize: 11.5, fontWeight: 700, color: '#059669', marginBottom: 6 }}>CA Network Summary</div>
           {[
             ['Total Pharmacies',   '8,420'],
-            ['CMS Adequacy Score', '94.2%'],
-            ['URAC Accredited',    '2,841'],
+            ['Adequacy Score', '94.2%'],
+            ['ACHC Accredited',    '2,841'],
             ['Specialty Coverage', '98.1%'],
             ['Rural Access (Kern)','79% ⚠️'],
             ['Gaps Identified',    '2 zones'],
@@ -191,14 +191,14 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
   /* ── Report generation ── */
   if (l.includes('report') || l.includes('export') || l.includes('generat')) {
     return {
-      text: `Custom Report Builder is ready. Based on your query, I'd suggest a **Credential Expiry Report** for Q1 2026. I can generate it now — it will cover 68,247 records and be ready as PDF or Excel in about 2 seconds.`,
+      text: `Custom Report Builder is ready. Based on your query, I'd suggest a **Credential Expiry Report** for Q1 2026. I can generate it now — it will cover 81,500 records and be ready as PDF or Excel in about 2 seconds.`,
       data: (
         <div style={{ marginTop: 8, background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 10, padding: '10px 12px' }}>
           <div style={{ fontSize: 11.5, fontWeight: 700, color: '#2563EB', marginBottom: 6 }}>Suggested Report Config</div>
           {[
             ['Report Type',    'DEA Expiry — Q1 2026'],
             ['Date Range',     'Jan 1 – Mar 31, 2026'],
-            ['Scope',          'All 68,247 pharmacies'],
+            ['Scope',          'All 81,500 pharmacies'],
             ['Sections',       'By state · By type · At-risk'],
             ['Formats',        'PDF, Excel, CSV'],
             ['Est. Records',   '~1,180 matches'],
@@ -216,7 +216,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     };
   }
 
-  /* ── No Surprises Act / CMS ── */
+  /* ── No Surprises Act / ── */
   if (l.includes('no surprise') || l.includes('nsa') || l.includes('cms')) {
     return {
       text: `No Surprises Act status: **38,569 pharmacies** validated for Q1 2026. 47 require manual fixes before the Apr 15 submission deadline. Overall readiness: 99.1%.`,
@@ -309,7 +309,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
   if (l.includes('find') || l.includes('search') || l.includes('look') || l.includes('show me')) {
     const sample = pharmacyResults.slice(0, 4);
     return {
-      text: `Searched **68,247 pharmacy records** — here are 4 matching results. Use Smart Search for advanced filters (type, state, service, credential status).`,
+      text: `Searched **81,500 pharmacy records** — here are 4 matching results. Use Smart Search for advanced filters (type, state, service, credential status).`,
       data: (
         <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {sample.map(p => (
@@ -331,7 +331,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
 
   /* ── Default / overview ── */
   return {
-    text: `I have access to **68,247 pharmacy records** across all 50 states with real-time compliance data. Right now there are **47 active compliance alerts** in your network.\n\nI can help you with:\n• DEA & credential expiry tracking\n• Network adequacy analysis by state\n• FWA risk scoring & fraud flags\n• Pharmacy search & profile review\n• Ownership change monitoring\n• Compliance report generation\n• No Surprises Act readiness\n\nWhat would you like to explore?`,
+    text: `I have access to **81,500 pharmacy records** across all 50 states with real-time compliance data. Right now there are **2 subscriptions nearing expiration** in your network.\n\nI can help you with:\n• DEA & credential expiry tracking\n• Network adequacy analysis by state\n• FWA risk scoring & fraud flags\n• Pharmacy search & profile review\n• Ownership change monitoring\n• Compliance report generation\n• No Surprises Act readiness\n\nWhat would you like to explore?`,
   };
 }
 
@@ -374,7 +374,7 @@ export function NCPDPBuddy() {
   const [typingAgent, setTypingAgent] = useState<{ name: string; icon: string; color: string } | null>(null);
   const [messages, setMessages] = useState<Message[]>([{
     role: 'assistant',
-    text: `Hi Sarah! I'm **NCPDP Buddy** — your AI assistant with real-time access to **68,247** pharmacy records.\n\nI can search pharmacies, analyze compliance, track credentials, assess FWA risk, and route tasks to any of our 33 specialized agents. What would you like to know?`,
+    text: `Hi Sarah! I'm **NCPDP Buddy** — your AI assistant with real-time access to **81,500** pharmacy records.\n\nI can search pharmacies, analyze compliance, track credentials, assess FWA risk, and route tasks to any of our 33 specialized agents. What would you like to know?`,
     time: now(),
     agentName: 'NCPDP Buddy',
     agentIcon: 'sparkle',
@@ -438,7 +438,7 @@ export function NCPDPBuddy() {
               <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', lineHeight: 1 }}>NCPDP Buddy</div>
               <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.6)', display: 'flex', alignItems: 'center', gap: 5, marginTop: 2 }}>
                 <span className="pulse-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ADE80', display: 'inline-block' }}/>
-                Online · 68,247 records · 33 agents
+                Online · 81,500 records · 33 agents
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

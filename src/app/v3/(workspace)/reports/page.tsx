@@ -87,7 +87,7 @@ const NETWORK_TREND = [
   { month: 'Dec', pharmacies: 66700 },
   { month: 'Jan', pharmacies: 67200 },
   { month: 'Feb', pharmacies: 67800 },
-  { month: 'Mar', pharmacies: 68247 },
+  { month: 'Mar', pharmacies: 81500 },
 ];
 const COVERAGE_BY_STATE = [
   { state: 'California', pharmacies: 6842, coverage: 98.2, change: '+1.4%' },
@@ -445,7 +445,7 @@ export default function ReportsV3() {
                 ]}
                 welcomeMessage="I can build any report from your NCPDP data. Describe what you need - metrics, filters, time range - and I'll generate it live."
                 getBotReply={(msg: string) =>
-                  `Report generated successfully.\n\nAnalyzed 68,247 pharmacy records matching "${msg.slice(0, 50)}${msg.length > 50 ? '...' : ''}".\n\nThe preview panel on the right has been updated with your results. You can export the report or refine the criteria.`
+                  `Report generated successfully.\n\nAnalyzed 81,500 pharmacy records matching "${msg.slice(0, 50)}${msg.length > 50 ? '...' : ''}".\n\nThe preview panel on the right has been updated with your results. You can export the report or refine the criteria.`
                 }
                 hideHeader
                 fluid
@@ -463,7 +463,7 @@ export default function ReportsV3() {
               }}>
                 <div>
                   <div className="v3-title" style={{ fontSize: 15, marginBottom: 2 }}>Q1 2026 Credential Expiry Report</div>
-                  <div className="v3-sub" style={{ fontSize: 12 }}>Generated Mar 31, 2026 -- 68,247 pharmacies analyzed</div>
+                  <div className="v3-sub" style={{ fontSize: 12 }}>Generated Mar 31, 2026 -- 81,500 pharmacies analyzed</div>
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <button className="v3-btn-soft" style={{ height: 34, padding: '0 14px', borderRadius: 8, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>

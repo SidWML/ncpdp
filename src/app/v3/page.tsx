@@ -11,7 +11,7 @@ import {
 import { AreaChart, Area, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 /* Data */
-const TREND = [{ m: 'O', v: 65800 },{ m: 'N', v: 66100 },{ m: 'D', v: 66700 },{ m: 'J', v: 67200 },{ m: 'F', v: 67800 },{ m: 'M', v: 68247 }];
+const TREND = [{ m: 'O', v: 65800 },{ m: 'N', v: 66100 },{ m: 'D', v: 66700 },{ m: 'J', v: 67200 },{ m: 'F', v: 67800 },{ m: 'M', v: 81500 }];
 const CRED = [{ n: 'Active', v: 64238, c: '#10B981' },{ n: 'Expiring', v: 2841, c: '#FBBF24' },{ n: 'Expired', v: 1168, c: '#EF4444' }];
 const HEALTH = [
   { l: 'DEA',     v: 98, c: '#059669' }, { l: 'Network', v: 96, c: '#059669' },
@@ -19,7 +19,7 @@ const HEALTH = [
 ];
 const EXAMPLES = [
   { title: 'DEA Expirations', desc: 'Show pharmacies with DEA expiring in 30 days across all networks', icon: IconShield, color: '#DC2626' },
-  { title: 'Network Adequacy', desc: 'Analyze coverage gaps and CMS adequacy status by state', icon: IconGlobe, color: '#059669' },
+  { title: 'Network Adequacy', desc: 'Analyze coverage gaps and adequacy status by state', icon: IconGlobe, color: '#059669' },
   { title: 'FWA Attestation', desc: 'Which pharmacies have overdue fraud, waste & abuse attestations?', icon: IconAlertTriangle, color: '#D97706' },
   { title: 'Ownership Changes', desc: 'Show recent pharmacy ownership transfers and affected networks', icon: IconStore, color: '#6366F1' },
 ];
@@ -27,7 +27,7 @@ const ACTIVITY = [
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'DEA Expiring: CareRx Pharmacy #0842', s: '12 days remaining -- 3 networks affected', time: '2m' },
   { icon: IconStore,         c: '#D97706', bg: '#FFFBEB', t: 'Ownership Changed: Valley Rx Solutions', s: 'Smith Family Pharmacy to Rite Aid Corp', time: '14m' },
   { icon: IconSparkles,      c: '#6366F1', bg: '#EEF2FF', t: 'Agent completed: Weekly network scan', s: '247 pharmacies flagged across 12 states', time: '28m' },
-  { icon: IconCheck,         c: '#059669', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready for CMS submission', time: '2h' },
+  { icon: IconCheck,         c: '#059669', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready for regulatory submission', time: '2h' },
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'FWA Overdue: 6 pharmacies', s: 'Midwest Chain #44, SunHealth + 4 more', time: '3h' },
 ];
 const SHORTCUTS = [
@@ -65,7 +65,7 @@ export default function DashboardV3() {
             What would you like to know about<br/>your pharmacy network?
           </h1>
           <p style={{ fontSize: 14, color: 'var(--v3-text-3)', margin: '0 0 24px', lineHeight: 1.5 }}>
-            Search 68,247 pharmacies, generate reports, check compliance, and more
+            Search 81,500 pharmacies, generate reports, check compliance, and more
           </p>
 
           {/* AI Prompt */}
@@ -130,7 +130,7 @@ export default function DashboardV3() {
           {/* Hero stat card */}
           <div className="v3-hero-card" style={{ padding: '18px 24px', flex: 1.2, position: 'relative', zIndex: 1 }}>
             <div style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,.6)', marginBottom: 4 }}>Total Pharmacies</div>
-            <div style={{ fontSize: 30, fontWeight: 800, letterSpacing: '-.5px', marginBottom: 2 }}>68,247</div>
+            <div style={{ fontSize: 30, fontWeight: 800, letterSpacing: '-.5px', marginBottom: 2 }}>81,500</div>
             <div style={{ fontSize: 11, color: 'rgba(255,255,255,.5)', display: 'flex', alignItems: 'center', gap: 4 }}>
               <IconTrendUp size={10} color="rgba(255,255,255,.7)"/> +312 this month
             </div>

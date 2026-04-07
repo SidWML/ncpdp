@@ -18,9 +18,9 @@ interface ReportData {
 /* ── Report templates ─────────────────────────────────────────────── */
 const REPORT_MAP: Record<string, ReportData> = {
   credential: {
-    title: 'Q1 2026 Credential Expiry Report', date: 'Mar 31, 2026', records: '68,247', states: '50',
+    title: 'Q1 2026 Credential Expiry Report', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '68,247', color: '#2968B0' },
+      { label: 'Total Pharmacies', value: '81,500', color: '#2968B0' },
       { label: 'Credentials Expiring', value: '234', color: '#F59E0B' },
       { label: 'Multi-Expiry Risk', value: '12', color: '#EF4444' },
       { label: 'States with Issues', value: '23', color: '#10B981' },
@@ -41,9 +41,9 @@ const REPORT_MAP: Record<string, ReportData> = {
     ],
   },
   fwa: {
-    title: 'FWA Attestation Status Report', date: 'Mar 31, 2026', records: '68,247', states: '50',
+    title: 'FWA Attestation Status Report', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '68,247', color: '#2968B0' },
+      { label: 'Total Pharmacies', value: '81,500', color: '#2968B0' },
       { label: 'FWA Pass', value: '67,841', color: '#10B981' },
       { label: 'Under Review', value: '359', color: '#F59E0B' },
       { label: 'Failed', value: '47', color: '#EF4444' },
@@ -64,7 +64,7 @@ const REPORT_MAP: Record<string, ReportData> = {
     ],
   },
   network: {
-    title: 'Network Adequacy Analysis', date: 'Mar 31, 2026', records: '68,247', states: '50',
+    title: 'Network Adequacy Analysis', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
       { label: 'Overall Adequacy', value: '94.2%', color: '#10B981' },
       { label: 'States Passing', value: '45', color: '#2968B0' },
@@ -111,7 +111,7 @@ const DEFAULT_REPORT = REPORT_MAP.credential;
 function detectReport(text: string): { key: string; reply: string } {
   const l = text.toLowerCase();
   if (l.includes('fwa') || l.includes('fraud') || l.includes('attestation'))
-    return { key: 'fwa', reply: 'Generated your **FWA Attestation Status Report**. 68,247 pharmacies analyzed — 47 critical risk, 359 under review. Preview is loaded on the right.' };
+    return { key: 'fwa', reply: 'Generated your **FWA Attestation Status Report**. 81,500 pharmacies analyzed — 47 critical risk, 359 under review. Preview is loaded on the right.' };
   if (l.includes('network') || l.includes('adequacy') || l.includes('coverage') || l.includes('gap'))
     return { key: 'network', reply: 'Generated **Network Adequacy Analysis**. Overall adequacy: 94.2% across 50 states. 12 coverage gap zones identified. Preview loaded.' };
   if (l.includes('no surprise') || l.includes('nsa') || l.includes('filing'))
@@ -127,7 +127,7 @@ function detectReport(text: string): { key: string; reply: string } {
 const TEMPLATES = [
   { label: 'Credential Expiry', desc: 'DEA, license & accreditation status', query: 'Generate a Q1 2026 credential expiry report grouped by state' },
   { label: 'FWA Risk Assessment', desc: 'Fraud, waste & abuse scoring', query: 'Generate FWA attestation status report for all networks' },
-  { label: 'Network Adequacy', desc: 'CMS adequacy by region', query: 'Network adequacy analysis with coverage gaps' },
+  { label: 'Network Adequacy', desc: 'adequacy by region', query: 'Network adequacy analysis with coverage gaps' },
   { label: 'No Surprises Act', desc: 'NSA compliance filing', query: 'Generate No Surprises Act filing report for Q1' },
   { label: 'Specialty Pharmacies', desc: 'Custom filtered export', query: 'Export all specialty pharmacies in CA and TX as Excel' },
   { label: 'Monthly Summary', desc: 'Compliance overview', query: 'Generate monthly compliance summary report' },
@@ -326,7 +326,7 @@ export default function AIReportsPage() {
 
             {/* Footer */}
             <div style={{ display: 'flex', gap: 6, alignItems: 'center', color: '#94A3B8', fontSize: 12, marginTop: 8 }}>
-              <IconDatabase size={12} color="#94A3B8"/> Data sourced from 68,247 pharmacy records
+              <IconDatabase size={12} color="#94A3B8"/> Data sourced from 81,500 pharmacy records
               <span style={{ margin: '0 4px' }}>·</span>
               <IconShield size={12} color="#94A3B8"/> HIPAA compliant
               <span style={{ margin: '0 4px' }}>·</span>

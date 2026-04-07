@@ -16,14 +16,14 @@ const kits = [
     prompts: [
       'Show me all DEA registrations expiring in the next 30 days across my network',
       'Identify coverage gaps in rural California zip codes',
-      'Find specialty pharmacies with URAC accreditation in Texas',
+      'Find specialty pharmacies with ACHC accreditation in Texas',
       'Which pharmacies had ownership changes in the last 90 days?',
-      'Generate a network adequacy report for Q1 2026 CMS submission',
+      'Generate a network adequacy report for Q1 2026 regulatory submission',
       'Flag any pharmacies with 3 or more compliance issues this quarter',
     ],
     workflows: [
       { label: 'Monthly Compliance Audit',      steps: 4, time: '~8 min' },
-      { label: 'CMS Network Adequacy Filing',   steps: 5, time: '~15 min' },
+      { label: 'Network Adequacy Filing',   steps: 5, time: '~15 min' },
       { label: 'DEA Renewal Campaign',          steps: 3, time: '~5 min' },
     ],
     tier: 'Enterprise',
@@ -37,7 +37,7 @@ const kits = [
     agents: ['Compliance Watchdog', 'FWA Risk Scoring', 'No Surprises Assistant', 'Custom Report Builder'],
     prompts: [
       'Run a complete FWA risk scan on pharmacies that missed attestation deadline',
-      'Generate the Q1 No Surprises Act CMS filing for our primary PBM network',
+      'Generate the Q1 No Surprises Act filing for our primary PBM network',
       'Show all pharmacies flagged for fraud risk in the last 6 months',
       'Which states are below 90% network adequacy threshold?',
       'Create a compliance scorecard for board presentation',

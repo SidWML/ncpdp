@@ -16,7 +16,7 @@ const STEPS = [
   { label: 'Query & Filter',   desc: 'Set filter criteria'          },
   { label: 'Validate Data',    desc: 'Automated data checks'        },
   { label: 'Review Report',    desc: 'Preview before submitting'    },
-  { label: 'Submit to CMS',    desc: 'File electronically'          },
+  { label: 'Submit Filing',    desc: 'File electronically'          },
 ];
 
 /* ─── Validation checks ──────────────────────────────────────────── */
@@ -27,7 +27,7 @@ const CHECKS = [
   { label: 'Phone Number Verified',        detail: '312 pharmacies have unverified or potentially outdated numbers',   status: 'warn', pass: 38257, total: 38569 },
   { label: 'Provider Type Classification', detail: '47 pharmacies missing required provider type — must fix',          status: 'fail', pass: 38522, total: 38569 },
   { label: 'Dispenser Class Populated',    detail: 'All pharmacies have dispenser class assigned',                     status: 'pass', pass: 38569, total: 38569 },
-  { label: 'Accreditation Currency',       detail: 'URAC/ACHC status current within 12 months',                       status: 'pass', pass: 38569, total: 38569 },
+  { label: 'Accreditation Currency',       detail: 'ACHC/PCAB status current within 12 months',                       status: 'pass', pass: 38569, total: 38569 },
   { label: 'Hours of Operation',           detail: '89 pharmacies missing weekend hours — warning only',               status: 'warn', pass: 38480, total: 38569 },
 ];
 
@@ -91,7 +91,7 @@ export default function NoSurprisesPage() {
     <>
       <Topbar
         title="No Surprises Report"
-        subtitle="CMS No Surprises Act — pharmacy network directory filing"
+        subtitle="No Surprises Act — pharmacy network directory filing"
         actions={
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="btn-secondary" style={{ fontSize: 12, gap: 5 }}>
@@ -362,7 +362,7 @@ export default function NoSurprisesPage() {
             <Card>
               <div style={{ padding: '14px 20px', borderBottom: '1px solid #F1F5F9' }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Report Preview — Q1 2026</div>
-                <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>Review before submitting to CMS</div>
+                <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>Review before submitting</div>
               </div>
               <CardBody style={{ padding: '20px 24px' }}>
                 {/* Summary */}
@@ -406,7 +406,7 @@ export default function NoSurprisesPage() {
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button className="btn-secondary" style={{ gap: 6, fontSize: 12 }}><IconDownload size={12}/> Download Preview</button>
                     <button className="btn-primary" onClick={() => goToStep(3)} style={{ gap: 6, fontSize: 12 }}>
-                      Next: Submit to CMS <IconChevronRight size={13} color="#fff"/>
+                      Next: Submit Filing <IconChevronRight size={13} color="#fff"/>
                     </button>
                   </div>
                 </div>
@@ -420,7 +420,7 @@ export default function NoSurprisesPage() {
               <CardBody style={{ padding: '32px 24px', textAlign: 'center' }}>
                 {!submitted ? (
                   <>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>Ready to Submit to CMS</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>Ready to Submit Filing</div>
                     <div style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
                       You are about to electronically file the Q1 2026 No Surprises Act report<br/>
                       for <strong>38,569 pharmacies</strong> to the Centers for Medicare & Medicaid Services.
@@ -434,7 +434,7 @@ export default function NoSurprisesPage() {
                     <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
                       <button className="btn-secondary" onClick={() => goToStep(2)} style={{ fontSize: 12 }}>Back</button>
                       <button className="btn-primary" onClick={handleSubmit} style={{ gap: 6, fontSize: 13, padding: '8px 28px' }}>
-                        <IconCheck size={14} color="#fff"/> Submit to CMS Now
+                        <IconCheck size={14} color="#fff"/> Submit Filing Now
                       </button>
                     </div>
                   </>
@@ -447,7 +447,7 @@ export default function NoSurprisesPage() {
                       <IconCheck size={28} color="#10B981"/>
                     </div>
                     <div style={{ fontSize: 16, fontWeight: 700, color: '#065F46', marginBottom: 8 }}>
-                      Successfully Submitted to CMS
+                      Successfully Submitted
                     </div>
                     <div style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
                       Your Q1 2026 No Surprises Act report has been filed electronically.
@@ -456,7 +456,7 @@ export default function NoSurprisesPage() {
                       display: 'inline-block', padding: '10px 20px', borderRadius: 8,
                       background: '#F0FDF4', border: '1px solid #A7F3D0', marginBottom: 20,
                     }}>
-                      <div style={{ fontSize: 12, color: '#047857', fontWeight: 600, marginBottom: 2 }}>CMS Confirmation ID</div>
+                      <div style={{ fontSize: 12, color: '#047857', fontWeight: 600, marginBottom: 2 }}>Confirmation ID</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, color: '#065F46' }}>CMS-NSA-Q12026-1104</div>
                     </div>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>

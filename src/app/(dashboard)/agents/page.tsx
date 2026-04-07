@@ -53,7 +53,7 @@ function getDemoResponse(agent: typeof agents[0]) {
   }
   if (agent.category === 'Compliance & Regulatory') {
     return {
-      text: `Compliance scan complete. Reviewed 68,247 pharmacy records. Found 47 active alerts requiring attention.`,
+      text: `Compliance scan complete. Reviewed 81,500 pharmacy records. Found 2 subscriptions nearing expiration.`,
       rows: alerts.slice(0, 4).map(a => ({
         label: a.title,
         value: `${a.pharmacy} · ${a.location}`,
@@ -64,7 +64,7 @@ function getDemoResponse(agent: typeof agents[0]) {
   }
   if (agent.category === 'Network Management') {
     return {
-      text: `Network analysis complete. Evaluated CMS adequacy standards across 8 states. 3 coverage gaps identified.`,
+      text: `Network analysis complete. Evaluated adequacy standards across 8 states. 3 coverage gaps identified.`,
       rows: [
         { label: 'California',  value: '8,420 pharmacies · 96% adequate', badge: 'Pass',    badgeColor: 'success' as const },
         { label: 'Texas',       value: '7,180 pharmacies · 93% adequate', badge: 'Pass',    badgeColor: 'success' as const },
@@ -88,7 +88,7 @@ function getDemoResponse(agent: typeof agents[0]) {
     text: `Agent "${agent.name}" executed successfully. ${agent.uses.toLocaleString()} total runs · Phase ${agent.phase} · ${agent.desc}`,
     rows: [
       { label: 'Status',      value: 'Completed in 0.8s',       badge: 'Done',    badgeColor: 'success' as const },
-      { label: 'Records',     value: '68,247 processed',         badge: 'Full',    badgeColor: 'brand' as const   },
+      { label: 'Records',     value: '81,500 processed',         badge: 'Full',    badgeColor: 'brand' as const   },
       { label: 'Alerts',      value: '47 items flagged',         badge: 'Review',  badgeColor: 'warning' as const },
       { label: 'Output',      value: 'Ready for export',         badge: 'Export',  badgeColor: 'neutral' as const },
     ],

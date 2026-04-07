@@ -27,25 +27,34 @@ const statIcons = [
 ];
 const statColorMap = ['brand', 'success', 'warning', 'violet'] as const;
 const sparkSets = [
-  [40,55,48,62,58,70,66,75,72,80],
-  [88,90,91,92,90,93,94,93,95,94],
-  [32,28,41,38,50,42,55,47,48,47],
-  [1.0,1.05,1.1,0.95,1.15,1.08,1.18,1.20,1.22,1.24],
+  [72,74,75,77,78,79,79,80,81,81.5],
+  [82,84,85,86,87,88,88,89,89,90],
+  [3,2,3,2,2,3,2,2,2,2],
+  [150,160,155,170,175,180,185,190,195,200],
 ];
 
 const healthMetrics = [
-  { label: 'DEA Compliance',   score: 98, color: '#059669', detail: '64,238 active'            },
-  { label: 'Network Adequacy', score: 96, color: '#2968B0', detail: '64 / 67 CMS standards'    },
-  { label: 'FWA Status',       score: 91, color: '#D97706', detail: '6 pharmacies under review' },
-  { label: 'NSA Readiness',    score: 99, color: '#2563EB', detail: '38,522 validated'          },
+  { label: 'DEA Compliance',   score: 98, color: '#059669', detail: '76,425 active'            },
+  { label: 'Network Adequacy', score: 96, color: '#2968B0', detail: '64 / 67 regulatory standards'    },
+  { label: 'FWA Status',       score: 90, color: '#D97706', detail: '73,350 of 81,500 attested' },
 ];
 
 const recentChanges = [
-  { id: 'NCP-0842', name: 'CareRx Pharmacy #0842',   type: 'Pharmacy Closed',   date: 'Mar 29', impact: '3 networks affected',    badge: 'danger',  label: 'Action'   },
-  { id: 'NCP-1290', name: 'Wellness Drug Store',      type: 'Ownership Change',  date: 'Mar 28', impact: 'Contract review needed', badge: 'warning', label: 'Review'   },
-  { id: 'NCP-3451', name: 'MedFirst Pharmacy',        type: 'New Opening',       date: 'Mar 27', impact: 'Added to 2 networks',   badge: 'success', label: 'Active'   },
-  { id: 'NCP-5501', name: 'PharmaPlus #42',           type: 'DEA Expiring',      date: 'Mar 26', impact: 'Renewal required',       badge: 'warning', label: 'Expiring' },
-  { id: 'NCP-7820', name: 'HealthMart RX',            type: 'Services Updated',  date: 'Mar 25', impact: '340B program added',     badge: 'info',    label: 'Info'     },
+  { id: 'NCP-0842', name: 'CareRx Pharmacy #0842',     type: 'Deactivated',         date: 'Apr 5',  impact: 'Removed from 3 networks', badge: 'danger',  label: 'Closed'   },
+  { id: 'NCP-3451', name: 'MedFirst Pharmacy',          type: 'New Opening',         date: 'Apr 4',  impact: 'Added to 2 networks',     badge: 'success', label: 'Active'   },
+  { id: 'NCP-7820', name: 'HealthMart RX',              type: 'Ownership Change',    date: 'Apr 3',  impact: 'Contract review needed',  badge: 'warning', label: 'Review'   },
+  { id: 'NCP-1290', name: 'Wellness Drug Store',        type: 'Ownership Change',    date: 'Apr 2',  impact: 'New parent entity filed', badge: 'warning', label: 'Review'   },
+  { id: 'NCP-5501', name: 'PharmaPlus #42',             type: 'Deactivated',         date: 'Apr 1',  impact: 'Removed from 1 network',  badge: 'danger',  label: 'Closed'   },
+  { id: 'NCP-6102', name: 'Sunrise Specialty Pharmacy', type: 'New Opening',         date: 'Mar 30', impact: 'Specialty network added',  badge: 'success', label: 'Active'   },
+  { id: 'NCP-6455', name: 'Valley Health Pharmacy',     type: 'Ownership Change',    date: 'Mar 28', impact: 'Pending re-credentialing', badge: 'warning', label: 'Review'   },
+  { id: 'NCP-7033', name: 'QuickMeds Pharmacy',         type: 'New Opening',         date: 'Mar 25', impact: 'Added to 4 networks',     badge: 'success', label: 'Active'   },
+];
+
+const profileUpdateStats = [
+  { label: 'Deactivations',    count: 34,  color: '#DC2626' },
+  { label: 'New Openings',     count: 126, color: '#059669' },
+  { label: 'Ownership Changes',count: 18,  color: '#D97706' },
+  { label: 'Total Updates',    count: 412, color: '#2968B0' },
 ];
 
 export default function DashboardPage() {
@@ -69,26 +78,26 @@ export default function DashboardPage() {
         }
       />
 
-      <main style={{ padding: '24px 24px 48px' }}>
+      <main style={{ padding: '20px 20px 48px' }}>
 
         {/* ── Greeting ── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)', margin: 0, letterSpacing: '-.3px' }}>
+            <h1 style={{ fontSize: 22, fontWeight: 600, color: 'var(--text-primary)', margin: 0, letterSpacing: '-.3px' }}>
               Good morning, Sarah
             </h1>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)', margin: '4px 0 0' }}>
-              Tuesday, March 31, 2026 · Here&apos;s your pharmacy network overview
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: '2px 0 0' }}>
+              Tuesday, April 7, 2026 · Here&apos;s your pharmacy network overview
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 500, color: '#059669' }}>
-            <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: '#059669' }}>
+            <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
             Real-time · Updated just now
           </div>
         </div>
 
         {/* ── Stat cards ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
           {stats.map((s, i) => (
             <StatCard
               key={s.id}
@@ -105,16 +114,16 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Row 1: charts ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
           <Card>
             <CardHeader
-              title="Network Growth"
+              title="Pharmacy Trend"
               subtitle="Active pharmacies — 6 months"
               action={<Badge variant="success" dot>Live</Badge>}
             />
             <CardBody>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 12 }}>
-                <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-.5px' }}>68,247</span>
+                <span style={{ fontSize: 26, fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '-.5px' }}>81,500</span>
                 <span style={{ fontSize: 12, fontWeight: 500, color: '#059669', background: '#ECFDF5', padding: '2px 8px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
                   <IconTrendUp size={11} color="#059669"/> +2.2%
                 </span>
@@ -123,15 +132,15 @@ export default function DashboardPage() {
                 data={networkTrend.map(d => ({ label: d.month, value: d.count }))}
                 color="#2968B0"
                 height={120}
-                yDomain={[65000, 69000]}
+                yDomain={[77000, 82500]}
               />
             </CardBody>
           </Card>
 
           <Card>
             <CardHeader
-              title="Credential Status"
-              subtitle="DEA · License · Accreditation"
+              title="DEA License"
+              subtitle="DEA · License"
               action={
                 <Link href="/compliance" style={{ textDecoration: 'none' }}>
                   <button className="btn-ghost">Details</button>
@@ -143,7 +152,7 @@ export default function DashboardPage() {
                 segments={credentialStatus}
                 innerRadius={52}
                 outerRadius={72}
-                centerLabel="94.2%"
+                centerLabel="90%"
                 centerSub="compliant"
               />
             </CardBody>
@@ -171,7 +180,7 @@ export default function DashboardPage() {
         {/* ── Compliance health — clean card ── */}
         <div className="card" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr)',
+          gridTemplateColumns: 'repeat(3,1fr)',
           gap: 16,
           marginBottom: 24,
           padding: '20px 24px',
@@ -200,14 +209,32 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* ── Recent Network Changes ── */}
+        {/* ── Recent Profile Updates ── */}
         <Card style={{ marginBottom: 24 }}>
           <CardHeader
-            title="Recent Network Changes"
-            subtitle="Last 7 days · Tracked by AGT-05 Change Tracker"
-            badge={<Badge variant="neutral">47 this week</Badge>}
+            title="Recent Profile Updates"
+            subtitle="Last 30 days · Tracked by AGT-05 Change Tracker"
+            badge={<Badge variant="neutral">412 updates</Badge>}
           />
           <CardBody style={{ padding: 0 }}>
+            {/* Summary stat pills */}
+            <div style={{
+              display: 'flex', gap: 12, padding: '14px 20px',
+              borderBottom: '1px solid var(--border-light)',
+              flexWrap: 'wrap',
+            }}>
+              {profileUpdateStats.map(s => (
+                <div key={s.label} style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  padding: '6px 14px', borderRadius: 8,
+                  background: 'var(--surface-2)',
+                }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: s.color, flexShrink: 0 }}/>
+                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{s.label}</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{s.count}</span>
+                </div>
+              ))}
+            </div>
             <table className="data-table">
               <thead>
                 <tr>
@@ -243,10 +270,10 @@ export default function DashboardPage() {
               fontSize: 13,
               color: 'var(--text-muted)',
             }}>
-              <span>Showing 5 of 47 changes · Powered by Change Tracker (AGT-05)</span>
+              <span>Showing 8 of 412 updates · 34 deactivations · 126 new openings · 18 ownership changes</span>
               <Link href="/alerts" style={{ textDecoration: 'none' }}>
                 <button className="btn-ghost" style={{ gap: 4 }}>
-                  View All Changes <IconChevronRight size={12}/>
+                  View All Updates <IconChevronRight size={12}/>
                 </button>
               </Link>
             </div>
@@ -260,7 +287,7 @@ export default function DashboardPage() {
           <Card style={{ display: 'flex', flexDirection: 'column' }}>
             <CardHeader
               title="Active Alerts"
-              badge={<Badge variant="danger">47</Badge>}
+              badge={<Badge variant="warning">2</Badge>}
               action={
                 <Link href="/alerts" style={{ textDecoration: 'none' }}>
                   <button className="btn-ghost">View all</button>
@@ -277,8 +304,8 @@ export default function DashboardPage() {
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>47 total alerts this month</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 1 }}>2 critical · 3 unread · Updated now</div>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>2 subscriptions nearing expiration</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 1 }}>0 critical · 2 pending · Updated now</div>
                 </div>
                 <Link href="/alerts" style={{ textDecoration: 'none' }}>
                   <button className="btn-secondary" style={{ padding: '6px 12px', gap: 4 }}>

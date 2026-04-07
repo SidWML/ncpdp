@@ -28,12 +28,12 @@ export function Progress({
           }}
         >
           {label && (
-            <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 500 }}>
+            <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 400 }}>
               {label}
             </span>
           )}
           {showLabel && (
-            <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>
+            <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>
               {clamp}%
             </span>
           )}

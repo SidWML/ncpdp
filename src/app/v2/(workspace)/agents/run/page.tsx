@@ -37,11 +37,11 @@ const catIcon = (cat: string, sz = 16) => {
 };
 
 const suggestions: Record<string, string[]> = {
-  'Search & Discovery':      ['Find all pharmacies in Texas with expiring DEA', 'Show retail pharmacies in Miami', 'List specialty pharmacies with URAC in CA', 'Find LTC pharmacies added last 30 days'],
-  'Compliance & Regulatory': ['Show pharmacies with expired DEA', 'List critical compliance alerts past 7 days', 'Which pharmacies have incomplete FWA?', 'Find No Surprises Act violations Q1 2026'],
-  'Network Management':      ['Analyze coverage gaps in Southeast', 'Show CMS adequacy for all networks', 'Which states below 90% adequacy?', 'Compare network Q1 vs Q4 2025'],
+  'Search & Discovery':      ['Find all pharmacies in Texas with expiring DEA', 'Show retail pharmacies in Miami', 'List compounding pharmacies in CA', 'Find LTC pharmacies added last 30 days'],
+  'Compliance & Regulatory': ['Show pharmacies with expired DEA', 'List critical compliance alerts past 7 days', 'Which pharmacies have incomplete FWA?', 'Independent pharmacies missing FWA attestation 2026'],
+  'Network Management':      ['Analyze coverage gaps in Southeast', 'Show adequacy score for all networks', 'Which states below 90% adequacy?', 'Compare network Q1 vs Q4 2025'],
   'Analytics & Prediction':  ['Predict closures in rural Texas', 'Show API usage trends 6 months', 'Identify pharmacy desert risk zones', 'Generate closure risk report'],
-  'Data Delivery':           ['Build feed of specialty pharmacies with DEA', 'Export network changes past 30 days', 'Configure daily alert delivery', 'Create e-prescribing router feed'],
+  'Data Delivery':           ['Build feed of specialty pharmacies with DEA', 'Export network changes past 30 days', 'Configure daily alert delivery', 'Build daily profile change feed'],
   'Credentialing (resQ)':    ['Check credentialing status Wellness Pharmacy', 'List incomplete resQ profiles', 'Show renewal queue next 90 days', 'Find networks for MedPlus Pharmacy'],
   'Claims & Routing':        ['Validate NPI for claims batch #4821', 'Show routing for specialty claims', 'Find pharmacies for bulk download', 'Analyze rejection patterns Q1'],
   'NCPDP Internal':          ['Generate audit trail Aetna 30 days', 'Show subscriber usage Q1 2026', 'List accounts declining API activity', 'Package dataset for enterprise'],
@@ -59,7 +59,7 @@ const RESULT_ROWS = [
 ];
 const BAR_DATA = [{ s: 'TX', c: 89 },{ s: 'CA', c: 72 },{ s: 'FL', c: 41 },{ s: 'NY', c: 28 },{ s: 'OH', c: 17 },{ s: 'IL', c: 14 }];
 const PIE_DATA = [{ n: 'Retail', v: 136, c: '#6366F1' },{ n: 'Specialty', v: 59, c: '#10B981' },{ n: 'Compounding', v: 25, c: '#FBBF24' },{ n: 'Chain', v: 18, c: '#EF4444' },{ n: 'Infusion', v: 9, c: '#8B5CF6' }];
-const TREND = [{ m: 'Oct', v: 64200 },{ m: 'Nov', v: 64900 },{ m: 'Dec', v: 65400 },{ m: 'Jan', v: 66100 },{ m: 'Feb', v: 67200 },{ m: 'Mar', v: 68247 }];
+const TREND = [{ m: 'Oct', v: 64200 },{ m: 'Nov', v: 64900 },{ m: 'Dec', v: 65400 },{ m: 'Jan', v: 66100 },{ m: 'Feb', v: 67200 },{ m: 'Mar', v: 81500 }];
 
 type Tab = 'results' | 'sql' | 'charts' | 'export';
 
@@ -89,7 +89,7 @@ function AgentRunInner() {
 
   function handleReply(msg: string) {
     setTimeout(() => { setHasResults(true); }, 0);
-    return `Analyzed 68,247 records.\nFound 247 results for: "${msg.slice(0, 60)}${msg.length > 60 ? '...' : ''}"`;
+    return `Analyzed 81,500 records.\nFound 247 results for: "${msg.slice(0, 60)}${msg.length > 60 ? '...' : ''}"`;
   }
   function handleCanvas() { setShowOutput(true); setTab('results'); }
 
@@ -149,7 +149,7 @@ function AgentRunInner() {
                     {tab === 'results' && (
                       <div>
                         <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
-                          {[{ l: 'Found', v: '247', c: 'var(--v2-primary)' },{ l: 'Time', v: '0.83s', c: 'var(--v2-green)' },{ l: 'Scanned', v: '68,247', c: 'var(--v2-text)' }].map(s => (
+                          {[{ l: 'Found', v: '247', c: 'var(--v2-primary)' },{ l: 'Time', v: '0.83s', c: 'var(--v2-green)' },{ l: 'Scanned', v: '81,500', c: 'var(--v2-text)' }].map(s => (
                             <div key={s.l} style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--v2-surface-2)', textAlign: 'center', flex: 1 }}>
                               <div style={{ fontSize: 10, color: 'var(--v2-text-3)', fontWeight: 500 }}>{s.l}</div>
                               <div style={{ fontSize: 16, fontWeight: 700, color: s.c, marginTop: 2 }}>{s.v}</div>
@@ -185,7 +185,7 @@ function AgentRunInner() {
                         </div>
                         <div style={{ marginTop: 10, padding: '8px 14px', background: 'var(--v2-surface)', borderRadius: 8, fontSize: 12, color: 'var(--v2-text-3)', display: 'flex', gap: 16, boxShadow: 'var(--v2-shadow-sm)' }}>
                           <span>Time: <strong style={{ color: 'var(--v2-green)' }}>0.83s</strong></span>
-                          <span>Scanned: <strong style={{ color: 'var(--v2-text)' }}>68,247</strong></span>
+                          <span>Scanned: <strong style={{ color: 'var(--v2-text)' }}>81,500</strong></span>
                           <span>Returned: <strong style={{ color: 'var(--v2-primary)' }}>247</strong></span>
                         </div>
                       </div>

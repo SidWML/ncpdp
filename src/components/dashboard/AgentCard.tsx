@@ -55,10 +55,10 @@ export function AgentCard({ name, category, phase, priority, desc, uses, compact
       <div
         className="card card-hover"
         onClick={onClick}
-        style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}
+        style={{ padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 10, border: '1px solid var(--border-light)' }}
       >
         <div style={{
-          width: 32, height: 32, borderRadius: 6,
+          width: 28, height: 28, borderRadius: 6,
           background: catStyle.bg,
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
@@ -66,8 +66,8 @@ export function AgentCard({ name, category, phase, priority, desc, uses, compact
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
-          <div style={{ fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 1 }}>
-            <IconBarChart size={10} color="var(--text-muted)"/>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 0 }}>
+            <IconBarChart size={9} color="var(--text-muted)"/>
             {uses.toLocaleString()} uses
           </div>
         </div>

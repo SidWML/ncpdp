@@ -4,8 +4,8 @@ export const stats = [
   {
     id: 'pharmacies',
     label: 'Total Pharmacies',
-    value: '68,247',
-    delta: '+312',
+    value: '81,500',
+    delta: '+1,204',
     deltaDir: 'up' as const,
     deltaPeriod: 'this month',
     icon: 'store',
@@ -13,9 +13,9 @@ export const stats = [
   },
   {
     id: 'credentials',
-    label: 'Active Credentials',
-    value: '94.2%',
-    delta: '+1.3%',
+    label: 'Attested Independent Pharmacies',
+    value: '90%',
+    delta: '+2.1%',
     deltaDir: 'up' as const,
     deltaPeriod: 'vs last month',
     icon: 'shield',
@@ -23,9 +23,9 @@ export const stats = [
   },
   {
     id: 'alerts',
-    label: 'Active Alerts',
-    value: '47',
-    delta: '-8',
+    label: 'Subscriptions Nearing Expiration',
+    value: '2',
+    delta: '-1',
     deltaDir: 'down' as const,
     deltaPeriod: 'since yesterday',
     icon: 'bell',
@@ -33,40 +33,40 @@ export const stats = [
   },
   {
     id: 'api',
-    label: 'API Calls Today',
-    value: '1.24M',
-    delta: '+18%',
+    label: 'API Calls',
+    value: '200K',
+    delta: '+12%',
     deltaDir: 'up' as const,
-    deltaPeriod: 'vs yesterday',
+    deltaPeriod: 'last month',
     icon: 'zap',
     color: 'violet',
   },
 ];
 
 export const credentialStatus = [
-  { label: 'Active',    value: 64238, color: '#10B981', pct: 94.1 },
-  { label: 'Expiring',  value: 2841,  color: '#F59E0B', pct: 4.2  },
-  { label: 'Expired',   value: 1168,  color: '#EF4444', pct: 1.7  },
+  { label: 'Active',    value: 73350, color: '#10B981', pct: 90.0 },
+  { label: 'Expiring',  value: 5705,  color: '#F59E0B', pct: 7.0  },
+  { label: 'Expired',   value: 2445,  color: '#EF4444', pct: 3.0  },
 ];
 
 export const networkTrend = [
-  { month: 'Oct', count: 65800 },
-  { month: 'Nov', count: 66200 },
-  { month: 'Dec', count: 66750 },
-  { month: 'Jan', count: 67100 },
-  { month: 'Feb', count: 67620 },
-  { month: 'Mar', count: 68247 },
+  { month: 'Oct', count: 78200 },
+  { month: 'Nov', count: 79100 },
+  { month: 'Dec', count: 79800 },
+  { month: 'Jan', count: 80200 },
+  { month: 'Feb', count: 80900 },
+  { month: 'Mar', count: 81500 },
 ];
 
 export const stateBreakdown = [
-  { state: 'CA', count: 8420, pct: 86 },
-  { state: 'TX', count: 7180, pct: 73 },
-  { state: 'FL', count: 6340, pct: 65 },
-  { state: 'NY', count: 5890, pct: 60 },
-  { state: 'OH', count: 4210, pct: 43 },
-  { state: 'PA', count: 3980, pct: 41 },
-  { state: 'IL', count: 3750, pct: 38 },
-  { state: 'GA', count: 2940, pct: 30 },
+  { state: 'CA', count: 10120, pct: 86 },
+  { state: 'TX', count: 8640,  pct: 73 },
+  { state: 'FL', count: 7620,  pct: 65 },
+  { state: 'NY', count: 7080,  pct: 60 },
+  { state: 'OH', count: 5060,  pct: 43 },
+  { state: 'PA', count: 4780,  pct: 41 },
+  { state: 'IL', count: 4510,  pct: 38 },
+  { state: 'GA', count: 3530,  pct: 30 },
 ];
 
 export const alerts = [
@@ -144,7 +144,7 @@ export const agents = [
   { id: 'agt-02', name: 'Pharmacy Finder',       category: 'Search & Discovery',       phase: '1b', priority: 'P0', icon: '🔎', desc: 'Advanced pharmacy search with natural language, fuzzy matching, geographic proximity.',                             uses: 3210  },
   { id: 'agt-10', name: 'No Surprises Assistant',category: 'Compliance & Regulatory',  phase: '1b', priority: 'P0', icon: '⚖️', desc: 'Automates No Surprises Act compliance reporting, reducing reporting from hours to minutes.',                        uses: 2890  },
   { id: 'agt-20', name: 'Credentialing Assist',  category: 'Credentialing (resQ)',     phase: '1b', priority: 'P0', icon: '🏆', desc: 'Guides pharmacies through resQ credentialing step-by-step, reducing errors by 70%+.',                              uses: 2540  },
-  { id: 'agt-06', name: 'Network Adequacy',      category: 'Network Management',       phase: '1b', priority: 'P1', icon: '🗺️', desc: 'Evaluates network adequacy against CMS, state, and accreditation standards.',                                     uses: 1870  },
+  { id: 'agt-06', name: 'Network Adequacy',      category: 'Network Management',       phase: '1b', priority: 'P1', icon: '🗺️', desc: 'Evaluates network adequacy against state and accreditation standards.',                                     uses: 1870  },
   { id: 'agt-11', name: 'Regulatory Summary',    category: 'Compliance & Regulatory',  phase: '1b', priority: 'P1', icon: '📋', desc: 'Monitors and summarizes regulatory changes with network impact assessment.',                                       uses: 1640  },
   { id: 'agt-13', name: 'Credential Lifecycle',  category: 'Compliance & Regulatory',  phase: '1b', priority: 'P1', icon: '🔄', desc: 'Tracks complete lifecycle of every pharmacy credential through renewal cycles.',                                   uses: 2210  },
   { id: 'agt-21', name: 'Profile Completeness',  category: 'Credentialing (resQ)',     phase: '1b', priority: 'P1', icon: '✅', desc: 'Analyzes pharmacy profile and recommends updates for completeness and visibility.',                                 uses: 1320  },
@@ -157,7 +157,6 @@ export const agents = [
   { id: 'agt-12', name: 'FWA Risk Scoring',      category: 'Compliance & Regulatory',  phase: '1c', priority: 'P1', icon: '🚨', desc: 'Analyzes pharmacy profiles for fraud, waste, and abuse risk indicators.',                                         uses: 890   },
   { id: 'agt-14', name: 'Enrollment Verifier',   category: 'Compliance & Regulatory',  phase: '1c', priority: 'P1', icon: '✔️', desc: 'Cross-references enrollment across Medicare, Medicaid, and commercial programs.',                                  uses: 670   },
   { id: 'agt-16', name: 'Directory Sync',        category: 'Data Delivery',            phase: '1c', priority: 'P1', icon: '🔗', desc: 'Compares subscriber\'s internal pharmacy directory against NCPDP source data.',                                   uses: 320   },
-  { id: 'agt-17', name: 'E-Prescribing Router',  category: 'Data Delivery',            phase: '1c', priority: 'P2', icon: '💌', desc: 'Recommends optimal pharmacy routing based on prescription type and capabilities.',                                  uses: 210   },
   { id: 'agt-18', name: 'Data Quality Reconciler',category: 'Data Delivery',           phase: '1c', priority: 'P1', icon: '🧹', desc: 'Analyzes pharmacy data quality, identifies incomplete profiles and anomalies.',                                    uses: 480   },
   { id: 'agt-19', name: 'Standards Migration',   category: 'Data Delivery',            phase: '1c', priority: 'P2', icon: '🔀', desc: 'Analyzes impact of NCPDP standard version changes on subscriber implementations.',                                 uses: 180   },
   { id: 'agt-22', name: 'Network Visibility',    category: 'Credentialing (resQ)',     phase: '1c', priority: 'P1', icon: '👁️', desc: 'Identifies networks the pharmacy qualifies for but isn\'t currently in.',                                         uses: 290   },
@@ -196,33 +195,33 @@ export const activityFeed = [
 
 export const tickerMessages = [
   '🔴 DEA expired: Wellness Pharmacy #0842 (Houston, TX) — 3 networks affected',
-  '⚠️  47 credential expiration alerts pending review',
+  '⚠️  2 subscriptions nearing expiration — review pending',
   '✅ Platform uptime: 99.97% — All systems operational',
-  '📊 68,247 active pharmacy records — Updated daily',
+  '📊 81,500 active pharmacy records — Updated daily',
   '🤖 12 AI agents processed 4,820 queries today',
   '⚠️  DEA expiring in 30 days: MedPlus Pharmacy #1204 (Chicago, IL)',
   '✅ No Surprises Act report submitted successfully for BlueCross',
-  '📈 API adoption up 18% this month — 1.24M calls today',
+  '📈 API adoption up 12% this month — 200K calls today',
 ];
 
 export const complianceMetrics = [
-  { label: 'Network Adequacy',    score: 96, status: 'pass'    as const, detail: '64 of 67 CMS standards met' },
-  { label: 'DEA Compliance',      score: 98, status: 'pass'    as const, detail: '2 expired, 1,168 active'    },
-  { label: 'FWA Attestations',    score: 91, status: 'warning' as const, detail: '6 pharmacies under review'  },
+  { label: 'Network Adequacy',    score: 96, status: 'pass'    as const, detail: '64 of 67 regulatory standards met' },
+  { label: 'DEA Compliance',      score: 98, status: 'pass'    as const, detail: '76,425 active of 81,500'    },
+  { label: 'FWA Attestations',    score: 90, status: 'warning' as const, detail: '73,350 of 81,500 attested' },
   { label: 'No Surprises Act',    score: 88, status: 'warning' as const, detail: '12 reports due this week'   },
   { label: 'State License',       score: 99, status: 'pass'    as const, detail: 'All jurisdictions current'  },
-  { label: 'Accreditations',      score: 94, status: 'pass'    as const, detail: 'URAC, ACHC, PCAB tracked'   },
+  { label: 'Accreditations',      score: 94, status: 'pass'    as const, detail: 'ACHC, PCAB tracked'          },
 ];
 
 export const pharmacyResults = [
-  { id: 'NCP-001', name: 'Wellness Pharmacy #0842',    city: 'Houston',     state: 'TX', type: 'Retail',    status: 'critical', npi: '1234567890', dea: 'Expired',  networks: 3 },
-  { id: 'NCP-002', name: 'CareFirst Pharmacy',          city: 'Miami',       state: 'FL', type: 'Retail',    status: 'critical', npi: '2345678901', dea: 'Active',   networks: 2 },
-  { id: 'NCP-003', name: 'MedPlus Pharmacy #1204',      city: 'Chicago',     state: 'IL', type: 'Retail',    status: 'warning',  npi: '3456789012', dea: 'Expiring', networks: 5 },
-  { id: 'NCP-004', name: 'Sunrise Specialty Pharmacy',  city: 'Phoenix',     state: 'AZ', type: 'Specialty', status: 'active',   npi: '4567890123', dea: 'Active',   networks: 4 },
-  { id: 'NCP-005', name: 'Green Valley Pharmacy',       city: 'Seattle',     state: 'WA', type: 'Retail',    status: 'active',   npi: '5678901234', dea: 'Active',   networks: 3 },
-  { id: 'NCP-006', name: 'BioPharm Compounding',        city: 'Boston',      state: 'MA', type: 'Specialty', status: 'active',   npi: '6789012345', dea: 'Active',   networks: 6 },
-  { id: 'NCP-007', name: 'QuickMeds Pharmacy',          city: 'Denver',      state: 'CO', type: 'Retail',    status: 'active',   npi: '7890123456', dea: 'Active',   networks: 2 },
-  { id: 'NCP-008', name: 'LifeSource Pharmacy',         city: 'Atlanta',     state: 'GA', type: 'LTC',       status: 'warning',  npi: '8901234567', dea: 'Expiring', networks: 1 },
+  { id: '0512345', name: 'Option Care Health',           city: 'Los Angeles', state: 'CA', type: 'Specialty', status: 'active',   npi: '1700186859', dea: 'Active',   networks: 5 },
+  { id: '0534567', name: 'Diplomat Pharmacy',            city: 'San Diego',   state: 'CA', type: 'Specialty', status: 'active',   npi: '1437262858', dea: 'Active',   networks: 4 },
+  { id: '0589012', name: 'PharMerica Corporation',       city: 'San Jose',    state: 'CA', type: 'LTC',       status: 'active',   npi: '1346374806', dea: 'Active',   networks: 3 },
+  { id: '0556789', name: 'BrightSpring Health Services', city: 'Sacramento',  state: 'CA', type: 'Specialty', status: 'warning',  npi: '1518067230', dea: 'Expiring', networks: 4 },
+  { id: '0523456', name: 'Omnicare Pharmacy',            city: 'Fresno',      state: 'CA', type: 'LTC',       status: 'active',   npi: '1255489310', dea: 'Active',   networks: 3 },
+  { id: '0578901', name: 'Rite Aid Pharmacy #5741',      city: 'San Francisco', state: 'CA', type: 'Retail',  status: 'active',   npi: '1629187402', dea: 'Active',   networks: 6 },
+  { id: '0545678', name: 'Alto Pharmacy',                city: 'Oakland',     state: 'CA', type: 'Retail',    status: 'active',   npi: '1790081453', dea: 'Active',   networks: 2 },
+  { id: '0501234', name: 'CarePharma Holdings',          city: 'Long Beach',  state: 'CA', type: 'Specialty', status: 'warning',  npi: '1184756923', dea: 'Expiring', networks: 3 },
 ];
 
 export interface PharmacyCredential {
@@ -333,7 +332,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { label: 'IL State License',    id: 'IL-PH-99241',  status: 'Active',   expires: 'Jun 30, 2027', pct: 88 },
       { label: 'Medicare Enrollment', id: 'MCR-07712',    status: 'Active',   expires: 'Dec 1, 2027',  pct: 97 },
       { label: 'FWA Attestation',     id: 'FWA-2026-089', status: 'Active',   expires: 'Jan 1, 2027',  pct: 80 },
-      { label: 'URAC Accreditation',  id: 'URAC-24-8841', status: 'Active',   expires: 'Dec 31, 2026', pct: 72 },
+      { label: 'ACHC Accreditation',  id: 'ACHC-25-8841', status: 'Active',   expires: 'Dec 31, 2026', pct: 72 },
     ],
     networkMemberships: [
       { name: 'Aetna PBM Network',  relId: 'REL-AET-03312', since: 'Feb 2016', status: 'Active' },
@@ -345,7 +344,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     changes: [
       { date: 'Mar 29, 2026', type: 'Alert',      desc: 'DEA expiring in 30 days — auto-notification sent to administrator', color: '#D97706' },
       { date: 'Mar 1, 2026',  type: 'Update',     desc: 'Added Specialty Drugs service capability to profile',               color: '#2968B0' },
-      { date: 'Dec 18, 2025', type: 'Credential', desc: 'URAC accreditation renewed — valid through Dec 2026',               color: '#10B981' },
+      { date: 'Dec 18, 2025', type: 'Credential', desc: 'ACHC accreditation renewed — valid through Dec 2026',               color: '#10B981' },
       { date: 'Oct 5, 2025',  type: 'Network',    desc: 'Added to Prime Therapeutics specialty drug network',                color: '#10B981' },
     ],
   },
@@ -365,7 +364,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { label: 'AZ State License',    id: 'AZ-PH-14892',  status: 'Active',   expires: 'Aug 31, 2027', pct: 94 },
       { label: 'Medicare Enrollment', id: 'MCR-08812',    status: 'Active',   expires: 'May 1, 2028',  pct: 98 },
       { label: 'FWA Attestation',     id: 'FWA-2026-224', status: 'Active',   expires: 'Jan 1, 2027',  pct: 80 },
-      { label: 'URAC Accreditation',  id: 'URAC-24-2281', status: 'Active',   expires: 'Sep 30, 2027', pct: 91 },
+      { label: 'ACHC Accreditation',  id: 'ACHC-25-2281', status: 'Active',   expires: 'Sep 30, 2027', pct: 91 },
       { label: 'ACHC Accreditation',  id: 'ACHC-24-0041', status: 'Active',   expires: 'Jul 31, 2027', pct: 88 },
     ],
     networkMemberships: [
@@ -375,7 +374,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { name: 'OptumRx Specialty',        relId: 'REL-OPT-SP-3312', since: 'Feb 2020', status: 'Active' },
     ],
     changes: [
-      { date: 'Mar 20, 2026', type: 'Credential', desc: 'Annual URAC accreditation review — passed with commendation',    color: '#10B981' },
+      { date: 'Mar 20, 2026', type: 'Credential', desc: 'Annual ACHC accreditation review — passed with commendation',    color: '#10B981' },
       { date: 'Feb 8, 2026',  type: 'Network',    desc: 'Added to Humana oncology specialty drug network',                color: '#10B981' },
       { date: 'Jan 15, 2026', type: 'Update',     desc: 'Rare Disease service capability added to profile',               color: '#2968B0' },
       { date: 'Nov 1, 2025',  type: 'Ownership',  desc: 'Partial ownership transfer — Sunrise Health Solutions LLC (80%)', color: '#6D28D9' },
@@ -491,7 +490,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     changes: [
       { date: 'Mar 25, 2026', type: 'Alert',      desc: 'DEA renewal due in 51 days — outreach initiated by Credentialing Assist', color: '#D97706' },
       { date: 'Feb 28, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026 — LTC exemption applied',               color: '#10B981' },
-      { date: 'Jan 5, 2026',  type: 'Network',    desc: 'LTC network adequacy review — passed all CMS criteria',                  color: '#10B981' },
+      { date: 'Jan 5, 2026',  type: 'Network',    desc: 'LTC network adequacy review — passed all criteria',                  color: '#10B981' },
     ],
   },
 };

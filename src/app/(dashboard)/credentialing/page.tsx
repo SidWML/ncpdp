@@ -10,15 +10,15 @@ import {
 } from '@/components/ui/Icons';
 
 const credTypes = [
-  { label: 'DEA Registration',   total: 68247, active: 64238, expiring: 2841, expired: 1168, color: '#2968B0', bg: '#F0F7FF', pct: 94.1 },
-  { label: 'State License',      total: 68247, active: 67089, expiring: 892,  expired: 266,  color: '#10B981', bg: '#ECFDF5', pct: 98.3 },
-  { label: 'URAC Accreditation', total: 14720, active: 13940, expiring: 498,  expired: 282,  color: '#06B6D4', bg: '#ECFEFF', pct: 94.7 },
+  { label: 'DEA Registration',   total: 81500, active: 76425, expiring: 3390, expired: 1685, color: '#2968B0', bg: '#F0F7FF', pct: 93.8 },
+  { label: 'State License',      total: 81500, active: 79870, expiring: 1140, expired: 490,  color: '#10B981', bg: '#ECFDF5', pct: 98.0 },
+  { label: 'ACHC Accreditation', total: 14720, active: 13940, expiring: 498,  expired: 282,  color: '#06B6D4', bg: '#ECFEFF', pct: 94.7 },
   { label: 'ACHC / PCAB',        total: 8190,  active: 7820,  expiring: 241,  expired: 129,  color: '#2968B0', bg: '#F0F7FF', pct: 95.5 },
 ];
 
 const renewalQueue = [
   { id: 'NCP-0842', name: 'Wellness Pharmacy #0842',  location: 'Houston, TX',    type: 'DEA Registration',  expires: 'Apr 2, 2026',   daysLeft: 2,  priority: 'urgent'  },
-  { id: 'NCP-1290', name: 'MedPlus Pharmacy',          location: 'Phoenix, AZ',    type: 'URAC Accreditation', expires: 'Apr 8, 2026',   daysLeft: 8,  priority: 'high'    },
+  { id: 'NCP-1290', name: 'MedPlus Pharmacy',          location: 'Phoenix, AZ',    type: 'ACHC Accreditation', expires: 'Apr 8, 2026',   daysLeft: 8,  priority: 'high'    },
   { id: 'NCP-3451', name: 'Care First Pharmacy',       location: 'Dallas, TX',     type: 'State License',     expires: 'Apr 15, 2026',  daysLeft: 15, priority: 'high'    },
   { id: 'NCP-5501', name: 'Valley Health Pharmacy',    location: 'Fresno, CA',     type: 'DEA Registration',  expires: 'Apr 22, 2026',  daysLeft: 22, priority: 'medium'  },
   { id: 'NCP-7820', name: 'Precision Pharmacy',        location: 'Columbus, OH',   type: 'ACHC',              expires: 'Apr 28, 2026',  daysLeft: 28, priority: 'medium'  },
@@ -28,7 +28,7 @@ const renewalQueue = [
 const recentActivity = [
   { action: 'DEA Renewed',      pharmacy: 'Sunrise Specialty Pharmacy', time: '2h ago',  icon: '✓', color: '#10B981' },
   { action: 'License Flagged',  pharmacy: 'Community Care Rx #44',      time: '4h ago',  icon: '!', color: '#D97706' },
-  { action: 'URAC Renewed',     pharmacy: 'Metro Health Pharmacy',       time: '6h ago',  icon: '✓', color: '#10B981' },
+  { action: 'ACHC Renewed',     pharmacy: 'Metro Health Pharmacy',       time: '6h ago',  icon: '✓', color: '#10B981' },
   { action: 'DEA Expiring',     pharmacy: 'North Star Pharmacy',         time: '8h ago',  icon: '!', color: '#D97706' },
   { action: 'New Enrollment',   pharmacy: 'Riverside Pharmacy Group',    time: '1d ago',  icon: '+', color: '#2968B0' },
 ];
@@ -87,7 +87,7 @@ export default function CredentialingPage() {
         {scanDone && (
           <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#D1FAE5', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669' }}>
             <IconCheck size={16} color="#059669"/>
-            Credential scan complete — 68,247 records verified · 4,001 action items identified
+            Credential scan complete — 81,500 records verified · 4,001 action items identified
           </div>
         )}
 

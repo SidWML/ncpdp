@@ -165,3 +165,99 @@ export function SectionTitle({ children }: SectionTitleProps) {
     </div>
   );
 }
+
+/* ─── Accordion (collapsible filter section) ────────────────────── */
+interface AccordionProps {
+  title: string;
+  /** Number of active filters in this section — shown as a badge */
+  count?: number;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}
+
+export function Accordion({ title, count, defaultOpen = false, children }: AccordionProps) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <div style={{
+      border: '1px solid #E8ECF2',
+      borderRadius: 10,
+      overflow: 'hidden',
+      marginBottom: 10,
+      background: '#fff',
+      transition: 'box-shadow .15s',
+      boxShadow: open ? '0 1px 4px rgba(15,23,42,.04)' : 'none',
+    }}>
+      {/* Header — always visible */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          padding: '11px 16px',
+          border: 'none',
+          cursor: 'pointer',
+          background: open ? '#FAFBFC' : '#fff',
+          transition: 'background .12s',
+        }}
+        onMouseEnter={e => { if (!open) e.currentTarget.style.background = '#FAFBFC'; }}
+        onMouseLeave={e => { if (!open) e.currentTarget.style.background = '#fff'; }}
+      >
+        {/* Chevron */}
+        <svg
+          width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{
+            transition: 'transform .2s ease',
+            transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+            flexShrink: 0,
+          }}
+        >
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+
+        {/* Title */}
+        <span style={{
+          fontSize: 12,
+          fontWeight: 600,
+          color: open ? '#1E293B' : '#64748B',
+          textTransform: 'uppercase',
+          letterSpacing: '.04em',
+          flex: 1,
+          textAlign: 'left',
+        }}>
+          {title}
+        </span>
+
+        {/* Count badge */}
+        {count !== undefined && count > 0 && (
+          <span style={{
+            fontSize: 10,
+            fontWeight: 700,
+            color: '#2968B0',
+            background: '#F0F7FF',
+            border: '1px solid #DFEEFF',
+            padding: '1px 7px',
+            borderRadius: 10,
+            lineHeight: '16px',
+          }}>
+            {count}
+          </span>
+        )}
+      </button>
+
+      {/* Body — collapsible */}
+      <div style={{
+        maxHeight: open ? 600 : 0,
+        opacity: open ? 1 : 0,
+        overflow: 'hidden',
+        transition: 'max-height .25s ease, opacity .2s ease, padding .25s ease',
+        padding: open ? '4px 16px 16px' : '0 16px',
+      }}>
+        {children}
+      </div>
+    </div>
+  );
+}

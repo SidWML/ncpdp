@@ -15,13 +15,13 @@ const variantClass: Record<Variant, string> = {
   primary:   'btn-primary',
   secondary: 'btn-secondary',
   ghost:     'btn-ghost',
-  danger:    'btn-primary', // overridden below
+  danger:    'btn-primary',
 };
 
 const sizeStyle: Record<Size, React.CSSProperties> = {
-  sm: { fontSize: 12, padding: '5px 10px' },
+  sm: { fontSize: 12, padding: '4px 8px' },
   md: {},
-  lg: { fontSize: 14, padding: '10px 20px' },
+  lg: { fontSize: 14, padding: '8px 16px' },
 };
 
 export function Button({
@@ -39,7 +39,7 @@ export function Button({
     : variantClass[variant];
 
   const dangerStyle: React.CSSProperties =
-    variant === 'danger' ? { background: '#EF4444' } : {};
+    variant === 'danger' ? { background: '#DC2626' } : {};
 
   return (
     <button

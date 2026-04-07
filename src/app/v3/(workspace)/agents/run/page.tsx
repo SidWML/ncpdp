@@ -35,11 +35,11 @@ const CI = (cat: string, sz = 16) => {
   return m[cat] || <IconSparkles size={sz}/>;
 };
 const SUGS: Record<string, string[]> = {
-  'Search & Discovery': ['Find pharmacies in TX with expiring DEA', 'Show retail pharmacies in Miami', 'List specialty with URAC in CA', 'Find LTC added last 30 days'],
-  'Network Management': ['Analyze coverage gaps Southeast', 'CMS adequacy all networks', 'States below 90% adequacy', 'Compare Q1 vs Q4 2025'],
-  'Compliance & Regulatory': ['Expired DEA all regions', 'Critical alerts past 7 days', 'Incomplete FWA attestations', 'NSA violations Q1 2026'],
+  'Search & Discovery': ['Find pharmacies in TX with expiring DEA', 'Show retail pharmacies in Miami', 'List compounding pharmacies in CA', 'Find LTC added last 30 days'],
+  'Network Management': ['Analyze coverage gaps Southeast', 'Adequacy score all networks', 'States below 90% adequacy', 'Compare Q1 vs Q4 2025'],
+  'Compliance & Regulatory': ['Expired DEA all regions', 'Critical alerts past 7 days', 'Incomplete FWA attestations', 'Independent pharmacies missing FWA 2026'],
   'Analytics & Prediction': ['Predict closures rural TX', 'API usage trends 6 months', 'Pharmacy desert risk zones', 'Closure risk report LTC'],
-  'Data Delivery': ['Build specialty DEA feed', 'Export changes 30 days', 'Daily alert delivery config', 'E-prescribing router feed'],
+  'Data Delivery': ['Build specialty DEA feed', 'Export changes 30 days', 'Daily alert delivery config', 'Daily profile change feed'],
   'Credentialing (resQ)': ['Credentialing status Wellness', 'Incomplete resQ profiles', 'Renewal queue 90 days', 'Networks for MedPlus'],
   'Claims & Routing': ['Validate NPI batch #4821', 'Routing specialty claims', 'Bulk download eligible', 'Rejection patterns Q1'],
   'NCPDP Internal': ['Audit trail Aetna 30 days', 'Subscriber usage Q1 2026', 'Declining API accounts', 'Enterprise dataset package'],
@@ -56,7 +56,7 @@ const ROWS = [
 ];
 const BD = [{ s: 'TX', c: 89 },{ s: 'CA', c: 72 },{ s: 'FL', c: 41 },{ s: 'NY', c: 28 },{ s: 'OH', c: 17 },{ s: 'IL', c: 14 }];
 const PD = [{ n: 'Retail', v: 136, c: '#6366F1' },{ n: 'Specialty', v: 59, c: '#10B981' },{ n: 'Compounding', v: 25, c: '#FBBF24' },{ n: 'Chain', v: 18, c: '#EF4444' }];
-const TD = [{ m: 'Oct', v: 64200 },{ m: 'Nov', v: 64900 },{ m: 'Dec', v: 65400 },{ m: 'Jan', v: 66100 },{ m: 'Feb', v: 67200 },{ m: 'Mar', v: 68247 }];
+const TD = [{ m: 'Oct', v: 64200 },{ m: 'Nov', v: 64900 },{ m: 'Dec', v: 65400 },{ m: 'Jan', v: 66100 },{ m: 'Feb', v: 67200 },{ m: 'Mar', v: 81500 }];
 
 type Tab = 'results' | 'sql' | 'charts' | 'export';
 const SQL = `SELECT p.ncpdp_id, p.pharmacy_name, p.city, p.state,
@@ -88,7 +88,7 @@ function Inner() {
     document.addEventListener('mousemove', mv); document.addEventListener('mouseup', up);
   }, [chatW]);
 
-  const reply = (msg: string) => { setTimeout(() => setHasRes(true), 0); return `Analyzed 68,247 records.\nFound 247 results for: "${msg.slice(0, 50)}${msg.length > 50 ? '...' : ''}"`; };
+  const reply = (msg: string) => { setTimeout(() => setHasRes(true), 0); return `Analyzed 81,500 records.\nFound 247 results for: "${msg.slice(0, 50)}${msg.length > 50 ? '...' : ''}"`; };
   const openCanvas = () => { setShowOut(true); setTab('results'); };
   const deaB = (s: string) => s === 'Valid' ? <span className="v3-badge v3-badge-green">Valid</span> : s === 'Expiring' ? <span className="v3-badge v3-badge-amber">Expiring</span> : <span className="v3-badge v3-badge-red">Expired</span>;
   const tabs: { id: Tab; l: string }[] = [{ id: 'results', l: 'Results' },{ id: 'sql', l: 'SQL' },{ id: 'charts', l: 'Charts' },{ id: 'export', l: 'Export' }];
@@ -135,7 +135,7 @@ function Inner() {
                     {tab === 'results' && (
                       <div>
                         <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
-                          {[{ l: 'Found', v: '247', c: 'var(--v3-accent)' },{ l: 'Time', v: '0.83s', c: 'var(--v3-green)' },{ l: 'Scanned', v: '68,247', c: 'var(--v3-text)' }].map(s => (
+                          {[{ l: 'Found', v: '247', c: 'var(--v3-accent)' },{ l: 'Time', v: '0.83s', c: 'var(--v3-green)' },{ l: 'Scanned', v: '81,500', c: 'var(--v3-text)' }].map(s => (
                             <div key={s.l} className="v3-card" style={{ padding: '10px 14px', textAlign: 'center', flex: 1 }}>
                               <div style={{ fontSize: 10, color: 'var(--v3-text-3)', fontWeight: 500 }}>{s.l}</div>
                               <div style={{ fontSize: 17, fontWeight: 700, color: s.c, marginTop: 2 }}>{s.v}</div>

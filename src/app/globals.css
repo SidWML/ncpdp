@@ -2,7 +2,6 @@
 
 /* ─── dataQ.ai Design Tokens — NCPDP Corporate Blue ────────────────── */
 :root {
-  /* Brand — NCPDP Corporate Blue */
   --brand-50:    #F0F7FF;
   --brand-100:   #DFEEFF;
   --brand-200:   #B8D5F5;
@@ -11,38 +10,32 @@
   --brand-600:   #2968B0;
   --brand-700:   #1E5690;
 
-  /* Dark sidebar */
   --sidebar-bg:   #0A1128;
 
-  /* Surfaces */
   --surface:      #FFFFFF;
-  --surface-2:    #F9FAFB;
+  --surface-2:    #FAFBFC;
   --surface-3:    #F3F4F6;
-  --bg:           #F5F6F8;
+  --bg:           #F7F8FA;
 
-  /* Borders */
-  --border:       #E5E7EB;
-  --border-light: #F0F1F3;
+  --border:       #EBEBEF;
+  --border-light: #F3F3F6;
 
-  /* Text — standard slate scale */
-  --text-primary:   #111827;
-  --text-secondary: #4B5563;
-  --text-muted:     #9CA3AF;
+  --text-primary:   #1A1A2E;
+  --text-secondary: #5C5C72;
+  --text-muted:     #9B9BAE;
 
-  /* Semantic — muted, professional */
   --success:  #059669;
   --warning:  #D97706;
   --danger:   #DC2626;
   --info:     #2563EB;
 
-  /* Layout */
   --sidebar-w:  248px;
   --topbar-h:   56px;
 
-  /* Shadows — subtle */
-  --shadow-card:  0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:    0 2px 8px rgba(0,0,0,.06);
-  --shadow-lg:    0 4px 16px rgba(0,0,0,.08);
+  --shadow-xs:    0 1px 2px rgba(0,0,0,.03);
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.02);
+  --shadow-md:    0 2px 6px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.03);
+  --shadow-lg:    0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.03);
 }
 
 @theme inline {
@@ -66,7 +59,7 @@ body {
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
@@ -74,27 +67,27 @@ body {
 /* ─── Utilities ──────────────────────────────────────────────────────── */
 @layer utilities {
 
-  /* Card — minimal, clean */
+  /* ── Card — Linear-style: barely there border, no shadow ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
   }
   .card-hover {
-    transition: box-shadow .15s ease, border-color .15s ease;
+    transition: background .12s ease, border-color .12s ease;
     cursor: pointer;
   }
   .card-hover:hover {
-    border-color: var(--brand-200);
-    box-shadow: var(--shadow-md);
+    background: var(--surface-2);
+    border-color: #D8D8DE;
   }
 
-  /* Buttons */
+  /* ── Buttons — compact, Notion-style ── */
   .btn-primary {
     background: var(--brand-600);
     color: #fff;
     border-radius: 6px;
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
@@ -102,74 +95,76 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: background .15s;
-    line-height: 1;
+    transition: background .12s, opacity .12s;
+    line-height: 1.3;
+    letter-spacing: 0;
   }
   .btn-primary:hover { background: var(--brand-700); }
-  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary:active { opacity: .85; }
+  .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
 
   .btn-secondary {
     background: var(--surface);
-    color: var(--text-primary);
+    color: var(--text-secondary);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 7px 14px;
+    padding: 5px 12px;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: border-color .15s, background .15s;
-    line-height: 1;
+    transition: background .12s, border-color .12s, color .12s;
+    line-height: 1.3;
   }
-  .btn-secondary:hover { border-color: var(--brand-400); background: var(--surface-2); }
+  .btn-secondary:hover { background: var(--surface-2); border-color: #D8D8DE; color: var(--text-primary); }
+  .btn-secondary:active { background: var(--surface-3); }
 
   .btn-ghost {
     background: transparent;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     border: none;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 5px 8px;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    transition: background .12s, color .12s;
-    line-height: 1;
+    transition: background .1s, color .1s;
+    line-height: 1.3;
   }
   .btn-ghost:hover { background: var(--surface-3); color: var(--text-primary); }
 
-  /* Badges — muted, no heavy borders */
+  /* ── Badges — flat pills, very subtle ── */
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 8px;
+    padding: 1px 7px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0;
     white-space: nowrap;
   }
-  .badge-success  { background: #ECFDF5; color: #059669; }
-  .badge-warning  { background: #FFFBEB; color: #B45309; }
-  .badge-danger   { background: #FEF2F2; color: #DC2626; }
-  .badge-info     { background: #EFF6FF; color: #2563EB; }
+  .badge-success  { background: #ECFDF5; color: #047857; }
+  .badge-warning  { background: #FFF8EB; color: #A16207; }
+  .badge-danger   { background: #FEF2F2; color: #B91C1C; }
+  .badge-info     { background: #EFF6FF; color: #1D4ED8; }
   .badge-brand    { background: var(--brand-50); color: var(--brand-700); }
-  .badge-violet   { background: #F5F3FF; color: #6D28D9; }
+  .badge-violet   { background: #F5F3FF; color: #5B21B6; }
   .badge-neutral  { background: var(--surface-3); color: var(--text-secondary); }
 
-  /* Input */
+  /* ── Input — clean, minimal ── */
   .input-base {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 7px 12px;
+    font-size: 13px;
     color: var(--text-primary);
     outline: none;
     transition: border-color .15s, box-shadow .15s;
@@ -177,20 +172,20 @@ body {
     line-height: 1.5;
   }
   .input-base::placeholder { color: var(--text-muted); }
-  .input-base:focus { border-color: var(--brand-500); box-shadow: 0 0 0 2px rgba(41,104,176,.12); }
+  .input-base:focus { border-color: var(--brand-400); box-shadow: 0 0 0 3px rgba(41,104,176,.08); }
 
-  /* Sidebar (dark) */
+  /* ── Sidebar (dark) ── */
   .sidebar-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 7px 12px;
+    padding: 6px 10px;
     border-radius: 6px;
     font-size: 13px;
     font-weight: 450;
     color: rgba(148,163,184,.9);
     cursor: pointer;
-    transition: background .12s, color .12s;
+    transition: background .1s, color .1s;
     text-decoration: none;
     line-height: 1.4;
   }
@@ -198,27 +193,25 @@ body {
   .sidebar-item.active { background: rgba(41,104,176,.2); color: #DFEEFF; font-weight: 550; }
   .sidebar-item.active svg { color: #5B9BD5; }
 
-  /* Progress */
-  .progress-bar { height: 4px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; }
+  /* ── Progress ── */
+  .progress-bar { height: 3px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 9999px; transition: width .5s cubic-bezier(.4,0,.2,1); }
 
-  /* Ticker */
+  /* Animations */
   .ticker-wrap { overflow: hidden; white-space: nowrap; }
   .animate-ticker { display: inline-block; animation: ticker 55s linear infinite; }
   @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  /* Pulse */
   .pulse-dot { animation: pdot 2s ease-in-out infinite; }
   @keyframes pdot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(.8); } }
 
   .divider-nav { border: none; border-top: 1px solid rgba(255,255,255,.06); margin: 4px 0; }
 
-  /* Typography hierarchy */
+  /* ── Typography ── */
   .page-title  { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -.3px; line-height: 1.3; }
   .page-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
-  .section-title { font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.4; letter-spacing: -.01em; }
 
-  /* Recharts override */
+  /* Recharts */
   .recharts-tooltip-wrapper .recharts-default-tooltip {
     border: 1px solid var(--border) !important;
     border-radius: 8px !important;
@@ -229,7 +222,7 @@ body {
   }
   .recharts-cartesian-grid-horizontal line,
   .recharts-cartesian-grid-vertical line {
-    stroke: var(--border) !important;
+    stroke: var(--border-light) !important;
     stroke-dasharray: none !important;
   }
 
@@ -237,35 +230,31 @@ body {
   .data-table { width: 100%; border-collapse: collapse; }
 }
 
-/* ── Global table styles ── */
+/* ── Tables ── */
 main table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
 }
 main table thead tr {
+  background: var(--surface-2) !important;
   border-bottom: 1px solid var(--border) !important;
-  background: transparent !important;
 }
 main table thead th {
-  padding: 10px 16px !important;
+  padding: 7px 16px !important;
   text-align: left;
   font-size: 12px !important;
   font-weight: 500 !important;
   color: var(--text-muted) !important;
   white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: .04em;
+  text-transform: none;
+  letter-spacing: 0;
   border-right: none;
-  background: transparent !important;
 }
 main table tbody tr {
   border-bottom: 1px solid var(--border-light);
-  transition: background .08s;
-}
-main table tbody tr:nth-child(odd) {
-  background: #fff;
+  transition: background .06s;
 }
 main table tbody tr:nth-child(even) {
   background: var(--surface-2);
@@ -277,8 +266,103 @@ main table tbody tr:hover {
   background: var(--brand-50) !important;
 }
 main table tbody td {
-  padding: 10px 16px !important;
-  font-size: 14px !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
   color: var(--text-secondary);
   border-right: none;
+}
+
+/* ── Code blocks — dark terminal style ── */
+pre.code-block, .code-dark {
+  background: #1A1A2E !important;
+  color: #E2E8F0 !important;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  padding: 16px;
+  border-radius: 8px;
+  overflow: auto;
+  margin: 0;
+  border: 1px solid rgba(255,255,255,.06);
+}
+pre.code-block .kw, .code-dark .kw { color: #93C5FD; }
+pre.code-block .str, .code-dark .str { color: #86EFAC; }
+pre.code-block .comment, .code-dark .comment { color: #6B7280; }
+
+/* ── Tabs — modern pill style ── */
+.tab-group {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-3);
+  border-radius: 8px;
+  padding: 3px;
+}
+.tab-item {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: background .1s, color .1s, box-shadow .1s;
+  line-height: 1.3;
+}
+.tab-item:hover {
+  color: var(--text-secondary);
+}
+.tab-item.active {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+
+/* ── Risk status highlights ── */
+.badge-danger-glow {
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+  animation: dangerGlow 2s ease-in-out infinite;
+}
+@keyframes dangerGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12); }
+}
+.badge-warning-glow {
+  box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
+  animation: warningGlow 2s ease-in-out infinite;
+}
+@keyframes warningGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.12); }
+}
+
+/* ── AI response card elevation ── */
+.ai-response-card {
+  background: linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 100%);
+  border: 1px solid #E8EFF8;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(41, 104, 176, 0.06);
+  transition: box-shadow .2s ease;
+}
+.ai-response-card:hover {
+  box-shadow: 0 4px 16px rgba(41, 104, 176, 0.1);
+}
+
+/* ── Drawer slide animation ── */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Insight card interaction ── */
+.insight-card {
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.insight-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }

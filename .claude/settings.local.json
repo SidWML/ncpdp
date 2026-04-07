@@ -9,7 +9,17 @@
       "Bash(wc -l src/app/v2/\\\\\\(workspace\\\\\\)/*/page.tsx src/app/v2/page.tsx)",
       "Bash(find src/app/\\\\\\(dashboard\\\\\\) -name \"*.tsx\" -exec sed -i 's/#0D9488/#2968B0/g; s/#14B8A6/#3A7EC8/g; s/#2DD4BF/#5B9BD5/g; s/#99F6E4/#B8D5F5/g; s/#CCFBF1/#DFEEFF/g; s/#F0FDFA/#F0F7FF/g; s/#0F766E/#1E5690/g; s/#134E4A/#0F2E4E/g; s/#115E59/#1E5690/g' {} +)",
       "Bash(find src/app/\\\\\\(dashboard\\\\\\) -name \"*.tsx\" -exec sed -i 's/rgba\\(13,148,136/rgba\\(41,104,176/g' {} +)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(grep -E \"\\\\.\\(tsx?|jsx?|css|json\\)$\")",
+      "Bash(xargs sed:*)",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\" -H \"Content-Type: application/json\" -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Reply with just: hello\"}]}]}')",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\" -H \"Content-Type: application/json\" -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Reply with just: hello\"}]}]}')",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\" -H \"Content-Type: application/json\" -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Say hello\"}]}]}')",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\")",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI\" -H \"Content-Type: application/json\" -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Reply with just: hello\"}]}]}')",
+      "Bash(curl -s 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI' -H 'Content-Type: application/json' -d '{:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['candidates'][0]['content']['parts'][0]['text'][:500]\\)\")",
+      "Bash(node -e ':*)"
     ]
   }
 }

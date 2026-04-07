@@ -1054,6 +1054,8 @@ export default function AISearchPage() {
   }
 
   const lastGeminiRef = useRef<GeminiResponse | null>(null);
+  const lastQueryRef = useRef<string>('');
+  const lastCtxRef = useRef<QueryContext | null>(null);
 
   function geminiToCtx(g: GeminiResponse): QueryContext {
     return {
@@ -1077,19 +1079,38 @@ export default function AISearchPage() {
   }
 
   async function handleBotReply(msg: string): Promise<string> {
+    // Add conversation context for follow-ups
+    const contextPrefix = lastQueryRef.current
+      ? `Previous query was: "${lastQueryRef.current}". This is a follow-up. `
+      : '';
+    lastQueryRef.current = msg;
+
     // Try Gemini first
-    const gemini = await queryGemini(msg);
+    const gemini = await queryGemini(contextPrefix + msg);
     if (gemini) {
       lastGeminiRef.current = gemini;
       const ctx = geminiToCtx(gemini);
+      lastCtxRef.current = ctx;
       setQueryCtx(ctx);
       setQueryKey(k => k + 1);
       setShowOutput(true);
       return gemini.replyText;
     }
-    // Fallback to static
+
+    // Fallback to static — check if this query matches a specific handler
     lastGeminiRef.current = null;
     const ctx = buildQueryContext(msg);
+    const isGenericFallback = ctx.canvasLabel === '247 results found';
+
+    // If it's a generic fallback and we have a previous context, reuse it
+    // (this happens when follow-up chip text doesn't match any specific handler)
+    if (isGenericFallback && lastCtxRef.current) {
+      setQueryCtx(lastCtxRef.current);
+      setShowOutput(true);
+      return buildBotReply(lastQueryRef.current || msg);
+    }
+
+    lastCtxRef.current = ctx;
     setQueryCtx(ctx);
     setQueryKey(k => k + 1);
     setShowOutput(true);
@@ -1105,8 +1126,8 @@ export default function AISearchPage() {
         canvasLabel: g.canvasLabel,
       };
     }
-    // Fallback
-    const ctx = buildQueryContext(msg);
+    // Use current queryCtx (which may be the reused previous context)
+    const ctx = lastCtxRef.current || buildQueryContext(msg);
     return {
       insights: ctx.chatInsights,
       followUps: ctx.followUps,

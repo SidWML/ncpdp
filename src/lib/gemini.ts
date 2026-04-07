@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = 'AIzaSyDwlwhs6vLkZnFD_v7p10eZFb3psaajcmI';
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 const SYSTEM_PROMPT = `You are the AI engine powering dataQ.ai — NCPDP's pharmacy network intelligence platform.

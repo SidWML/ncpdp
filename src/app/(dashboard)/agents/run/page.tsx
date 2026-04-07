@@ -616,9 +616,16 @@ function AgentRunInner() {
     };
   }
 
+  const lastAgentQueryRef = useRef<string>('');
+
   async function handleBotReply(msg: string): Promise<string> {
-    const agentContext = `You are the "${agent.name}" agent (${agent.category}). ${agent.desc}. Focus your response on this agent's specialty.`;
-    const gemini = await queryGemini(agentContext + ' ' + msg);
+    const contextPrefix = lastAgentQueryRef.current
+      ? `Previous query: "${lastAgentQueryRef.current}". This is a follow-up. `
+      : '';
+    lastAgentQueryRef.current = msg;
+
+    const agentContext = `You are the "${agent.name}" agent (${agent.category}). ${agent.desc}. Focus your response on this agent's specialty. `;
+    const gemini = await queryGemini(agentContext + contextPrefix + msg);
     if (gemini) {
       lastGeminiRef.current = gemini;
       const ctx = geminiToCtx(gemini);
@@ -628,8 +635,13 @@ function AgentRunInner() {
       setShowOutput(true);
       return gemini.replyText;
     }
-    // Fallback — use static default context
+    // Fallback — reuse previous context if available (for follow-up chips)
     lastGeminiRef.current = null;
+    if (dynamicCtx) {
+      setHasResults(true);
+      setShowOutput(true);
+      return `Refined results based on your follow-up: "${msg}"\n\nUpdated data is available in the output panel.`;
+    }
     const fallbackCtx = makeCtx(sql, RESULT_ROWS);
     setDynamicCtx(fallbackCtx);
     setQueryKey(k => k + 1);

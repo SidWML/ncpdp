@@ -11,20 +11,20 @@ import { credentialStatus, networkTrend, stateBreakdown } from '@/lib/mockData';
 import { IconDownload, IconActivity } from '@/components/ui/Icons';
 
 const pharmacyTypes = [
-  { label: 'Retail',      value: 38420, pct: 56, color: '#2968B0' },
-  { label: 'Specialty',   value: 14720, pct: 22, color: '#06B6D4' },
-  { label: 'LTC',         value: 8190,  pct: 12, color: '#10B981' },
-  { label: 'Compounding', value: 4100,  pct: 6,  color: '#F59E0B' },
-  { label: 'Mail Order',  value: 2817,  pct: 4,  color: '#2968B0' },
+  { label: 'Retail',      value: 45640, pct: 56, color: '#2968B0' },
+  { label: 'Specialty',   value: 17930, pct: 22, color: '#06B6D4' },
+  { label: 'LTC',         value: 9780,  pct: 12, color: '#10B981' },
+  { label: 'Compounding', value: 4890,  pct: 6,  color: '#F59E0B' },
+  { label: 'Mail Order',  value: 3260,  pct: 4,  color: '#2968B0' },
 ];
 
 const apiTrend = [
-  { label: 'Oct', value: 820000  },
-  { label: 'Nov', value: 940000  },
-  { label: 'Dec', value: 1010000 },
-  { label: 'Jan', value: 1080000 },
-  { label: 'Feb', value: 1150000 },
-  { label: 'Mar', value: 1240000 },
+  { label: 'Oct', value: 150000 },
+  { label: 'Nov', value: 160000 },
+  { label: 'Dec', value: 170000 },
+  { label: 'Jan', value: 180000 },
+  { label: 'Feb', value: 190000 },
+  { label: 'Mar', value: 200000 },
 ];
 
 const platformKpis = [
@@ -35,21 +35,21 @@ const platformKpis = [
 ];
 
 const complianceTargets = [
-  { label: 'FWA Attestation',  value: 87.4, target: 95, gap: 3253, color: '#F59E0B' },
-  { label: 'License Current',  value: 96.8, target: 99, gap: 1371, color: '#F59E0B' },
-  { label: 'DEA Registration', value: 94.1, target: 98, gap: 2527, color: '#F59E0B' },
-  { label: 'Accreditation',    value: 91.2, target: 95, gap: 3770, color: '#F59E0B' },
+  { label: 'FWA Attestation',  value: 90.0, target: 95, gap: 8150, color: '#F59E0B' },
+  { label: 'State License',    value: 99.0, target: 99, gap: 490,  color: '#10B981' },
+  { label: 'DEA Registration', value: 98.0, target: 98, gap: 1685, color: '#10B981' },
+  { label: 'Network Adequacy', value: 94.2, target: 95, gap: 406,  color: '#F59E0B' },
 ];
 
 const coverageStates = [
-  { state: 'California',   count: 8420, pct: 99.1, status: 'Pass',   trend: '+2.1%', up: true  },
-  { state: 'Texas',        count: 7180, pct: 98.7, status: 'Pass',   trend: '+1.8%', up: true  },
-  { state: 'Florida',      count: 6340, pct: 97.3, status: 'Pass',   trend: '+3.2%', up: true  },
-  { state: 'New York',     count: 5890, pct: 99.4, status: 'Pass',   trend: '+0.5%', up: true  },
-  { state: 'Pennsylvania', count: 3980, pct: 96.8, status: 'Pass',   trend: '−0.3%', up: false },
-  { state: 'Illinois',     count: 3750, pct: 97.1, status: 'Pass',   trend: '+1.2%', up: true  },
-  { state: 'Ohio',         count: 4210, pct: 94.2, status: 'Review', trend: '−1.1%', up: false },
-  { state: 'Montana',      count: 312,  pct: 88.4, status: 'Below',  trend: '−2.3%', up: false },
+  { state: 'California',   count: 10120, pct: 99.1, status: 'Pass',   trend: '+2.1%', up: true  },
+  { state: 'Texas',        count: 8640,  pct: 98.7, status: 'Pass',   trend: '+1.8%', up: true  },
+  { state: 'Florida',      count: 7620,  pct: 97.3, status: 'Pass',   trend: '+3.2%', up: true  },
+  { state: 'New York',     count: 7080,  pct: 99.4, status: 'Pass',   trend: '+0.5%', up: true  },
+  { state: 'Pennsylvania', count: 4780,  pct: 96.8, status: 'Pass',   trend: '−0.3%', up: false },
+  { state: 'Illinois',     count: 4510,  pct: 97.1, status: 'Pass',   trend: '+1.2%', up: true  },
+  { state: 'Ohio',         count: 5060,  pct: 94.2, status: 'Review', trend: '−1.1%', up: false },
+  { state: 'Montana',      count: 412,   pct: 82.4, status: 'Below',  trend: '−2.3%', up: false },
 ];
 
 const statusCfg = {
@@ -109,10 +109,10 @@ export default function AnalyticsPage() {
         {/* ── KPI cards ── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
           {[
-            { label: 'Total Network',    value: '81,500', sub: '+312 this month',        bar: 72,  color: '#2968B0', delta: '+0.5%', green: true  },
-            { label: 'Credential Score', value: 'A−',     sub: '↑ from B+ last quarter', bar: 87,  color: '#10B981', delta: '+1.3%', green: true  },
-            { label: 'Network Adequacy', value: '97.2%',  sub: '48 / 50 states meet threshold', bar: 97, color: '#2968B0', delta: '+0.4%', green: true  },
-            { label: 'Profile Complete', value: '84%',    sub: '↑ 4% this quarter',      bar: 84,  color: '#F59E0B', delta: '+4%',   green: true  },
+            { label: 'Total Network',    value: '81,500', sub: '+1,204 this month',       bar: 82,  color: '#2968B0', delta: '+1.5%', green: true  },
+            { label: 'DEA Compliance',   value: '98%',    sub: '76,425 active registrations', bar: 98, color: '#10B981', delta: '+0.8%', green: true  },
+            { label: 'Network Adequacy', value: '94.2%',  sub: '44 / 50 states meet threshold', bar: 94, color: '#2968B0', delta: '+0.4%', green: true  },
+            { label: 'FWA Attestation',  value: '90%',    sub: '73,350 of 81,500 attested', bar: 90, color: '#F59E0B', delta: '+2.1%', green: true  },
           ].map(k => (
             <div key={k.label} className="card" style={{ padding: '18px 20px' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>{k.label}</div>
@@ -130,7 +130,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 16 }}>
           <Card>
             <CardHeader
-              title="Network Growth"
+              title="Pharmacy Trend"
               subtitle="Active pharmacies — rolling 6 months"
               action={<Badge variant="success" dot>+2.2%</Badge>}
               icon={<IconActivity size={14}/>}
@@ -152,15 +152,15 @@ export default function AnalyticsPage() {
                 data={networkTrend.map(d => ({ label: d.month, value: d.count }))}
                 color="#2968B0"
                 height={150}
-                yDomain={[65000, 69000]}
+                yDomain={[77000, 82500]}
               />
             </CardBody>
           </Card>
 
           <Card>
             <CardHeader
-              title="Credential Status"
-              subtitle="DEA · License · Accreditation · FWA"
+              title="DEA License"
+              subtitle="DEA · License · FWA"
               icon={<IconActivity size={14}/>}
             />
             <CardBody style={{ padding: '12px 16px 16px' }}>
@@ -168,8 +168,8 @@ export default function AnalyticsPage() {
                 segments={credentialStatus}
                 innerRadius={52}
                 outerRadius={72}
-                centerLabel="94.2%"
-                centerSub="active"
+                centerLabel="90%"
+                centerSub="compliant"
               />
               {/* Legend */}
               <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 8 }}>
@@ -227,7 +227,7 @@ export default function AnalyticsPage() {
                 segments={pharmacyTypes}
                 innerRadius={38}
                 outerRadius={58}
-                centerLabel="68k"
+                centerLabel="81.5k"
                 centerSub="total"
               />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 10 }}>
@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
           </Card>
 
           <Card>
-            <CardHeader title="Compliance Targets" subtitle="vs industry benchmarks — Q1"/>
+            <CardHeader title="Compliance Targets" subtitle="vs benchmarks — Q1 2026"/>
             <CardBody style={{ padding: '16px 20px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
               {complianceTargets.map(c => (
                 <div key={c.label}>
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
             <CardHeader
               title="API Call Volume"
               subtitle="Monthly REST + GraphQL requests"
-              action={<Badge variant="brand" dot>+18% MoM</Badge>}
+              action={<Badge variant="brand" dot>+12% MoM</Badge>}
               icon={<IconActivity size={14}/>}
             />
             <CardBody>
@@ -292,7 +292,7 @@ export default function AnalyticsPage() {
                 data={apiTrend}
                 color="#06B6D4"
                 height={140}
-                valueFormatter={(v: number) => `${(v/1000000).toFixed(1)}M`}
+                valueFormatter={(v: number) => `${(v/1000).toFixed(0)}K`}
               />
             </CardBody>
           </Card>

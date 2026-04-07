@@ -14,6 +14,8 @@ export function RootShell({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
+  const hideBuddy = path === '/ai-search' || path === '/ai-reports';
+
   return (
     <SidebarProvider>
       <div style={{ display: 'flex', minHeight: '100vh' }}>
@@ -31,7 +33,7 @@ export function RootShell({ children }: { children: React.ReactNode }) {
         >
           {children}
         </div>
-        <NCPDPBuddy />
+        {!hideBuddy && <NCPDPBuddy />}
       </div>
     </SidebarProvider>
   );

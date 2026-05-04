@@ -9,14 +9,14 @@ import {
 } from '@/components/ui/Icons';
 
 const catColors: Record<string, { c: string; bg: string }> = {
-  'Search & Discovery':      { c: '#6366F1', bg: '#EEF2FF' },
-  'Network Management':      { c: '#059669', bg: '#ECFDF5' },
+  'Search & Discovery':      { c: '#005C8D', bg: '#E8F3F9' },
+  'Network Management':      { c: '#449055', bg: '#ECFDF5' },
   'Compliance & Regulatory': { c: '#DC2626', bg: '#FEF2F2' },
-  'Data Delivery':           { c: '#2563EB', bg: '#EFF6FF' },
+  'Data Delivery':           { c: '#1474A4', bg: '#E8F3F9' },
   'Credentialing (resQ)':    { c: '#D97706', bg: '#FFFBEB' },
-  'Analytics & Prediction':  { c: '#7C3AED', bg: '#F5F3FF' },
-  'Claims & Routing':        { c: '#10B981', bg: '#ECFDF5' },
-  'NCPDP Internal':          { c: '#0284C7', bg: '#F0F9FF' },
+  'Analytics & Prediction':  { c: '#004870', bg: '#E8F3F9' },
+  'Claims & Routing':        { c: '#76C799', bg: '#ECFDF5' },
+  'NCPDP Internal':          { c: '#005C8D', bg: '#E8F3F9' },
 };
 
 const catIcon = (cat: string) => {

@@ -33,7 +33,7 @@ export function Topbar({ title, subtitle, actions }: Props) {
         <span style={{ position: 'absolute', top: -2, right: -2, width: 14, height: 14, borderRadius: 7, background: '#EF4444', color: '#fff', fontSize: 8, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--v3-bg)' }}>47</span>
       </Link>
 
-      <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#fff', flexShrink: 0, cursor: 'pointer' }}>SC</div>
+      <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg,#005C8D,#005C8D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#fff', flexShrink: 0, cursor: 'pointer' }}>SC</div>
     </header>
   );
 }

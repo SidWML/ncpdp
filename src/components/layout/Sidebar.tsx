@@ -23,8 +23,8 @@ const navSections: { section: string; items: NavItem[] }[] = [
     section: 'Main',
     items: [
       { href: '/',             label: 'Dashboard',       icon: IconDashboard },
-      { href: '/ai-search',   label: 'AI Smart Search',  icon: IconLogoBrain, badge: 'AI', badgeColor: '#2968B0' },
-      { href: '/ai-reports',  label: 'AI Report Builder', icon: IconReport, badge: 'AI', badgeColor: '#2968B0' },
+      { href: '/ai-search',   label: 'AI Smart Search',  icon: IconLogoBrain, badge: 'AI', badgeColor: '#449055' },
+      { href: '/ai-reports',  label: 'AI Report Builder', icon: IconReport, badge: 'AI', badgeColor: '#449055' },
       { href: '/agents',       label: 'Agent Library',   icon: IconAgents, badge: '33' },
       { href: '/analytics',    label: 'Analytics',       icon: IconAnalytics },
       { href: '/alerts',       label: 'Alerts',          icon: IconBell, badge: '47', badgeColor: '#DC2626' },
@@ -85,7 +85,7 @@ export function Sidebar() {
         top: 0,
         bottom: 0,
         width: w,
-        background: '#0A1128',
+        background: '#0A1628',
         display: 'flex',
         flexDirection: 'column',
         zIndex: 40,
@@ -109,19 +109,32 @@ export function Sidebar() {
         {collapsed ? (
           <button
             onClick={() => setCollapsed(false)}
+            aria-label="Expand sidebar"
             style={{
               background: 'rgba(255,255,255,.06)', border: 'none', cursor: 'pointer',
-              padding: 4, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 0, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: 36, height: 36, overflow: 'hidden',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="NCPDP" width={28} height={28} style={{ borderRadius: 4 }}/>
+            {/* Globe-only crop via background-image positioning */}
+            <div style={{
+              width: 28, height: 28,
+              backgroundImage: 'url(/pharmacyfocus-logo.png)',
+              backgroundSize: 'auto 28px',          /* match container height */
+              backgroundPosition: 'left center',     /* show leftmost portion (the globe) */
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0) invert(1)',
+            }}/>
           </button>
         ) : (
           <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, overflow: 'hidden' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="NCPDP" className=' w-20 invert brightness-0' style={{ borderRadius: 4 }}/>
+              <img
+                src="/pharmacyfocus-logo.png"
+                alt="PharmacyFocus"
+                style={{ height: 32, width: 'auto', filter: 'brightness(0) invert(1)' }}
+              />
             </div>
             <button
               onClick={() => setCollapsed(true)}
@@ -164,7 +177,7 @@ export function Sidebar() {
                   title={collapsed ? label : undefined}
                   style={{ justifyContent: collapsed ? 'center' : undefined, marginBottom: 1 }}
                 >
-                  <span style={{ flexShrink: 0, color: active ? '#5B9BD5' : 'rgba(148,163,184,.7)', transition: 'color .12s' }}>
+                  <span style={{ flexShrink: 0, color: active ? '#76C799' : 'rgba(148,163,184,.7)', transition: 'color .12s' }}>
                     <Icon size={16} strokeWidth={active ? 2 : 1.7}/>
                   </span>
                   {!collapsed && (
@@ -172,8 +185,8 @@ export function Sidebar() {
                       <span style={{ flex: 1, lineHeight: 1 }}>{label}</span>
                       {badge && (
                         <span style={{
-                          background: badgeColor ? badgeColor : 'rgba(41,104,176,.25)',
-                          color: badgeColor ? '#fff' : '#B8D5F5',
+                          background: badgeColor ? badgeColor : 'rgba(0,92,141,.25)',
+                          color: badgeColor ? '#fff' : '#8FC2D8',
                           fontSize: 10,
                           fontWeight: 600,
                           padding: '1px 6px',

@@ -13,14 +13,14 @@ import {
 // Category color mapping
 // -------------------------------------------------------------------
 const catColors: Record<string, string> = {
-  'Search & Discovery':      '#6366F1',
-  'Network Management':      '#059669',
+  'Search & Discovery':      '#005C8D',
+  'Network Management':      '#449055',
   'Compliance & Regulatory': '#DC2626',
-  'Data Delivery':           '#2563EB',
+  'Data Delivery':           '#1474A4',
   'Credentialing (resQ)':    '#D97706',
-  'Analytics & Prediction':  '#7C3AED',
-  'Claims & Routing':        '#10B981',
-  'NCPDP Internal':          '#0284C7',
+  'Analytics & Prediction':  '#004870',
+  'Claims & Routing':        '#76C799',
+  'NCPDP Internal':          '#005C8D',
 };
 
 // -------------------------------------------------------------------
@@ -157,7 +157,7 @@ export default function AgentsPage() {
         {/* 3-column agent grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           {filtered.map(agent => {
-            const color = catColors[agent.category] || '#6366F1';
+            const color = catColors[agent.category] || '#005C8D';
             const CatIcon = catIcons[agent.category] || IconBot;
 
             return (

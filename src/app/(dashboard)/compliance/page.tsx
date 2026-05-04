@@ -21,7 +21,7 @@ const auditItems = [
 ];
 
 const statusConfig = {
-  pass:    { color: '#10B981', bg: '#D1FAE5', border: '#A7F3D0', label: 'Pass'   },
+  pass:    { color: '#76C799', bg: '#D1FAE5', border: '#A7F3D0', label: 'Pass'   },
   warning: { color: '#D97706', bg: '#FEF3C7', border: '#FDE68A', label: 'Review' },
   fail:    { color: '#DC2626', bg: '#FEE2E2', border: '#FECACA', label: 'Fail'   },
 };
@@ -66,9 +66,9 @@ export default function CompliancePage() {
           <div style={{
             marginBottom: 16, padding: '12px 16px', borderRadius: 8,
             background: '#D1FAE5', border: '1px solid #A7F3D0',
-            display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669',
+            display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#449055',
           }}>
-            <IconCheck size={16} color="#059669"/>
+            <IconCheck size={16} color="#449055"/>
             Compliance scan complete — 81,500 records reviewed, 18 items flagged for review
           </div>
         )}
@@ -89,7 +89,7 @@ export default function CompliancePage() {
             <div style={{ position: 'relative', width: 110, height: 110 }}>
               <svg width="110" height="110" viewBox="0 0 120 120" style={{ transform: 'rotate(-90deg)' }}>
                 <circle cx="60" cy="60" r="48" fill="none" stroke="var(--border-light)" strokeWidth="14"/>
-                <circle cx="60" cy="60" r="48" fill="none" stroke="#10B981" strokeWidth="14"
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#76C799" strokeWidth="14"
                   strokeDasharray={`${(overallScore / 100) * 2 * Math.PI * 48} ${2 * Math.PI * 48}`}
                   strokeLinecap="round"/>
               </svg>
@@ -173,7 +173,7 @@ export default function CompliancePage() {
                     <tr
                       key={i}
                       onClick={() => setSelected(isSelected ? null : i)}
-                      style={{ background: isSelected ? '#F0F7FF' : undefined, cursor: 'pointer' }}
+                      style={{ background: isSelected ? '#E8F3F9' : undefined, cursor: 'pointer' }}
                     >
                       <td style={{ fontWeight: 600 }}>{row.item}</td>
                       <td>
@@ -203,7 +203,7 @@ export default function CompliancePage() {
             {selected !== null && (
               <div style={{
                 margin: '0 16px 16px', padding: '14px 16px', borderRadius: 12,
-                background: 'var(--surface-2)', border: '1px solid #B8D5F5',
+                background: 'var(--surface-2)', border: '1px solid #8FC2D8',
               }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>
                   {auditItems[selected].item} — Detail View

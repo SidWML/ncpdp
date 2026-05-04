@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/Icons';
 
 const attestationStats = [
-  { label: 'Attestation Required',  value: '81,500', color: '#2968B0', bg: '#F0F7FF', border: '#B8D5F5' },
-  { label: 'Completed',             value: '73,350', color: '#10B981', bg: '#ECFDF5', border: '#A7F3D0' },
+  { label: 'Attestation Required',  value: '81,500', color: '#005C8D', bg: '#E8F3F9', border: '#8FC2D8' },
+  { label: 'Completed',             value: '73,350', color: '#76C799', bg: '#ECFDF5', border: '#A7F3D0' },
   { label: 'Pending (In Progress)', value: '4,891',  color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
   { label: 'Overdue',               value: '1,172',  color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
 ];
@@ -27,7 +27,7 @@ const overdueList = [
 const riskBands = [
   { label: 'High Risk (8–10)',   count: 6,   color: '#DC2626', bg: '#FEE2E2' },
   { label: 'Medium Risk (5–7)', count: 28,  color: '#D97706', bg: '#FEF3C7' },
-  { label: 'Low Risk (1–4)',    count: 1138, color: '#10B981', bg: '#ECFDF5' },
+  { label: 'Low Risk (1–4)',    count: 1138, color: '#76C799', bg: '#ECFDF5' },
 ];
 
 const completionByNetwork = [
@@ -79,15 +79,15 @@ export default function FWAPage() {
       <main style={{ padding: '16px 20px 40px' }}>
 
         {sent && (
-          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#D1FAE5', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669' }}>
-            <IconCheck size={16} color="#059669"/>
+          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#D1FAE5', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#449055' }}>
+            <IconCheck size={16} color="#449055"/>
             Reminder emails sent to 1,172 pharmacies with overdue attestations
           </div>
         )}
 
         {scanDone && !sent && (
-          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#EFF6FF', border: '1px solid #BFDBFE', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#2563EB' }}>
-            <IconShield size={16} color="#2563EB"/>
+          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#E8F3F9', border: '1px solid #8FC2D8', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#1474A4' }}>
+            <IconShield size={16} color="#1474A4"/>
             FWA Risk Agent scan complete — 6 high-risk pharmacies identified, 34 medium-risk flagged
           </div>
         )}
@@ -114,10 +114,10 @@ export default function FWAPage() {
             />
             <CardBody style={{ padding: '16px 20px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 12 }}>
-                <span style={{ fontSize: 48, fontWeight: 700, color: '#2968B0', lineHeight: 1 }}>{completionPct}%</span>
+                <span style={{ fontSize: 48, fontWeight: 700, color: '#005C8D', lineHeight: 1 }}>{completionPct}%</span>
                 <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>73,350 of 81,500 pharmacies</span>
               </div>
-              <Progress value={completionPct} color="#2968B0" height={10}/>
+              <Progress value={completionPct} color="#005C8D" height={10}/>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 12, color: 'var(--text-muted)' }}>
                 <span>Started Jan 1, 2026</span>
                 <span>Deadline Apr 30, 2026</span>
@@ -125,7 +125,7 @@ export default function FWAPage() {
 
               <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { label: 'Completed', count: 73350, color: '#10B981', pct: 91.1 },
+                  { label: 'Completed', count: 73350, color: '#76C799', pct: 91.1 },
                   { label: 'In Progress', count: 4891, color: '#D97706', pct: 7.2  },
                   { label: 'Overdue',   count: 1172,  color: '#DC2626', pct: 1.7   },
                 ].map(b => (
@@ -166,9 +166,9 @@ export default function FWAPage() {
                 <div key={n.network}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{n.network}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: n.pct >= 90 ? '#10B981' : '#D97706' }}>{n.pct}%</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: n.pct >= 90 ? '#76C799' : '#D97706' }}>{n.pct}%</span>
                   </div>
-                  <Progress value={n.pct} color={n.pct >= 90 ? '#10B981' : '#D97706'} height={6}/>
+                  <Progress value={n.pct} color={n.pct >= 90 ? '#76C799' : '#D97706'} height={6}/>
                   <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{n.count} attested</div>
                 </div>
               ))}
@@ -223,7 +223,7 @@ export default function FWAPage() {
                       <td>
                         <span style={{
                           fontSize: 13, fontWeight: 700,
-                          color: r.riskScore >= 8 ? '#DC2626' : r.riskScore >= 5 ? '#D97706' : '#10B981',
+                          color: r.riskScore >= 8 ? '#DC2626' : r.riskScore >= 5 ? '#D97706' : '#76C799',
                         }}>{r.riskScore.toFixed(1)}</span>
                         <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 4 }}>/ 10</span>
                       </td>

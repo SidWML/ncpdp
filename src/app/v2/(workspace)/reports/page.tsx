@@ -65,7 +65,7 @@ const PHARMACY_TYPE_DATA = [
   { name: 'LTC',         value: 3892,  pct: 5.7  },
   { name: 'Other',       value: 3127,  pct: 4.6  },
 ];
-const PIE_COLORS = ['#6366F1', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#94A3B8'];
+const PIE_COLORS = ['#005C8D', '#005C8D', '#EC4899', '#F59E0B', '#76C799', '#94A3B8'];
 
 const GROWTH_TREND = [
   { month: 'Apr 25', total: 63200 }, { month: 'May 25', total: 63800 },
@@ -101,7 +101,7 @@ const COMPLIANCE_TARGETS = [
 const REPORT_STATS = [
   { label: 'Total Expiring', value: '1,247', color: '#EF4444' },
   { label: 'Within 30 Days', value: '312', color: '#F59E0B' },
-  { label: 'States Affected', value: '38', color: '#6366F1' },
+  { label: 'States Affected', value: '38', color: '#005C8D' },
   { label: 'Networks Impacted', value: '14', color: '#0EA5E9' },
 ];
 
@@ -199,7 +199,7 @@ export default function ReportsPage() {
               }}
             >
               {t === 'OnDemand Query' && <IconFilter size={13}/>}
-              {t === 'AI Report Builder' && <IconSparkles size={13} color={activeTab === t ? '#6366F1' : '#94A3B8'}/>}
+              {t === 'AI Report Builder' && <IconSparkles size={13} color={activeTab === t ? '#005C8D' : '#94A3B8'}/>}
               {t === 'Analytics' && <IconBarChart size={13}/>}
               {t}
             </button>
@@ -451,7 +451,7 @@ export default function ReportsPage() {
               <AgentChat
                 agentName="Report Builder"
                 agentId="AGT-25"
-                gradient="linear-gradient(135deg, #7C3AED, #A855F7)"
+                gradient="linear-gradient(135deg, #004870, #A855F7)"
                 suggestions={[
                   'Generate Q1 2026 credential expiry report',
                   'Show pharmacy network growth by state',
@@ -478,7 +478,7 @@ export default function ReportsPage() {
               {/* Report Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
                 <div>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: '#7C3AED', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 4 }}>
+                  <div style={{ fontSize: 10, fontWeight: 600, color: '#004870', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 4 }}>
                     AI-Generated Report
                   </div>
                   <h2 className="v2-title" style={{ fontSize: 18, marginBottom: 4 }}>Q1 2026 Credential Expiry Report</h2>
@@ -510,7 +510,7 @@ export default function ReportsPage() {
                         <span style={{ fontSize: 12, color: 'var(--v2-text-3)' }}>{item.count} ({item.pct}%)</span>
                       </div>
                       <div style={{ height: 6, borderRadius: 3, background: 'var(--v2-surface-2)' }}>
-                        <div style={{ height: '100%', borderRadius: 3, width: `${item.pct}%`, background: item.pct > 30 ? '#EF4444' : item.pct > 15 ? '#F59E0B' : '#6366F1', transition: 'width .3s' }}/>
+                        <div style={{ height: '100%', borderRadius: 3, width: `${item.pct}%`, background: item.pct > 30 ? '#EF4444' : item.pct > 15 ? '#F59E0B' : '#005C8D', transition: 'width .3s' }}/>
                       </div>
                     </div>
                   ))}
@@ -593,8 +593,8 @@ export default function ReportsPage() {
                     <Tooltip
                       contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,.08)' }}
                     />
-                    <Bar dataKey="added" fill="#10B981" radius={[3, 3, 0, 0]} name="Added"/>
-                    <Bar dataKey="net" fill="#6366F1" radius={[3, 3, 0, 0]} name="Net"/>
+                    <Bar dataKey="added" fill="#76C799" radius={[3, 3, 0, 0]} name="Added"/>
+                    <Bar dataKey="net" fill="#005C8D" radius={[3, 3, 0, 0]} name="Net"/>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -637,8 +637,8 @@ export default function ReportsPage() {
                   <AreaChart data={GROWTH_TREND}>
                     <defs>
                       <linearGradient id="growthGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#6366F1" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#005C8D" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#005C8D" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--v2-border-lt)" vertical={false}/>
@@ -648,7 +648,7 @@ export default function ReportsPage() {
                       formatter={(val: unknown) => [Number(val).toLocaleString(), 'Pharmacies']}
                       contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,.08)' }}
                     />
-                    <Area type="monotone" dataKey="total" stroke="#6366F1" strokeWidth={2} fill="url(#growthGrad)"/>
+                    <Area type="monotone" dataKey="total" stroke="#005C8D" strokeWidth={2} fill="url(#growthGrad)"/>
                   </AreaChart>
                 </ResponsiveContainer>
               </div>

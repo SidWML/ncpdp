@@ -46,7 +46,7 @@ const Inp = TextInput;
 const DRange = DateRange;
 
 const statusCfg = {
-  pass: { color: '#10B981', bg: '#D1FAE5', border: '#A7F3D0' },
+  pass: { color: '#76C799', bg: '#D1FAE5', border: '#A7F3D0' },
   warn: { color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
   fail: { color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
 };
@@ -124,19 +124,19 @@ export default function NoSurprisesPage() {
                     <div style={{
                       width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: 12, fontWeight: 600, flexShrink: 0,
-                      background: completed ? '#10B981' : active ? '#1E5690' : '#E2E8F0',
+                      background: completed ? '#76C799' : active ? '#004870' : '#E2E8F0',
                       color: completed || active ? '#fff' : '#94A3B8',
                       transition: 'all .15s',
                     }}>
                       {completed ? <IconCheck size={13} color="#fff"/> : i + 1}
                     </div>
                     <div>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: active ? '#1E5690' : completed ? '#10B981' : '#94A3B8' }}>{s.label}</div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: active ? '#004870' : completed ? '#76C799' : '#94A3B8' }}>{s.label}</div>
                       <div style={{ fontSize: 12, color: '#94A3B8' }}>{s.desc}</div>
                     </div>
                   </div>
                   {i < STEPS.length - 1 && (
-                    <div style={{ flex: 1, height: 2, borderRadius: 1, background: completed ? '#10B981' : '#E2E8F0', margin: '0 12px', transition: 'background .15s' }}/>
+                    <div style={{ flex: 1, height: 2, borderRadius: 1, background: completed ? '#76C799' : '#E2E8F0', margin: '0 12px', transition: 'background .15s' }}/>
                   )}
                 </React.Fragment>
               );
@@ -285,10 +285,10 @@ export default function NoSurprisesPage() {
                     background: '#F0FDF4', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <IconCheck size={18} color="#10B981"/>
+                      <IconCheck size={18} color="#76C799"/>
                       <div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: '#065F46' }}>38,569 pharmacies matched your filter criteria</div>
-                        <div style={{ fontSize: 12, color: '#047857', marginTop: 2 }}>Q1 2026 — Jan 1 through Mar 31, 2026</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#2A6936' }}>38,569 pharmacies matched your filter criteria</div>
+                        <div style={{ fontSize: 12, color: '#449055', marginTop: 2 }}>Q1 2026 — Jan 1 through Mar 31, 2026</div>
                       </div>
                     </div>
                     <button className="btn-primary" onClick={() => goToStep(1)} style={{ gap: 6, fontSize: 12 }}>
@@ -368,9 +368,9 @@ export default function NoSurprisesPage() {
                 {/* Summary */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 18 }}>
                   {[
-                    { label: 'Pharmacies in Report', value: '38,569',  color: '#2968B0' },
+                    { label: 'Pharmacies in Report', value: '38,569',  color: '#005C8D' },
                     { label: 'Reporting Period',      value: 'Q1 2026', color: 'var(--text-primary)' },
-                    { label: 'Validation Status',     value: 'Passed',  color: '#10B981' },
+                    { label: 'Validation Status',     value: 'Passed',  color: '#76C799' },
                   ].map(s => (
                     <div key={s.label} style={{ padding: '14px 16px', borderRadius: 8, background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                       <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
@@ -392,9 +392,9 @@ export default function NoSurprisesPage() {
                     <div key={r.type} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 7 }}>
                       <div style={{ fontSize: 12, color: '#475569', width: 160, flexShrink: 0 }}>{r.type}</div>
                       <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#E2E8F0', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${r.pct}%`, background: '#2968B0', borderRadius: 3 }}/>
+                        <div style={{ height: '100%', width: `${r.pct}%`, background: '#005C8D', borderRadius: 3 }}/>
                       </div>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: '#2968B0', width: 60, textAlign: 'right' }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#005C8D', width: 60, textAlign: 'right' }}>
                         {r.count.toLocaleString()}
                       </div>
                     </div>
@@ -444,9 +444,9 @@ export default function NoSurprisesPage() {
                       width: 64, height: 64, borderRadius: '50%', background: '#D1FAE5',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px',
                     }}>
-                      <IconCheck size={28} color="#10B981"/>
+                      <IconCheck size={28} color="#76C799"/>
                     </div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: '#065F46', marginBottom: 8 }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: '#2A6936', marginBottom: 8 }}>
                       Successfully Submitted
                     </div>
                     <div style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
@@ -456,8 +456,8 @@ export default function NoSurprisesPage() {
                       display: 'inline-block', padding: '10px 20px', borderRadius: 8,
                       background: '#F0FDF4', border: '1px solid #A7F3D0', marginBottom: 20,
                     }}>
-                      <div style={{ fontSize: 12, color: '#047857', fontWeight: 600, marginBottom: 2 }}>Confirmation ID</div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, color: '#065F46' }}>CMS-NSA-Q12026-1104</div>
+                      <div style={{ fontSize: 12, color: '#449055', fontWeight: 600, marginBottom: 2 }}>Confirmation ID</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, color: '#2A6936' }}>CMS-NSA-Q12026-1104</div>
                     </div>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
                       <button className="btn-secondary" style={{ gap: 5, fontSize: 12 }}><IconDownload size={12}/> Download Receipt</button>
@@ -508,12 +508,12 @@ export default function NoSurprisesPage() {
           <Card>
             <CardBody style={{ padding: '14px 16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#2968B0,#5B9BD5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#005C8D,#2D8AB5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <IconSearch size={13} color="#fff"/>
                 </div>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>No Surprises Assistant</div>
-                  <div style={{ fontSize: 12, color: '#10B981' }}>AGT-08 · Active</div>
+                  <div style={{ fontSize: 12, color: '#76C799' }}>AGT-08 · Active</div>
                 </div>
               </div>
               <div style={{ fontSize: 12, color: '#64748B', lineHeight: 1.5 }}>

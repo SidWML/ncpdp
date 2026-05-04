@@ -103,15 +103,15 @@ export function MultiSelect({ options, height = 96, value, onChange }: MultiSele
             style={{
               display: 'flex', alignItems: 'center', gap: 8, padding: '5px 10px',
               fontSize: 12, color: active ? 'var(--text-primary)' : '#475569', cursor: 'pointer',
-              background: active ? '#F0F7FF' : 'transparent',
+              background: active ? '#E8F3F9' : 'transparent',
               fontWeight: active ? 600 : 400,
               transition: 'background .1s',
             }}
           >
             <div style={{
               width: 15, height: 15, borderRadius: 3, flexShrink: 0,
-              border: active ? '1.5px solid #2968B0' : '1.5px solid #CBD5E1',
-              background: active ? '#2968B0' : '#fff',
+              border: active ? '1.5px solid #005C8D' : '1.5px solid #CBD5E1',
+              background: active ? '#005C8D' : '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               {active && (
@@ -236,9 +236,9 @@ export function Accordion({ title, count, defaultOpen = false, children }: Accor
           <span style={{
             fontSize: 10,
             fontWeight: 700,
-            color: '#2968B0',
-            background: '#F0F7FF',
-            border: '1px solid #DFEEFF',
+            color: '#005C8D',
+            background: '#E8F3F9',
+            border: '1px solid #C6E0EC',
             padding: '1px 7px',
             borderRadius: 10,
             lineHeight: '16px',

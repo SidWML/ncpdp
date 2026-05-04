@@ -10,7 +10,7 @@ const kits = [
     role: 'PBM Network Director',
     persona: 'Sarah Chen',
     avatar: 'SC',
-    gradient: 'linear-gradient(135deg, #2968B0, #3A7EC8)',
+    gradient: 'linear-gradient(135deg, #005C8D, #1474A4)',
     desc: 'Manage pharmacy network compliance, coverage gaps, and contract renewals at scale.',
     agents: ['Network Analyzer', 'Compliance Watchdog', 'Pharmacy Finder', 'Change Tracker'],
     prompts: [
@@ -32,7 +32,7 @@ const kits = [
     role: 'Compliance VP',
     persona: 'Michael Torres',
     avatar: 'MT',
-    gradient: 'linear-gradient(135deg, #10B981, #06B6D4)',
+    gradient: 'linear-gradient(135deg, #76C799, #449055)',
     desc: 'Automate regulatory reporting, FWA risk detection, and No Surprises Act filings.',
     agents: ['Compliance Watchdog', 'FWA Risk Scoring', 'No Surprises Assistant', 'Custom Report Builder'],
     prompts: [
@@ -76,7 +76,7 @@ const kits = [
     role: 'IT / Integration Engineer',
     persona: 'David Kim',
     avatar: 'DK',
-    gradient: 'linear-gradient(135deg, #3A7EC8, #0EA5E9)',
+    gradient: 'linear-gradient(135deg, #1474A4, #0EA5E9)',
     desc: 'Set up API integrations, configure webhooks, and automate data pipelines.',
     agents: ['API Agent', 'Data Delivery Agent', 'Webhook Manager', 'Integration Assistant'],
     prompts: [
@@ -131,12 +131,12 @@ export default function StarterKitsPage() {
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: '#2968B0' }}>4</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#005C8D' }}>4</div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Roles</div>
             </div>
             <div style={{ width: 1, background: 'var(--border)' }}/>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: '#34D399' }}>24</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#A6DFB8' }}>24</div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Prompts</div>
             </div>
             <div style={{ width: 1, background: 'var(--border)' }}/>
@@ -183,7 +183,7 @@ export default function StarterKitsPage() {
                     {kit.agents.map(a => (
                       <span key={a} style={{
                         fontSize: 12, fontWeight: 600, padding: '4px 8px', borderRadius: 4,
-                        background: '#F0F7FF', color: '#2968B0',
+                        background: '#E8F3F9', color: '#005C8D',
                       }}>{a}</span>
                     ))}
                   </div>
@@ -203,15 +203,15 @@ export default function StarterKitsPage() {
                           display: 'flex', alignItems: 'center', gap: 8,
                           transition: 'border-color .15s',
                         }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#B8D5F5')}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#8FC2D8')}
                         onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-light)')}
                       >
-                        <span style={{ color: '#5B9BD5', flexShrink: 0, fontSize: 12 }}>›</span>
+                        <span style={{ color: '#2D8AB5', flexShrink: 0, fontSize: 12 }}>›</span>
                         {p}
                       </div>
                     ))}
                     {kit.prompts.length > 4 && (
-                      <div style={{ fontSize: 12, color: '#2968B0', fontWeight: 600, paddingLeft: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <div style={{ fontSize: 12, color: '#005C8D', fontWeight: 600, paddingLeft: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                         +{kit.prompts.length - 4} more prompts <IconChevronRight size={11}/>
                       </div>
                     )}
@@ -232,7 +232,7 @@ export default function StarterKitsPage() {
                         }}
                       >
                         <div style={{ width: 24, height: 24, borderRadius: 7, background: '#D1FAE5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          <IconPlay size={10} color="#059669"/>
+                          <IconPlay size={10} color="#449055"/>
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{w.label}</div>

@@ -119,7 +119,7 @@ export function SidebarV2() {
   return (
     <aside style={{
       position: 'fixed', left: 0, top: 0, bottom: 0, width: w,
-      background: '#0A1128', display: 'flex', flexDirection: 'column',
+      background: '#0A1628', display: 'flex', flexDirection: 'column',
       zIndex: 40, transition: 'width .2s cubic-bezier(.4,0,.2,1)',
       overflow: 'hidden', borderRight: '1px solid rgba(255,255,255,.05)',
     }}>
@@ -130,21 +130,32 @@ export function SidebarV2() {
         borderBottom: '1px solid rgba(255,255,255,.06)', flexShrink: 0,
       }}>
         {collapsed ? (
-          <button onClick={() => setCollapsed(false)} style={{
+          <button onClick={() => setCollapsed(false)} aria-label="Expand sidebar" style={{
             background: 'rgba(255,255,255,.06)', border: 'none', cursor: 'pointer',
-            padding: 4, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 0, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: 36, height: 36, overflow: 'hidden',
           }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="NCPDP" width={28} height={28} style={{ borderRadius: 4 }}/>
+            <div style={{
+              width: 28, height: 28,
+              backgroundImage: 'url(/pharmacyfocus-logo.png)',
+              backgroundSize: 'auto 28px',
+              backgroundPosition: 'left center',
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0) invert(1)',
+            }}/>
           </button>
         ) : (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="NCPDP" width={30} height={30} style={{ borderRadius: 4 }}/>
+              <img
+                src="/pharmacyfocus-logo.png"
+                alt="PharmacyFocus"
+                style={{ height: 30, width: 'auto', filter: 'brightness(0) invert(1)' }}
+              />
               <div>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-.4px', lineHeight: 1 }}>
-                  DataSolutions<span style={{ color: '#818CF8' }}>.ai</span>
+                  DataSolutions<span style={{ color: '#76C799' }}>.ai</span>
                 </div>
                 <div style={{ fontSize: 9, color: 'rgba(255,255,255,.35)', fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', marginTop: 1 }}>
                   by NCPDP
@@ -182,7 +193,7 @@ export function SidebarV2() {
                   >
                     <span style={{
                       fontSize: 11, fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase',
-                      color: hasActive ? '#A5B4FC' : 'rgba(255,255,255,.4)',
+                      color: hasActive ? '#8FC2D8' : 'rgba(255,255,255,.4)',
                     }}>
                       {section}
                     </span>
@@ -192,7 +203,7 @@ export function SidebarV2() {
                     }}>
                       <IconChevronDown
                         size={12}
-                        color={hasActive ? '#A5B4FC' : 'rgba(255,255,255,.3)'}
+                        color={hasActive ? '#8FC2D8' : 'rgba(255,255,255,.3)'}
                         className=""
                         strokeWidth={2}
                       />
@@ -226,7 +237,7 @@ export function SidebarV2() {
                       title={collapsed ? label : undefined}
                       style={{ justifyContent: collapsed ? 'center' : undefined, marginBottom: 2, padding: '7px 10px' }}
                     >
-                      <span style={{ flexShrink: 0, color: active ? '#818CF8' : 'rgba(148,163,184,.65)', transition: 'color .12s' }}>
+                      <span style={{ flexShrink: 0, color: active ? '#76C799' : 'rgba(148,163,184,.65)', transition: 'color .12s' }}>
                         <Icon size={16} strokeWidth={active ? 2.2 : 1.8}/>
                       </span>
                       {!collapsed && (
@@ -234,7 +245,7 @@ export function SidebarV2() {
                           <span style={{ flex: 1, lineHeight: 1 }}>{label}</span>
                           {badge && (
                             <span style={{
-                              background: badgeColor || 'rgba(99,102,241,.25)',
+                              background: badgeColor || 'rgba(0,92,141,.25)',
                               color: badgeColor ? '#fff' : '#a5b4fc',
                               fontSize: 10, fontWeight: 700, padding: '1px 6px',
                               borderRadius: 9999, lineHeight: 1.7,

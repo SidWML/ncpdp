@@ -95,10 +95,10 @@ export default function GeographicSearchPage() {
           {/* Summary cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
             {[
-              { label: 'States Meeting Adequacy', value: '3',   color: '#10B981', sub: 'coverage >= 100%' },
+              { label: 'States Meeting Adequacy', value: '3',   color: '#76C799', sub: 'coverage >= 100%' },
               { label: 'States Needing Review',   value: '5',   color: '#F59E0B', sub: 'coverage 90-99%'  },
               { label: 'Below Threshold',         value: '4',   color: '#EF4444', sub: 'coverage < 90%'   },
-              { label: 'Total Network Gap',       value: '466', color: '#2968B0', sub: 'pharmacies needed' },
+              { label: 'Total Network Gap',       value: '466', color: '#005C8D', sub: 'pharmacies needed' },
             ].map(s => (
               <Card key={s.label}>
                 <CardBody style={{ padding: '14px 18px' }}>
@@ -134,10 +134,10 @@ export default function GeographicSearchPage() {
                   {GEO_DATA.map(r => (
                     <tr key={r.code}>
                       <td style={{ fontWeight: 500 }}>{r.state}</td>
-                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 12 }}>{r.code}</td>
+                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#005C8D', fontSize: 12 }}>{r.code}</td>
                       <td>{r.total.toLocaleString()}</td>
                       <td>{r.required.toLocaleString()}</td>
-                      <td style={{ fontWeight: 600, color: r.coverage >= 100 ? '#10B981' : r.coverage >= 90 ? '#D97706' : '#DC2626' }}>
+                      <td style={{ fontWeight: 600, color: r.coverage >= 100 ? '#76C799' : r.coverage >= 90 ? '#D97706' : '#DC2626' }}>
                         {r.coverage.toFixed(1)}%
                       </td>
                       <td style={{ color: r.gap === 0 ? '#CBD5E1' : '#DC2626', fontWeight: r.gap > 0 ? 600 : 400 }}>
@@ -160,7 +160,7 @@ export default function GeographicSearchPage() {
           <AgentChat
             agentName="Network Analyzer"
             agentId="AGT-03"
-            gradient="linear-gradient(135deg,#10B981,#06B6D4)"
+            gradient="linear-gradient(135deg,#76C799,#449055)"
             icon={<IconGlobe size={18} color="#fff"/>}
             welcomeMessage="Hi Sarah! I'm your Network Analyzer Agent. I can analyze geographic coverage, identify pharmacy deserts, and generate network adequacy reports for regulatory. What coverage area should I analyze?"
             suggestions={[

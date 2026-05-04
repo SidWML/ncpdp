@@ -1,19 +1,19 @@
 // DataSolutions.ai Design Tokens — NCPDP Corporate Blue palette
 export const colors = {
   brand: {
-    50:  '#F0F7FF',
-    100: '#DFEEFF',
-    200: '#B8D5F5',
-    400: '#5B9BD5',
-    500: '#3A7EC8',
-    600: '#2968B0',
-    700: '#1E5690',
+    50:  '#E8F3F9',
+    100: '#C6E0EC',
+    200: '#8FC2D8',
+    400: '#2D8AB5',
+    500: '#1474A4',
+    600: '#005C8D',
+    700: '#004870',
     900: '#0F2E4E',
   },
-  success: '#059669',
+  success: '#449055',
   warning: '#D97706',
   danger:  '#DC2626',
-  info:    '#2563EB',
+  info:    '#1474A4',
 } as const;
 
 export const radius = {

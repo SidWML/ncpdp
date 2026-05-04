@@ -11,6 +11,7 @@ interface Message {
   insights?: Insight[];
   followUps?: string[];
   canvasLabel?: string;
+  canvasData?: unknown;
 }
 
 interface Insight {
@@ -30,12 +31,16 @@ interface AgentChatProps {
   getInsights?: (userMsg: string) => Insight[];
   getFollowUps?: (userMsg: string) => string[];
   getCanvasLabel?: (userMsg: string) => string;
-  /** Called when the async reply resolves — use to update insights/followUps/canvasLabel after AI responds */
-  onBotReplied?: (userMsg: string) => { insights?: Insight[]; followUps?: string[]; canvasLabel?: string } | void;
+  onBotReplied?: (userMsg: string) => { insights?: Insight[]; followUps?: string[]; canvasLabel?: string; canvasData?: unknown } | void;
+  /** Controlled messages — when provided, AgentChat uses these instead of internal state */
+  messages?: Message[];
+  onMessagesChange?: (msgs: Message[]) => void;
   hideHeader?: boolean;
   fluid?: boolean;
-  onOpenCanvas?: (queryId: number, queryText: string) => void;
+  onOpenCanvas?: (queryId: number, queryText: string, canvasData?: unknown) => void;
 }
+
+export type { Message as ChatMessage };
 
 /* Parse **bold** markdown into React nodes */
 function parseBold(text: string): React.ReactNode {
@@ -59,8 +64,8 @@ const DEFAULT_REPLY = (msg: string) =>
 
 const DEFAULT_INSIGHTS = (_msg: string): Insight[] => [
   { icon: 'warning', text: '2 pharmacies have expired DEA licenses', color: '#DC2626' },
-  { icon: 'location', text: 'Most results concentrated in Texas region', color: '#2968B0' },
-  { icon: 'stat', text: '88% of matched pharmacies are currently active', color: '#059669' },
+  { icon: 'location', text: 'Most results concentrated in Texas region', color: '#005C8D' },
+  { icon: 'stat', text: '88% of matched pharmacies are currently active', color: '#449055' },
 ];
 
 const DEFAULT_FOLLOWUPS = (_msg: string): string[] => [
@@ -72,9 +77,9 @@ const DEFAULT_FOLLOWUPS = (_msg: string): string[] => [
 
 const insightIcons: Record<string, React.ReactNode> = {
   warning: <IconAlertTriangle size={13} color="#DC2626"/>,
-  info: <IconSparkles size={13} color="#2968B0"/>,
-  location: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2968B0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
-  stat: <IconBarChart size={13} color="#059669"/>,
+  info: <IconSparkles size={13} color="#005C8D"/>,
+  location: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#005C8D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  stat: <IconBarChart size={13} color="#449055"/>,
 };
 
 const DEFAULT_CANVAS_LABEL = (_msg: string) => '247 results';
@@ -86,11 +91,24 @@ export function AgentChat({
   getFollowUps = DEFAULT_FOLLOWUPS,
   getCanvasLabel = DEFAULT_CANVAS_LABEL,
   onBotReplied,
+  messages: controlledMessages,
+  onMessagesChange,
   hideHeader, fluid, onOpenCanvas,
 }: AgentChatProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, role: 'bot', text: welcomeMessage, time: timeNow() },
-  ]);
+  const welcomeMsg: Message = { id: 1, role: 'bot', text: welcomeMessage, time: timeNow() };
+  const [internalMessages, setInternalMessages] = useState<Message[]>([welcomeMsg]);
+  const isControlled = controlledMessages !== undefined && onMessagesChange !== undefined;
+  // When controlled but empty, show welcome message visually but don't persist it
+  const messages = isControlled
+    ? (controlledMessages!.length > 0 ? controlledMessages! : [welcomeMsg])
+    : internalMessages;
+  const setMessages = isControlled
+    ? (updater: Message[] | ((prev: Message[]) => Message[])) => {
+        const current = controlledMessages!.length > 0 ? controlledMessages! : [welcomeMsg];
+        const next = typeof updater === 'function' ? updater(current) : updater;
+        onMessagesChange!(next);
+      }
+    : setInternalMessages;
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
   const [activeMode, setActiveMode] = useState<'ask' | 'analyze' | 'compare'>('ask');
@@ -113,24 +131,22 @@ export function AgentChat({
     const isAsync = replyResult instanceof Promise;
 
     if (isAsync) {
-      // Async path — wait for AI response, then show everything together
       (replyResult as Promise<string>).then(replyText => {
         setTyping(false);
-        // After async resolves, get the updated insights/followUps/canvasLabel
         const overrides = onBotReplied?.(text);
         const insights = overrides?.insights ?? getInsights(text);
         const followUps = overrides?.followUps ?? getFollowUps(text);
         const canvasLabel = overrides?.canvasLabel ?? getCanvasLabel(text);
+        const canvasData = overrides?.canvasData ?? undefined;
         setMessages(m => [...m, {
           id: Date.now() + 1, role: 'bot', text: replyText, time: timeNow(), queryId: qId,
-          insights, followUps, canvasLabel,
+          insights, followUps, canvasLabel, canvasData,
         }]);
         if (onOpenCanvas && qId === 1) {
-          setTimeout(() => onOpenCanvas(qId, text), 100);
+          setTimeout(() => onOpenCanvas(qId, text, undefined), 100);
         }
       });
     } else {
-      // Sync path — use timeout for typing animation
       setTimeout(() => {
         setTyping(false);
         const insights = getInsights(text);
@@ -141,7 +157,7 @@ export function AgentChat({
           insights, followUps, canvasLabel,
         }]);
         if (onOpenCanvas && qId === 1) {
-          setTimeout(() => onOpenCanvas(qId, text), 100);
+          setTimeout(() => onOpenCanvas(qId, text, undefined), 100);
         }
       }, 1200 + Math.random() * 800);
     }
@@ -185,8 +201,8 @@ export function AgentChat({
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>{agentName}</div>
-            <div style={{ fontSize: 11, color: '#10B981', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981', display: 'inline-block' }}/>
+            <div style={{ fontSize: 11, color: '#76C799', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#76C799', display: 'inline-block' }}/>
               {agentId} · Online
             </div>
           </div>
@@ -206,7 +222,7 @@ export function AgentChat({
                 {/* Avatar */}
                 <div style={{
                   width: 26, height: 26, borderRadius: 8, flexShrink: 0, marginTop: 2,
-                  background: m.role === 'bot' ? gradient : '#2968B0',
+                  background: m.role === 'bot' ? gradient : '#005C8D',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   {m.role === 'bot'
@@ -219,7 +235,7 @@ export function AgentChat({
                   <div style={{
                     padding: m.role === 'bot' && m.queryId ? '12px 16px' : '9px 13px',
                     borderRadius: m.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
-                    background: m.role === 'user' ? '#2968B0' : m.queryId ? '#FAFBFC' : '#F3F4F6',
+                    background: m.role === 'user' ? '#005C8D' : m.queryId ? '#FAFBFC' : '#F3F4F6',
                     color: m.role === 'user' ? '#fff' : '#1F2937',
                     fontSize: 13, lineHeight: 1.55,
                     border: m.role === 'bot' && m.queryId ? '1px solid #E5E7EB' : 'none',
@@ -234,7 +250,7 @@ export function AgentChat({
                   {m.role === 'bot' && m.insights && m.insights.length > 0 && (
                     <div style={{
                       marginTop: 8, padding: '10px 14px', borderRadius: 10,
-                      background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 100%)',
+                      background: 'linear-gradient(135deg, #FAFBFC 0%, #E8F3F9 100%)',
                       border: '1px solid #E8EFF8',
                       display: 'flex', flexDirection: 'column', gap: 6,
                       maxWidth: '100%',
@@ -263,20 +279,20 @@ export function AgentChat({
                   {/* Canvas card for bot query responses */}
                   {m.role === 'bot' && m.queryId && onOpenCanvas && (
                     <button
-                      onClick={() => onOpenCanvas(m.queryId!, m.text)}
+                      onClick={() => onOpenCanvas(m.queryId!, m.text, m.canvasData)}
                       style={{
                         marginTop: 6, padding: '6px 12px',
-                        borderRadius: 8, background: '#F0F7FF', border: '1px solid #B8D5F5',
+                        borderRadius: 8, background: '#E8F3F9', border: '1px solid #8FC2D8',
                         display: 'inline-flex', alignItems: 'center', gap: 8,
                         cursor: 'pointer', transition: 'background .12s',
                       }}
-                      onMouseEnter={e => (e.currentTarget.style.background = '#DFEEFF')}
-                      onMouseLeave={e => (e.currentTarget.style.background = '#F0F7FF')}
+                      onMouseEnter={e => (e.currentTarget.style.background = '#C6E0EC')}
+                      onMouseLeave={e => (e.currentTarget.style.background = '#E8F3F9')}
                     >
-                      <IconSparkles size={13} color="#2968B0"/>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: '#2968B0' }}>{parseBold(m.canvasLabel || '247 results')}</span>
-                      <span style={{ fontSize: 11, color: '#5B9BD5' }}>Open in Canvas</span>
-                      <IconExternalLink size={10} color="#5B9BD5"/>
+                      <IconSparkles size={13} color="#005C8D"/>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: '#005C8D' }}>{parseBold(m.canvasLabel || '247 results')}</span>
+                      <span style={{ fontSize: 11, color: '#2D8AB5' }}>Open in Canvas</span>
+                      <IconExternalLink size={10} color="#2D8AB5"/>
                     </button>
                   )}
 
@@ -293,7 +309,7 @@ export function AgentChat({
                             cursor: 'pointer', transition: 'all .15s',
                             display: 'flex', alignItems: 'center', gap: 4,
                           }}
-                          onMouseEnter={e => { e.currentTarget.style.borderColor = '#2968B0'; e.currentTarget.style.color = '#2968B0'; e.currentTarget.style.background = '#F0F7FF'; }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = '#005C8D'; e.currentTarget.style.color = '#005C8D'; e.currentTarget.style.background = '#E8F3F9'; }}
                           onMouseLeave={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.color = '#475569'; e.currentTarget.style.background = '#fff'; }}
                         >
                           {fu}
@@ -353,7 +369,7 @@ export function AgentChat({
                 background: '#FAFBFC', color: '#374151', fontSize: 12.5, cursor: 'pointer',
                 textAlign: 'left', transition: 'border-color .15s, background .15s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8D5F5'; e.currentTarget.style.background = '#F0F7FF'; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#8FC2D8'; e.currentTarget.style.background = '#E8F3F9'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.background = '#FAFBFC'; }}
             >{s}</button>
           ))}
@@ -371,9 +387,9 @@ export function AgentChat({
               style={{
                 padding: '3px 10px', borderRadius: 12, fontSize: 11, fontWeight: 500,
                 border: '1px solid',
-                borderColor: activeMode === mode.id ? '#2968B0' : '#E5E7EB',
-                background: activeMode === mode.id ? '#F0F7FF' : '#fff',
-                color: activeMode === mode.id ? '#2968B0' : '#94A3B8',
+                borderColor: activeMode === mode.id ? '#005C8D' : '#E5E7EB',
+                background: activeMode === mode.id ? '#E8F3F9' : '#fff',
+                color: activeMode === mode.id ? '#005C8D' : '#94A3B8',
                 cursor: 'pointer', transition: 'all .15s',
                 display: 'flex', alignItems: 'center', gap: 4,
               }}
@@ -404,7 +420,7 @@ export function AgentChat({
               minHeight: 42, maxHeight: 120,
               transition: 'border-color .15s, box-shadow .15s',
             }}
-            onFocus={e => { e.currentTarget.style.borderColor = '#2968B0'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(41,104,176,0.1)'; }}
+            onFocus={e => { e.currentTarget.style.borderColor = '#005C8D'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,92,141,0.1)'; }}
             onBlur={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.boxShadow = 'none'; }}
             onInput={e => {
               const el = e.currentTarget;
@@ -417,11 +433,11 @@ export function AgentChat({
             disabled={!input.trim() || typing}
             style={{
               width: 42, height: 42, borderRadius: 10, border: 'none',
-              background: input.trim() && !typing ? 'linear-gradient(135deg, #2968B0, #5B9BD5)' : '#E5E7EB',
+              background: input.trim() && !typing ? 'linear-gradient(135deg, #005C8D, #2D8AB5)' : '#E5E7EB',
               cursor: input.trim() && !typing ? 'pointer' : 'default',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'all .15s', flexShrink: 0,
-              boxShadow: input.trim() && !typing ? '0 2px 8px rgba(41,104,176,0.3)' : 'none',
+              boxShadow: input.trim() && !typing ? '0 2px 8px rgba(0,92,141,0.3)' : 'none',
             }}
           >
             <IconSend size={16} color={input.trim() && !typing ? '#fff' : '#9CA3AF'}/>

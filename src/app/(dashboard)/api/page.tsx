@@ -36,8 +36,8 @@ const endpoints = [
 ];
 
 const methodColors: Record<string, { color: string; bg: string }> = {
-  GET:  { color: '#059669', bg: '#D1FAE5' },
-  POST: { color: '#2563EB', bg: '#DBEAFE' },
+  GET:  { color: '#449055', bg: '#D1FAE5' },
+  POST: { color: '#1474A4', bg: '#C6E0EC' },
   PUT:  { color: '#D97706', bg: '#FEF3C7' },
   DEL:  { color: '#DC2626', bg: '#FEE2E2' },
 };
@@ -103,9 +103,9 @@ export default function APIPage() {
         {/* Usage stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
           {[
-            { label: 'Calls Today',    value: '1.24M',   pct: 67,  color: '#2968B0' },
-            { label: 'Avg Latency',    value: '182ms',   pct: 36,  color: '#10B981' },
-            { label: 'Success Rate',   value: '99.94%',  pct: 100, color: '#10B981' },
+            { label: 'Calls Today',    value: '1.24M',   pct: 67,  color: '#005C8D' },
+            { label: 'Avg Latency',    value: '182ms',   pct: 36,  color: '#76C799' },
+            { label: 'Success Rate',   value: '99.94%',  pct: 100, color: '#76C799' },
             { label: 'Monthly Quota',  value: '67% used',pct: 67,  color: '#D97706' },
           ].map(s => (
             <div key={s.label} className="card" style={{ padding: '16px 16px' }}>
@@ -131,7 +131,7 @@ export default function APIPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <div style={{ width: 28, height: 28, borderRadius: 8, background: k.status === 'active' ? '#D1FAE5' : 'var(--surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <IconKey size={13} color={k.status === 'active' ? '#10B981' : 'var(--text-muted)'}/>
+                        <IconKey size={13} color={k.status === 'active' ? '#76C799' : 'var(--text-muted)'}/>
                       </div>
                       <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{k.name}</span>
                     </div>
@@ -148,7 +148,7 @@ export default function APIPage() {
                       onClick={e => { e.stopPropagation(); copyToClipboard(k.key, k.name); }}
                       style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', padding: 2 }}
                     >
-                      {copied === k.name ? <IconCheck size={12} color="#10B981"/> : <IconCopy size={12}/>}
+                      {copied === k.name ? <IconCheck size={12} color="#76C799"/> : <IconCopy size={12}/>}
                     </button>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-muted)' }}>
@@ -174,7 +174,7 @@ export default function APIPage() {
                     <div
                       style={{
                         width: '100%', borderRadius: '4px 4px 0 0',
-                        background: d.label === 'Fri' ? '#2968B0' : '#B8D5F5',
+                        background: d.label === 'Fri' ? '#005C8D' : '#8FC2D8',
                         height: `${(d.value / maxCalls) * 100}%`,
                         minHeight: 4,
                         transition: 'height .3s',
@@ -227,7 +227,7 @@ export default function APIPage() {
                             {ep.method}
                           </span>
                         </td>
-                        <td style={{ fontFamily: 'monospace', fontSize: 12, color: '#2968B0' }}>{ep.path}</td>
+                        <td style={{ fontFamily: 'monospace', fontSize: 12, color: '#005C8D' }}>{ep.path}</td>
                         <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>{ep.desc}</td>
                         <td style={{ fontSize: 12, fontWeight: 600 }}>{ep.calls}</td>
                       </tr>
@@ -254,9 +254,9 @@ export default function APIPage() {
                     onClick={() => setCodeLang(lang)}
                     style={{
                       fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 8, cursor: 'pointer',
-                      background: codeLang === lang ? '#F0F7FF' : 'var(--surface-2)',
-                      color: codeLang === lang ? '#2968B0' : 'var(--text-muted)',
-                      border: `1px solid ${codeLang === lang ? 'rgba(41,104,176,.3)' : 'var(--border)'}`,
+                      background: codeLang === lang ? '#E8F3F9' : 'var(--surface-2)',
+                      color: codeLang === lang ? '#005C8D' : 'var(--text-muted)',
+                      border: `1px solid ${codeLang === lang ? 'rgba(0,92,141,.3)' : 'var(--border)'}`,
                       transition: 'all .15s',
                       textTransform: 'capitalize',
                     }}
@@ -266,7 +266,7 @@ export default function APIPage() {
                   onClick={() => copyToClipboard(codeExamples[codeLang], 'code')}
                   style={{ marginLeft: 'auto', background: 'none', border: '1px solid var(--border)', borderRadius: 8, padding: '4px 12px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}
                 >
-                  {copied === 'code' ? <><IconCheck size={11} color="#10B981"/> Copied</> : <><IconCopy size={11}/> Copy</>}
+                  {copied === 'code' ? <><IconCheck size={11} color="#76C799"/> Copied</> : <><IconCopy size={11}/> Copy</>}
                 </button>
               </div>
 

@@ -15,6 +15,8 @@ import type { QueryContext } from '@/components/ui/OutputPanel';
 import { queryGemini } from '@/lib/gemini';
 import type { GeminiResponse } from '@/lib/gemini';
 import { SUGGESTION_REPLIES as EXACT_REPLIES, SUGGESTION_CONTEXTS as EXACT_CONTEXTS } from '@/lib/search-contexts';
+import { ChatThreadsSidebar, useThreads } from '@/components/ui/ChatThreads';
+import type { ChatMessage } from '@/components/ui/AgentChat';
 
 /* ── Types ─────────────────────────────────────────────────────────── */
 interface Message {
@@ -33,34 +35,34 @@ function detectAgent(input: string) {
   if (l.includes('fwa') || l.includes('fraud') || l.includes('waste') || l.includes('attest'))
     return { name: 'FWA Risk Scoring', color: '#D97706' };
   if (l.includes('closure') || l.includes('closed'))
-    return { name: 'Change Tracker', color: '#2968B0' };
+    return { name: 'Change Tracker', color: '#005C8D' };
   if (l.includes('network') || l.includes('adequacy') || l.includes('coverage') || l.includes('gap'))
-    return { name: 'Network Analyzer', color: '#059669' };
+    return { name: 'Network Analyzer', color: '#449055' };
   if (l.includes('ownership') || l.includes('contract') || l.includes('transfer'))
-    return { name: 'Contract Intelligence', color: '#2968B0' };
+    return { name: 'Contract Intelligence', color: '#005C8D' };
   if (l.includes('report') || l.includes('export') || l.includes('generat'))
-    return { name: 'Custom Report Builder', color: '#06B6D4' };
+    return { name: 'Custom Report Builder', color: '#449055' };
   if (l.includes('compliance') || l.includes('audit') || l.includes('score'))
     return { name: 'Compliance Watchdog', color: '#DC2626' };
   if (l.includes('compound') || l.includes('sterile'))
-    return { name: 'Pharmacy Finder', color: '#059669' };
+    return { name: 'Pharmacy Finder', color: '#449055' };
   if (l.includes('alert') || l.includes('critical') || l.includes('urgent'))
     return { name: 'Compliance Watchdog', color: '#DC2626' };
   if (l.includes('agent') || l.includes('top') || l.includes('most used'))
-    return { name: 'NCPDP Buddy', color: '#2968B0' };
+    return { name: 'NCPDP Buddy', color: '#005C8D' };
   if (l.includes('api') || l.includes('usage') || l.includes('call'))
-    return { name: 'Subscriber Insight', color: '#06B6D4' };
+    return { name: 'Subscriber Insight', color: '#449055' };
   if (l.includes('find') || l.includes('search') || l.includes('look') || l.includes('pharmacy') || l.includes('show'))
-    return { name: 'Pharmacy Finder', color: '#2968B0' };
+    return { name: 'Pharmacy Finder', color: '#005C8D' };
   if (l.includes('predict') || l.includes('desert') || l.includes('forecast'))
-    return { name: 'Closure Prediction', color: '#2968B0' };
+    return { name: 'Closure Prediction', color: '#005C8D' };
   if (l.includes('state') || l.includes('geographic') || l.includes('map'))
-    return { name: 'Network Analyzer', color: '#059669' };
+    return { name: 'Network Analyzer', color: '#449055' };
   if (l.includes('batch') || l.includes('download') || l.includes('bulk'))
-    return { name: 'Batch Optimizer', color: '#10B981' };
+    return { name: 'Batch Optimizer', color: '#76C799' };
   if (l.includes('onboard') || l.includes('setup') || l.includes('start'))
-    return { name: 'Onboarding Agent', color: '#06B6D4' };
-  return { name: 'NCPDP Buddy', color: '#2968B0' };
+    return { name: 'Onboarding Agent', color: '#449055' };
+  return { name: 'NCPDP Buddy', color: '#005C8D' };
 }
 
 /* ── Response builder ─────────────────────────────────────────────── */
@@ -74,7 +76,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {results.map(p => (
-            <div key={p.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
+            <div key={p.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.dea === 'Expired' ? 'danger' : 'warning'}>DEA {p.dea}</Badge>
@@ -82,7 +84,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
               <div style={{ fontSize: 12, color: '#64748B', marginTop: 3 }}>{p.city}, {p.state} · NPI: {p.npi} · {p.networks} network{p.networks !== 1 ? 's' : ''} affected</div>
             </div>
           ))}
-          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 12, color: '#64748B' }}>Total affected across all states: <strong style={{ color: '#DC2626' }}>1,151</strong></span>
             <button className="btn-primary" style={{ fontSize: 11, padding: '4px 14px' }}>Export Full List</button>
           </div>
@@ -103,9 +105,9 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ display: 'flex', gap: 8 }}>
               {[
-                { label: 'Total Independent', count: '24,450', color: '#2968B0', bg: '#F0F7FF', border: '#B8D5F5' },
+                { label: 'Total Independent', count: '24,450', color: '#005C8D', bg: '#E8F3F9', border: '#8FC2D8' },
                 { label: `Missing ${year}`, count: missing2025 ? '1,420' : '8,150', color: '#DC2626', bg: '#FEF2F2', border: '#FECACA' },
-                { label: `Attested ${year}`, count: missing2025 ? '23,030' : '16,300', color: '#059669', bg: '#F0FDF4', border: '#A7F3D0' },
+                { label: `Attested ${year}`, count: missing2025 ? '23,030' : '16,300', color: '#449055', bg: '#F0FDF4', border: '#A7F3D0' },
               ].map(s => (
                 <div key={s.label} style={{ flex: 1, padding: '14px', borderRadius: 8, textAlign: 'center', background: s.bg, border: `1px solid ${s.border}` }}>
                   <div style={{ fontSize: 20, fontWeight: 700, color: s.color }}>{s.count}</div>
@@ -138,7 +140,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <div style={{ display: 'flex', gap: 8 }}>
             {[
-              { label: 'Attested', count: '73,350', color: '#059669', bg: '#F0FDF4', border: '#A7F3D0' },
+              { label: 'Attested', count: '73,350', color: '#449055', bg: '#F0FDF4', border: '#A7F3D0' },
               { label: 'Pending', count: '6,480', color: '#D97706', bg: '#FFFBF5', border: '#FDE68A' },
               { label: 'Not Started', count: '1,670', color: '#DC2626', bg: '#FEF2F2', border: '#FECACA' },
             ].map(s => (
@@ -150,7 +152,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
           </div>
           {recent && (
             <div style={{ padding: '12px 16px', borderRadius: 8, background: '#F0FDF4', border: '1px solid #A7F3D0' }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#059669', marginBottom: 4 }}>Last 30 Days — 4,218 New Attestations</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#449055', marginBottom: 4 }}>Last 30 Days — 4,218 New Attestations</div>
               <div style={{ fontSize: 12, color: '#64748B' }}>TX: 612 · CA: 548 · FL: 441 · NY: 389 · IL: 312 · Others: 1,916</div>
             </div>
           )}
@@ -167,7 +169,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
           {complianceMetrics.map(m => {
             const isWarn = m.status === 'warning';
             return (
-              <div key={m.label} style={{ padding: '12px 16px', borderRadius: 8, background: isWarn ? '#FFFBF5' : '#F0FDF4', border: `1px solid ${isWarn ? '#FDE68A' : '#A7F3D0'}`, borderLeft: `3px solid ${isWarn ? '#F59E0B' : '#10B981'}` }}>
+              <div key={m.label} style={{ padding: '12px 16px', borderRadius: 8, background: isWarn ? '#FFFBF5' : '#F0FDF4', border: `1px solid ${isWarn ? '#FDE68A' : '#A7F3D0'}`, borderLeft: `3px solid ${isWarn ? '#F59E0B' : '#76C799'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{m.label}</span>
                   <Badge variant={isWarn ? 'warning' : 'success'}>{m.score}%</Badge>
@@ -185,7 +187,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Network analysis across 8 monitored states. Overall adequacy: **94.2%** — above minimum threshold of 90%. 2 states need attention:`,
       data: (
-        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #E8F3F9' }}>
           <table className="data-table" style={{ margin: 0 }}>
             <thead><tr><th>State</th><th>Pharmacies</th><th>Adequacy</th><th>Status</th></tr></thead>
             <tbody>
@@ -214,7 +216,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Sunset Drugs',      city: 'Phoenix, AZ',  date: 'Mar 28', networks: 1, impact: 'Medium' },
             { name: 'Family Care Rx',    city: 'Dallas, TX',   date: 'Mar 27', networks: 0, impact: 'None' },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${p.impact === 'High' ? '#DC2626' : p.impact === 'Medium' ? '#F59E0B' : '#94A3B8'}` }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', borderLeft: `3px solid ${p.impact === 'High' ? '#DC2626' : p.impact === 'Medium' ? '#F59E0B' : '#94A3B8'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.impact === 'High' ? 'danger' : p.impact === 'Medium' ? 'warning' : 'neutral'}>{p.impact}</Badge>
@@ -233,7 +235,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {alerts.map(a => (
-            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', borderLeft: `3px solid ${a.severity === 'critical' ? '#DC2626' : a.severity === 'warning' ? '#F59E0B' : '#3B82F6'}` }}>
+            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', borderLeft: `3px solid ${a.severity === 'critical' ? '#DC2626' : a.severity === 'warning' ? '#F59E0B' : '#1474A4'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{a.title}</span>
                 <Badge variant={a.severity === 'critical' ? 'danger' : a.severity === 'warning' ? 'warning' : 'info'}>{a.severity}</Badge>
@@ -253,13 +255,13 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {top.map((a, i) => (
-            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#B8D5F5', width: 20 }}>#{i + 1}</span>
+            <div key={a.id} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#8FC2D8', width: 20 }}>#{i + 1}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{a.name}</div>
                 <div style={{ fontSize: 11, color: '#94A3B8' }}>{a.category}</div>
               </div>
-              <span style={{ fontSize: 12, fontWeight: 700, color: '#2968B0' }}>{a.uses.toLocaleString()}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#005C8D' }}>{a.uses.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -271,8 +273,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `API usage is **up 12% month-over-month** with 200K calls today. REST endpoints drive 67% of traffic.`,
       data: (
-        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: '#0284C7', marginBottom: 8 }}>API Usage — April 2026</div>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9' }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#005C8D', marginBottom: 8 }}>API Usage — April 2026</div>
           {[
             ['Calls Today', '200K'], ['Monthly Total', '4.6M'], ['REST Calls', '3.1M (67%)'],
             ['GraphQL Calls', '1.5M (33%)'], ['Avg Response Time', '48ms'], ['Error Rate', '0.02%'],
@@ -301,7 +303,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Precision Compounding Rx',    city: stateName === 'Virginia' ? 'Arlington, VA' : stateName === 'Texas' ? 'Dallas, TX' : 'San Diego, CA', type: 'Non-Sterile', services: 'Veterinary · Dermatology' },
             { name: 'SpectraCare Pharmacy',        city: stateName === 'Virginia' ? 'Virginia Beach, VA' : stateName === 'Texas' ? 'Austin, TX' : 'Chicago, IL', type: 'Sterile', services: 'Infusion · Pain Management' },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#F0FDF4', border: '1px solid #A7F3D0', borderLeft: '3px solid #059669' }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#F0FDF4', border: '1px solid #A7F3D0', borderLeft: '3px solid #449055' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant="success">{p.type}</Badge>
@@ -309,7 +311,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
               <div style={{ fontSize: 12, color: '#64748B', marginTop: 3 }}>{p.city} · {p.services}</div>
             </div>
           ))}
-          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 12, color: '#64748B' }}>Showing 3 of {stateName ? (stateName === 'Texas' ? '347' : stateName === 'Virginia' ? '124' : stateName === 'California' ? '512' : '218') : '2,840'} compounding pharmacies</span>
             <button className="btn-primary" style={{ fontSize: 11, padding: '4px 14px' }}>View All</button>
           </div>
@@ -322,8 +324,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Custom Report Builder is ready. Based on your query, I suggest a **Credential Expiry Report** for Q1 2026 covering 81,500 records.`,
       data: (
-        <div style={{ padding: '16px', borderRadius: 8, background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#2968B0', marginBottom: 8 }}>Suggested Report Config</div>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#E8F3F9', border: '1px solid #8FC2D8' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#005C8D', marginBottom: 8 }}>Suggested Report Config</div>
           {[
             ['Report Type', 'DEA Expiry — Q1 2026'], ['Date Range', 'Jan 1 – Mar 31, 2026'],
             ['Scope', 'All 81,500 pharmacies'], ['Est. Records', '~1,180 matches'], ['Formats', 'PDF, Excel, CSV'],
@@ -350,7 +352,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Pacific Health Rx',     city: 'San Diego, CA', date: 'Feb 20', priority: 'Low', networks: 1 },
             { name: 'Sunrise Holdings #3',   city: 'Phoenix, AZ', date: 'Feb 15', priority: 'Low', networks: 1 },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: p.priority === 'High' ? '#F0F7FF' : '#FAFBFF', border: `1px solid ${p.priority === 'High' ? '#B8D5F5' : '#EEF1F8'}`, borderLeft: `3px solid ${p.priority === 'High' ? '#2968B0' : '#94A3B8'}` }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: p.priority === 'High' ? '#E8F3F9' : '#FAFBFC', border: `1px solid ${p.priority === 'High' ? '#8FC2D8' : '#E8F3F9'}`, borderLeft: `3px solid ${p.priority === 'High' ? '#005C8D' : '#94A3B8'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant={p.priority === 'High' ? 'brand' : 'neutral'}>{p.priority}</Badge>
@@ -373,8 +375,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
         ? `Found pharmacy **${found.name}** (NCPDP ID: ${id}) in ${found.city}, ${found.state}.`
         : `Found pharmacy record for NCPDP ID **${id}**:`,
       data: (
-        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#2968B0', marginBottom: 10 }}>Pharmacy Profile — {id}</div>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#005C8D', marginBottom: 10 }}>Pharmacy Profile — {id}</div>
           {[
             ['DBA Name', found?.name || 'Option Care Health'],
             ['Location', found ? `${found.city}, ${found.state}` : 'Los Angeles, CA'],
@@ -406,7 +408,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             { name: 'Walgreens #12044', city: 'Houston, TX', hours: '24/7', type: 'Retail', networks: 6 },
             { name: 'HEB Pharmacy #0281', city: 'Sugar Land, TX', hours: '24/7', type: 'Retail', networks: 5 },
           ].map((p, i) => (
-            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
+            <div key={i} style={{ padding: '12px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{p.name}</span>
                 <Badge variant="success">{p.hours}</Badge>
@@ -414,7 +416,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
               <div style={{ fontSize: 12, color: '#64748B', marginTop: 3 }}>{p.city} · {p.type} · {p.networks} networks</div>
             </div>
           ))}
-          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8', fontSize: 12, color: '#64748B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ padding: '8px 16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9', fontSize: 12, color: '#64748B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Showing 3 of 38 results</span>
             <button className="btn-primary" style={{ fontSize: 11, padding: '4px 14px' }}>View All</button>
           </div>
@@ -429,7 +431,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Found **${caResults.length > 0 ? '512' : '512'} specialty pharmacies** in California. Showing top results from 81,500 records:`,
       data: (
-        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #E8F3F9' }}>
           <table className="data-table" style={{ margin: 0 }}>
             <thead><tr><th>Pharmacy</th><th>City</th><th>Type</th><th>DEA</th><th>Networks</th></tr></thead>
             <tbody>
@@ -462,7 +464,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
         ? `Scheduled **weekly batch download** every Monday at 6:00 AM ET. Estimated 81,500 records per run.`
         : `Batch download ready. **${stateFilter ? stateFilter.length * 8200 : 81500} records** ${stateFilter ? `for ${stateFilter.join(', ').toUpperCase()}` : 'across all states'} prepared for export:`,
       data: (
-        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFF', border: '1px solid #EEF1F8' }}>
+        <div style={{ padding: '16px', borderRadius: 8, background: '#FAFBFC', border: '1px solid #E8F3F9' }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#D97706', marginBottom: 8 }}>{isSchedule ? 'Scheduled Job Config' : 'Export Details'}</div>
           {(isSchedule
             ? [['Schedule', 'Every Monday 6:00 AM ET'], ['Format', 'CSV'], ['Records', '~81,500 per run'], ['Filter', 'Chain pharmacies only'], ['Delivery', 'SFTP + email notification'], ['Status', 'Active']]
@@ -510,7 +512,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Searched **81,500 pharmacy records**. Here are results matching your query:`,
       data: (
-        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #EEF1F8' }}>
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid #E8F3F9' }}>
           <table className="data-table" style={{ margin: 0 }}>
             <thead><tr><th>Pharmacy</th><th>City</th><th>Type</th><th>DEA</th><th>Networks</th></tr></thead>
             <tbody>
@@ -557,7 +559,7 @@ interface Category {
 
 const CATEGORIES: Category[] = [
   {
-    key: 'webconnect', label: 'WebConnect', Icon: IconSearch, accent: '#2968B0',
+    key: 'webconnect', label: 'WebConnect', Icon: IconSearch, accent: '#005C8D',
     questions: [
       'Find all specialty pharmacies in California',
       'Look up pharmacy by NCPDP ID 0512345',
@@ -567,7 +569,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'ondemand', label: 'OnDemand Query', Icon: IconReport, accent: '#2563EB',
+    key: 'ondemand', label: 'OnDemand Query', Icon: IconReport, accent: '#1474A4',
     questions: [
       'Generate a DEA expiry report for Q1 2026',
       'Export all specialty pharmacies as Excel',
@@ -577,7 +579,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'compounding', label: 'Compounding', Icon: IconShield, accent: '#059669',
+    key: 'compounding', label: 'Compounding', Icon: IconShield, accent: '#449055',
     questions: [
       'List all compounding pharmacies in Texas',
       'Show compounding pharmacies in Virginia',
@@ -587,7 +589,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'audit', label: 'Pharmacy Audit', Icon: IconCheck, accent: '#10B981',
+    key: 'audit', label: 'Pharmacy Audit', Icon: IconCheck, accent: '#76C799',
     questions: [
       'Run a full compliance audit across all networks',
       'Show pharmacies with DEA expiring in 30 days',
@@ -597,7 +599,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'chow', label: 'CHOW Tracker', Icon: IconStore, accent: '#2968B0',
+    key: 'chow', label: 'CHOW Tracker', Icon: IconStore, accent: '#005C8D',
     questions: [
       'Show recent ownership changes this month',
       'Which ownership transfers affect active contracts?',
@@ -607,7 +609,7 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: 'geographic', label: 'Geographic', Icon: IconGlobe, accent: '#06B6D4',
+    key: 'geographic', label: 'Geographic', Icon: IconGlobe, accent: '#449055',
     questions: [
       'Network adequacy breakdown by state',
       'Which states are below the adequacy threshold?',
@@ -708,14 +710,14 @@ function buildQueryContext(msg: string): QueryContext {
         { text: `DEA status: ${row.dea} · Type: ${row.type}`, type: 'info' as const },
       ],
       stats: [
-        { label: 'NCPDP ID', value: id, color: '#2968B0', bg: '#F0F7FF' },
-        { label: 'Profile Score', value: '94', color: '#059669', bg: '#ECFDF5' },
+        { label: 'NCPDP ID', value: id, color: '#005C8D', bg: '#E8F3F9' },
+        { label: 'Profile Score', value: '94', color: '#449055', bg: '#ECFDF5' },
         { label: 'Credentials', value: '4', color: '#334155', bg: '#F8FAFC' },
-        { label: 'Networks', value: String(found?.networks || 5), color: '#2968B0', bg: '#F0F7FF' },
+        { label: 'Networks', value: String(found?.networks || 5), color: '#005C8D', bg: '#E8F3F9' },
       ],
       barData: [{ label: 'DEA', value: 1 }, { label: 'License', value: 1 }, { label: 'FWA', value: 1 }, { label: 'Medicare', value: 1 }],
       barLabel: 'Credential Status',
-      pieData: [{ name: 'Active', value: 3, color: '#059669' }, { name: 'Expiring', value: 1, color: '#F59E0B' }],
+      pieData: [{ name: 'Active', value: 3, color: '#449055' }, { name: 'Expiring', value: 1, color: '#F59E0B' }],
       pieLabel: 'Credential Health',
       trendData: [{ month: 'Oct', primary: 92, secondary: 0 }, { month: 'Nov', primary: 93, secondary: 0 }, { month: 'Dec', primary: 94, secondary: 1 }, { month: 'Jan', primary: 94, secondary: 0 }, { month: 'Feb', primary: 94, secondary: 0 }, { month: 'Mar', primary: 94, secondary: 1 }],
       trendLabel: 'Profile Score (6 months)',
@@ -723,7 +725,7 @@ function buildQueryContext(msg: string): QueryContext {
       totalResults: 1, execTime: '0.12s',
       canvasLabel: `Profile: ${row.name}`,
       followUps: ['Show credential history', 'View network memberships', 'Run compliance audit', 'Check FWA attestation'],
-      chatInsights: [{ icon: 'stat' as const, text: `${row.name} — ${row.city}, ${row.state}`, color: '#059669' }, { icon: 'info' as const, text: `DEA: ${row.dea} · ${row.type} pharmacy · ${found?.networks || 5} networks`, color: '#2968B0' }],
+      chatInsights: [{ icon: 'stat' as const, text: `${row.name} — ${row.city}, ${row.state}`, color: '#449055' }, { icon: 'info' as const, text: `DEA: ${row.dea} · ${row.type} pharmacy · ${found?.networks || 5} networks`, color: '#005C8D' }],
     };
   }
 
@@ -748,14 +750,14 @@ function buildQueryContext(msg: string): QueryContext {
         { text: 'CVS and Walgreens account for 68% of 24/7 locations in this area', type: 'info' as const },
       ],
       stats: [
-        { label: '24/7 Pharmacies', value: '38', color: '#059669', bg: '#ECFDF5' },
-        { label: 'Area', value: `${city}, ${stCode}`, color: '#2968B0', bg: '#F0F7FF' },
-        { label: 'All DEA Valid', value: '100%', color: '#059669', bg: '#ECFDF5' },
+        { label: '24/7 Pharmacies', value: '38', color: '#449055', bg: '#ECFDF5' },
+        { label: 'Area', value: `${city}, ${stCode}`, color: '#005C8D', bg: '#E8F3F9' },
+        { label: 'All DEA Valid', value: '100%', color: '#449055', bg: '#ECFDF5' },
         { label: 'Avg Networks', value: '6.3', color: '#334155', bg: '#F8FAFC' },
       ],
       barData: [{ label: 'CVS', value: 14 }, { label: 'Walgreens', value: 12 }, { label: 'HEB', value: 6 }, { label: 'Kroger', value: 4 }, { label: 'Independent', value: 2 }],
       barLabel: `24/7 Pharmacies by Chain (${city})`,
-      pieData: [{ name: 'Retail', value: 32, color: '#2968B0' }, { name: 'Specialty', value: 4, color: '#10B981' }, { name: 'Compounding', value: 2, color: '#F59E0B' }],
+      pieData: [{ name: 'Retail', value: 32, color: '#005C8D' }, { name: 'Specialty', value: 4, color: '#76C799' }, { name: 'Compounding', value: 2, color: '#F59E0B' }],
       pieLabel: '24/7 Pharmacy Types',
       trendData: [{ month: 'Oct', primary: 34, secondary: 2 }, { month: 'Nov', primary: 35, secondary: 1 }, { month: 'Dec', primary: 35, secondary: 3 }, { month: 'Jan', primary: 36, secondary: 1 }, { month: 'Feb', primary: 37, secondary: 2 }, { month: 'Mar', primary: 38, secondary: 1 }],
       trendLabel: `24/7 Pharmacy Count (${city} area)`,
@@ -763,7 +765,7 @@ function buildQueryContext(msg: string): QueryContext {
       totalResults: 38, execTime: '0.41s',
       canvasLabel: `38 pharmacies open 24/7`,
       followUps: [`Show only CVS locations`, `Filter ${city} metro only`, 'Export 24/7 pharmacy list', 'Show pharmacies with drive-through'],
-      chatInsights: [{ icon: 'stat' as const, text: `38 pharmacies open 24/7 near ${city}, ${stCode}`, color: '#059669' }, { icon: 'location' as const, text: `CVS and Walgreens cover 68% of 24/7 locations`, color: '#2968B0' }, { icon: 'info' as const, text: 'All locations have valid DEA and active state licenses', color: '#059669' }],
+      chatInsights: [{ icon: 'stat' as const, text: `38 pharmacies open 24/7 near ${city}, ${stCode}`, color: '#449055' }, { icon: 'location' as const, text: `CVS and Walgreens cover 68% of 24/7 locations`, color: '#005C8D' }, { icon: 'info' as const, text: 'All locations have valid DEA and active state licenses', color: '#449055' }],
     };
   }
 
@@ -794,7 +796,7 @@ ORDER BY c.dea_expires ASC LIMIT 247`,
     ],
     barData: [{ label: 'TX', value: 89 }, { label: 'CA', value: 72 }, { label: 'FL', value: 41 }, { label: 'NY', value: 28 }, { label: 'TN', value: 17 }],
     barLabel: 'DEA Issues by State',
-    pieData: [{ name: 'Expiring <30d', value: 89, color: '#DC2626' }, { name: 'Expiring 30-60d', value: 67, color: '#F59E0B' }, { name: 'Expiring 60-90d', value: 89, color: '#2968B0' }, { name: 'Expired', value: 2, color: '#111827' }],
+    pieData: [{ name: 'Expiring <30d', value: 89, color: '#DC2626' }, { name: 'Expiring 30-60d', value: 67, color: '#F59E0B' }, { name: 'Expiring 60-90d', value: 89, color: '#005C8D' }, { name: 'Expired', value: 2, color: '#111827' }],
     pieLabel: 'DEA Expiry Timeline',
     trendData: [{ month: 'Oct', primary: 18, secondary: 42 }, { month: 'Nov', primary: 22, secondary: 38 }, { month: 'Dec', primary: 15, secondary: 51 }, { month: 'Jan', primary: 28, secondary: 44 }, { month: 'Feb', primary: 31, secondary: 40 }, { month: 'Mar', primary: 24, secondary: 47 }],
     trendLabel: 'Monthly DEA Expirations vs Renewals',
@@ -802,7 +804,7 @@ ORDER BY c.dea_expires ASC LIMIT 247`,
     totalResults: 247, execTime: '0.62s',
     canvasLabel: '247 DEA issues found',
     followUps: ['Show only expired DEA', 'Filter by state: TX', 'Export DEA expiry report', 'View renewal queue'],
-    chatInsights: [{ icon: 'warning', text: '2 pharmacies have fully expired DEA — network access suspended', color: '#DC2626' }, { icon: 'location', text: 'Texas leads with 89 DEA issues — 36% of total', color: '#2968B0' }, { icon: 'stat', text: '156 renewals due within 90 days — auto-notifications sent', color: '#059669' }],
+    chatInsights: [{ icon: 'warning', text: '2 pharmacies have fully expired DEA — network access suspended', color: '#DC2626' }, { icon: 'location', text: 'Texas leads with 89 DEA issues — 36% of total', color: '#005C8D' }, { icon: 'stat', text: '156 renewals due within 90 days — auto-notifications sent', color: '#449055' }],
   };
 
   /* FWA / Attestation */
@@ -825,14 +827,14 @@ ORDER BY f.attestation_year DESC, p.state LIMIT 8150`,
       { text: 'TX has 1,220 missing attestations — highest gap by state', type: 'warning' },
     ],
     stats: [
-      { label: 'Total Pharmacies', value: '81,500', color: '#2968B0', bg: '#F0F7FF' },
-      { label: 'Attested', value: '73,350', color: '#059669', bg: '#ECFDF5' },
+      { label: 'Total Pharmacies', value: '81,500', color: '#005C8D', bg: '#E8F3F9' },
+      { label: 'Attested', value: '73,350', color: '#449055', bg: '#ECFDF5' },
       { label: 'Pending', value: '6,480', color: '#D97706', bg: '#FFF7ED' },
       { label: 'Not Started', value: '1,670', color: '#DC2626', bg: '#FEF2F2' },
     ],
     barData: [{ label: 'TX', value: 1220 }, { label: 'CA', value: 980 }, { label: 'FL', value: 840 }, { label: 'NY', value: 620 }, { label: 'IL', value: 510 }],
     barLabel: 'Missing FWA Attestations by State',
-    pieData: [{ name: 'Attested', value: 73350, color: '#059669' }, { name: 'Pending', value: 6480, color: '#F59E0B' }, { name: 'Not Started', value: 1670, color: '#DC2626' }],
+    pieData: [{ name: 'Attested', value: 73350, color: '#449055' }, { name: 'Pending', value: 6480, color: '#F59E0B' }, { name: 'Not Started', value: 1670, color: '#DC2626' }],
     pieLabel: 'FWA Attestation Status',
     trendData: [{ month: 'Oct', primary: 3200, secondary: 9800 }, { month: 'Nov', primary: 3800, secondary: 9200 }, { month: 'Dec', primary: 4100, secondary: 8900 }, { month: 'Jan', primary: 4600, secondary: 8600 }, { month: 'Feb', primary: 3900, secondary: 8400 }, { month: 'Mar', primary: 4218, secondary: 8150 }],
     trendLabel: 'Monthly Attestations vs Remaining Gap',
@@ -840,7 +842,7 @@ ORDER BY f.attestation_year DESC, p.state LIMIT 8150`,
     totalResults: 8150, execTime: '1.12s',
     canvasLabel: '8,150 missing attestations',
     followUps: ['Show only 2026 missing', 'Filter TX independents', 'Export non-attested list', 'View attestation trend'],
-    chatInsights: [{ icon: 'warning', text: '8,150 independent pharmacies have not completed FWA for 2026', color: '#DC2626' }, { icon: 'stat', text: '90% overall attestation rate — 73,350 of 81,500 complete', color: '#059669' }, { icon: 'location', text: 'TX has largest gap: 1,220 missing attestations', color: '#2968B0' }],
+    chatInsights: [{ icon: 'warning', text: '8,150 independent pharmacies have not completed FWA for 2026', color: '#DC2626' }, { icon: 'stat', text: '90% overall attestation rate — 73,350 of 81,500 complete', color: '#449055' }, { icon: 'location', text: 'TX has largest gap: 1,220 missing attestations', color: '#005C8D' }],
   };
 
   /* Compliance / Audit */
@@ -858,14 +860,14 @@ ORDER BY score ASC`,
       { text: 'DEA compliance at 98% — 2 expired registrations flagged', type: 'info' },
     ],
     stats: [
-      { label: 'Overall Score', value: '94', color: '#059669', bg: '#ECFDF5' },
-      { label: 'DEA', value: '98%', color: '#059669', bg: '#ECFDF5' },
+      { label: 'Overall Score', value: '94', color: '#449055', bg: '#ECFDF5' },
+      { label: 'DEA', value: '98%', color: '#449055', bg: '#ECFDF5' },
       { label: 'FWA', value: '90%', color: '#D97706', bg: '#FFF7ED' },
-      { label: 'State License', value: '99%', color: '#059669', bg: '#ECFDF5' },
+      { label: 'State License', value: '99%', color: '#449055', bg: '#ECFDF5' },
     ],
     barData: complianceMetrics.map(m => ({ label: m.label.slice(0, 12), value: m.score })),
     barLabel: 'Compliance Scores by Category',
-    pieData: [{ name: 'Passing', value: 4, color: '#059669' }, { name: 'Warning', value: 2, color: '#F59E0B' }],
+    pieData: [{ name: 'Passing', value: 4, color: '#449055' }, { name: 'Warning', value: 2, color: '#F59E0B' }],
     pieLabel: 'Standards Status',
     trendData: [{ month: 'Oct', primary: 91, secondary: 3 }, { month: 'Nov', primary: 92, secondary: 2 }, { month: 'Dec', primary: 93, secondary: 2 }, { month: 'Jan', primary: 93, secondary: 2 }, { month: 'Feb', primary: 94, secondary: 2 }, { month: 'Mar', primary: 94, secondary: 2 }],
     trendLabel: 'Compliance Score Trend',
@@ -873,7 +875,7 @@ ORDER BY score ASC`,
     totalResults: 6, execTime: '0.34s',
     canvasLabel: '6 compliance metrics',
     followUps: ['Show FWA details', 'DEA compliance breakdown', 'Generate compliance PDF', 'Compare Q1 vs Q4'],
-    chatInsights: [{ icon: 'stat', text: 'Overall score 94/100 — above 90 benchmark', color: '#059669' }, { icon: 'warning', text: 'FWA attestation at 90% — below 95% target', color: '#D97706' }, { icon: 'info', text: 'Next audit deadline: April 30, 2026', color: '#2968B0' }],
+    chatInsights: [{ icon: 'stat', text: 'Overall score 94/100 — above 90 benchmark', color: '#449055' }, { icon: 'warning', text: 'FWA attestation at 90% — below 95% target', color: '#D97706' }, { icon: 'info', text: 'Next audit deadline: April 30, 2026', color: '#005C8D' }],
   };
 
   /* Network / Geographic / Adequacy */
@@ -892,14 +894,14 @@ GROUP BY p.state ORDER BY adequacy_pct ASC`,
       { text: 'Rural East TX has only 4 pharmacies for 182K population', type: 'warning' },
     ],
     stats: [
-      { label: 'States Analyzed', value: '50', color: '#2968B0', bg: '#F0F7FF' },
-      { label: 'Adequate', value: '44', color: '#059669', bg: '#ECFDF5' },
+      { label: 'States Analyzed', value: '50', color: '#005C8D', bg: '#E8F3F9' },
+      { label: 'Adequate', value: '44', color: '#449055', bg: '#ECFDF5' },
       { label: 'Below Threshold', value: '6', color: '#DC2626', bg: '#FEF2F2' },
       { label: 'Desert Zones', value: '12', color: '#D97706', bg: '#FFF7ED' },
     ],
     barData: stateBreakdown.map(s => ({ label: s.state, value: s.count })),
     barLabel: 'Pharmacy Count by State',
-    pieData: [{ name: 'Exceeds (>95%)', value: 28, color: '#059669' }, { name: 'Meets (90-95%)', value: 16, color: '#2968B0' }, { name: 'Below (<90%)', value: 6, color: '#DC2626' }],
+    pieData: [{ name: 'Exceeds (>95%)', value: 28, color: '#449055' }, { name: 'Meets (90-95%)', value: 16, color: '#005C8D' }, { name: 'Below (<90%)', value: 6, color: '#DC2626' }],
     pieLabel: 'Adequacy Distribution',
     trendData: [{ month: 'Oct', primary: 78200, secondary: 3200 }, { month: 'Nov', primary: 79100, secondary: 2900 }, { month: 'Dec', primary: 79800, secondary: 2700 }, { month: 'Jan', primary: 80200, secondary: 2500 }, { month: 'Feb', primary: 80900, secondary: 2300 }, { month: 'Mar', primary: 81500, secondary: 2100 }],
     trendLabel: 'Network Growth vs Underserved Areas',
@@ -907,7 +909,7 @@ GROUP BY p.state ORDER BY adequacy_pct ASC`,
     totalResults: 50, execTime: '0.91s',
     canvasLabel: '50 states analyzed',
     followUps: ['Show desert zones only', 'Filter below-threshold states', 'Export adequacy report', 'View rural county detail'],
-    chatInsights: [{ icon: 'stat', text: 'Overall adequacy 94.2% — 44 of 50 states meet threshold', color: '#059669' }, { icon: 'warning', text: '12 pharmacy desert zones — 3 critical in Southeast', color: '#DC2626' }, { icon: 'location', text: 'Rural East TX: 4 pharmacies serving 182,000 population', color: '#D97706' }],
+    chatInsights: [{ icon: 'stat', text: 'Overall adequacy 94.2% — 44 of 50 states meet threshold', color: '#449055' }, { icon: 'warning', text: '12 pharmacy desert zones — 3 critical in Southeast', color: '#DC2626' }, { icon: 'location', text: 'Rural East TX: 4 pharmacies serving 182,000 population', color: '#D97706' }],
   };
 
   /* Compounding */
@@ -931,14 +933,14 @@ ORDER BY p.city, p.pharmacy_name LIMIT 347`,
       { text: 'Houston metro has 89 compounding pharmacies — highest concentration', type: 'info' },
     ],
     stats: [
-      { label: 'TX Compounding', value: '347', color: '#059669', bg: '#ECFDF5' },
-      { label: 'Sterile', value: '142', color: '#2968B0', bg: '#F0F7FF' },
+      { label: 'TX Compounding', value: '347', color: '#449055', bg: '#ECFDF5' },
+      { label: 'Sterile', value: '142', color: '#005C8D', bg: '#E8F3F9' },
       { label: 'Non-Sterile', value: '205', color: '#D97706', bg: '#FFF7ED' },
       { label: 'National Total', value: '2,840', color: '#334155', bg: '#F8FAFC' },
     ],
     barData: [{ label: 'CA', value: 512 }, { label: 'TX', value: 347 }, { label: 'FL', value: 296 }, { label: 'NY', value: 231 }, { label: 'OH', value: 178 }],
     barLabel: 'Compounding Pharmacies by State',
-    pieData: [{ name: 'Sterile', value: 142, color: '#2968B0' }, { name: 'Non-Sterile', value: 205, color: '#10B981' }],
+    pieData: [{ name: 'Sterile', value: 142, color: '#005C8D' }, { name: 'Non-Sterile', value: 205, color: '#76C799' }],
     pieLabel: 'Compounding Type (TX)',
     trendData: [{ month: 'Oct', primary: 328, secondary: 12 }, { month: 'Nov', primary: 332, secondary: 8 }, { month: 'Dec', primary: 335, secondary: 10 }, { month: 'Jan', primary: 339, secondary: 6 }, { month: 'Feb', primary: 343, secondary: 9 }, { month: 'Mar', primary: 347, secondary: 7 }],
     trendLabel: 'TX Compounding Growth',
@@ -946,7 +948,7 @@ ORDER BY p.city, p.pharmacy_name LIMIT 347`,
     totalResults: 347, execTime: '0.48s',
     canvasLabel: '347 compounding pharmacies',
     followUps: ['Filter sterile only', 'Show Houston metro', 'Compare TX vs CA', 'Export compounding list'],
-    chatInsights: [{ icon: 'stat', text: '347 compounding pharmacies in Texas — 3rd largest state', color: '#059669' }, { icon: 'info', text: '142 sterile + 205 non-sterile facilities', color: '#2968B0' }, { icon: 'location', text: 'Houston metro leads with 89 compounding pharmacies', color: '#2968B0' }],
+    chatInsights: [{ icon: 'stat', text: '347 compounding pharmacies in Texas — 3rd largest state', color: '#449055' }, { icon: 'info', text: '142 sterile + 205 non-sterile facilities', color: '#005C8D' }, { icon: 'location', text: 'Houston metro leads with 89 compounding pharmacies', color: '#005C8D' }],
   };
 
   /* Specialty / California */
@@ -962,14 +964,14 @@ ORDER BY p.city, p.pharmacy_name LIMIT 512`,
       { text: '3 pharmacies have DEA expiring within 30 days', type: 'warning' },
     ],
     stats: [
-      { label: 'CA Specialty', value: '512', color: '#2968B0', bg: '#F0F7FF' },
-      { label: 'Los Angeles', value: '94', color: '#059669', bg: '#ECFDF5' },
-      { label: 'San Diego', value: '67', color: '#059669', bg: '#ECFDF5' },
-      { label: 'San Francisco', value: '58', color: '#059669', bg: '#ECFDF5' },
+      { label: 'CA Specialty', value: '512', color: '#005C8D', bg: '#E8F3F9' },
+      { label: 'Los Angeles', value: '94', color: '#449055', bg: '#ECFDF5' },
+      { label: 'San Diego', value: '67', color: '#449055', bg: '#ECFDF5' },
+      { label: 'San Francisco', value: '58', color: '#449055', bg: '#ECFDF5' },
     ],
     barData: [{ label: 'LA', value: 94 }, { label: 'SD', value: 67 }, { label: 'SF', value: 58 }, { label: 'SAC', value: 42 }, { label: 'SJ', value: 38 }, { label: 'Other', value: 213 }],
     barLabel: 'CA Specialty Pharmacies by City',
-    pieData: [{ name: 'Oncology', value: 128, color: '#DC2626' }, { name: 'Infusion', value: 96, color: '#2968B0' }, { name: 'Rare Disease', value: 74, color: '#10B981' }, { name: 'HIV/Hep', value: 62, color: '#F59E0B' }, { name: 'Other', value: 152, color: '#94A3B8' }],
+    pieData: [{ name: 'Oncology', value: 128, color: '#DC2626' }, { name: 'Infusion', value: 96, color: '#005C8D' }, { name: 'Rare Disease', value: 74, color: '#76C799' }, { name: 'HIV/Hep', value: 62, color: '#F59E0B' }, { name: 'Other', value: 152, color: '#94A3B8' }],
     pieLabel: 'Specialty Focus Areas (CA)',
     trendData: [{ month: 'Oct', primary: 488, secondary: 12 }, { month: 'Nov', primary: 493, secondary: 8 }, { month: 'Dec', primary: 498, secondary: 10 }, { month: 'Jan', primary: 502, secondary: 6 }, { month: 'Feb', primary: 508, secondary: 9 }, { month: 'Mar', primary: 512, secondary: 7 }],
     trendLabel: 'CA Specialty Pharmacy Growth',
@@ -977,7 +979,7 @@ ORDER BY p.city, p.pharmacy_name LIMIT 512`,
     totalResults: 512, execTime: '0.71s',
     canvasLabel: '512 specialty pharmacies',
     followUps: ['Filter Los Angeles only', 'Show oncology focus', 'Export CA specialty list', 'Compare by city'],
-    chatInsights: [{ icon: 'stat', text: '512 active specialty pharmacies in California', color: '#059669' }, { icon: 'location', text: 'Los Angeles leads with 94 specialty facilities', color: '#2968B0' }, { icon: 'warning', text: '3 pharmacies have DEA expiring within 30 days', color: '#D97706' }],
+    chatInsights: [{ icon: 'stat', text: '512 active specialty pharmacies in California', color: '#449055' }, { icon: 'location', text: 'Los Angeles leads with 94 specialty facilities', color: '#005C8D' }, { icon: 'warning', text: '3 pharmacies have DEA expiring within 30 days', color: '#D97706' }],
   };
 
   /* CHOW / Ownership */
@@ -1000,12 +1002,12 @@ ORDER BY o.change_date DESC`,
     stats: [
       { label: 'Total CHOW', value: '18', color: '#D97706', bg: '#FFF7ED' },
       { label: 'High Priority', value: '4', color: '#DC2626', bg: '#FEF2F2' },
-      { label: 'Processed', value: '12', color: '#059669', bg: '#ECFDF5' },
+      { label: 'Processed', value: '12', color: '#449055', bg: '#ECFDF5' },
       { label: 'Pending', value: '6', color: '#D97706', bg: '#FFF7ED' },
     ],
     barData: [{ label: 'CA', value: 5 }, { label: 'TX', value: 4 }, { label: 'FL', value: 3 }, { label: 'AZ', value: 2 }, { label: 'WA', value: 2 }, { label: 'Other', value: 2 }],
     barLabel: 'Ownership Changes by State',
-    pieData: [{ name: 'Completed', value: 12, color: '#059669' }, { name: 'Under Review', value: 4, color: '#F59E0B' }, { name: 'Pending', value: 2, color: '#DC2626' }],
+    pieData: [{ name: 'Completed', value: 12, color: '#449055' }, { name: 'Under Review', value: 4, color: '#F59E0B' }, { name: 'Pending', value: 2, color: '#DC2626' }],
     pieLabel: 'CHOW Processing Status',
     trendData: [{ month: 'Oct', primary: 12, secondary: 8 }, { month: 'Nov', primary: 15, secondary: 10 }, { month: 'Dec', primary: 10, secondary: 6 }, { month: 'Jan', primary: 14, secondary: 9 }, { month: 'Feb', primary: 16, secondary: 11 }, { month: 'Mar', primary: 18, secondary: 12 }],
     trendLabel: 'Monthly Ownership Changes',
@@ -1013,7 +1015,7 @@ ORDER BY o.change_date DESC`,
     totalResults: 18, execTime: '0.29s',
     canvasLabel: '18 ownership changes',
     followUps: ['Show high priority only', 'Filter pending review', 'Export CHOW report', 'View contract impact'],
-    chatInsights: [{ icon: 'warning', text: '4 high-priority ownership changes require contract renegotiation', color: '#DC2626' }, { icon: 'stat', text: '12 of 18 changes fully processed — 6 still pending', color: '#D97706' }, { icon: 'info', text: 'All changed pharmacies maintained active DEA status', color: '#059669' }],
+    chatInsights: [{ icon: 'warning', text: '4 high-priority ownership changes require contract renegotiation', color: '#DC2626' }, { icon: 'stat', text: '12 of 18 changes fully processed — 6 still pending', color: '#D97706' }, { icon: 'info', text: 'All changed pharmacies maintained active DEA status', color: '#449055' }],
   };
 
   /* Batch / Download / Export */
@@ -1030,14 +1032,14 @@ ORDER BY p.state, p.pharmacy_name`,
       { text: 'Last full export: 2 days ago — 412 records updated since', type: 'info' },
     ],
     stats: [
-      { label: 'Total Records', value: '81,500', color: '#2968B0', bg: '#F0F7FF' },
+      { label: 'Total Records', value: '81,500', color: '#005C8D', bg: '#E8F3F9' },
       { label: 'CSV Size', value: '~210 MB', color: '#334155', bg: '#F8FAFC' },
-      { label: 'Last Export', value: '2d ago', color: '#059669', bg: '#ECFDF5' },
+      { label: 'Last Export', value: '2d ago', color: '#449055', bg: '#ECFDF5' },
       { label: 'Updated Since', value: '412', color: '#D97706', bg: '#FFF7ED' },
     ],
     barData: stateBreakdown.map(s => ({ label: s.state, value: s.count })),
     barLabel: 'Records by State',
-    pieData: [{ name: 'Retail', value: 48200, color: '#2968B0' }, { name: 'Specialty', value: 18400, color: '#10B981' }, { name: 'LTC', value: 8900, color: '#F59E0B' }, { name: 'Other', value: 6000, color: '#94A3B8' }],
+    pieData: [{ name: 'Retail', value: 48200, color: '#005C8D' }, { name: 'Specialty', value: 18400, color: '#76C799' }, { name: 'LTC', value: 8900, color: '#F59E0B' }, { name: 'Other', value: 6000, color: '#94A3B8' }],
     pieLabel: 'Export by Pharmacy Type',
     trendData: [{ month: 'Oct', primary: 420, secondary: 180 }, { month: 'Nov', primary: 510, secondary: 210 }, { month: 'Dec', primary: 480, secondary: 190 }, { month: 'Jan', primary: 620, secondary: 240 }, { month: 'Feb', primary: 710, secondary: 290 }, { month: 'Mar', primary: 680, secondary: 310 }],
     trendLabel: 'Monthly New vs Deactivated',
@@ -1045,7 +1047,7 @@ ORDER BY p.state, p.pharmacy_name`,
     totalResults: 81500, execTime: '2.41s',
     canvasLabel: '81,500 records ready',
     followUps: ['Download CSV now', 'Filter TX, FL, CA only', 'Schedule weekly export', 'View export history'],
-    chatInsights: [{ icon: 'stat', text: '81,500 records prepared for batch export', color: '#059669' }, { icon: 'info', text: 'Estimated CSV file size: ~210 MB across all states', color: '#2968B0' }, { icon: 'info', text: '412 records updated since last export 2 days ago', color: '#D97706' }],
+    chatInsights: [{ icon: 'stat', text: '81,500 records prepared for batch export', color: '#449055' }, { icon: 'info', text: 'Estimated CSV file size: ~210 MB across all states', color: '#005C8D' }, { icon: 'info', text: '412 records updated since last export 2 days ago', color: '#D97706' }],
   };
 
   /* Report / Generate */
@@ -1062,14 +1064,14 @@ ORDER BY c.dea_expires ASC`,
       { text: 'Available as PDF, Excel, or CSV — auto-generated in ~2 seconds', type: 'success' },
     ],
     stats: [
-      { label: 'Report Scope', value: '1,180', color: '#2968B0', bg: '#F0F7FF' },
+      { label: 'Report Scope', value: '1,180', color: '#005C8D', bg: '#E8F3F9' },
       { label: 'Period', value: 'Q1 2026', color: '#334155', bg: '#F8FAFC' },
-      { label: 'Formats', value: '3', color: '#059669', bg: '#ECFDF5' },
-      { label: 'Gen Time', value: '~2s', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'Formats', value: '3', color: '#449055', bg: '#ECFDF5' },
+      { label: 'Gen Time', value: '~2s', color: '#76C799', bg: '#ECFDF5' },
     ],
     barData: [{ label: 'Jan', value: 380 }, { label: 'Feb', value: 420 }, { label: 'Mar', value: 380 }],
     barLabel: 'DEA Expirations by Month (Q1)',
-    pieData: [{ name: 'Retail', value: 680, color: '#2968B0' }, { name: 'Specialty', value: 340, color: '#10B981' }, { name: 'LTC', value: 160, color: '#F59E0B' }],
+    pieData: [{ name: 'Retail', value: 680, color: '#005C8D' }, { name: 'Specialty', value: 340, color: '#76C799' }, { name: 'LTC', value: 160, color: '#F59E0B' }],
     pieLabel: 'Report Breakdown by Type',
     trendData: [{ month: 'Q4-24', primary: 1050, secondary: 920 }, { month: 'Q1-25', primary: 1120, secondary: 980 }, { month: 'Q2-25', primary: 980, secondary: 890 }, { month: 'Q3-25', primary: 1060, secondary: 940 }, { month: 'Q4-25', primary: 1140, secondary: 1010 }, { month: 'Q1-26', primary: 1180, secondary: 0 }],
     trendLabel: 'Quarterly DEA Expiry Volume',
@@ -1077,7 +1079,7 @@ ORDER BY c.dea_expires ASC`,
     totalResults: 1180, execTime: '0.55s',
     canvasLabel: '1,180 in report scope',
     followUps: ['Generate PDF now', 'Export as Excel', 'Narrow to specialty only', 'Add FWA status column'],
-    chatInsights: [{ icon: 'info', text: '1,180 pharmacies with DEA expiring in Q1 2026', color: '#2968B0' }, { icon: 'stat', text: 'Report auto-generates in ~2 seconds — PDF, Excel, CSV', color: '#059669' }],
+    chatInsights: [{ icon: 'info', text: '1,180 pharmacies with DEA expiring in Q1 2026', color: '#005C8D' }, { icon: 'stat', text: 'Report auto-generates in ~2 seconds — PDF, Excel, CSV', color: '#449055' }],
   };
 
   /* Default / general search */
@@ -1091,14 +1093,14 @@ WHERE p.active = true ORDER BY p.pharmacy_name ASC LIMIT 247`,
       { text: '94% of matched pharmacies have active DEA registrations', type: 'success' },
     ],
     stats: [
-      { label: 'Results', value: '247', color: '#2968B0', bg: '#F0F7FF' },
-      { label: 'Exec Time', value: '0.83s', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'Results', value: '247', color: '#005C8D', bg: '#E8F3F9' },
+      { label: 'Exec Time', value: '0.83s', color: '#76C799', bg: '#ECFDF5' },
       { label: 'Scanned', value: '81,500', color: '#334155', bg: '#F8FAFC' },
-      { label: 'Active', value: '232', color: '#059669', bg: '#ECFDF5' },
+      { label: 'Active', value: '232', color: '#449055', bg: '#ECFDF5' },
     ],
     barData: [{ label: 'CA', value: 72 }, { label: 'TX', value: 56 }, { label: 'FL', value: 38 }, { label: 'NY', value: 24 }, { label: 'IL', value: 18 }, { label: 'Other', value: 39 }],
     barLabel: 'Results by State',
-    pieData: [{ name: 'Specialty', value: 128, color: '#2968B0' }, { name: 'Retail', value: 62, color: '#10B981' }, { name: 'LTC', value: 34, color: '#F59E0B' }, { name: 'Infusion', value: 23, color: '#06B6D4' }],
+    pieData: [{ name: 'Specialty', value: 128, color: '#005C8D' }, { name: 'Retail', value: 62, color: '#76C799' }, { name: 'LTC', value: 34, color: '#F59E0B' }, { name: 'Infusion', value: 23, color: '#449055' }],
     pieLabel: 'Results by Type',
     trendData: [{ month: 'Oct', primary: 78200, secondary: 420 }, { month: 'Nov', primary: 79100, secondary: 510 }, { month: 'Dec', primary: 79800, secondary: 480 }, { month: 'Jan', primary: 80200, secondary: 620 }, { month: 'Feb', primary: 80900, secondary: 710 }, { month: 'Mar', primary: 81500, secondary: 680 }],
     trendLabel: 'Network Growth (6 months)',
@@ -1106,7 +1108,7 @@ WHERE p.active = true ORDER BY p.pharmacy_name ASC LIMIT 247`,
     totalResults: 247, execTime: '0.83s',
     canvasLabel: '247 results found',
     followUps: ['Filter to active only', 'Show expired DEA', 'Export results as CSV', 'Compare by state'],
-    chatInsights: [{ icon: 'stat', text: '247 matching results across 81,500 records', color: '#2968B0' }, { icon: 'info', text: '94% of matched pharmacies have active DEA registrations', color: '#059669' }],
+    chatInsights: [{ icon: 'stat', text: '247 matching results across 81,500 records', color: '#005C8D' }, { icon: 'info', text: '94% of matched pharmacies have active DEA registrations', color: '#449055' }],
   };
 }
 
@@ -1114,12 +1116,63 @@ WHERE p.active = true ORDER BY p.pharmacy_name ASC LIMIT 247`,
 export default function AISearchPage() {
   const [hasQueried, setHasQueried] = useState(false);
   const [showOutput, setShowOutput] = useState(false);
+  const [showThreads, setShowThreads] = useState(false);
   const [chatWidth, setChatWidth] = useState(480);
   const [activeTab, setActiveTab] = useState('webconnect');
   const [queryCtx, setQueryCtx] = useState<QueryContext | null>(null);
   const [input, setInput] = useState('');
   const [queryKey, setQueryKey] = useState(0);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+  const threadMsgsRef = useRef<Map<string, ChatMessage[]>>(new Map());
+  const threadState = useThreads('ai-search');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // When messages change, save to current thread and auto-create if needed
+  function handleMessagesChange(msgs: ChatMessage[]) {
+    setChatMessages(msgs);
+    const firstUserMsg = msgs.find(m => m.role === 'user');
+
+    if (firstUserMsg && !activeThreadId) {
+      // Auto-create thread named after the first query
+      const id = threadState.createThread(firstUserMsg.text);
+      setActiveThreadId(id);
+      threadMsgsRef.current.set(id, msgs);
+      return;
+    }
+
+    if (activeThreadId) {
+      threadMsgsRef.current.set(activeThreadId, msgs);
+    }
+  }
+
+  function handleSelectThread(id: string) {
+    // Save current messages
+    if (activeThreadId) threadMsgsRef.current.set(activeThreadId, chatMessages);
+    // Load selected thread's messages
+    const saved = threadMsgsRef.current.get(id) || [];
+    setChatMessages(saved);
+    setActiveThreadId(id);
+    threadState.setActiveId(id);
+    if (saved.length > 0) {
+      setHasQueried(true);
+      // Restore last canvas from the last bot message with canvasData
+      const lastBot = [...saved].reverse().find(m => m.role === 'bot' && m.canvasData);
+      if (lastBot?.canvasData) {
+        setQueryCtx(lastBot.canvasData as QueryContext);
+        setQueryKey(k => k + 1);
+      }
+    }
+  }
+
+  function handleNewChat() {
+    if (activeThreadId) threadMsgsRef.current.set(activeThreadId, chatMessages);
+    setChatMessages([]);
+    setActiveThreadId(null);
+    setQueryCtx(null);
+    setShowOutput(false);
+    setHasQueried(true); // Go straight to chat mode with empty messages
+  }
   const dragging = useRef(false);
   const startX = useRef(0);
   const startW = useRef(480);
@@ -1198,7 +1251,6 @@ export default function AISearchPage() {
     // If current message doesn't match anything specific but we have previous context,
     // this is a follow-up chip — keep showing previous results with a refined reply
     if (isGenericFallback && lastCtxRef.current) {
-      // Don't update queryCtx or queryKey — keep showing previous panel data
       setShowOutput(true);
       return `Applied filter: **${msg}**\n\nRefined the previous results based on your selection. Updated data is in the output panel →`;
     }
@@ -1214,23 +1266,25 @@ export default function AISearchPage() {
   function handleBotReplied(_msg: string) {
     const g = lastGeminiRef.current;
     if (g) {
-      return {
-        insights: g.chatInsights,
-        followUps: g.followUps,
-        canvasLabel: g.canvasLabel,
-      };
+      const ctx = geminiToCtx(g);
+      return { insights: g.chatInsights, followUps: g.followUps, canvasLabel: g.canvasLabel, canvasData: ctx };
     }
-    // Use the preserved previous context for follow-ups
     const ctx = lastCtxRef.current;
     if (ctx) {
-      return {
-        insights: ctx.chatInsights,
-        followUps: ctx.followUps,
-        canvasLabel: ctx.canvasLabel,
-      };
+      return { insights: ctx.chatInsights, followUps: ctx.followUps, canvasLabel: ctx.canvasLabel, canvasData: ctx };
     }
     return undefined;
   }
+
+  // When user clicks "Open in Canvas" on any message
+  function handleOpenCanvas(_qId: number, _text: string, canvasData?: unknown) {
+    if (canvasData) {
+      setQueryCtx(canvasData as QueryContext);
+      setQueryKey(k => k + 1);
+    }
+    setShowOutput(true);
+  }
+
 
   function handleGetInsights(msg: string) {
     return buildQueryContext(msg).chatInsights;
@@ -1272,18 +1326,27 @@ export default function AISearchPage() {
         title="AI Smart Search"
         subtitle="Unified AI intelligence across all DataSolutions.ai tools and data"
         actions={hasQueried ? (
-          <button
-            className={showOutput ? 'btn-primary' : 'btn-secondary'}
-            onClick={() => setShowOutput(o => !o)}
-            style={{ fontSize: 12, gap: 5 }}
-          >
-            <IconBarChart size={13} color={showOutput ? '#fff' : undefined}/>
-            {showOutput ? 'Hide Output' : 'Show Output'}
-          </button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button
+              className="btn-secondary"
+              onClick={() => setShowThreads(o => !o)}
+              style={{ fontSize: 12, gap: 5 }}
+            >
+              <IconStore size={13}/> {showThreads ? 'Hide' : 'Show'} Threads
+            </button>
+            <button
+              className={showOutput ? 'btn-primary' : 'btn-secondary'}
+              onClick={() => setShowOutput(o => !o)}
+              style={{ fontSize: 12, gap: 5 }}
+            >
+              <IconBarChart size={13} color={showOutput ? '#fff' : undefined}/>
+              {showOutput ? 'Hide Output' : 'Show Output'}
+            </button>
+          </div>
         ) : undefined}
       />
 
-      <main style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - var(--topbar-h, 56px))', background: '#FAFBFF' }}>
+      <main style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - var(--topbar-h, 56px))', background: '#FAFBFC' }}>
 
         {/* ── Landing / Welcome ──────────────────────────────────── */}
         {!hasQueried && (
@@ -1293,9 +1356,9 @@ export default function AISearchPage() {
               {/* Hero */}
               <div style={{
                 width: 64, height: 64, borderRadius: 18,
-                background: 'linear-gradient(145deg, #2968B0, #3A7EC8)',
+                background: 'linear-gradient(145deg, #005C8D, #1474A4)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 12px 40px rgba(41,104,176,.2)',
+                boxShadow: '0 12px 40px rgba(0,92,141,.2)',
                 marginBottom: 18,
               }}>
                 <IconSparkles size={30} color="#fff"/>
@@ -1316,7 +1379,7 @@ export default function AISearchPage() {
                   padding: '4px 4px 4px 16px',
                   transition: 'border-color .2s, box-shadow .2s',
                 }}>
-                  <IconSparkles size={17} color="#B8D5F5"/>
+                  <IconSparkles size={17} color="#8FC2D8"/>
                   <input
                     ref={inputRef}
                     type="text"
@@ -1334,7 +1397,7 @@ export default function AISearchPage() {
                     disabled={!input.trim()}
                     style={{
                       width: 40, height: 40, borderRadius: 10, border: 'none', cursor: 'pointer',
-                      background: input.trim() ? 'linear-gradient(135deg, #2968B0, #3A7EC8)' : '#F1F5F9',
+                      background: input.trim() ? 'linear-gradient(135deg, #005C8D, #1474A4)' : '#F1F5F9',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'background .2s', flexShrink: 0,
                     }}
@@ -1427,6 +1490,17 @@ export default function AISearchPage() {
         {/* ── Chat + Output split ────────────────────────────────── */}
         {hasQueried && (
           <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+            {/* Thread sidebar */}
+            {showThreads && (
+              <ChatThreadsSidebar
+                threads={threadState.threads}
+                activeId={activeThreadId}
+                onSelect={handleSelectThread}
+                onNew={handleNewChat}
+                onDelete={(id) => { threadState.deleteThread(id); threadMsgsRef.current.delete(id); }}
+                onClose={() => setShowThreads(false)}
+              />
+            )}
             {/* LEFT: Chat */}
             <div data-search-chat style={{
               display: 'flex', flexDirection: 'column',
@@ -1436,18 +1510,21 @@ export default function AISearchPage() {
               minHeight: 0, overflow: 'hidden', transition: 'width .2s ease',
             }}>
               <AgentChat
+                key={activeThreadId || 'new'}
                 agentName="AI Smart Search"
                 agentId="SEARCH"
-                gradient="linear-gradient(135deg, #2968B0, #3A7EC8)"
+                gradient="linear-gradient(135deg, #005C8D, #1474A4)"
                 icon={<IconSparkles size={18} color="#fff"/>}
                 welcomeMessage={`Hi Sarah! I'm your **AI Smart Search** assistant with real-time access to **81,500** pharmacy records and 33 specialized agents.\n\nAsk me anything — results will appear in the output panel alongside charts, SQL, and export options.`}
                 suggestions={activeCat.questions.slice(0, 4)}
+                messages={chatMessages}
+                onMessagesChange={handleMessagesChange}
                 getBotReply={handleBotReply}
                 getInsights={handleGetInsights}
                 getFollowUps={handleGetFollowUps}
                 getCanvasLabel={handleGetCanvasLabel}
                 onBotReplied={handleBotReplied}
-                onOpenCanvas={() => { if (queryCtx) setShowOutput(true); }}
+                onOpenCanvas={handleOpenCanvas}
                 hideHeader
                 fluid
               />
@@ -1458,7 +1535,7 @@ export default function AISearchPage() {
               <div
                 onMouseDown={onMouseDown}
                 style={{ width: 6, flexShrink: 0, cursor: 'col-resize', background: 'transparent', position: 'relative', zIndex: 10 }}
-                onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#5B9BD5'; }}
+                onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#2D8AB5'; }}
                 onMouseLeave={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#E2E8F0'; }}
               >
                 <div style={{ position: 'absolute', left: 2, top: 0, bottom: 0, width: 2, background: '#E2E8F0', transition: 'background .15s' }}/>

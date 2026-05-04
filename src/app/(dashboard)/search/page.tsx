@@ -125,7 +125,7 @@ export default function SearchPage() {
         {/* Results */}
         {searched
           ? <DataTable columns={PHARM_COLS} data={PHARMACY_RESULTS}/>
-          : <EmptyState icon={<IconFilter size={22} color="#5B9BD5"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to query the pharmacy database"/>
+          : <EmptyState icon={<IconFilter size={22} color="#2D8AB5"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to query the pharmacy database"/>
         }
       </main>
     </>

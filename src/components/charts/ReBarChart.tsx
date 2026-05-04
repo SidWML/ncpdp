@@ -26,7 +26,7 @@ function CustomTooltip({ active, payload, label }: TipProps) {
   );
 }
 
-export function ReBarChart({ data, height = 140, color = '#2968B0' }: Props) {
+export function ReBarChart({ data, height = 140, color = '#005C8D' }: Props) {
   const chartData = data.map(d => ({ name: d.label, value: d.value, color: d.color || color }));
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -34,7 +34,7 @@ export function ReBarChart({ data, height = 140, color = '#2968B0' }: Props) {
         <CartesianGrid strokeDasharray="0" stroke="#F1F5F9" vertical={false}/>
         <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94A3B8', fontWeight: 600 }} tickLine={false} axisLine={false}/>
         <YAxis tick={{ fontSize: 10, fill: '#94A3B8' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `${(v/1000).toFixed(0)}k` : String(v)}/>
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(99,102,241,.05)' }}/>
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,92,141,.05)' }}/>
         <Bar dataKey="value" radius={[5, 5, 0, 0]}>
           {chartData.map((entry, i) => (
             <Cell key={i} fill={entry.color} fillOpacity={0.9}/>

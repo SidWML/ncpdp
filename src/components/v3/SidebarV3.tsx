@@ -29,10 +29,10 @@ export function Sidebar() {
       {/* Logo */}
       <div style={{ height: 60, display: 'flex', alignItems: 'center', padding: col ? '0' : '0 18px', justifyContent: col ? 'center' : 'space-between', flexShrink: 0 }}>
         <Link href="/v3" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          <div style={{ width: 32, height: 32, borderRadius: 10, background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ width: 32, height: 32, borderRadius: 10, background: 'linear-gradient(135deg,#005C8D,#005C8D)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 12h12M3 19h8" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/></svg>
           </div>
-          {!col && <span style={{ fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-.4px' }}>DataSolutions<span style={{ color: '#A5B4FC' }}>.ai</span></span>}
+          {!col && <span style={{ fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-.4px' }}>DataSolutions<span style={{ color: '#8FC2D8' }}>.ai</span></span>}
         </Link>
         {!col && <button onClick={() => setCol(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', borderRadius: 6 }}><IconChevronLeft size={14} color="rgba(255,255,255,.25)"/></button>}
       </div>
@@ -47,7 +47,7 @@ export function Sidebar() {
               {!col && (
                 <>
                   <span style={{ flex: 1 }}>{n.label}</span>
-                  {n.badge && <span style={{ fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 20, background: 'rgba(99,102,241,.2)', color: '#A5B4FC' }}>{n.badge}</span>}
+                  {n.badge && <span style={{ fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 20, background: 'rgba(0,92,141,.2)', color: '#8FC2D8' }}>{n.badge}</span>}
                 </>
               )}
             </Link>
@@ -68,7 +68,7 @@ export function Sidebar() {
       {!col && (
         <div style={{ padding: '14px 14px', flexShrink: 0 }}>
           <div style={{ padding: '10px 12px', borderRadius: 12, background: 'rgba(255,255,255,.04)', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 11, fontWeight: 700, color: '#fff' }}>SC</div>
+            <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#005C8D,#005C8D)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 11, fontWeight: 700, color: '#fff' }}>SC</div>
             <div>
               <div style={{ fontSize: 12.5, fontWeight: 550, color: '#E4E4E7' }}>Sarah Chen</div>
               <div style={{ fontSize: 10, color: 'rgba(255,255,255,.3)' }}>Enterprise</div>

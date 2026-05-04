@@ -21,8 +21,8 @@ const deliveryMethods = [
     files: ['Full file (monthly)', 'Delta file (monthly)'],
     freshness: 'Monthly',
     Icon: IconFolder,
-    iconBg: '#F0F7FF',
-    iconColor: '#2968B0',
+    iconBg: '#E8F3F9',
+    iconColor: '#005C8D',
     tier: 'Essential+',
   },
   {
@@ -44,7 +44,7 @@ const deliveryMethods = [
     freshness: 'Real-time',
     Icon: IconDatabase,
     iconBg: '#D1FAE5',
-    iconColor: '#059669',
+    iconColor: '#449055',
     tier: 'Enterprise',
   },
   {
@@ -54,8 +54,8 @@ const deliveryMethods = [
     files: ['Pharmacy updates', 'Credential changes', 'Closures'],
     freshness: 'Instant',
     Icon: IconWebhook,
-    iconBg: '#F0F7FF',
-    iconColor: '#2968B0',
+    iconBg: '#E8F3F9',
+    iconColor: '#005C8D',
     tier: 'Enterprise',
   },
 ];
@@ -121,9 +121,9 @@ export default function DeliveryPage() {
           {([['feeds','Data Delivery'],['batch','Document Batch Download']] as const).map(([key, label]) => (
             <button key={key} onClick={() => setTab(key)} style={{
               padding: '12px 24px', fontSize: 13, fontWeight: tab === key ? 600 : 500,
-              color: tab === key ? '#2968B0' : '#64748B',
+              color: tab === key ? '#005C8D' : '#64748B',
               background: 'none', border: 'none', cursor: 'pointer',
-              borderBottom: tab === key ? '2px solid #2968B0' : '2px solid transparent', marginBottom: -2,
+              borderBottom: tab === key ? '2px solid #005C8D' : '2px solid transparent', marginBottom: -2,
             }}>{label}</button>
           ))}
         </div>
@@ -222,7 +222,7 @@ export default function DeliveryPage() {
               <Card style={{ marginBottom: 16 }}>
                 <div style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Search Pharmacy</div>
-                  <a href="#" style={{ fontSize: 12, color: '#2968B0', fontWeight: 600 }}>Click here for Document Batch Download instructions</a>
+                  <a href="#" style={{ fontSize: 12, color: '#005C8D', fontWeight: 600 }}>Click here for Document Batch Download instructions</a>
                 </div>
                 <CardBody style={{ padding: '20px 24px' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 12 }}>
@@ -284,7 +284,7 @@ export default function DeliveryPage() {
                     {batchSearched && (
                       <button
                         onClick={() => setSelected(BATCH_RESULTS.slice(0,50).map(r => r.ncpdp))}
-                        style={{ padding: '4px 12px', borderRadius: 4, border: '1px solid #B8D5F5', background: '#F0F7FF', color: '#2968B0', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}
+                        style={{ padding: '4px 12px', borderRadius: 4, border: '1px solid #8FC2D8', background: '#E8F3F9', color: '#005C8D', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}
                       >
                         Select All
                       </button>
@@ -315,7 +315,7 @@ export default function DeliveryPage() {
                               />
                             </td>
                             <td style={{ padding: '8px 12px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
-                            <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#2968B0', fontWeight: 600, fontSize: 12 }}>{r.ncpdp}</td>
+                            <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#005C8D', fontWeight: 600, fontSize: 12 }}>{r.ncpdp}</td>
                             <td style={{ padding: '8px 12px', color: '#64748B' }}>{r.store}</td>
                             <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#64748B', fontSize: 12 }}>{r.npi}</td>
                           </tr>
@@ -339,14 +339,14 @@ export default function DeliveryPage() {
                       <span style={{ fontWeight: 400, opacity: .7 }}> (maximum of 50)</span>
                     </span>
                     <div style={{ display: 'flex', gap: 8 }}>
-                      <button onClick={() => setSelected([])} style={{ padding: '4px 12px', borderRadius: 4, border: '1px solid #B8D5F5', background: '#F0F7FF', color: '#2968B0', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                      <button onClick={() => setSelected([])} style={{ padding: '4px 12px', borderRadius: 4, border: '1px solid #8FC2D8', background: '#E8F3F9', color: '#005C8D', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                         Clear
                       </button>
                       <button
                         disabled={selected.length === 0}
                         style={{
                           padding: '4px 12px', borderRadius: 4, border: 'none', fontSize: 12, fontWeight: 600, cursor: selected.length > 0 ? 'pointer' : 'default',
-                          background: selected.length > 0 ? '#10B981' : '#6B7280', color: '#fff',
+                          background: selected.length > 0 ? '#76C799' : '#6B7280', color: '#fff',
                           display: 'flex', alignItems: 'center', gap: 4,
                         }}
                       >
@@ -369,7 +369,7 @@ export default function DeliveryPage() {
                         ) : selectedPharmacies.map((r, i) => (
                           <tr key={r.ncpdp} style={{ background: i % 2 === 0 ? '#fff' : '#FAFAFA', borderTop: '1px solid #F1F5F9' }}>
                             <td style={{ padding: '8px 12px', fontWeight: 500, color: '#1E293B', fontSize: 12 }}>{r.name}</td>
-                            <td style={{ padding: '8px 12px', fontFamily: 'monospace', fontWeight: 600, color: '#2968B0', fontSize: 12 }}>{r.ncpdp}</td>
+                            <td style={{ padding: '8px 12px', fontFamily: 'monospace', fontWeight: 600, color: '#005C8D', fontSize: 12 }}>{r.ncpdp}</td>
                             <td style={{ padding: '8px 12px' }}>
                               <button onClick={() => removeSelected(r.ncpdp)} style={{
                                 width: 22, height: 22, borderRadius: 4, border: '1px solid #FECACA',
@@ -385,7 +385,7 @@ export default function DeliveryPage() {
                     </table>
                     {selected.length > 0 && (
                       <div style={{ padding: '8px 12px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', fontSize: 12, color: '#64748B', display: 'flex', justifyContent: 'space-between' }}>
-                        <span><strong style={{ color: '#2968B0' }}>{selected.length}</strong> selected (max 50)</span>
+                        <span><strong style={{ color: '#005C8D' }}>{selected.length}</strong> selected (max 50)</span>
                         <span>{50 - selected.length} slots remaining</span>
                       </div>
                     )}

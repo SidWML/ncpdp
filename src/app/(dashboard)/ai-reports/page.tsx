@@ -8,9 +8,10 @@ import {
 } from '@/components/ui/Icons';
 import { queryGeminiReport } from '@/lib/gemini';
 import type { GeminiReportResponse } from '@/lib/gemini';
+import { ChatThreadsSidebar, useThreads } from '@/components/ui/ChatThreads';
 
 /* ── Types ─────────────────────────────────────────────────────────── */
-interface Msg { id: number; role: 'user' | 'bot'; text: string }
+interface Msg { id: number; role: 'user' | 'bot'; text: string; reportData?: ReportData }
 interface ReportData {
   title: string; date: string; records: string; states: string;
   stats: { label: string; value: string; color: string }[];
@@ -22,16 +23,16 @@ const REPORT_MAP: Record<string, ReportData> = {
   credential: {
     title: 'Q1 2026 Credential Expiry Report', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '81,500', color: '#2968B0' },
+      { label: 'Total Pharmacies', value: '81,500', color: '#005C8D' },
       { label: 'Credentials Expiring', value: '234', color: '#F59E0B' },
       { label: 'Multi-Expiry Risk', value: '12', color: '#EF4444' },
-      { label: 'States with Issues', value: '23', color: '#10B981' },
+      { label: 'States with Issues', value: '23', color: '#76C799' },
     ],
     sections: [
       { title: 'Expiring by Type', rows: [
-        { label: 'DEA Registration', value: '89', color: '#2968B0' },
+        { label: 'DEA Registration', value: '89', color: '#005C8D' },
         { label: 'State License', value: '112', color: '#F59E0B' },
-        { label: 'Accreditation', value: '33', color: '#10B981' },
+        { label: 'Accreditation', value: '33', color: '#76C799' },
       ]},
       { title: 'Top States at Risk', rows: [
         { label: 'Texas', value: '28 expiring', color: '#DC2626' },
@@ -45,14 +46,14 @@ const REPORT_MAP: Record<string, ReportData> = {
   fwa: {
     title: 'FWA Attestation Status Report', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
-      { label: 'Total Pharmacies', value: '81,500', color: '#2968B0' },
-      { label: 'FWA Pass', value: '67,841', color: '#10B981' },
+      { label: 'Total Pharmacies', value: '81,500', color: '#005C8D' },
+      { label: 'FWA Pass', value: '67,841', color: '#76C799' },
       { label: 'Under Review', value: '359', color: '#F59E0B' },
       { label: 'Failed', value: '47', color: '#EF4444' },
     ],
     sections: [
       { title: 'Risk Distribution', rows: [
-        { label: 'Low Risk (0-3)', value: '64,210', color: '#10B981' },
+        { label: 'Low Risk (0-3)', value: '64,210', color: '#76C799' },
         { label: 'Medium Risk (4-6)', value: '3,631', color: '#F59E0B' },
         { label: 'High Risk (7-8)', value: '359', color: '#F97316' },
         { label: 'Critical (9-10)', value: '47', color: '#EF4444' },
@@ -60,7 +61,7 @@ const REPORT_MAP: Record<string, ReportData> = {
       { title: 'Top Flags', rows: [
         { label: 'Billing anomaly', value: '142 pharmacies', color: '#DC2626' },
         { label: 'Dispensing pattern', value: '98 pharmacies', color: '#F59E0B' },
-        { label: 'Ownership change', value: '67 pharmacies', color: '#2968B0' },
+        { label: 'Ownership change', value: '67 pharmacies', color: '#005C8D' },
         { label: 'DEA mismatch', value: '52 pharmacies', color: '#F59E0B' },
       ]},
     ],
@@ -68,18 +69,18 @@ const REPORT_MAP: Record<string, ReportData> = {
   network: {
     title: 'Network Adequacy Analysis', date: 'Mar 31, 2026', records: '81,500', states: '50',
     stats: [
-      { label: 'Overall Adequacy', value: '94.2%', color: '#10B981' },
-      { label: 'States Passing', value: '45', color: '#2968B0' },
+      { label: 'Overall Adequacy', value: '94.2%', color: '#76C799' },
+      { label: 'States Passing', value: '45', color: '#005C8D' },
       { label: 'States at Risk', value: '5', color: '#F59E0B' },
       { label: 'Coverage Gaps', value: '12 zones', color: '#EF4444' },
     ],
     sections: [
       { title: 'By Region', rows: [
-        { label: 'Northeast', value: '96.1%', color: '#10B981' },
-        { label: 'Southeast', value: '92.8%', color: '#10B981' },
+        { label: 'Northeast', value: '96.1%', color: '#76C799' },
+        { label: 'Southeast', value: '92.8%', color: '#76C799' },
         { label: 'Midwest', value: '91.4%', color: '#F59E0B' },
-        { label: 'Southwest', value: '93.6%', color: '#10B981' },
-        { label: 'West', value: '95.3%', color: '#10B981' },
+        { label: 'Southwest', value: '93.6%', color: '#76C799' },
+        { label: 'West', value: '95.3%', color: '#76C799' },
       ]},
       { title: 'Gap Zones', rows: [
         { label: 'Rural TX (Kern)', value: '79% — needs 3 pharmacies', color: '#EF4444' },
@@ -91,15 +92,15 @@ const REPORT_MAP: Record<string, ReportData> = {
   nosurprises: {
     title: 'No Surprises Act Filing — Q1 2026', date: 'Mar 31, 2026', records: '38,569', states: '50',
     stats: [
-      { label: 'Validated', value: '38,569', color: '#10B981' },
-      { label: 'Pass', value: '38,210', color: '#059669' },
+      { label: 'Validated', value: '38,569', color: '#76C799' },
+      { label: 'Pass', value: '38,210', color: '#449055' },
       { label: 'Warnings', value: '312', color: '#F59E0B' },
       { label: 'Failures', value: '47', color: '#EF4444' },
     ],
     sections: [
       { title: 'Filing Status', rows: [
-        { label: 'Aetna', value: 'Filed — Pass', color: '#10B981' },
-        { label: 'BlueCross BlueShield', value: 'Filed — Pass', color: '#10B981' },
+        { label: 'Aetna', value: 'Filed — Pass', color: '#76C799' },
+        { label: 'BlueCross BlueShield', value: 'Filed — Pass', color: '#76C799' },
         { label: 'Cigna', value: 'Pending — 3 warnings', color: '#F59E0B' },
         { label: 'UnitedHealth', value: 'Due Apr 15', color: '#F59E0B' },
       ]},
@@ -142,6 +143,8 @@ export default function AIReportsPage() {
   const [typing, setTyping]   = useState(false);
   const [report, setReport]   = useState<ReportData | null>(null);
   const [fmt, setFmt]         = useState('PDF');
+  const [showThreads, setShowThreads] = useState(false);
+  const threadState = useThreads('ai-reports');
   const bottomRef = useRef<HTMLDivElement>(null);
   const hasMessages = msgs.length > 0;
 
@@ -157,17 +160,19 @@ export default function AIReportsPage() {
     // Try Gemini first
     const gemini = await queryGeminiReport(t);
     if (gemini) {
-      setReport({ title: gemini.title, date: gemini.date, records: gemini.records, states: gemini.states, stats: gemini.stats, sections: gemini.sections });
+      const rd: ReportData = { title: gemini.title, date: gemini.date, records: gemini.records, states: gemini.states, stats: gemini.stats, sections: gemini.sections };
+      setReport(rd);
       setTyping(false);
-      setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: gemini.replyText }]);
+      setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: gemini.replyText, reportData: rd }]);
       return;
     }
 
     // Fallback to static
     const { key, reply } = detectReport(t);
-    setReport(REPORT_MAP[key] || DEFAULT_REPORT);
+    const rd = REPORT_MAP[key] || DEFAULT_REPORT;
+    setReport(rd);
     setTyping(false);
-    setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: reply }]);
+    setMsgs(m => [...m, { id: Date.now() + 1, role: 'bot', text: reply, reportData: rd }]);
   }
 
   function renderBold(text: string) {
@@ -178,8 +183,28 @@ export default function AIReportsPage() {
 
   return (
     <>
-      <Topbar title="AI Report Builder" subtitle="Describe what you need — generate instant reports from all DataSolutions.ai data" />
-      <main style={{ display: 'flex', height: 'calc(100vh - 84px)', background: '#FAFBFF' }}>
+      <Topbar
+        title="AI Report Builder"
+        subtitle="Describe what you need — generate instant reports from all DataSolutions.ai data"
+        actions={hasMessages ? (
+          <button className="btn-secondary" onClick={() => setShowThreads(o => !o)} style={{ fontSize: 12, gap: 5 }}>
+            {showThreads ? 'Hide' : 'Show'} Threads
+          </button>
+        ) : undefined}
+      />
+      <main style={{ display: 'flex', height: 'calc(100vh - 84px)', background: '#FAFBFC' }}>
+
+        {/* Thread sidebar */}
+        {showThreads && (
+          <ChatThreadsSidebar
+            threads={threadState.threads}
+            activeId={threadState.activeId}
+            onSelect={(id) => threadState.setActiveId(id)}
+            onNew={() => threadState.createThread('New report')}
+            onDelete={(id) => threadState.deleteThread(id)}
+            onClose={() => setShowThreads(false)}
+          />
+        )}
 
         {/* ── LEFT: Chat panel ──────────────────────────────── */}
         <div style={{ width: report ? 420 : '100%', maxWidth: report ? 420 : 700, margin: report ? 0 : '0 auto', display: 'flex', flexDirection: 'column', background: '#fff', borderRight: report ? '1px solid #E8ECF4' : 'none', transition: 'width .3s' }}>
@@ -187,7 +212,7 @@ export default function AIReportsPage() {
           {/* Empty state */}
           {!hasMessages && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 24px' }}>
-              <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(145deg, #2968B0, #3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(41,104,176,.25)', marginBottom: 18 }}>
+              <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(145deg, #005C8D, #1474A4)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(0,92,141,.25)', marginBottom: 18 }}>
                 <IconReport size={28} color="#fff"/>
               </div>
               <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-.3px' }}>What report do you need?</h2>
@@ -198,9 +223,9 @@ export default function AIReportsPage() {
               {/* Input */}
               <div style={{ width: '100%', maxWidth: 440, marginTop: 24 }}>
                 <div style={{ display: 'flex', alignItems: 'center', background: '#fff', border: '1px solid #E2E8F0', borderRadius: 14, boxShadow: '0 4px 24px rgba(15,23,42,.06)', padding: '4px 4px 4px 16px' }}>
-                  <span style={{ display: 'flex', marginRight: 10 }}><IconSparkles size={16} color="#B8D5F5"/></span>
+                  <span style={{ display: 'flex', marginRight: 10 }}><IconSparkles size={16} color="#8FC2D8"/></span>
                   <input type="text" placeholder="e.g. DEA expiry report by state for Q1..." value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 14, color: '#0F172A', padding: '11px 0' }}/>
-                  <button onClick={() => send()} disabled={!input.trim()} style={{ width: 40, height: 40, borderRadius: 8, border: 'none', cursor: 'pointer', background: input.trim() ? 'linear-gradient(135deg,#2968B0,#3A7EC8)' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', flexShrink: 0 }}>
+                  <button onClick={() => send()} disabled={!input.trim()} style={{ width: 40, height: 40, borderRadius: 8, border: 'none', cursor: 'pointer', background: input.trim() ? 'linear-gradient(135deg,#005C8D,#1474A4)' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', flexShrink: 0 }}>
                     <IconSend size={15} color={input.trim() ? '#fff' : '#94A3B8'}/>
                   </button>
                 </div>
@@ -210,7 +235,7 @@ export default function AIReportsPage() {
               <div style={{ display: 'flex', gap: 6, marginTop: 14, alignItems: 'center' }}>
                 <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>Format:</span>
                 {['PDF', 'Excel', 'CSV', 'JSON', 'API'].map(f => (
-                  <button key={f} onClick={() => setFmt(f)} style={{ fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 6, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#2968B0' : '#E2E8F0', background: fmt === f ? '#F0F7FF' : '#fff', color: fmt === f ? '#2968B0' : '#94A3B8', transition: 'all .15s' }}>{f}</button>
+                  <button key={f} onClick={() => setFmt(f)} style={{ fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 6, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#005C8D' : '#E2E8F0', background: fmt === f ? '#E8F3F9' : '#fff', color: fmt === f ? '#005C8D' : '#94A3B8', transition: 'all .15s' }}>{f}</button>
                 ))}
               </div>
 
@@ -220,7 +245,7 @@ export default function AIReportsPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {TEMPLATES.map(t => (
                     <button key={t.label} onClick={() => send(t.query)} style={{ padding: '12px', textAlign: 'left', background: '#fff', border: '1px solid #E8ECF4', borderRadius: 8, cursor: 'pointer', transition: 'border-color .15s' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8D5F5'; }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#8FC2D8'; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = '#E8ECF4'; }}
                     >
                       <div style={{ fontSize: 13, fontWeight: 600, color: '#0F172A' }}>{t.label}</div>
@@ -239,7 +264,7 @@ export default function AIReportsPage() {
                 {msgs.map(m => (
                   <div key={m.id} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 14 }}>
                     {m.role === 'bot' ? (
-                      <div style={{ width: 30, height: 30, borderRadius: 9, flexShrink: 0, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 30, height: 30, borderRadius: 9, flexShrink: 0, background: 'linear-gradient(135deg,#005C8D,#1474A4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <IconSparkles size={14} color="#fff"/>
                       </div>
                     ) : (
@@ -248,20 +273,38 @@ export default function AIReportsPage() {
                       </div>
                     )}
                     <div style={{ flex: 1, paddingTop: 2 }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: m.role === 'bot' ? '#2968B0' : '#64748B', marginBottom: 3 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: m.role === 'bot' ? '#005C8D' : '#64748B', marginBottom: 3 }}>
                         {m.role === 'bot' ? 'Report Builder' : 'You'}
                       </div>
                       <div style={{ fontSize: 13, lineHeight: 1.6, color: '#334155' }}>{renderBold(m.text)}</div>
+                      {m.role === 'bot' && m.reportData && (
+                        <button
+                          onClick={() => setReport(m.reportData!)}
+                          style={{
+                            marginTop: 6, padding: '5px 10px', borderRadius: 7,
+                            background: '#E8F3F9', border: '1px solid #8FC2D8',
+                            display: 'inline-flex', alignItems: 'center', gap: 6,
+                            cursor: 'pointer', fontSize: 12, fontWeight: 600, color: '#005C8D',
+                            transition: 'background .12s',
+                          }}
+                          onMouseEnter={e => (e.currentTarget.style.background = '#C6E0EC')}
+                          onMouseLeave={e => (e.currentTarget.style.background = '#E8F3F9')}
+                        >
+                          <IconSparkles size={11} color="#005C8D"/>
+                          {m.reportData.title.slice(0, 30)}{m.reportData.title.length > 30 ? '...' : ''}
+                          <span style={{ fontSize: 11, color: '#2D8AB5', fontWeight: 500 }}>Open in Canvas</span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
                 {typing && (
                   <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 14 }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#2968B0,#3A7EC8)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#005C8D,#1474A4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <IconSparkles size={14} color="#fff"/>
                     </div>
                     <div style={{ paddingTop: 6, display: 'flex', gap: 4, alignItems: 'center' }}>
-                      {[0,1,2].map(j => <span key={j} style={{ width: 6, height: 6, borderRadius: '50%', background: '#B8D5F5', display: 'inline-block', animation: `pdot 1.2s ease-in-out ${j*.2}s infinite` }}/>)}
+                      {[0,1,2].map(j => <span key={j} style={{ width: 6, height: 6, borderRadius: '50%', background: '#8FC2D8', display: 'inline-block', animation: `pdot 1.2s ease-in-out ${j*.2}s infinite` }}/>)}
                       <span style={{ fontSize: 12, color: '#94A3B8', marginLeft: 6 }}>Generating report...</span>
                     </div>
                   </div>
@@ -273,12 +316,12 @@ export default function AIReportsPage() {
               <div style={{ padding: '8px 16px 14px', borderTop: '1px solid #F1F5F9', flexShrink: 0 }}>
                 <div style={{ display: 'flex', gap: 5, marginBottom: 8 }}>
                   {['PDF','Excel','CSV','JSON','API'].map(f => (
-                    <button key={f} onClick={() => setFmt(f)} style={{ padding: '4px 8px', borderRadius: 6, fontSize: 12, fontWeight: 600, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#2968B0' : '#E2E8F0', background: fmt === f ? '#F0F7FF' : '#fff', color: fmt === f ? '#2968B0' : '#94A3B8' }}>{f}</button>
+                    <button key={f} onClick={() => setFmt(f)} style={{ padding: '4px 8px', borderRadius: 6, fontSize: 12, fontWeight: 600, border: '1px solid', cursor: 'pointer', borderColor: fmt === f ? '#005C8D' : '#E2E8F0', background: fmt === f ? '#E8F3F9' : '#fff', color: fmt === f ? '#005C8D' : '#94A3B8' }}>{f}</button>
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Refine or describe another report..." style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 13, outline: 'none', color: '#0F172A' }}/>
-                  <button onClick={() => send()} disabled={!input.trim() || typing} style={{ width: 38, height: 38, borderRadius: 8, background: input.trim() ? 'linear-gradient(135deg,#2968B0,#3A7EC8)' : '#F1F5F9', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <button onClick={() => send()} disabled={!input.trim() || typing} style={{ width: 38, height: 38, borderRadius: 8, background: input.trim() ? 'linear-gradient(135deg,#005C8D,#1474A4)' : '#F1F5F9', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <IconSend size={14} color={input.trim() ? '#fff' : '#94A3B8'}/>
                   </button>
                 </div>
@@ -289,7 +332,7 @@ export default function AIReportsPage() {
 
         {/* ── RIGHT: Report preview ─────────────────────────── */}
         {report && (
-          <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px', background: '#FAFBFF' }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px', background: '#FAFBFC' }}>
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
               <div>

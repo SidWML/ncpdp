@@ -113,7 +113,7 @@ export default function PharmacyAuditPage() {
 
           {searched
             ? <DataTable columns={COLS} data={RESULTS}/>
-            : <EmptyState icon={<IconFilter size={22} color="#5B9BD5"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to audit pharmacy records"/>
+            : <EmptyState icon={<IconFilter size={22} color="#2D8AB5"/>} title="No results yet" subtitle="Set your filter criteria above and click Search to audit pharmacy records"/>
           }
         </div>
 
@@ -121,7 +121,7 @@ export default function PharmacyAuditPage() {
           <AgentChat
             agentName="Audit Agent"
             agentId="AGT-12"
-            gradient="linear-gradient(135deg,#2968B0,#5B9BD5)"
+            gradient="linear-gradient(135deg,#005C8D,#2D8AB5)"
             welcomeMessage="Hi Sarah! I'm your Pharmacy Audit Agent. I can search and audit pharmacy records, flag compliance issues, and generate audit reports. What would you like to audit today?"
             suggestions={[
               'Show all pharmacies that changed status in the last 90 days',

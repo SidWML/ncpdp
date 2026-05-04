@@ -25,20 +25,20 @@ type SectionKey = (typeof SECTIONS)[number]['key'];
 // Team members
 // -------------------------------------------------------------------
 const TEAM = [
-  { name: 'Sarah Chen',     email: 'sarah.chen@dataq.ai',     role: 'Owner',  status: 'Active',  joined: 'Jan 2024',  initials: 'SC', color: '#6366F1' },
-  { name: 'Marcus Rivera',  email: 'marcus.r@dataq.ai',       role: 'Admin',  status: 'Active',  joined: 'Mar 2024',  initials: 'MR', color: '#059669' },
+  { name: 'Sarah Chen',     email: 'sarah.chen@dataq.ai',     role: 'Owner',  status: 'Active',  joined: 'Jan 2024',  initials: 'SC', color: '#005C8D' },
+  { name: 'Marcus Rivera',  email: 'marcus.r@dataq.ai',       role: 'Admin',  status: 'Active',  joined: 'Mar 2024',  initials: 'MR', color: '#449055' },
   { name: 'Priya Patel',    email: 'priya.p@dataq.ai',        role: 'Editor', status: 'Active',  joined: 'Jun 2024',  initials: 'PP', color: '#D97706' },
   { name: 'James Kim',      email: 'james.k@dataq.ai',        role: 'Viewer', status: 'Active',  joined: 'Sep 2024',  initials: 'JK', color: '#DC2626' },
-  { name: 'Lisa Thompson',  email: 'lisa.t@dataq.ai',         role: 'Editor', status: 'Invited', joined: 'Mar 2026',  initials: 'LT', color: '#7C3AED' },
+  { name: 'Lisa Thompson',  email: 'lisa.t@dataq.ai',         role: 'Editor', status: 'Invited', joined: 'Mar 2026',  initials: 'LT', color: '#004870' },
 ];
 
 // -------------------------------------------------------------------
 // API stat cards
 // -------------------------------------------------------------------
 const API_STATS = [
-  { label: 'Total Requests',  value: '1.24M',  sub: 'Last 30 days',  color: '#6366F1' },
-  { label: 'Avg Latency',     value: '42ms',   sub: 'p95: 128ms',    color: '#059669' },
-  { label: 'Success Rate',    value: '99.97%', sub: '342 errors',    color: '#2563EB' },
+  { label: 'Total Requests',  value: '1.24M',  sub: 'Last 30 days',  color: '#005C8D' },
+  { label: 'Avg Latency',     value: '42ms',   sub: 'p95: 128ms',    color: '#449055' },
+  { label: 'Success Rate',    value: '99.97%', sub: '342 errors',    color: '#1474A4' },
   { label: 'Active Keys',     value: '4',      sub: '2 production',  color: '#D97706' },
 ];
 
@@ -109,9 +109,9 @@ console.log(\`Found \${data.total} pharmacies\`);`,
 // Data feed cards
 // -------------------------------------------------------------------
 const DATA_FEEDS = [
-  { name: 'Pharmacy Database Weekly', format: 'CSV / SFTP',    freq: 'Weekly - Mondays',  records: '81,500', status: 'Active',   color: '#059669' },
-  { name: 'Credential Updates',       format: 'JSON / API',    freq: 'Real-time',         records: '~240/day', status: 'Active', color: '#6366F1' },
-  { name: 'Network Changes',          format: 'XML / SFTP',    freq: 'Daily',             records: '~1,800',  status: 'Active',  color: '#2563EB' },
+  { name: 'Pharmacy Database Weekly', format: 'CSV / SFTP',    freq: 'Weekly - Mondays',  records: '81,500', status: 'Active',   color: '#449055' },
+  { name: 'Credential Updates',       format: 'JSON / API',    freq: 'Real-time',         records: '~240/day', status: 'Active', color: '#005C8D' },
+  { name: 'Network Changes',          format: 'XML / SFTP',    freq: 'Daily',             records: '~1,800',  status: 'Active',  color: '#1474A4' },
   { name: 'Compliance Alerts',        format: 'JSON / Webhook',freq: 'Real-time',         records: '~47/day', status: 'Active',  color: '#DC2626' },
 ];
 
@@ -168,10 +168,10 @@ const INVOICES = [
 // Helpers
 // ===================================================================
 const methodColor = (m: string) => {
-  if (m === 'GET')  return '#059669';
-  if (m === 'POST') return '#2563EB';
+  if (m === 'GET')  return '#449055';
+  if (m === 'POST') return '#1474A4';
   if (m === 'PUT')  return '#D97706';
-  return '#6366F1';
+  return '#005C8D';
 };
 
 function CopyButton({ text }: { text: string }) {
@@ -182,7 +182,7 @@ function CopyButton({ text }: { text: string }) {
       style={{ padding: '4px 8px' }}
       onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
     >
-      {copied ? <IconCheck size={13} color="#059669"/> : <IconCopy size={13}/>}
+      {copied ? <IconCheck size={13} color="#449055"/> : <IconCopy size={13}/>}
     </button>
   );
 }
@@ -240,7 +240,7 @@ export default function AdminPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
               <div style={{
                 width: 64, height: 64, borderRadius: 16,
-                background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+                background: 'linear-gradient(135deg,#005C8D,#005C8D)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 20, fontWeight: 700, color: '#fff',
               }}>SC</div>
@@ -412,7 +412,7 @@ export default function AdminPage() {
                           style={{ padding: '4px 8px' }}
                           onClick={() => copyKey(k.key)}
                         >
-                          {copiedKey === k.key ? <IconCheck size={13} color="#059669"/> : <IconCopy size={13}/>}
+                          {copiedKey === k.key ? <IconCheck size={13} color="#449055"/> : <IconCopy size={13}/>}
                         </button>
                       </td>
                     </tr>
@@ -430,7 +430,7 @@ export default function AdminPage() {
                   <div style={{ flex: 1, height: 6, borderRadius: 3, background: 'var(--v3-surface-2)', overflow: 'hidden' }}>
                     <div style={{
                       width: `${(r.used / r.max) * 100}%`, height: '100%', borderRadius: 3,
-                      background: r.used / r.max > 0.9 ? '#DC2626' : r.used / r.max > 0.7 ? '#D97706' : '#059669',
+                      background: r.used / r.max > 0.9 ? '#DC2626' : r.used / r.max > 0.7 ? '#D97706' : '#449055',
                     }}/>
                   </div>
                   <span style={{ fontSize: 12, color: 'var(--v3-text-3)', width: 120, textAlign: 'right' }}>
@@ -539,7 +539,7 @@ export default function AdminPage() {
                       <span className="v3-badge v3-badge-accent" style={{ fontSize: 10 }}>Email</span>
                     </th>
                     <th style={{ padding: '12px 18px', textAlign: 'center', fontSize: 12, fontWeight: 500, color: 'var(--v3-text-3)' }}>
-                      <span className="v3-badge" style={{ fontSize: 10, background: '#E0E7FF', color: '#4338CA' }}>Slack</span>
+                      <span className="v3-badge" style={{ fontSize: 10, background: '#C6E0EC', color: '#4338CA' }}>Slack</span>
                     </th>
                     <th style={{ padding: '12px 18px', textAlign: 'center', fontSize: 12, fontWeight: 500, color: 'var(--v3-text-3)' }}>
                       <span className="v3-badge v3-badge-gray" style={{ fontSize: 10 }}>Webhook</span>
@@ -573,8 +573,8 @@ export default function AdminPage() {
             <div className="v3-card" style={{ padding: 20, marginBottom: 16 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <div style={{ width: 42, height: 42, borderRadius: 12, background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <IconGlobe size={20} color="#6366F1"/>
+                  <div style={{ width: 42, height: 42, borderRadius: 12, background: '#E8F3F9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <IconGlobe size={20} color="#005C8D"/>
                   </div>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 14 }}>Single Sign-On (SSO)</div>
@@ -600,7 +600,7 @@ export default function AdminPage() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                   <div style={{ width: 42, height: 42, borderRadius: 12, background: '#ECFDF5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <IconLock size={20} color="#059669"/>
+                    <IconLock size={20} color="#449055"/>
                   </div>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 14 }}>Multi-Factor Authentication</div>
@@ -712,7 +712,7 @@ export default function AdminPage() {
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                     {p.features.map((f, fi) => (
                       <li key={fi} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--v3-text-2)', marginBottom: 8 }}>
-                        <IconCheck size={14} color="#059669"/>
+                        <IconCheck size={14} color="#449055"/>
                         {f}
                       </li>
                     ))}

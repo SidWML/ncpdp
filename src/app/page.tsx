@@ -34,8 +34,8 @@ const sparkSets = [
 ];
 
 const healthMetrics = [
-  { label: 'DEA Compliance',   score: 98, color: '#059669', detail: '76,425 active'            },
-  { label: 'Network Adequacy', score: 96, color: '#2968B0', detail: '64 / 67 regulatory standards'    },
+  { label: 'DEA Compliance',   score: 98, color: '#449055', detail: '76,425 active'            },
+  { label: 'Network Adequacy', score: 96, color: '#005C8D', detail: '64 / 67 regulatory standards'    },
   { label: 'FWA Status',       score: 90, color: '#D97706', detail: '73,350 of 81,500 attested' },
 ];
 
@@ -52,9 +52,9 @@ const recentChanges = [
 
 const profileUpdateStats = [
   { label: 'Deactivations',    count: 34,  color: '#DC2626' },
-  { label: 'New Openings',     count: 126, color: '#059669' },
+  { label: 'New Openings',     count: 126, color: '#449055' },
   { label: 'Ownership Changes',count: 18,  color: '#D97706' },
-  { label: 'Total Updates',    count: 412, color: '#2968B0' },
+  { label: 'Total Updates',    count: 412, color: '#005C8D' },
 ];
 
 export default function DashboardPage() {
@@ -90,8 +90,8 @@ export default function DashboardPage() {
               Tuesday, April 7, 2026 · Here&apos;s your pharmacy network overview
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: '#059669' }}>
-            <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: '#449055' }}>
+            <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#449055', display: 'inline-block' }}/>
             Real-time · Updated just now
           </div>
         </div>
@@ -124,13 +124,13 @@ export default function DashboardPage() {
             <CardBody>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 12 }}>
                 <span style={{ fontSize: 26, fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '-.5px' }}>81,500</span>
-                <span style={{ fontSize: 12, fontWeight: 500, color: '#059669', background: '#ECFDF5', padding: '2px 8px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                  <IconTrendUp size={11} color="#059669"/> +2.2%
+                <span style={{ fontSize: 12, fontWeight: 500, color: '#449055', background: '#ECFDF5', padding: '2px 8px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
+                  <IconTrendUp size={11} color="#449055"/> +2.2%
                 </span>
               </div>
               <ReAreaChart
                 data={networkTrend.map(d => ({ label: d.month, value: d.count }))}
-                color="#2968B0"
+                color="#005C8D"
                 height={120}
                 yDomain={[77000, 82500]}
               />
@@ -365,7 +365,7 @@ export default function DashboardPage() {
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669', display: 'inline-block' }}/>
+                  <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#449055', display: 'inline-block' }}/>
                   <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>Live · 24 events today</span>
                 </div>
                 <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Auto-refresh 30s</span>

@@ -164,7 +164,7 @@ export default function AdminPage() {
       {/* Avatar */}
       <div className="v2c" style={{ ...card, display: 'flex', alignItems: 'center', gap: 20, marginBottom: 16 }}>
         <div style={{
-          width: 64, height: 64, borderRadius: 16, background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+          width: 64, height: 64, borderRadius: 16, background: 'linear-gradient(135deg,#005C8D,#005C8D)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 22, fontWeight: 700, color: '#fff', flexShrink: 0,
         }}>SC</div>
@@ -375,7 +375,7 @@ export default function AdminPage() {
         }}>
           <button onClick={() => copyKey(CODE_EXAMPLES[codeLang], 'code')}
             style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(255,255,255,.08)', border: 'none', borderRadius: 6, padding: '4px 8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#94A3B8' }}>
-            {copiedKey === 'code' ? <><IconCheck size={11} color="#10B981" /> Copied</> : <><IconCopy size={11} /> Copy</>}
+            {copiedKey === 'code' ? <><IconCheck size={11} color="#76C799" /> Copied</> : <><IconCopy size={11} /> Copy</>}
           </button>
           {CODE_EXAMPLES[codeLang]}
         </div>

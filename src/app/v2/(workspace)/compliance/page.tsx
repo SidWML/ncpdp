@@ -15,10 +15,10 @@ import { Badge } from '@/components/ui/Badge';
    ═══════════════════════════════════════════════════════════════════ */
 
 const HEALTH_SCORES = [
-  { label: 'DEA Compliance', score: 98, total: '81,500', issues: '1,168 expiring', color: '#059669' },
-  { label: 'Network Adequacy', score: 96, total: '42 networks', issues: '3 below threshold', color: '#059669' },
+  { label: 'DEA Compliance', score: 98, total: '81,500', issues: '1,168 expiring', color: '#449055' },
+  { label: 'Network Adequacy', score: 96, total: '42 networks', issues: '3 below threshold', color: '#449055' },
   { label: 'FWA Status', score: 91, total: '38,569', issues: '3,412 pending', color: '#D97706' },
-  { label: 'NSA Readiness', score: 99, total: '12 filings', issues: '1 upcoming', color: '#059669' },
+  { label: 'NSA Readiness', score: 99, total: '12 filings', issues: '1 upcoming', color: '#449055' },
 ];
 
 const TABS = ['Credentialing Queue', 'FWA Attestation', 'No Surprises Filing', 'Alerts'] as const;
@@ -308,7 +308,7 @@ export default function CompliancePage() {
                 <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--v2-amber)' }}>91.1%</span>
               </div>
               <div style={{ height: 10, borderRadius: 5, background: 'var(--v2-surface-3)', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: '91.1%', borderRadius: 5, background: 'linear-gradient(90deg, var(--v2-primary), #818CF8)' }} />
+                <div style={{ height: '100%', width: '91.1%', borderRadius: 5, background: 'linear-gradient(90deg, var(--v2-primary), #76C799)' }} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
                 <span className="v2-sub">58,290 of 64,081 pharmacies attested</span>

@@ -17,7 +17,7 @@ interface AlertItemProps {
 const cfg = {
   critical: { dot: '#DC2626', bg: 'rgba(220,38,38,.02)', label: 'Critical', badgeBg: '#FEF2F2', badgeColor: '#DC2626' },
   warning:  { dot: '#D97706', bg: 'rgba(217,119,6,.02)',  label: 'Warning',  badgeBg: '#FFFBEB', badgeColor: '#B45309' },
-  info:     { dot: '#2563EB', bg: 'transparent',           label: 'Info',     badgeBg: '#EFF6FF', badgeColor: '#2563EB' },
+  info:     { dot: '#1474A4', bg: 'transparent',           label: 'Info',     badgeBg: '#E8F3F9', badgeColor: '#1474A4' },
 };
 
 export function AlertItem({ severity, title, pharmacy, location, time, networks, read, compact, onClick }: AlertItemProps) {

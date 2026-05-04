@@ -17,14 +17,14 @@ import {
 } from 'recharts';
 
 const catColors: Record<string, { c: string; bg: string; gradient: string }> = {
-  'Search & Discovery':      { c: '#6366F1', bg: '#EEF2FF', gradient: 'linear-gradient(135deg,#6366F1,#818CF8)' },
-  'Network Management':      { c: '#059669', bg: '#ECFDF5', gradient: 'linear-gradient(135deg,#059669,#34D399)' },
+  'Search & Discovery':      { c: '#005C8D', bg: '#E8F3F9', gradient: 'linear-gradient(135deg,#005C8D,#76C799)' },
+  'Network Management':      { c: '#449055', bg: '#ECFDF5', gradient: 'linear-gradient(135deg,#449055,#A6DFB8)' },
   'Compliance & Regulatory': { c: '#DC2626', bg: '#FEF2F2', gradient: 'linear-gradient(135deg,#DC2626,#F87171)' },
-  'Data Delivery':           { c: '#2563EB', bg: '#EFF6FF', gradient: 'linear-gradient(135deg,#2563EB,#60A5FA)' },
+  'Data Delivery':           { c: '#1474A4', bg: '#E8F3F9', gradient: 'linear-gradient(135deg,#1474A4,#60A5FA)' },
   'Credentialing (resQ)':    { c: '#D97706', bg: '#FFFBEB', gradient: 'linear-gradient(135deg,#D97706,#FBBF24)' },
-  'Analytics & Prediction':  { c: '#7C3AED', bg: '#F5F3FF', gradient: 'linear-gradient(135deg,#7C3AED,#A78BFA)' },
-  'Claims & Routing':        { c: '#10B981', bg: '#ECFDF5', gradient: 'linear-gradient(135deg,#10B981,#6EE7B7)' },
-  'NCPDP Internal':          { c: '#0284C7', bg: '#F0F9FF', gradient: 'linear-gradient(135deg,#0284C7,#38BDF8)' },
+  'Analytics & Prediction':  { c: '#004870', bg: '#E8F3F9', gradient: 'linear-gradient(135deg,#004870,#76C799)' },
+  'Claims & Routing':        { c: '#76C799', bg: '#ECFDF5', gradient: 'linear-gradient(135deg,#76C799,#A6DFB8)' },
+  'NCPDP Internal':          { c: '#005C8D', bg: '#E8F3F9', gradient: 'linear-gradient(135deg,#005C8D,#38BDF8)' },
 };
 const catIcon = (cat: string, sz = 16) => {
   const m: Record<string, React.ReactElement> = {
@@ -58,7 +58,7 @@ const RESULT_ROWS = [
   { ncpdp: '8901234', name: 'Pacific Infusion Services',    city: 'Seattle',     state: 'WA', type: 'Infusion',    dea: 'Valid',    phone: '(206) 555-0923' },
 ];
 const BAR_DATA = [{ s: 'TX', c: 89 },{ s: 'CA', c: 72 },{ s: 'FL', c: 41 },{ s: 'NY', c: 28 },{ s: 'OH', c: 17 },{ s: 'IL', c: 14 }];
-const PIE_DATA = [{ n: 'Retail', v: 136, c: '#6366F1' },{ n: 'Specialty', v: 59, c: '#10B981' },{ n: 'Compounding', v: 25, c: '#FBBF24' },{ n: 'Chain', v: 18, c: '#EF4444' },{ n: 'Infusion', v: 9, c: '#8B5CF6' }];
+const PIE_DATA = [{ n: 'Retail', v: 136, c: '#005C8D' },{ n: 'Specialty', v: 59, c: '#76C799' },{ n: 'Compounding', v: 25, c: '#FBBF24' },{ n: 'Chain', v: 18, c: '#EF4444' },{ n: 'Infusion', v: 9, c: '#005C8D' }];
 const TREND = [{ m: 'Oct', v: 64200 },{ m: 'Nov', v: 64900 },{ m: 'Dec', v: 65400 },{ m: 'Jan', v: 66100 },{ m: 'Feb', v: 67200 },{ m: 'Mar', v: 81500 }];
 
 type Tab = 'results' | 'sql' | 'charts' | 'export';
@@ -178,8 +178,8 @@ function AgentRunInner() {
                     {tab === 'sql' && (
                       <div>
                         <div style={{ position: 'relative' }}>
-                          <pre style={{ background: '#0C0F1A', color: '#A5B4FC', fontFamily: 'ui-monospace, monospace', fontSize: 12.5, lineHeight: 1.7, padding: '20px 24px', borderRadius: 10, overflowX: 'auto', margin: 0 }}>{sql}</pre>
-                          <button onClick={() => { navigator.clipboard.writeText(sql).catch(() => {}); setSqlCopied(true); setTimeout(() => setSqlCopied(false), 1500); }} style={{ position: 'absolute', top: 10, right: 12, background: sqlCopied ? '#059669' : 'rgba(165,180,252,.15)', border: 'none', borderRadius: 6, padding: '4px 12px', fontSize: 11, fontWeight: 600, color: sqlCopied ? '#fff' : '#A5B4FC', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                          <pre style={{ background: '#0C0F1A', color: '#8FC2D8', fontFamily: 'ui-monospace, monospace', fontSize: 12.5, lineHeight: 1.7, padding: '20px 24px', borderRadius: 10, overflowX: 'auto', margin: 0 }}>{sql}</pre>
+                          <button onClick={() => { navigator.clipboard.writeText(sql).catch(() => {}); setSqlCopied(true); setTimeout(() => setSqlCopied(false), 1500); }} style={{ position: 'absolute', top: 10, right: 12, background: sqlCopied ? '#449055' : 'rgba(143,194,216,.15)', border: 'none', borderRadius: 6, padding: '4px 12px', fontSize: 11, fontWeight: 600, color: sqlCopied ? '#fff' : '#8FC2D8', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                             <IconCopy size={11}/> {sqlCopied ? 'Copied!' : 'Copy'}
                           </button>
                         </div>
@@ -196,7 +196,7 @@ function AgentRunInner() {
                           <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--v2-text)', marginBottom: 12 }}>Results by State</div>
                           <div style={{ height: 200 }}>
                             <ResponsiveContainer width="100%" height="100%">
-                              <BarChart data={BAR_DATA}><CartesianGrid strokeDasharray="3 3" stroke="#F0F0F2" vertical={false}/><XAxis dataKey="s" tick={{ fontSize: 11, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><YAxis tick={{ fontSize: 10, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: '1px solid #E4E4E7' }}/><Bar dataKey="c" fill="#6366F1" radius={[4, 4, 0, 0]} barSize={28}/></BarChart>
+                              <BarChart data={BAR_DATA}><CartesianGrid strokeDasharray="3 3" stroke="#F0F0F2" vertical={false}/><XAxis dataKey="s" tick={{ fontSize: 11, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><YAxis tick={{ fontSize: 10, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: '1px solid #E4E4E7' }}/><Bar dataKey="c" fill="#005C8D" radius={[4, 4, 0, 0]} barSize={28}/></BarChart>
                             </ResponsiveContainer>
                           </div>
                         </div>
@@ -213,7 +213,7 @@ function AgentRunInner() {
                             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--v2-text)', marginBottom: 12 }}>Trend</div>
                             <div style={{ height: 180 }}>
                               <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={TREND}><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#6366F1" stopOpacity={.15}/><stop offset="100%" stopColor="#6366F1" stopOpacity={0}/></linearGradient></defs><XAxis dataKey="m" tick={{ fontSize: 10, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><YAxis domain={[63000, 69000]} hide/><Area type="monotone" dataKey="v" stroke="#6366F1" strokeWidth={2} fill="url(#ag)"/></AreaChart>
+                                <AreaChart data={TREND}><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#005C8D" stopOpacity={.15}/><stop offset="100%" stopColor="#005C8D" stopOpacity={0}/></linearGradient></defs><XAxis dataKey="m" tick={{ fontSize: 10, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/><YAxis domain={[63000, 69000]} hide/><Area type="monotone" dataKey="v" stroke="#005C8D" strokeWidth={2} fill="url(#ag)"/></AreaChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
@@ -226,7 +226,7 @@ function AgentRunInner() {
                           { l: 'CSV', d: 'Comma-separated for Excel', s: '~48 KB', ic: <IconReport size={18} color="var(--v2-primary)"/> },
                           { l: 'JSON', d: 'Structured data for APIs', s: '~96 KB', ic: <IconCode size={18} color="var(--v2-green)"/> },
                           { l: 'SQL', d: 'Download the query file', s: '~1 KB', ic: <IconDatabase size={18} color="var(--v2-amber)"/> },
-                          { l: 'API Endpoint', d: 'Copy REST endpoint URL', s: 'Live', ic: <IconNetwork size={18} color="#7C3AED"/> },
+                          { l: 'API Endpoint', d: 'Copy REST endpoint URL', s: 'Live', ic: <IconNetwork size={18} color="#004870"/> },
                         ].map(f => (
                           <div key={f.l} className="v2c" style={{ padding: '16px 18px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>

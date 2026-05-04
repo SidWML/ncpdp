@@ -44,8 +44,8 @@ const OD_ROWS = Array.from({ length: 15 }, (_, i) => ({
 const EXPIRY_STATS = [
   { label: 'Total Expiring', value: '1,247', color: '#EF4444', bg: '#FEF2F2', icon: IconAlertTriangle },
   { label: '30-Day Critical', value: '312', color: '#DC2626', bg: '#FEE2E2', icon: IconShield },
-  { label: 'Renewed This Qtr', value: '2,891', color: '#059669', bg: '#ECFDF5', icon: IconCheck },
-  { label: 'Avg Days to Expiry', value: '47', color: '#6366F1', bg: '#EEF2FF', icon: IconCalendar },
+  { label: 'Renewed This Qtr', value: '2,891', color: '#449055', bg: '#ECFDF5', icon: IconCheck },
+  { label: 'Avg Days to Expiry', value: '47', color: '#005C8D', bg: '#E8F3F9', icon: IconCalendar },
 ];
 const EXPIRY_BY_TYPE = [
   { type: 'DEA Registration', count: 489, pct: 39 },
@@ -71,11 +71,11 @@ const NET_CHANGES = [
   { month: 'Mar', added: 490, removed: -200 },
 ];
 const PHARM_TYPES = [
-  { name: 'Community', value: 41200, color: '#6366F1' },
-  { name: 'Specialty', value: 8400, color: '#A78BFA' },
+  { name: 'Community', value: 41200, color: '#005C8D' },
+  { name: 'Specialty', value: 8400, color: '#76C799' },
   { name: 'Mail Service', value: 5100, color: '#EC4899' },
   { name: 'LTC', value: 4800, color: '#F59E0B' },
-  { name: 'Compounding', value: 3200, color: '#10B981' },
+  { name: 'Compounding', value: 3200, color: '#76C799' },
   { name: 'Other', value: 5547, color: '#94A3B8' },
 ];
 const NETWORK_TREND = [
@@ -127,11 +127,11 @@ export default function ReportsV3() {
         {/* --- AI Prompt Hero --- */}
         <div className="v3-prompt" style={{
           maxWidth: 760, margin: '28px auto 0', padding: '20px 24px',
-          background: 'linear-gradient(135deg, rgba(99,102,241,.06), rgba(167,139,250,.06))',
-          borderRadius: 16, border: '1px solid rgba(99,102,241,.15)',
+          background: 'linear-gradient(135deg, rgba(0,92,141,.06), rgba(118,199,153,.06))',
+          borderRadius: 16, border: '1px solid rgba(0,92,141,.15)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <IconSparkles size={20} color="#6366F1" />
+            <IconSparkles size={20} color="#005C8D" />
             <span className="v3-title" style={{ fontSize: 15 }}>AI Report Assistant</span>
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -142,7 +142,7 @@ export default function ReportsV3() {
               placeholder="Describe the report you need..."
               style={{
                 flex: 1, height: 44, fontSize: 13.5, borderRadius: 12,
-                padding: '0 16px', border: '1px solid rgba(99,102,241,.2)',
+                padding: '0 16px', border: '1px solid rgba(0,92,141,.2)',
                 background: '#fff',
               }}
               onKeyDown={e => e.key === 'Enter' && setTab('AI Report Builder')}
@@ -170,8 +170,8 @@ export default function ReportsV3() {
                 onClick={() => { setPrompt(s); setTab('AI Report Builder'); }}
                 style={{
                   fontSize: 11.5, padding: '5px 12px', borderRadius: 20,
-                  border: '1px solid rgba(99,102,241,.15)', cursor: 'pointer',
-                  background: 'rgba(99,102,241,.04)', color: 'var(--v3-text-2)',
+                  border: '1px solid rgba(0,92,141,.15)', cursor: 'pointer',
+                  background: 'rgba(0,92,141,.04)', color: 'var(--v3-text-2)',
                 }}
               >
                 {s}
@@ -189,11 +189,11 @@ export default function ReportsV3() {
               onClick={() => setTab(t)}
               style={{
                 padding: '10px 22px', fontSize: 13, fontWeight: tab === t ? 600 : 400,
-                color: tab === t ? '#6366F1' : 'var(--v3-text-3)',
-                borderBottom: tab === t ? '2px solid #6366F1' : '2px solid transparent',
+                color: tab === t ? '#005C8D' : 'var(--v3-text-3)',
+                borderBottom: tab === t ? '2px solid #005C8D' : '2px solid transparent',
                 background: 'none', border: 'none', borderBottomWidth: 2,
                 borderBottomStyle: 'solid',
-                borderBottomColor: tab === t ? '#6366F1' : 'transparent',
+                borderBottomColor: tab === t ? '#005C8D' : 'transparent',
                 cursor: 'pointer', transition: 'all .15s',
               }}
             >
@@ -210,7 +210,7 @@ export default function ReportsV3() {
             {/* Filter section */}
             <div className="v3-card" style={{ padding: 24, marginBottom: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-                <IconFilter size={16} color="#6366F1" />
+                <IconFilter size={16} color="#005C8D" />
                 <span className="v3-title" style={{ fontSize: 14 }}>Query Filters</span>
               </div>
 
@@ -360,7 +360,7 @@ export default function ReportsV3() {
                   <tbody>
                     {pagedRows.map((r, i) => (
                       <tr key={i} style={{ borderBottom: '1px solid var(--v3-border)' }}>
-                        <td style={{ padding: '10px 14px', fontWeight: 600, color: '#6366F1' }}>{r.ncpdp}</td>
+                        <td style={{ padding: '10px 14px', fontWeight: 600, color: '#005C8D' }}>{r.ncpdp}</td>
                         <td style={{ padding: '10px 14px', fontFamily: 'var(--font-mono, monospace)', fontSize: 11.5 }}>{r.npi}</td>
                         <td style={{ padding: '10px 14px', fontWeight: 500 }}>{r.name}</td>
                         <td style={{ padding: '10px 14px', color: 'var(--v3-text-2)' }}>{r.city}</td>
@@ -436,7 +436,7 @@ export default function ReportsV3() {
               <AgentChat
                 agentName="Report Builder"
                 agentId="AGT-25"
-                gradient="linear-gradient(135deg,#7C3AED,#A78BFA)"
+                gradient="linear-gradient(135deg,#004870,#76C799)"
                 suggestions={[
                   'Credential expiry report for Q1 2026',
                   'Network pharmacy additions by month',
@@ -457,8 +457,8 @@ export default function ReportsV3() {
               {/* Preview header */}
               <div className="v3-hero-card" style={{
                 padding: '18px 24px', borderRadius: 14,
-                background: 'linear-gradient(135deg, rgba(124,58,237,.08), rgba(167,139,250,.05))',
-                border: '1px solid rgba(124,58,237,.12)',
+                background: 'linear-gradient(135deg, rgba(0,72,112,.08), rgba(118,199,153,.05))',
+                border: '1px solid rgba(0,72,112,.12)',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
@@ -498,7 +498,7 @@ export default function ReportsV3() {
                     <div key={t.type} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                       <span style={{ width: 130, fontSize: 12, color: 'var(--v3-text-2)' }}>{t.type}</span>
                       <div style={{ flex: 1, height: 8, borderRadius: 4, background: 'var(--v3-surface-2)', overflow: 'hidden' }}>
-                        <div style={{ width: `${t.pct}%`, height: '100%', borderRadius: 4, background: 'linear-gradient(90deg,#6366F1,#A78BFA)' }} />
+                        <div style={{ width: `${t.pct}%`, height: '100%', borderRadius: 4, background: 'linear-gradient(90deg,#005C8D,#76C799)' }} />
                       </div>
                       <span style={{ width: 50, fontSize: 12, fontWeight: 600, textAlign: 'right' }}>{t.count}</span>
                       <span style={{ width: 36, fontSize: 11, color: 'var(--v3-text-3)', textAlign: 'right' }}>{t.pct}%</span>
@@ -579,7 +579,7 @@ export default function ReportsV3() {
                       contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid var(--v3-border)' }}
                       formatter={(val: unknown) => `${Math.abs(Number(val))}`}
                     />
-                    <Bar dataKey="added" fill="#6366F1" radius={[4, 4, 0, 0]} name="Added" />
+                    <Bar dataKey="added" fill="#005C8D" radius={[4, 4, 0, 0]} name="Added" />
                     <Bar dataKey="removed" fill="#EF4444" radius={[4, 4, 0, 0]} name="Removed" />
                   </BarChart>
                 </ResponsiveContainer>
@@ -626,8 +626,8 @@ export default function ReportsV3() {
                   <AreaChart data={NETWORK_TREND}>
                     <defs>
                       <linearGradient id="networkGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#6366F1" stopOpacity={0.3} />
-                        <stop offset="100%" stopColor="#6366F1" stopOpacity={0.02} />
+                        <stop offset="0%" stopColor="#005C8D" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#005C8D" stopOpacity={0.02} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--v3-border)" />
@@ -643,7 +643,7 @@ export default function ReportsV3() {
                     <Area
                       type="monotone"
                       dataKey="pharmacies"
-                      stroke="#6366F1"
+                      stroke="#005C8D"
                       strokeWidth={2}
                       fill="url(#networkGrad)"
                       name="Pharmacies"
@@ -674,18 +674,18 @@ export default function ReportsV3() {
                       {COVERAGE_BY_STATE.map(r => (
                         <tr key={r.state} style={{ borderBottom: '1px solid var(--v3-border)' }}>
                           <td style={{ padding: '9px 16px', fontWeight: 500 }}>{r.state}</td>
-                          <td style={{ padding: '9px 16px', fontWeight: 600, color: '#6366F1' }}>{r.pharmacies.toLocaleString()}</td>
+                          <td style={{ padding: '9px 16px', fontWeight: 600, color: '#005C8D' }}>{r.pharmacies.toLocaleString()}</td>
                           <td style={{ padding: '9px 16px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                               <div style={{ flex: 1, maxWidth: 80, height: 6, borderRadius: 3, background: 'var(--v3-surface-2)', overflow: 'hidden' }}>
-                                <div style={{ width: `${r.coverage}%`, height: '100%', borderRadius: 3, background: r.coverage >= 97 ? '#10B981' : '#F59E0B' }} />
+                                <div style={{ width: `${r.coverage}%`, height: '100%', borderRadius: 3, background: r.coverage >= 97 ? '#76C799' : '#F59E0B' }} />
                               </div>
                               <span style={{ fontSize: 12 }}>{r.coverage}%</span>
                             </div>
                           </td>
                           <td style={{ padding: '9px 16px' }}>
-                            <span style={{ color: '#059669', fontSize: 12, display: 'flex', alignItems: 'center', gap: 3 }}>
-                              <IconTrendUp size={12} color="#059669" /> {r.change}
+                            <span style={{ color: '#449055', fontSize: 12, display: 'flex', alignItems: 'center', gap: 3 }}>
+                              <IconTrendUp size={12} color="#449055" /> {r.change}
                             </span>
                           </td>
                         </tr>
@@ -719,7 +719,7 @@ export default function ReportsV3() {
                           }} />
                           <div style={{
                             width: `${t.actual}%`, height: '100%', borderRadius: 4,
-                            background: t.status === 'met' ? '#10B981' : t.status === 'warning' ? '#F59E0B' : '#EF4444',
+                            background: t.status === 'met' ? '#76C799' : t.status === 'warning' ? '#F59E0B' : '#EF4444',
                           }} />
                         </div>
                         <span style={{ fontSize: 12, fontWeight: 600, width: 44, textAlign: 'right' }}>{t.actual}%</span>

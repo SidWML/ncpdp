@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/Icons';
 
 const credTypes = [
-  { label: 'DEA Registration',   total: 81500, active: 76425, expiring: 3390, expired: 1685, color: '#2968B0', bg: '#F0F7FF', pct: 93.8 },
-  { label: 'State License',      total: 81500, active: 79870, expiring: 1140, expired: 490,  color: '#10B981', bg: '#ECFDF5', pct: 98.0 },
-  { label: 'ACHC Accreditation', total: 14720, active: 13940, expiring: 498,  expired: 282,  color: '#06B6D4', bg: '#ECFEFF', pct: 94.7 },
-  { label: 'ACHC / PCAB',        total: 8190,  active: 7820,  expiring: 241,  expired: 129,  color: '#2968B0', bg: '#F0F7FF', pct: 95.5 },
+  { label: 'DEA Registration',   total: 81500, active: 76425, expiring: 3390, expired: 1685, color: '#005C8D', bg: '#E8F3F9', pct: 93.8 },
+  { label: 'State License',      total: 81500, active: 79870, expiring: 1140, expired: 490,  color: '#76C799', bg: '#ECFDF5', pct: 98.0 },
+  { label: 'ACHC Accreditation', total: 14720, active: 13940, expiring: 498,  expired: 282,  color: '#449055', bg: '#ECFEFF', pct: 94.7 },
+  { label: 'ACHC / PCAB',        total: 8190,  active: 7820,  expiring: 241,  expired: 129,  color: '#005C8D', bg: '#E8F3F9', pct: 95.5 },
 ];
 
 const renewalQueue = [
@@ -26,18 +26,18 @@ const renewalQueue = [
 ];
 
 const recentActivity = [
-  { action: 'DEA Renewed',      pharmacy: 'Sunrise Specialty Pharmacy', time: '2h ago',  icon: '✓', color: '#10B981' },
+  { action: 'DEA Renewed',      pharmacy: 'Sunrise Specialty Pharmacy', time: '2h ago',  icon: '✓', color: '#76C799' },
   { action: 'License Flagged',  pharmacy: 'Community Care Rx #44',      time: '4h ago',  icon: '!', color: '#D97706' },
-  { action: 'ACHC Renewed',     pharmacy: 'Metro Health Pharmacy',       time: '6h ago',  icon: '✓', color: '#10B981' },
+  { action: 'ACHC Renewed',     pharmacy: 'Metro Health Pharmacy',       time: '6h ago',  icon: '✓', color: '#76C799' },
   { action: 'DEA Expiring',     pharmacy: 'North Star Pharmacy',         time: '8h ago',  icon: '!', color: '#D97706' },
-  { action: 'New Enrollment',   pharmacy: 'Riverside Pharmacy Group',    time: '1d ago',  icon: '+', color: '#2968B0' },
+  { action: 'New Enrollment',   pharmacy: 'Riverside Pharmacy Group',    time: '1d ago',  icon: '+', color: '#005C8D' },
 ];
 
 const priorityCfg = {
   urgent: { color: '#DC2626', bg: '#FEE2E2', border: '#FECACA', label: 'Urgent' },
   high:   { color: '#D97706', bg: '#FEF3C7', border: '#FDE68A', label: 'High'   },
-  medium: { color: '#2563EB', bg: '#DBEAFE', border: '#BFDBFE', label: 'Medium' },
-  normal: { color: '#059669', bg: '#D1FAE5', border: '#A7F3D0', label: 'Normal' },
+  medium: { color: '#1474A4', bg: '#C6E0EC', border: '#8FC2D8', label: 'Medium' },
+  normal: { color: '#449055', bg: '#D1FAE5', border: '#A7F3D0', label: 'Normal' },
 };
 
 export default function CredentialingPage() {
@@ -85,8 +85,8 @@ export default function CredentialingPage() {
       <main style={{ padding: '16px 20px 40px' }}>
 
         {scanDone && (
-          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#D1FAE5', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#059669' }}>
-            <IconCheck size={16} color="#059669"/>
+          <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 8, background: '#D1FAE5', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: '#449055' }}>
+            <IconCheck size={16} color="#449055"/>
             Credential scan complete — 81,500 records verified · 4,001 action items identified
           </div>
         )}
@@ -94,10 +94,10 @@ export default function CredentialingPage() {
         {/* Summary strip */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 14 }}>
           {[
-            { label: 'Active Credentials', value: '153,087', delta: '+312 this week', color: '#10B981', bg: '#ECFDF5', border: '#A7F3D0' },
+            { label: 'Active Credentials', value: '153,087', delta: '+312 this week', color: '#76C799', bg: '#ECFDF5', border: '#A7F3D0' },
             { label: 'Expiring (30 days)', value: '4,472',   delta: 'Across all types', color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
             { label: 'Expired',            value: '1,845',   delta: 'Require renewal',  color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
-            { label: 'Scan Coverage',      value: '100%',    delta: 'Daily automated',  color: '#2968B0', bg: '#F0F7FF', border: '#B8D5F5' },
+            { label: 'Scan Coverage',      value: '100%',    delta: 'Daily automated',  color: '#005C8D', bg: '#E8F3F9', border: '#8FC2D8' },
           ].map(s => (
             <div key={s.label} className="card" style={{ padding: '16px 16px', background: s.bg, border: `1px solid ${s.border}` }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: s.color, textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 4 }}>{s.label}</div>
@@ -119,9 +119,9 @@ export default function CredentialingPage() {
                   onClick={() => setActiveTab(t.key)}
                   style={{
                     fontSize: 13, fontWeight: 600, padding: '12px 16px',
-                    color: activeTab === t.key ? '#2968B0' : 'var(--text-muted)',
+                    color: activeTab === t.key ? '#005C8D' : 'var(--text-muted)',
                     background: 'none', border: 'none',
-                    borderBottom: `2px solid ${activeTab === t.key ? '#2968B0' : 'transparent'}`,
+                    borderBottom: `2px solid ${activeTab === t.key ? '#005C8D' : 'transparent'}`,
                     cursor: 'pointer', transition: 'all .15s',
                   }}
                 >{t.label}</button>
@@ -133,8 +133,8 @@ export default function CredentialingPage() {
               {activeTab === 'queue' && (
                 <>
                   {selected.length > 0 && (
-                    <div style={{ padding: '12px 20px', background: '#F0F7FF', borderBottom: '1px solid #B8D5F5', display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: '#2968B0' }}>{selected.length} selected</span>
+                    <div style={{ padding: '12px 20px', background: '#E8F3F9', borderBottom: '1px solid #8FC2D8', display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: '#005C8D' }}>{selected.length} selected</span>
                       <button className="btn-primary" style={{ fontSize: 12, padding: '4px 12px', gap: 4 }}><IconPlay size={12} color="#fff"/> Send Bulk Reminders</button>
                       <button className="btn-secondary" style={{ fontSize: 12, padding: '4px 12px' }}>Export Selected</button>
                       <button onClick={() => setSelected([])} style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex' }}><IconX size={14}/></button>
@@ -155,7 +155,7 @@ export default function CredentialingPage() {
                       {renewalQueue.map(r => {
                         const pc = priorityCfg[r.priority as keyof typeof priorityCfg];
                         return (
-                          <tr key={r.id} style={{ background: selected.includes(r.id) ? '#F0F7FF' : undefined }}>
+                          <tr key={r.id} style={{ background: selected.includes(r.id) ? '#E8F3F9' : undefined }}>
                             <td><input type="checkbox" checked={selected.includes(r.id)} onChange={() => toggleSelect(r.id)}/></td>
                             <td>
                               <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{r.name}</div>
@@ -198,7 +198,7 @@ export default function CredentialingPage() {
                       <Progress value={c.pct} color={c.color} height={6}/>
                       <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
                         {[
-                          { label: 'Active',    value: c.active,   color: '#10B981' },
+                          { label: 'Active',    value: c.active,   color: '#76C799' },
                           { label: 'Expiring',  value: c.expiring, color: '#D97706' },
                           { label: 'Expired',   value: c.expired,  color: '#DC2626' },
                         ].map(s => (
@@ -242,8 +242,8 @@ export default function CredentialingPage() {
                 {[
                   { label: '2 expiring today',     days: 0,  color: '#DC2626' },
                   { label: '18 expiring this week', days: 7,  color: '#D97706' },
-                  { label: '312 in next 30 days',  days: 30, color: '#2563EB' },
-                  { label: '892 in next 60 days',  days: 60, color: '#2968B0' },
+                  { label: '312 in next 30 days',  days: 30, color: '#1474A4' },
+                  { label: '892 in next 60 days',  days: 60, color: '#005C8D' },
                 ].map(d => (
                   <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: d.color, flexShrink: 0 }}/>
@@ -259,8 +259,8 @@ export default function CredentialingPage() {
               <CardHeader title="Active Agents"/>
               <CardBody style={{ padding: '8px 16px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { id: 'AGT-13', name: 'Credential Lifecycle Manager', status: 'Running', color: '#10B981' },
-                  { id: 'AGT-20', name: 'Credentialing Assist',         status: 'Idle',    color: '#2968B0' },
+                  { id: 'AGT-13', name: 'Credential Lifecycle Manager', status: 'Running', color: '#76C799' },
+                  { id: 'AGT-20', name: 'Credentialing Assist',         status: 'Idle',    color: '#005C8D' },
                 ].map(a => (
                   <div key={a.id} style={{ padding: '12px 12px', borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border-light)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>

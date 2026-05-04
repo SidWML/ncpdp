@@ -13,10 +13,10 @@ import { RELATIONSHIPS, PROVIDER_TYPES, US_STATES } from '@/lib/filter-options';
 // -- DATA --
 
 const HEALTH_SCORES = [
-  { label: 'DEA Compliance', score: 98, total: '81,500', issues: '1,168 expiring', color: '#059669' },
-  { label: 'Network Adequacy', score: 96, total: '42 networks', issues: '3 below threshold', color: '#059669' },
+  { label: 'DEA Compliance', score: 98, total: '81,500', issues: '1,168 expiring', color: '#449055' },
+  { label: 'Network Adequacy', score: 96, total: '42 networks', issues: '3 below threshold', color: '#449055' },
   { label: 'FWA Status', score: 91, total: '38,569', issues: '3,412 pending', color: '#D97706' },
-  { label: 'NSA Readiness', score: 99, total: '12 filings', issues: '1 upcoming', color: '#059669' },
+  { label: 'NSA Readiness', score: 99, total: '12 filings', issues: '1 upcoming', color: '#449055' },
 ];
 
 const TABS = ['Credentialing Queue', 'FWA Attestation', 'No Surprises Filing', 'Alerts'] as const;
@@ -130,7 +130,7 @@ function InitialAvatar({ name, color }: { name: string; color: string }) {
   );
 }
 
-const AVATAR_COLORS = ['#6366F1', '#059669', '#DC2626', '#D97706', '#0284C7', '#7C3AED', '#DB2777', '#059669', '#6366F1', '#DC2626'];
+const AVATAR_COLORS = ['#005C8D', '#449055', '#DC2626', '#D97706', '#005C8D', '#004870', '#DB2777', '#449055', '#005C8D', '#DC2626'];
 
 // -- MAIN PAGE --
 
@@ -274,7 +274,7 @@ export default function CompliancePageV3() {
                 <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--v3-amber)' }}>91.1%</span>
               </div>
               <div style={{ height: 10, borderRadius: 5, background: 'var(--v3-surface-3)', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: '91.1%', borderRadius: 5, background: 'linear-gradient(90deg, var(--v3-accent), #818CF8)' }} />
+                <div style={{ height: '100%', width: '91.1%', borderRadius: 5, background: 'linear-gradient(90deg, var(--v3-accent), #76C799)' }} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
                 <span className="v3-sub">58,290 of 64,081 pharmacies attested</span>

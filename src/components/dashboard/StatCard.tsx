@@ -16,10 +16,10 @@ interface StatCardProps {
 }
 
 const colorMap: Record<Color, { spark: string; iconColor: string }> = {
-  brand:   { spark: '#5B9BD5', iconColor: '#2968B0' },
-  success: { spark: '#34D399', iconColor: '#059669' },
+  brand:   { spark: '#2D8AB5', iconColor: '#005C8D' },
+  success: { spark: '#A6DFB8', iconColor: '#449055' },
   warning: { spark: '#FBBF24', iconColor: '#D97706' },
-  violet:  { spark: '#A78BFA', iconColor: '#6D28D9' },
+  violet:  { spark: '#76C799', iconColor: '#004870' },
   teal:    { spark: '#2DD4BF', iconColor: '#0D9488' },
 };
 
@@ -63,9 +63,9 @@ export function StatCard({
             gap: 3,
             fontSize: 12,
             fontWeight: 500,
-            color: isUp ? '#047857' : '#B91C1C',
+            color: isUp ? '#449055' : '#B91C1C',
           }}>
-            {isUp ? <IconTrendUp size={11} color="#047857"/> : <IconTrendDown size={11} color="#B91C1C"/>}
+            {isUp ? <IconTrendUp size={11} color="#449055"/> : <IconTrendDown size={11} color="#B91C1C"/>}
             {delta}
           </span>
           {deltaPeriod && <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{deltaPeriod}</span>}

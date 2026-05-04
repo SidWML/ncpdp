@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
-/* ─── DataSolutions.ai Design Tokens — NCPDP Corporate Blue ────────────────── */
+/* ─── DataSolutions.ai Design Tokens — PharmacyFocus Brand ────────────────── */
 :root {
-  --brand-50:    #F0F7FF;
-  --brand-100:   #DFEEFF;
-  --brand-200:   #B8D5F5;
-  --brand-400:   #5B9BD5;
-  --brand-500:   #3A7EC8;
-  --brand-600:   #2968B0;
-  --brand-700:   #1E5690;
+  --brand-50:    #E8F3F9;
+  --brand-100:   #C6E0EC;
+  --brand-200:   #8FC2D8;
+  --brand-400:   #2D8AB5;
+  --brand-500:   #1474A4;
+  --brand-600:   #005C8D;
+  --brand-700:   #004870;
 
-  --sidebar-bg:   #0A1128;
+  --accent-500:  #76C799;
+  --accent-600:  #449055;
+
+  --sidebar-bg:   #0A1628;
 
   --surface:      #FFFFFF;
   --surface-2:    #FAFBFC;
@@ -24,10 +27,10 @@
   --text-secondary: #5C5C72;
   --text-muted:     #9B9BAE;
 
-  --success:  #059669;
+  --success:  #449055;
   --warning:  #D97706;
   --danger:   #DC2626;
-  --info:     #2563EB;
+  --info:     #1474A4;
 
   --sidebar-w:  248px;
   --topbar-h:   56px;
@@ -149,12 +152,12 @@ body {
     font-weight: 500;
     white-space: nowrap;
   }
-  .badge-success  { background: #ECFDF5; color: #047857; }
+  .badge-success  { background: #E8F7EE; color: #449055; }
   .badge-warning  { background: #FFF8EB; color: #A16207; }
   .badge-danger   { background: #FEF2F2; color: #B91C1C; }
-  .badge-info     { background: #EFF6FF; color: #1D4ED8; }
+  .badge-info     { background: #E8F3F9; color: #1D4ED8; }
   .badge-brand    { background: var(--brand-50); color: var(--brand-700); }
-  .badge-violet   { background: #F5F3FF; color: #5B21B6; }
+  .badge-violet   { background: #E8F3F9; color: #5B21B6; }
   .badge-neutral  { background: var(--surface-3); color: var(--text-secondary); }
 
   /* ── Input — clean, minimal ── */
@@ -172,7 +175,7 @@ body {
     line-height: 1.5;
   }
   .input-base::placeholder { color: var(--text-muted); }
-  .input-base:focus { border-color: var(--brand-400); box-shadow: 0 0 0 3px rgba(41,104,176,.08); }
+  .input-base:focus { border-color: var(--brand-400); box-shadow: 0 0 0 3px rgba(0,92,141,.08); }
 
   /* ── Sidebar (dark) ── */
   .sidebar-item {
@@ -190,8 +193,8 @@ body {
     line-height: 1.4;
   }
   .sidebar-item:hover { background: rgba(255,255,255,.05); color: #CBD5E1; }
-  .sidebar-item.active { background: rgba(41,104,176,.2); color: #DFEEFF; font-weight: 550; }
-  .sidebar-item.active svg { color: #5B9BD5; }
+  .sidebar-item.active { background: rgba(118,199,153,.18); color: #D4F1DE; font-weight: 550; box-shadow: inset 2px 0 0 #76C799; }
+  .sidebar-item.active svg { color: #76C799; }
 
   /* ── Progress ── */
   .progress-bar { height: 3px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; }
@@ -338,7 +341,7 @@ pre.code-block .comment, .code-dark .comment { color: #6B7280; }
 
 /* ── AI response card elevation ── */
 .ai-response-card {
-  background: linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 100%);
+  background: linear-gradient(135deg, #FAFBFC 0%, #E8F3F9 100%);
   border: 1px solid #E8EFF8;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(41, 104, 176, 0.06);

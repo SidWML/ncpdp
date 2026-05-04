@@ -27,7 +27,7 @@ function CustomTooltip({ active, payload, label }: TipProps) {
   );
 }
 
-export function ReAreaChart({ data, color = '#2968B0', height = 140, valueFormatter, yDomain }: Props) {
+export function ReAreaChart({ data, color = '#005C8D', height = 140, valueFormatter, yDomain }: Props) {
   const chartData = data.map(d => ({ name: d.label, value: d.value }));
   return (
     <ResponsiveContainer width="100%" height={height}>

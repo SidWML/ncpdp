@@ -4,16 +4,16 @@ import { IconBell, IconCpu, IconZap, IconReport } from '@/components/ui/Icons';
 
 const typeConfig = {
   alert:  { Icon: IconBell,   bg: '#FEF2F2', color: '#DC2626' },
-  agent:  { Icon: IconCpu,    bg: '#F0F7FF', color: '#2968B0' },
-  api:    { Icon: IconZap,    bg: '#EFF6FF', color: '#2563EB' },
-  report: { Icon: IconReport, bg: '#ECFDF5', color: '#059669' },
+  agent:  { Icon: IconCpu,    bg: '#E8F3F9', color: '#005C8D' },
+  api:    { Icon: IconZap,    bg: '#E8F3F9', color: '#1474A4' },
+  report: { Icon: IconReport, bg: '#ECFDF5', color: '#449055' },
 };
 
 const severityDot: Record<string, string> = {
   critical: '#DC2626',
   warning:  '#D97706',
-  info:     '#2563EB',
-  success:  '#059669',
+  info:     '#1474A4',
+  success:  '#449055',
 };
 
 export function ActivityFeed() {

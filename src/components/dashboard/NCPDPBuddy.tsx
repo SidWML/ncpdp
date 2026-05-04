@@ -30,26 +30,26 @@ function detectAgent(input: string): { name: string; icon: string; color: string
   if (l.includes('fwa') || l.includes('fraud') || l.includes('waste') || l.includes('abuse') || l.includes('risk'))
     return { name: 'FWA Risk Scoring', icon: '🚨', color: '#D97706' };
   if (l.includes('closure') || l.includes('closed') || l.includes('close'))
-    return { name: 'Change Tracker', icon: '📊', color: '#2968B0' };
+    return { name: 'Change Tracker', icon: '📊', color: '#005C8D' };
   if (l.includes('network') || l.includes('adequacy') || l.includes('coverage') || l.includes('gap'))
-    return { name: 'Network Analyzer', icon: '🔍', color: '#059669' };
+    return { name: 'Network Analyzer', icon: '🔍', color: '#449055' };
   if (l.includes('ownership') || l.includes('contract') || l.includes('transfer'))
-    return { name: 'Contract Intelligence', icon: '📝', color: '#2968B0' };
+    return { name: 'Contract Intelligence', icon: '📝', color: '#005C8D' };
   if (l.includes('report') || l.includes('export') || l.includes('generat'))
-    return { name: 'Custom Report Builder', icon: '📈', color: '#06B6D4' };
+    return { name: 'Custom Report Builder', icon: '📈', color: '#449055' };
   if (l.includes('search') || l.includes('find') || l.includes('look') || l.includes('show me'))
-    return { name: 'Pharmacy Finder', icon: '🔎', color: '#2968B0' };
+    return { name: 'Pharmacy Finder', icon: '🔎', color: '#005C8D' };
   if (l.includes('agent') || l.includes('top') || l.includes('most used'))
-    return { name: 'NCPDP Buddy', icon: '💬', color: '#2968B0' };
+    return { name: 'NCPDP Buddy', icon: '💬', color: '#005C8D' };
   if (l.includes('alert') || l.includes('critical') || l.includes('urgent'))
     return { name: 'Compliance Watchdog', icon: '🛡️', color: '#DC2626' };
   if (l.includes('api') || l.includes('usage') || l.includes('call'))
-    return { name: 'Subscriber Insight', icon: '🎯', color: '#06B6D4' };
+    return { name: 'Subscriber Insight', icon: '🎯', color: '#449055' };
   if (l.includes('no surprise') || l.includes('nsa') || l.includes('cms'))
-    return { name: 'No Surprises Assistant', icon: '⚖️', color: '#10B981' };
+    return { name: 'No Surprises Assistant', icon: '⚖️', color: '#76C799' };
   if (l.includes('predict') || l.includes('forecast') || l.includes('desert'))
-    return { name: 'Closure Prediction', icon: '🔮', color: '#2968B0' };
-  return { name: 'NCPDP Buddy', icon: '💬', color: '#2968B0' };
+    return { name: 'Closure Prediction', icon: '🔮', color: '#005C8D' };
+  return { name: 'NCPDP Buddy', icon: '💬', color: '#005C8D' };
 }
 
 /* ── Response builder ───────────────────────────────────────────────── */
@@ -74,7 +74,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
               <div style={{ fontSize: 10.5, color: '#64748B', marginTop: 2 }}>{p.city}, {p.state} · {p.networks} network{p.networks !== 1 ? 's' : ''} affected</div>
             </div>
           ))}
-          <button style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: '#2968B0', background: '#F0F7FF', border: '1px solid #B8D5F5', borderRadius: 7, padding: '5px 10px', cursor: 'pointer' }}>
+          <button style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: '#005C8D', background: '#E8F3F9', border: '1px solid #8FC2D8', borderRadius: 7, padding: '5px 10px', cursor: 'pointer' }}>
             Export Full Report →
           </button>
         </div>
@@ -142,7 +142,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       text: `California network adequacy: **94.2%** — above minimum threshold of 90%. Rural access in Kern County is borderline at 79%. Recommendation: add 2 specialty pharmacies near Bakersfield.`,
       data: (
         <div style={{ marginTop: 8, background: '#F0FDF4', border: '1px solid #A7F3D0', borderRadius: 10, padding: '10px 12px' }}>
-          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#059669', marginBottom: 6 }}>CA Network Summary</div>
+          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#449055', marginBottom: 6 }}>CA Network Summary</div>
           {[
             ['Total Pharmacies',   '8,420'],
             ['Adequacy Score', '94.2%'],
@@ -176,7 +176,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             <div key={i} style={{ background: p.priority === 'High' ? '#FAF5FF' : '#F8FAFC', border: `1px solid ${p.priority === 'High' ? '#DDD6FE' : '#E2E8F0'}`, borderRadius: 8, padding: '7px 10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0F172A' }}>{p.name}</span>
-                <span style={{ fontSize: 10.5, fontWeight: 700, color: p.priority === 'High' ? '#1E5690' : '#64748B', background: p.priority === 'High' ? '#EDE9FE' : '#F1F5F9', padding: '1px 7px', borderRadius: 9999 }}>
+                <span style={{ fontSize: 10.5, fontWeight: 700, color: p.priority === 'High' ? '#004870' : '#64748B', background: p.priority === 'High' ? '#EDE9FE' : '#F1F5F9', padding: '1px 7px', borderRadius: 9999 }}>
                   {p.priority} Priority
                 </span>
               </div>
@@ -193,8 +193,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `Custom Report Builder is ready. Based on your query, I'd suggest a **Credential Expiry Report** for Q1 2026. I can generate it now — it will cover 81,500 records and be ready as PDF or Excel in about 2 seconds.`,
       data: (
-        <div style={{ marginTop: 8, background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 10, padding: '10px 12px' }}>
-          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#2563EB', marginBottom: 6 }}>Suggested Report Config</div>
+        <div style={{ marginTop: 8, background: '#E8F3F9', border: '1px solid #8FC2D8', borderRadius: 10, padding: '10px 12px' }}>
+          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#1474A4', marginBottom: 6 }}>Suggested Report Config</div>
           {[
             ['Report Type',    'DEA Expiry — Q1 2026'],
             ['Date Range',     'Jan 1 – Mar 31, 2026'],
@@ -208,7 +208,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
               <span style={{ fontWeight: 600, color: '#0F172A' }}>{v}</span>
             </div>
           ))}
-          <button style={{ marginTop: 8, width: '100%', fontSize: 11.5, fontWeight: 600, color: '#fff', background: '#2563EB', border: 'none', borderRadius: 7, padding: '6px 10px', cursor: 'pointer' }}>
+          <button style={{ marginTop: 8, width: '100%', fontSize: 11.5, fontWeight: 600, color: '#fff', background: '#1474A4', border: 'none', borderRadius: 7, padding: '6px 10px', cursor: 'pointer' }}>
             Generate Report Now →
           </button>
         </div>
@@ -223,7 +223,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
       data: (
         <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {[
-            { label: 'Pass',     count: '38,210', color: '#059669', bg: '#D1FAE5', border: '#A7F3D0' },
+            { label: 'Pass',     count: '38,210', color: '#449055', bg: '#D1FAE5', border: '#A7F3D0' },
             { label: 'Warnings', count: '312',    color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
             { label: 'Failures', count: '47',     color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
           ].map(s => (
@@ -272,7 +272,7 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
                 <div style={{ fontSize: 11.5, fontWeight: 600, color: '#0F172A' }}>{a.name}</div>
                 <div style={{ fontSize: 10.5, color: '#94A3B8' }}>{a.category}</div>
               </div>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#2968B0' }}>{a.uses.toLocaleString()}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#005C8D' }}>{a.uses.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -285,8 +285,8 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
     return {
       text: `API usage is **up 18% month-over-month** with 1.24M calls today. REST endpoints are the primary driver. You're on track to exceed the monthly average for the first time this quarter.`,
       data: (
-        <div style={{ marginTop: 8, background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: 10, padding: '10px 12px' }}>
-          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#0284C7', marginBottom: 6 }}>API Usage — March 2026</div>
+        <div style={{ marginTop: 8, background: '#E8F3F9', border: '1px solid #8FC2D8', borderRadius: 10, padding: '10px 12px' }}>
+          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#005C8D', marginBottom: 6 }}>API Usage — March 2026</div>
           {[
             ['Calls Today',         '1.24M'],
             ['Monthly Total',       '28.4M'],
@@ -316,12 +316,12 @@ function buildReply(input: string): { text: string; data?: React.ReactNode } {
             <div key={p.id} style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 8, padding: '7px 10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0F172A' }}>{p.name}</span>
-                <span style={{ fontSize: 10.5, color: '#2968B0', fontFamily: 'monospace', fontWeight: 700 }}>{p.id}</span>
+                <span style={{ fontSize: 10.5, color: '#005C8D', fontFamily: 'monospace', fontWeight: 700 }}>{p.id}</span>
               </div>
               <div style={{ fontSize: 10.5, color: '#64748B', marginTop: 2 }}>{p.city}, {p.state} · {p.type} · DEA {p.dea}</div>
             </div>
           ))}
-          <a href="/search" style={{ marginTop: 4, display: 'block', fontSize: 11, fontWeight: 600, color: '#2968B0', background: '#F0F7FF', border: '1px solid #B8D5F5', borderRadius: 7, padding: '5px 10px', cursor: 'pointer', textDecoration: 'none', textAlign: 'center' }}>
+          <a href="/search" style={{ marginTop: 4, display: 'block', fontSize: 11, fontWeight: 600, color: '#005C8D', background: '#E8F3F9', border: '1px solid #8FC2D8', borderRadius: 7, padding: '5px 10px', cursor: 'pointer', textDecoration: 'none', textAlign: 'center' }}>
             Open Full Smart Search →
           </a>
         </div>
@@ -430,7 +430,7 @@ export function NCPDPBuddy() {
           overflow: 'hidden',
         }}>
           {/* Header */}
-          <div style={{ background: 'linear-gradient(135deg, #2968B0, #1E5690)', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          <div style={{ background: 'linear-gradient(135deg, #005C8D, #004870)', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <div style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(255,255,255,.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <IconSparkles size={19} color="#fff"/>
             </div>
@@ -457,16 +457,16 @@ export function NCPDPBuddy() {
             {messages.map((msg, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row', gap: 8, alignItems: 'flex-start' }}>
                 {msg.role === 'assistant' && (
-                  <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#2968B0,#1E5690)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#005C8D,#004870)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
                     <IconSparkles size={14} color="#fff"/>
                   </div>
                 )}
                 <div style={{ maxWidth: '82%' }}>
                   {msg.role === 'assistant' && msg.agentName && (
-                    <AgentBadge name={msg.agentName} icon={msg.agentIcon || '💬'} color="#2968B0"/>
+                    <AgentBadge name={msg.agentName} icon={msg.agentIcon || '💬'} color="#005C8D"/>
                   )}
                   <div style={{
-                    background: msg.role === 'user' ? '#2968B0' : 'var(--surface-2)',
+                    background: msg.role === 'user' ? '#005C8D' : 'var(--surface-2)',
                     color: msg.role === 'user' ? '#fff' : 'var(--text-primary)',
                     padding: '8px 11px',
                     borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '2px 12px 12px 12px',
@@ -486,7 +486,7 @@ export function NCPDPBuddy() {
 
             {typing && typingAgent && (
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#2968B0,#1E5690)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 13 }}>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#005C8D,#004870)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 13 }}>
                   {typingAgent.icon}
                 </div>
                 <div>
@@ -506,8 +506,8 @@ export function NCPDPBuddy() {
           <div style={{ padding: '0 12px 6px', display: 'flex', gap: 5, flexWrap: 'wrap', flexShrink: 0 }}>
             {suggestions.map(s => (
               <button key={s} onClick={() => send(s)} style={{
-                fontSize: 10.5, fontWeight: 500, color: '#2968B0',
-                background: '#F0F7FF', border: '1px solid #B8D5F5',
+                fontSize: 10.5, fontWeight: 500, color: '#005C8D',
+                background: '#E8F3F9', border: '1px solid #8FC2D8',
                 borderRadius: 9999, padding: '3px 9px', cursor: 'pointer', whiteSpace: 'nowrap',
               }}>{s}</button>
             ))}
@@ -541,13 +541,13 @@ export function NCPDPBuddy() {
           width: 52,
           height: 52,
           borderRadius: '50%',
-          background: open ? '#2968B0' : 'linear-gradient(135deg, #2968B0, #1E5690)',
+          background: open ? '#005C8D' : 'linear-gradient(135deg, #005C8D, #004870)',
           border: 'none',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 8px 28px rgba(41,104,176,.38)',
+          boxShadow: '0 8px 28px rgba(0,92,141,.38)',
           transition: 'transform .15s, box-shadow .15s',
           position: 'relative',
         }}
@@ -559,7 +559,7 @@ export function NCPDPBuddy() {
           <span style={{
             position: 'absolute', top: -1, right: -1,
             width: 14, height: 14, borderRadius: '50%',
-            background: '#10B981', border: '2px solid var(--bg)',
+            background: '#76C799', border: '2px solid var(--bg)',
           }}/>
         )}
       </button>

@@ -18,20 +18,22 @@ import {
 import { AgentChat } from '@/components/ui/AgentChat';
 import { SqlTab as SharedSqlTab, ChartsTab as SharedChartsTab, ExportTab as SharedExportTab, OutputPanel } from '@/components/ui/OutputPanel';
 import type { ResultRow as SharedResultRow, QueryContext } from '@/components/ui/OutputPanel';
+import { ChatThreadsSidebar, useThreads } from '@/components/ui/ChatThreads';
+import type { ChatMessage } from '@/components/ui/AgentChat';
 import { queryGemini } from '@/lib/gemini';
 import type { GeminiResponse } from '@/lib/gemini';
 import { useCallback, useRef } from 'react';
 
 /* ── Category helpers ────────────────────────────────────────────── */
 const catColors: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
-  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5', gradient: 'linear-gradient(135deg,#2968B0,#5B9BD5)' },
-  'Network Management':      { bg: '#ECFDF5', text: '#059669', border: '#A7F3D0', gradient: 'linear-gradient(135deg,#059669,#34D399)' },
+  'Search & Discovery':      { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8', gradient: 'linear-gradient(135deg,#005C8D,#2D8AB5)' },
+  'Network Management':      { bg: '#ECFDF5', text: '#449055', border: '#A7F3D0', gradient: 'linear-gradient(135deg,#449055,#A6DFB8)' },
   'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', border: '#FECACA', gradient: 'linear-gradient(135deg,#DC2626,#F87171)' },
-  'Data Delivery':           { bg: '#EFF6FF', text: '#2563EB', border: '#BFDBFE', gradient: 'linear-gradient(135deg,#2563EB,#60A5FA)' },
+  'Data Delivery':           { bg: '#E8F3F9', text: '#1474A4', border: '#8FC2D8', gradient: 'linear-gradient(135deg,#1474A4,#60A5FA)' },
   'Credentialing (resQ)':    { bg: '#FFF7ED', text: '#D97706', border: '#FDE68A', gradient: 'linear-gradient(135deg,#D97706,#FBBF24)' },
-  'Analytics & Prediction':  { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5', gradient: 'linear-gradient(135deg,#2968B0,#5B9BD5)' },
-  'Claims & Routing':        { bg: '#ECFDF5', text: '#10B981', border: '#6EE7B7', gradient: 'linear-gradient(135deg,#10B981,#6EE7B7)' },
-  'NCPDP Internal':          { bg: '#F0F9FF', text: '#0284C7', border: '#BAE6FD', gradient: 'linear-gradient(135deg,#0284C7,#38BDF8)' },
+  'Analytics & Prediction':  { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8', gradient: 'linear-gradient(135deg,#005C8D,#2D8AB5)' },
+  'Claims & Routing':        { bg: '#ECFDF5', text: '#76C799', border: '#A6DFB8', gradient: 'linear-gradient(135deg,#76C799,#A6DFB8)' },
+  'NCPDP Internal':          { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8', gradient: 'linear-gradient(135deg,#005C8D,#38BDF8)' },
 };
 
 const catIcon = (cat: string, size = 16) => {
@@ -176,11 +178,11 @@ const BAR_DATA = [
   { state: 'PA', count: 12 }, { state: 'WA', count: 9 },
 ];
 const PIE_DATA = [
-  { name: 'Community/Retail', value: 136, color: '#2968B0' },
-  { name: 'Specialty',        value: 59,  color: '#10B981' },
+  { name: 'Community/Retail', value: 136, color: '#005C8D' },
+  { name: 'Specialty',        value: 59,  color: '#76C799' },
   { name: 'Compounding',      value: 25,  color: '#F59E0B' },
   { name: 'Chain',            value: 18,  color: '#EF4444' },
-  { name: 'Infusion',         value: 9,   color: '#2968B0' },
+  { name: 'Infusion',         value: 9,   color: '#005C8D' },
 ];
 const TREND_DATA = [
   { month: 'Oct', active: 78200, new: 420, closed: 180 },
@@ -197,8 +199,8 @@ function InsightsBanner() {
   const insights = [
     { id: 0, icon: <IconAlertTriangle size={14} color="#DC2626"/>, text: '2 pharmacies have expired DEA registrations requiring immediate action', severity: 'danger', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B' },
     { id: 1, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>, text: '72% of results are from TX/CA — geographic concentration risk', severity: 'warning', bg: '#FFF7ED', border: '#FDE68A', color: '#92400E' },
-    { id: 2, icon: <IconBarChart size={14} color="#059669"/>, text: '88% active rate across matched pharmacies (above 85% benchmark)', severity: 'success', bg: '#ECFDF5', border: '#A7F3D0', color: '#065F46' },
-    { id: 3, icon: <IconShield size={14} color="#2968B0"/>, text: '1 pharmacy has incomplete FWA attestation — compliance gap', severity: 'info', bg: '#F0F7FF', border: '#B8D5F5', color: '#1E40AF' },
+    { id: 2, icon: <IconBarChart size={14} color="#449055"/>, text: '88% active rate across matched pharmacies (above 85% benchmark)', severity: 'success', bg: '#ECFDF5', border: '#A7F3D0', color: '#2A6936' },
+    { id: 3, icon: <IconShield size={14} color="#005C8D"/>, text: '1 pharmacy has incomplete FWA attestation — compliance gap', severity: 'info', bg: '#E8F3F9', border: '#8FC2D8', color: '#1E40AF' },
   ];
 
   const visible = insights.filter(i => !dismissed.has(i.id));
@@ -207,14 +209,14 @@ function InsightsBanner() {
   return (
     <div style={{
       marginBottom: 16, padding: '14px 16px', borderRadius: 12,
-      background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 50%, #FAFBFC 100%)',
+      background: 'linear-gradient(135deg, #FAFBFC 0%, #E8F3F9 50%, #FAFBFC 100%)',
       border: '1px solid #E8EFF8',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{
             width: 24, height: 24, borderRadius: 7,
-            background: 'linear-gradient(135deg, #2968B0, #5B9BD5)',
+            background: 'linear-gradient(135deg, #005C8D, #2D8AB5)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <IconSparkles size={13} color="#fff"/>
@@ -258,7 +260,7 @@ function PharmacyDrawer({ row, onClose }: { row: ResultRow; onClose: () => void 
   const detail = PHARMACY_DETAILS[row.ncpdp];
 
   const statusColor = (s: string) =>
-    s === 'Active' || s === 'Valid' || s === 'Complete' ? '#059669' :
+    s === 'Active' || s === 'Valid' || s === 'Complete' ? '#449055' :
     s === 'Expiring' || s === 'Pending' ? '#D97706' :
     '#DC2626';
 
@@ -304,17 +306,17 @@ function PharmacyDrawer({ row, onClose }: { row: ResultRow; onClose: () => void 
                 border: `1px solid ${detail.riskScore > 60 ? '#FECACA' : detail.riskScore > 30 ? '#FDE68A' : '#A7F3D0'}`,
               }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>Risk Score</div>
-                <div style={{ fontSize: 28, fontWeight: 800, color: detail.riskScore > 60 ? '#DC2626' : detail.riskScore > 30 ? '#D97706' : '#059669', marginTop: 2 }}>
+                <div style={{ fontSize: 28, fontWeight: 800, color: detail.riskScore > 60 ? '#DC2626' : detail.riskScore > 30 ? '#D97706' : '#449055', marginTop: 2 }}>
                   {detail.riskScore}
                   <span style={{ fontSize: 12, fontWeight: 500, color: '#94A3B8' }}>/100</span>
                 </div>
               </div>
               <div style={{
                 padding: '12px 14px', borderRadius: 10,
-                background: '#F0F7FF', border: '1px solid #B8D5F5',
+                background: '#E8F3F9', border: '1px solid #8FC2D8',
               }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.05em' }}>Profile Score</div>
-                <div style={{ fontSize: 28, fontWeight: 800, color: '#2968B0', marginTop: 2 }}>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#005C8D', marginTop: 2 }}>
                   {detail.profileScore}
                   <span style={{ fontSize: 12, fontWeight: 500, color: '#94A3B8' }}>%</span>
                 </div>
@@ -444,10 +446,10 @@ function ResultsTab({ agentName, resultRows, onRowClick }: { agentName: string; 
       {/* Summary strip */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginBottom: 18 }}>
         {[
-          { label: 'Records Found',  value: '247',    color: '#2968B0', bg: '#F0F7FF' },
-          { label: 'Execution Time', value: '0.83s',  color: '#10B981', bg: '#ECFDF5' },
+          { label: 'Records Found',  value: '247',    color: '#005C8D', bg: '#E8F3F9' },
+          { label: 'Execution Time', value: '0.83s',  color: '#76C799', bg: '#ECFDF5' },
           { label: 'Records Scanned',value: '81,500', color: '#334155', bg: '#F8FAFC' },
-          { label: 'Active',         value: '218',    color: '#10B981', bg: '#ECFDF5' },
+          { label: 'Active',         value: '218',    color: '#76C799', bg: '#ECFDF5' },
           { label: 'At Risk',        value: '29',     color: '#EF4444', bg: '#FEF2F2' },
         ].map(s => (
           <div key={s.label} style={{ padding: '12px 16px', borderRadius: 8, background: s.bg, textAlign: 'center' }}>
@@ -473,10 +475,10 @@ function ResultsTab({ agentName, resultRows, onRowClick }: { agentName: string; 
                 key={r.ncpdp}
                 onClick={() => onRowClick(r)}
                 style={{ cursor: 'pointer', transition: 'background .08s' }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#F0F7FF')}
+                onMouseEnter={e => (e.currentTarget.style.background = '#E8F3F9')}
                 onMouseLeave={e => (e.currentTarget.style.background = '')}
               >
-                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
+                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#005C8D', fontSize: 13 }}>{r.ncpdp}</td>
                 <td style={{ fontWeight: 500 }}>{r.name}</td>
                 <td style={{ color: '#64748B' }}>{r.city}</td>
                 <td style={{ fontWeight: 600 }}>{r.state}</td>
@@ -518,10 +520,10 @@ function makeCtx(sql: string, rows: ResultRow[]): QueryContext {
       { text: '1 pharmacy has incomplete FWA attestation — compliance gap', type: 'info' },
     ],
     stats: [
-      { label: 'Records Found', value: '247', color: '#2968B0', bg: '#F0F7FF' },
-      { label: 'Execution Time', value: '0.83s', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'Records Found', value: '247', color: '#005C8D', bg: '#E8F3F9' },
+      { label: 'Execution Time', value: '0.83s', color: '#76C799', bg: '#ECFDF5' },
       { label: 'Records Scanned', value: '81,500', color: '#334155', bg: '#F8FAFC' },
-      { label: 'Active', value: '218', color: '#10B981', bg: '#ECFDF5' },
+      { label: 'Active', value: '218', color: '#76C799', bg: '#ECFDF5' },
       { label: 'At Risk', value: '29', color: '#EF4444', bg: '#FEF2F2' },
     ],
     barData: BAR_DATA.map(d => ({ label: d.state, value: d.count })),
@@ -535,7 +537,7 @@ function makeCtx(sql: string, rows: ResultRow[]): QueryContext {
     execTime: '0.83s',
     canvasLabel: '247 results found',
     followUps: ['Filter to active only', 'Show expired DEA', 'View compliance report', 'Compare by state'],
-    chatInsights: [{ icon: 'warning' as const, text: '2 pharmacies have expired DEA licenses', color: '#DC2626' }, { icon: 'location' as const, text: 'Most results concentrated in Texas region', color: '#2968B0' }, { icon: 'stat' as const, text: '88% of matched pharmacies are currently active', color: '#059669' }],
+    chatInsights: [{ icon: 'warning' as const, text: '2 pharmacies have expired DEA licenses', color: '#DC2626' }, { icon: 'location' as const, text: 'Most results concentrated in Texas region', color: '#005C8D' }, { icon: 'stat' as const, text: '88% of matched pharmacies are currently active', color: '#449055' }],
   };
 }
 
@@ -570,7 +572,46 @@ function AgentRunInner() {
   const [selectedRow, setSelectedRow] = useState<ResultRow | null>(null);
   const [dynamicCtx, setDynamicCtx] = useState<QueryContext | null>(null);
   const [queryKey, setQueryKey] = useState(0);
+  const [showThreads, setShowThreads] = useState(false);
+  const [agentChatMsgs, setAgentChatMsgs] = useState<ChatMessage[]>([]);
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+  const threadMsgsRef = useRef<Map<string, ChatMessage[]>>(new Map());
+  const threadState = useThreads('agents', agent.id);
   const lastGeminiRef = useRef<GeminiResponse | null>(null);
+
+  function handleAgentMsgsChange(msgs: ChatMessage[]) {
+    setAgentChatMsgs(msgs);
+    const firstUser = msgs.find(m => m.role === 'user');
+    if (firstUser && !activeThreadId) {
+      const id = threadState.createThread(firstUser.text);
+      setActiveThreadId(id);
+      threadMsgsRef.current.set(id, msgs);
+      return;
+    }
+    if (activeThreadId) threadMsgsRef.current.set(activeThreadId, msgs);
+  }
+
+  function handleSelectAgentThread(id: string) {
+    if (activeThreadId) threadMsgsRef.current.set(activeThreadId, agentChatMsgs);
+    const saved = threadMsgsRef.current.get(id) || [];
+    setAgentChatMsgs(saved);
+    setActiveThreadId(id);
+    threadState.setActiveId(id);
+    if (saved.length > 0) {
+      setHasResults(true);
+      const lastBot = [...saved].reverse().find(m => m.role === 'bot' && m.canvasData);
+      if (lastBot?.canvasData) { setDynamicCtx(lastBot.canvasData as QueryContext); setQueryKey(k => k + 1); }
+    }
+  }
+
+  function handleNewAgentChat() {
+    if (activeThreadId) threadMsgsRef.current.set(activeThreadId, agentChatMsgs);
+    setAgentChatMsgs([]);
+    setActiveThreadId(null);
+    setDynamicCtx(null);
+    setShowOutput(false);
+    setHasResults(false);
+  }
   const dragging = useRef(false);
   const startX = useRef(0);
   const startW = useRef(420);
@@ -654,15 +695,24 @@ function AgentRunInner() {
     return `Analyzed **81,500** pharmacy records based on your query.\n\nResults are ready in the output panel with detailed breakdowns, charts, and export options.`;
   }
 
+  function handleOpenCanvasAgent(_qId: number, _text: string, canvasData?: unknown) {
+    if (canvasData) {
+      setDynamicCtx(canvasData as QueryContext);
+      setQueryKey(k => k + 1);
+    }
+    setShowOutput(true);
+    setActiveTab('results');
+  }
+
   function handleBotReplied(_msg: string) {
     const g = lastGeminiRef.current;
-    if (g) return { insights: g.chatInsights, followUps: g.followUps, canvasLabel: g.canvasLabel };
+    if (g) { const c = geminiToCtx(g); return { insights: g.chatInsights, followUps: g.followUps, canvasLabel: g.canvasLabel, canvasData: c }; }
     const ctx = lastAgentCtxRef.current;
-    if (ctx) return { insights: ctx.chatInsights, followUps: ctx.followUps, canvasLabel: ctx.canvasLabel };
+    if (ctx) return { insights: ctx.chatInsights, followUps: ctx.followUps, canvasLabel: ctx.canvasLabel, canvasData: ctx };
     return {
       insights: [
-        { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#059669' },
-        { icon: 'info' as const, text: `Agent: ${agent.name} (${agent.category})`, color: '#2968B0' },
+        { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#449055' },
+        { icon: 'info' as const, text: `Agent: ${agent.name} (${agent.category})`, color: '#005C8D' },
       ],
       followUps: agentSuggestions.slice(0, 4),
       canvasLabel: 'View results',
@@ -671,8 +721,8 @@ function AgentRunInner() {
 
   function handleGetInsights() {
     return [
-      { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#059669' },
-      { icon: 'info' as const, text: `Agent: ${agent.name}`, color: '#2968B0' },
+      { icon: 'stat' as const, text: '81,500 pharmacy records analyzed', color: '#449055' },
+      { icon: 'info' as const, text: `Agent: ${agent.name}`, color: '#005C8D' },
     ];
   }
 
@@ -684,7 +734,11 @@ function AgentRunInner() {
     return 'View results';
   }
 
-  function handleOpenCanvas() {
+  function handleOpenCanvas(_qId: number, _text: string, canvasData?: unknown) {
+    if (canvasData) {
+      setDynamicCtx(canvasData as QueryContext);
+      setQueryKey(k => k + 1);
+    }
     setShowOutput(true);
     setActiveTab('results');
   }
@@ -695,17 +749,34 @@ function AgentRunInner() {
         title={agent.name}
         subtitle={`${agent.id.toUpperCase()} · ${agent.category}`}
         actions={
-          <button
-            className={showOutput ? 'btn-primary' : 'btn-secondary'}
-            onClick={() => setShowOutput(o => !o)}
-            style={{ fontSize: 12, gap: 5 }}
-          >
-            <IconBarChart size={13} color={showOutput ? '#fff' : undefined}/>
-            {showOutput ? 'Hide Output' : 'Show Output'}
-          </button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button className="btn-secondary" onClick={() => setShowThreads(o => !o)} style={{ fontSize: 12, gap: 5 }}>
+              {showThreads ? 'Hide' : 'Show'} Threads
+            </button>
+            <button
+              className={showOutput ? 'btn-primary' : 'btn-secondary'}
+              onClick={() => setShowOutput(o => !o)}
+              style={{ fontSize: 12, gap: 5 }}
+            >
+              <IconBarChart size={13} color={showOutput ? '#fff' : undefined}/>
+              {showOutput ? 'Hide Output' : 'Show Output'}
+            </button>
+          </div>
         }
       />
       <main style={{ display: 'flex', height: `calc(100vh - var(--topbar-h))` }}>
+
+        {/* Thread sidebar */}
+        {showThreads && (
+          <ChatThreadsSidebar
+            threads={threadState.threads}
+            activeId={activeThreadId}
+            onSelect={handleSelectAgentThread}
+            onNew={handleNewAgentChat}
+            onDelete={(id) => { threadState.deleteThread(id); threadMsgsRef.current.delete(id); }}
+            onClose={() => setShowThreads(false)}
+          />
+        )}
 
         {/* LEFT: Chat */}
         <div style={{ display: 'flex', flexDirection: 'column', width: showOutput ? chatWidth : '100%', flexShrink: showOutput ? 0 : undefined, flex: showOutput ? undefined : 1, minHeight: 0, overflow: 'hidden', transition: 'width .2s ease' }}>
@@ -717,12 +788,15 @@ function AgentRunInner() {
           </div>
 
           <AgentChat
+            key={activeThreadId || 'new'}
             agentName={agent.name}
             agentId={agent.id.toUpperCase()}
             gradient={cc.gradient}
             icon={catIcon(agent.category, 18)}
             welcomeMessage={`Hi! I'm ${agent.name}. ${agent.desc}\n\nI can search, analyze, and compare data across 81,500 pharmacy records. Ask me anything or pick a query below.`}
             suggestions={agentSuggestions}
+            messages={agentChatMsgs}
+            onMessagesChange={handleAgentMsgsChange}
             getBotReply={handleBotReply}
             getInsights={handleGetInsights}
             getFollowUps={handleGetFollowUps}
@@ -743,7 +817,7 @@ function AgentRunInner() {
                 width: 6, flexShrink: 0, cursor: 'col-resize',
                 background: 'transparent', position: 'relative', zIndex: 10,
               }}
-              onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#5B9BD5'; }}
+              onMouseEnter={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#2D8AB5'; }}
               onMouseLeave={e => { const line = e.currentTarget.firstElementChild as HTMLElement; if (line) line.style.background = '#E2E8F0'; }}
             >
               <div style={{
@@ -771,7 +845,7 @@ function AgentRunInner() {
                     padding: '12px 20px', fontSize: 13, fontWeight: activeTab === t.id ? 600 : 500,
                     color: activeTab === t.id ? 'var(--text-primary)' : '#9CA3AF',
                     background: 'none', border: 'none', cursor: 'pointer',
-                    borderBottom: activeTab === t.id ? '2px solid #2968B0' : '2px solid transparent',
+                    borderBottom: activeTab === t.id ? '2px solid #005C8D' : '2px solid transparent',
                     marginBottom: -1,
                   }}>{t.label}</button>
                 ))}
@@ -781,10 +855,10 @@ function AgentRunInner() {
                 {!hasResults ? (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
                     <div style={{
-                      width: 64, height: 64, borderRadius: 16, background: '#F0F7FF', border: '1px solid #DFEEFF',
+                      width: 64, height: 64, borderRadius: 16, background: '#E8F3F9', border: '1px solid #C6E0EC',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16,
                     }}>
-                      <IconCpu size={28} color="#5B9BD5"/>
+                      <IconCpu size={28} color="#2D8AB5"/>
                     </div>
                     <div style={{ fontSize: 16, fontWeight: 700, color: '#94A3B8', marginBottom: 6 }}>Ready to run</div>
                     <div style={{ fontSize: 13, color: '#CBD5E1', maxWidth: 320, lineHeight: 1.6 }}>
@@ -797,14 +871,14 @@ function AgentRunInner() {
                     {activeTab === 'results' && (
                       <div>
                         {/* Insights */}
-                        <div style={{ marginBottom: 16, padding: '14px 16px', borderRadius: 12, background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 50%, #FAFBFC 100%)', border: '1px solid #E8EFF8' }}>
+                        <div style={{ marginBottom: 16, padding: '14px 16px', borderRadius: 12, background: 'linear-gradient(135deg, #FAFBFC 0%, #E8F3F9 50%, #FAFBFC 100%)', border: '1px solid #E8EFF8' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 10 }}>
-                            <IconSparkles size={12} color="#2968B0"/> AI Insights
+                            <IconSparkles size={12} color="#005C8D"/> AI Insights
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             {dynamicCtx.insights.map((ins, i) => (
-                              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: ins.type === 'danger' ? '#FEF2F2' : ins.type === 'warning' ? '#FFF7ED' : ins.type === 'success' ? '#ECFDF5' : '#F0F7FF', border: `1px solid ${ins.type === 'danger' ? '#FECACA' : ins.type === 'warning' ? '#FDE68A' : ins.type === 'success' ? '#A7F3D0' : '#B8D5F5'}`, fontSize: 12, color: ins.type === 'danger' ? '#991B1B' : ins.type === 'warning' ? '#92400E' : ins.type === 'success' ? '#065F46' : '#1E40AF', lineHeight: 1.4 }}>
-                                {ins.type === 'danger' ? <IconAlertTriangle size={14} color="#DC2626"/> : <IconBarChart size={14} color={ins.type === 'success' ? '#059669' : '#2968B0'}/>}
+                              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: ins.type === 'danger' ? '#FEF2F2' : ins.type === 'warning' ? '#FFF7ED' : ins.type === 'success' ? '#ECFDF5' : '#E8F3F9', border: `1px solid ${ins.type === 'danger' ? '#FECACA' : ins.type === 'warning' ? '#FDE68A' : ins.type === 'success' ? '#A7F3D0' : '#8FC2D8'}`, fontSize: 12, color: ins.type === 'danger' ? '#991B1B' : ins.type === 'warning' ? '#92400E' : ins.type === 'success' ? '#2A6936' : '#1E40AF', lineHeight: 1.4 }}>
+                                {ins.type === 'danger' ? <IconAlertTriangle size={14} color="#DC2626"/> : <IconBarChart size={14} color={ins.type === 'success' ? '#449055' : '#005C8D'}/>}
                                 <span style={{ flex: 1 }}>{ins.text}</span>
                               </div>
                             ))}

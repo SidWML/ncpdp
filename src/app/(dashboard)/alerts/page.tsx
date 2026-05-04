@@ -15,8 +15,8 @@ const filters = ['All', 'Critical', 'Warning', 'Info', 'Unread'];
 const summaryCards = [
   { label: 'Critical',  count: 2,   color: '#DC2626', bg: '#FEE2E2', border: '#FECACA', Icon: IconAlertTriangle },
   { label: 'Warning',   count: 18,  color: '#D97706', bg: '#FEF3C7', border: '#FDE68A', Icon: IconBell           },
-  { label: 'Info',      count: 27,  color: '#2563EB', bg: '#DBEAFE', border: '#BFDBFE', Icon: IconInfo           },
-  { label: 'Resolved',  count: 142, color: '#059669', bg: '#D1FAE5', border: '#A7F3D0', Icon: IconCheck          },
+  { label: 'Info',      count: 27,  color: '#1474A4', bg: '#C6E0EC', border: '#8FC2D8', Icon: IconInfo           },
+  { label: 'Resolved',  count: 142, color: '#449055', bg: '#D1FAE5', border: '#A7F3D0', Icon: IconCheck          },
 ];
 
 const deliveryChannels = [

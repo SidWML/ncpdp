@@ -44,7 +44,7 @@ export const stats = [
 ];
 
 export const credentialStatus = [
-  { label: 'Active',    value: 73350, color: '#10B981', pct: 90.0 },
+  { label: 'Active',    value: 73350, color: '#76C799', pct: 90.0 },
   { label: 'Expiring',  value: 5705,  color: '#F59E0B', pct: 7.0  },
   { label: 'Expired',   value: 2445,  color: '#EF4444', pct: 3.0  },
 ];
@@ -284,7 +284,7 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     ],
     changes: [
       { date: 'Mar 31, 2026', type: 'Alert',      desc: 'DEA registration expired — network access under review',       color: '#DC2626' },
-      { date: 'Feb 15, 2026', type: 'Update',     desc: 'Phone number updated via resQ portal by pharmacy administrator', color: '#2968B0' },
+      { date: 'Feb 15, 2026', type: 'Update',     desc: 'Phone number updated via resQ portal by pharmacy administrator', color: '#005C8D' },
       { date: 'Jan 8, 2026',  type: 'Network',    desc: 'Removed from OptumRx network pending DEA renewal',            color: '#D97706' },
       { date: 'Nov 4, 2025',  type: 'Credential', desc: 'FWA Attestation expired — follow-up required',                color: '#DC2626' },
     ],
@@ -312,8 +312,8 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     ],
     changes: [
       { date: 'Mar 28, 2026', type: 'Alert',      desc: 'State license expiring in 33 days — renewal notice sent',      color: '#D97706' },
-      { date: 'Mar 10, 2026', type: 'Update',     desc: 'Operating hours updated: extended Saturday hours added',         color: '#2968B0' },
-      { date: 'Jan 22, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026',                              color: '#10B981' },
+      { date: 'Mar 10, 2026', type: 'Update',     desc: 'Operating hours updated: extended Saturday hours added',         color: '#005C8D' },
+      { date: 'Jan 22, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026',                              color: '#76C799' },
     ],
   },
   'NCP-003': {
@@ -343,9 +343,9 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     ],
     changes: [
       { date: 'Mar 29, 2026', type: 'Alert',      desc: 'DEA expiring in 30 days — auto-notification sent to administrator', color: '#D97706' },
-      { date: 'Mar 1, 2026',  type: 'Update',     desc: 'Added Specialty Drugs service capability to profile',               color: '#2968B0' },
-      { date: 'Dec 18, 2025', type: 'Credential', desc: 'ACHC accreditation renewed — valid through Dec 2026',               color: '#10B981' },
-      { date: 'Oct 5, 2025',  type: 'Network',    desc: 'Added to Prime Therapeutics specialty drug network',                color: '#10B981' },
+      { date: 'Mar 1, 2026',  type: 'Update',     desc: 'Added Specialty Drugs service capability to profile',               color: '#005C8D' },
+      { date: 'Dec 18, 2025', type: 'Credential', desc: 'ACHC accreditation renewed — valid through Dec 2026',               color: '#76C799' },
+      { date: 'Oct 5, 2025',  type: 'Network',    desc: 'Added to Prime Therapeutics specialty drug network',                color: '#76C799' },
     ],
   },
   'NCP-004': {
@@ -374,10 +374,10 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { name: 'OptumRx Specialty',        relId: 'REL-OPT-SP-3312', since: 'Feb 2020', status: 'Active' },
     ],
     changes: [
-      { date: 'Mar 20, 2026', type: 'Credential', desc: 'Annual ACHC accreditation review — passed with commendation',    color: '#10B981' },
-      { date: 'Feb 8, 2026',  type: 'Network',    desc: 'Added to Humana oncology specialty drug network',                color: '#10B981' },
-      { date: 'Jan 15, 2026', type: 'Update',     desc: 'Rare Disease service capability added to profile',               color: '#2968B0' },
-      { date: 'Nov 1, 2025',  type: 'Ownership',  desc: 'Partial ownership transfer — Sunrise Health Solutions LLC (80%)', color: '#6D28D9' },
+      { date: 'Mar 20, 2026', type: 'Credential', desc: 'Annual ACHC accreditation review — passed with commendation',    color: '#76C799' },
+      { date: 'Feb 8, 2026',  type: 'Network',    desc: 'Added to Humana oncology specialty drug network',                color: '#76C799' },
+      { date: 'Jan 15, 2026', type: 'Update',     desc: 'Rare Disease service capability added to profile',               color: '#005C8D' },
+      { date: 'Nov 1, 2025',  type: 'Ownership',  desc: 'Partial ownership transfer — Sunrise Health Solutions LLC (80%)', color: '#004870' },
     ],
   },
   'NCP-005': {
@@ -403,9 +403,9 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { name: 'Regence BlueCross',    relId: 'REL-RGB-00193', since: 'Nov 2020', status: 'Active' },
     ],
     changes: [
-      { date: 'Mar 5, 2026',  type: 'Ownership',  desc: 'Change of ownership — Green Valley Healthcare Partners LLC',   color: '#6D28D9' },
-      { date: 'Feb 20, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026 — submitted via portal',      color: '#10B981' },
-      { date: 'Jan 12, 2026', type: 'Update',     desc: 'Sunday hours added: 11AM–5PM',                                 color: '#2968B0' },
+      { date: 'Mar 5, 2026',  type: 'Ownership',  desc: 'Change of ownership — Green Valley Healthcare Partners LLC',   color: '#004870' },
+      { date: 'Feb 20, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026 — submitted via portal',      color: '#76C799' },
+      { date: 'Jan 12, 2026', type: 'Update',     desc: 'Sunday hours added: 11AM–5PM',                                 color: '#005C8D' },
     ],
   },
   'NCP-006': {
@@ -436,8 +436,8 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     ],
     changes: [
       { date: 'Mar 15, 2026', type: 'Credential', desc: 'PCAB renewal in progress — submission deadline Jun 2026',       color: '#D97706' },
-      { date: 'Feb 1, 2026',  type: 'Network',    desc: 'Added to OptumRx oncology specialty compounding network',       color: '#10B981' },
-      { date: 'Jan 20, 2026', type: 'Update',     desc: 'Veterinary Compounding service added to profile',               color: '#2968B0' },
+      { date: 'Feb 1, 2026',  type: 'Network',    desc: 'Added to OptumRx oncology specialty compounding network',       color: '#76C799' },
+      { date: 'Jan 20, 2026', type: 'Update',     desc: 'Veterinary Compounding service added to profile',               color: '#005C8D' },
     ],
   },
   'NCP-007': {
@@ -462,9 +462,9 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
       { name: 'OptumRx Network',       relId: 'REL-OPT-55214', since: 'May 2020', status: 'Active' },
     ],
     changes: [
-      { date: 'Mar 10, 2026', type: 'Update',     desc: 'Extended hours — now open 7 days/week 8AM–10PM',               color: '#2968B0' },
-      { date: 'Feb 14, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026',                              color: '#10B981' },
-      { date: 'Dec 1, 2025',  type: 'Network',    desc: 'Added Point-of-Care Testing certification',                     color: '#10B981' },
+      { date: 'Mar 10, 2026', type: 'Update',     desc: 'Extended hours — now open 7 days/week 8AM–10PM',               color: '#005C8D' },
+      { date: 'Feb 14, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026',                              color: '#76C799' },
+      { date: 'Dec 1, 2025',  type: 'Network',    desc: 'Added Point-of-Care Testing certification',                     color: '#76C799' },
     ],
   },
   'NCP-008': {
@@ -489,8 +489,8 @@ export const pharmacyProfiles: Record<string, PharmacyProfile> = {
     ],
     changes: [
       { date: 'Mar 25, 2026', type: 'Alert',      desc: 'DEA renewal due in 51 days — outreach initiated by Credentialing Assist', color: '#D97706' },
-      { date: 'Feb 28, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026 — LTC exemption applied',               color: '#10B981' },
-      { date: 'Jan 5, 2026',  type: 'Network',    desc: 'LTC network adequacy review — passed all criteria',                  color: '#10B981' },
+      { date: 'Feb 28, 2026', type: 'Credential', desc: 'FWA Attestation renewed for 2026 — LTC exemption applied',               color: '#76C799' },
+      { date: 'Jan 5, 2026',  type: 'Network',    desc: 'LTC network adequacy review — passed all criteria',                  color: '#76C799' },
     ],
   },
 };

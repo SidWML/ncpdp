@@ -12,30 +12,30 @@ import { AreaChart, Area, ResponsiveContainer, PieChart, Pie, Cell } from 'recha
 
 /* Data */
 const TREND = [{ m: 'O', v: 65800 },{ m: 'N', v: 66100 },{ m: 'D', v: 66700 },{ m: 'J', v: 67200 },{ m: 'F', v: 67800 },{ m: 'M', v: 81500 }];
-const CRED = [{ n: 'Active', v: 64238, c: '#10B981' },{ n: 'Expiring', v: 2841, c: '#FBBF24' },{ n: 'Expired', v: 1168, c: '#EF4444' }];
+const CRED = [{ n: 'Active', v: 64238, c: '#76C799' },{ n: 'Expiring', v: 2841, c: '#FBBF24' },{ n: 'Expired', v: 1168, c: '#EF4444' }];
 const HEALTH = [
-  { l: 'DEA',     v: 98, c: '#059669' }, { l: 'Network', v: 96, c: '#059669' },
-  { l: 'FWA',     v: 91, c: '#D97706' }, { l: 'NSA',     v: 99, c: '#059669' },
+  { l: 'DEA',     v: 98, c: '#449055' }, { l: 'Network', v: 96, c: '#449055' },
+  { l: 'FWA',     v: 91, c: '#D97706' }, { l: 'NSA',     v: 99, c: '#449055' },
 ];
 const EXAMPLES = [
   { title: 'DEA Expirations', desc: 'Show pharmacies with DEA expiring in 30 days across all networks', icon: IconShield, color: '#DC2626' },
-  { title: 'Network Adequacy', desc: 'Analyze coverage gaps and adequacy status by state', icon: IconGlobe, color: '#059669' },
+  { title: 'Network Adequacy', desc: 'Analyze coverage gaps and adequacy status by state', icon: IconGlobe, color: '#449055' },
   { title: 'FWA Attestation', desc: 'Which pharmacies have overdue fraud, waste & abuse attestations?', icon: IconAlertTriangle, color: '#D97706' },
-  { title: 'Ownership Changes', desc: 'Show recent pharmacy ownership transfers and affected networks', icon: IconStore, color: '#6366F1' },
+  { title: 'Ownership Changes', desc: 'Show recent pharmacy ownership transfers and affected networks', icon: IconStore, color: '#005C8D' },
 ];
 const ACTIVITY = [
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'DEA Expiring: CareRx Pharmacy #0842', s: '12 days remaining -- 3 networks affected', time: '2m' },
   { icon: IconStore,         c: '#D97706', bg: '#FFFBEB', t: 'Ownership Changed: Valley Rx Solutions', s: 'Smith Family Pharmacy to Rite Aid Corp', time: '14m' },
-  { icon: IconSparkles,      c: '#6366F1', bg: '#EEF2FF', t: 'Agent completed: Weekly network scan', s: '247 pharmacies flagged across 12 states', time: '28m' },
-  { icon: IconCheck,         c: '#059669', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready for regulatory submission', time: '2h' },
+  { icon: IconSparkles,      c: '#005C8D', bg: '#E8F3F9', t: 'Agent completed: Weekly network scan', s: '247 pharmacies flagged across 12 states', time: '28m' },
+  { icon: IconCheck,         c: '#449055', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready for regulatory submission', time: '2h' },
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'FWA Overdue: 6 pharmacies', s: 'Midwest Chain #44, SunHealth + 4 more', time: '3h' },
 ];
 const SHORTCUTS = [
-  { l: 'Search',     i: IconSearch,    h: '/v3/search',     c: '#6366F1', bg: '#EEF2FF' },
-  { l: 'Reports',    i: IconReport,    h: '/v3/reports',    c: '#059669', bg: '#ECFDF5' },
+  { l: 'Search',     i: IconSearch,    h: '/v3/search',     c: '#005C8D', bg: '#E8F3F9' },
+  { l: 'Reports',    i: IconReport,    h: '/v3/reports',    c: '#449055', bg: '#ECFDF5' },
   { l: 'Compliance', i: IconShield,    h: '/v3/compliance', c: '#DC2626', bg: '#FEF2F2' },
-  { l: 'Geographic', i: IconGlobe,     h: '/v3/search',     c: '#0284C7', bg: '#EFF6FF' },
-  { l: 'Downloads',  i: IconDownload,  h: '/v3/admin',      c: '#7C3AED', bg: '#F5F3FF' },
+  { l: 'Geographic', i: IconGlobe,     h: '/v3/search',     c: '#005C8D', bg: '#E8F3F9' },
+  { l: 'Downloads',  i: IconDownload,  h: '/v3/admin',      c: '#004870', bg: '#E8F3F9' },
   { l: 'Analytics',  i: IconBarChart,  h: '/v3/reports',    c: '#D97706', bg: '#FFFBEB' },
 ];
 
@@ -57,7 +57,7 @@ export default function DashboardV3() {
         {/* AI HERO */}
         <div style={{ maxWidth: 700, margin: '0 auto', paddingTop: 48, paddingBottom: 36, textAlign: 'center' }}>
           {/* Sparkle icon */}
-          <div style={{ width: 56, height: 56, borderRadius: 16, background: 'linear-gradient(135deg,#6366F1,#A78BFA)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 4px 20px rgba(99,102,241,.25)' }}>
+          <div style={{ width: 56, height: 56, borderRadius: 16, background: 'linear-gradient(135deg,#005C8D,#76C799)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 4px 20px rgba(0,92,141,.25)' }}>
             <IconSparkles size={28} color="#fff"/>
           </div>
           <div style={{ fontSize: 13, color: 'var(--v3-accent)', fontWeight: 600, marginBottom: 6 }}>Good to see you!</div>
@@ -210,7 +210,7 @@ export default function DashboardV3() {
                   borderBottom: i < ACTIVITY.length - 1 ? '1px solid var(--v3-border-lt)' : 'none',
                   cursor: 'pointer', transition: 'background .06s',
                 }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFAFF')}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFBFC')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}
                 >
                   <div style={{ width: 26, height: 26, borderRadius: 7, background: a.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>

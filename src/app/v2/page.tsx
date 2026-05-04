@@ -18,7 +18,7 @@ const TREND = [
   { m: 'Jan', v: 67200 }, { m: 'Feb', v: 67800 }, { m: 'Mar', v: 81500 },
 ];
 const CRED = [
-  { name: 'Active', value: 64238, color: '#10B981' },
+  { name: 'Active', value: 64238, color: '#76C799' },
   { name: 'Expiring', value: 2841, color: '#FBBF24' },
   { name: 'Expired', value: 1168, color: '#EF4444' },
 ];
@@ -30,10 +30,10 @@ const BY_TYPE = [
 const ACTIVITY = [
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'DEA Expiring: CareRx Pharmacy #0842', s: '12 days remaining', time: '2m ago' },
   { icon: IconStore,         c: '#D97706', bg: '#FFFBEB', t: 'Ownership Changed: Valley Rx Solutions', s: 'Smith Family to Rite Aid Corp', time: '14m ago' },
-  { icon: IconSparkles,      c: '#6366F1', bg: '#EEF2FF', t: 'Agent completed: Weekly network scan', s: '247 pharmacies flagged', time: '28m ago' },
+  { icon: IconSparkles,      c: '#005C8D', bg: '#E8F3F9', t: 'Agent completed: Weekly network scan', s: '247 pharmacies flagged', time: '28m ago' },
   { icon: IconAlertTriangle, c: '#DC2626', bg: '#FEF2F2', t: 'FWA Overdue: 6 pharmacies', s: 'Midwest Chain #44 + 5 more', time: '1h ago' },
-  { icon: IconCheck,         c: '#059669', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready', time: '2h ago' },
-  { icon: IconSparkles,      c: '#6366F1', bg: '#EEF2FF', t: 'Agent completed: Credential audit', s: '89 DEA, 112 license issues', time: '3h ago' },
+  { icon: IconCheck,         c: '#449055', bg: '#ECFDF5', t: 'NSA Q1 report validated', s: '38,569 pharmacies ready', time: '2h ago' },
+  { icon: IconSparkles,      c: '#005C8D', bg: '#E8F3F9', t: 'Agent completed: Credential audit', s: '89 DEA, 112 license issues', time: '3h ago' },
 ];
 const CHANGES = [
   { id: '1234567', name: 'CareRx Pharmacy #0842',     type: 'DEA Expiring',     impact: '3 networks', s: 'urgent' },
@@ -43,18 +43,18 @@ const CHANGES = [
   { id: '9012847', name: 'Mountain View Clinical Rx', type: 'Accreditation Due',impact: '6 networks', s: 'pending' },
 ];
 const HEALTH = [
-  { l: 'DEA Compliance',   v: 98, c: '#059669', total: '64,238 active' },
-  { l: 'Network Adequacy', v: 96, c: '#059669', total: '64/67 pass' },
+  { l: 'DEA Compliance',   v: 98, c: '#449055', total: '64,238 active' },
+  { l: 'Network Adequacy', v: 96, c: '#449055', total: '64/67 pass' },
   { l: 'FWA Attestation',  v: 91, c: '#D97706', total: '6 under review' },
-  { l: 'NSA Readiness',    v: 99, c: '#059669', total: '38,522 validated' },
+  { l: 'NSA Readiness',    v: 99, c: '#449055', total: '38,522 validated' },
 ];
 const LAUNCH = [
-  { l: 'Search',        i: IconSearch,    h: '/v2/search',     c: '#6366F1', b: '#EEF2FF' },
-  { l: 'Reports',       i: IconReport,    h: '/v2/reports',    c: '#059669', b: '#ECFDF5' },
+  { l: 'Search',        i: IconSearch,    h: '/v2/search',     c: '#005C8D', b: '#E8F3F9' },
+  { l: 'Reports',       i: IconReport,    h: '/v2/reports',    c: '#449055', b: '#ECFDF5' },
   { l: 'Compliance',    i: IconShield,    h: '/v2/compliance', c: '#DC2626', b: '#FEF2F2' },
   { l: 'No Surprises',  i: IconFileCheck, h: '/v2/compliance', c: '#D97706', b: '#FFFBEB' },
-  { l: 'Geographic',    i: IconGlobe,     h: '/v2/search',     c: '#0284C7', b: '#EFF6FF' },
-  { l: 'Downloads',     i: IconDownload,  h: '/v2/admin',      c: '#7C3AED', b: '#F5F3FF' },
+  { l: 'Geographic',    i: IconGlobe,     h: '/v2/search',     c: '#005C8D', b: '#E8F3F9' },
+  { l: 'Downloads',     i: IconDownload,  h: '/v2/admin',      c: '#004870', b: '#E8F3F9' },
 ];
 
 const sb = (s: string) => s === 'urgent' ? <span className="v2g v2g-err">Urgent</span> : s === 'pending' ? <span className="v2g v2g-w">Pending</span> : <span className="v2g v2g-ok">Done</span>;
@@ -129,11 +129,11 @@ export default function DashboardV2() {
             <div style={{ height: 80 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={TREND} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-                  <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#6366F1" stopOpacity={0.15}/><stop offset="100%" stopColor="#6366F1" stopOpacity={0}/></linearGradient></defs>
+                  <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#005C8D" stopOpacity={0.15}/><stop offset="100%" stopColor="#005C8D" stopOpacity={0}/></linearGradient></defs>
                   <XAxis dataKey="m" tick={{ fontSize: 10, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/>
                   <YAxis domain={[65000, 69000]} hide/>
                   <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: '1px solid #E4E4E7', boxShadow: '0 4px 12px rgba(0,0,0,.06)' }}/>
-                  <Area type="monotone" dataKey="v" stroke="#6366F1" strokeWidth={2} fill="url(#g1)"/>
+                  <Area type="monotone" dataKey="v" stroke="#005C8D" strokeWidth={2} fill="url(#g1)"/>
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -177,7 +177,7 @@ export default function DashboardV2() {
                   <XAxis dataKey="type" tick={{ fontSize: 9.5, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/>
                   <YAxis tick={{ fontSize: 9, fill: '#A1A1AA' }} axisLine={false} tickLine={false}/>
                   <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: '1px solid #E4E4E7' }}/>
-                  <Bar dataKey="count" fill="#6366F1" radius={[3, 3, 0, 0]} barSize={20}/>
+                  <Bar dataKey="count" fill="#005C8D" radius={[3, 3, 0, 0]} barSize={20}/>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -218,7 +218,7 @@ export default function DashboardV2() {
                   borderBottom: i < ACTIVITY.length - 1 ? '1px solid var(--v2-border-lt)' : 'none',
                   cursor: 'pointer', transition: 'background .06s',
                 }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFAFF')}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFBFC')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}
                 >
                   <div style={{ width: 26, height: 26, borderRadius: 7, background: a.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
@@ -247,7 +247,7 @@ export default function DashboardV2() {
                   borderBottom: i < CHANGES.length - 1 ? '1px solid var(--v2-border-lt)' : 'none',
                   cursor: 'pointer', transition: 'background .06s',
                 }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFAFF')}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#FAFBFC')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>

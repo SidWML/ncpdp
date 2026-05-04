@@ -64,14 +64,14 @@ export default function ChowPage() {
               padding: '12px 20px', fontSize: 13, fontWeight: queue === key ? 600 : 500,
               color: queue === key ? 'var(--text-primary)' : '#6B7280',
               background: 'none', border: 'none', cursor: 'pointer',
-              borderBottom: queue === key ? '2px solid #2968B0' : '2px solid transparent',
+              borderBottom: queue === key ? '2px solid #005C8D' : '2px solid transparent',
               marginBottom: -2, display: 'flex', alignItems: 'center', gap: 8,
             }}>
               {label}
               <span style={{
                 fontSize: 12, fontWeight: 600, padding: '2px 8px', borderRadius: 4,
-                background: queue === key ? '#F0F7FF' : '#F3F4F6',
-                color: queue === key ? '#2968B0' : '#9CA3AF',
+                background: queue === key ? '#E8F3F9' : '#F3F4F6',
+                color: queue === key ? '#005C8D' : '#9CA3AF',
               }}>{count}</span>
             </button>
           ))}
@@ -114,10 +114,10 @@ export default function ChowPage() {
                   <label key={mode} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
                     <div style={{
                       width: 18, height: 18, borderRadius: '50%',
-                      border: searchMode === mode ? '2px solid #2968B0' : '2px solid #CBD5E1',
+                      border: searchMode === mode ? '2px solid #005C8D' : '2px solid #CBD5E1',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                      {searchMode === mode && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#2968B0' }}/>}
+                      {searchMode === mode && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#005C8D' }}/>}
                     </div>
                     <span style={{ fontWeight: searchMode === mode ? 600 : 500, color: searchMode === mode ? 'var(--text-primary)' : '#64748B' }}
                       onClick={() => setSearchMode(mode)}>
@@ -152,10 +152,10 @@ export default function ChowPage() {
                 {visible.map((r, i) => (
                   <tr key={`${r.oldNcpdp}-${r.oldClose}-${i}`}>
                     <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#6B7280' }}>{r.oldNcpdp}</td>
-                    <td><span style={{ color: '#2968B0', fontWeight: 500, cursor: 'pointer' }}>{r.oldName}</span></td>
+                    <td><span style={{ color: '#005C8D', fontWeight: 500, cursor: 'pointer' }}>{r.oldName}</span></td>
                     <td style={{ color: '#9CA3AF' }}>{r.oldClose}</td>
                     <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#6B7280' }}>{r.newNcpdp}</td>
-                    <td><span style={{ color: '#2968B0', fontWeight: 500, cursor: 'pointer' }}>{r.newName}</span></td>
+                    <td><span style={{ color: '#005C8D', fontWeight: 500, cursor: 'pointer' }}>{r.newName}</span></td>
                     <td style={{ color: '#9CA3AF' }}>{r.newOpen}</td>
                   </tr>
                 ))}
@@ -172,7 +172,7 @@ export default function ChowPage() {
                 style={{ padding: '4px 10px', borderRadius: 6, border: 'none', background: 'none', color: page === 0 ? '#CBD5E1' : '#64748B', fontSize: 12, cursor: page === 0 ? 'default' : 'pointer', fontWeight: 500 }}>
                 Previous
               </button>
-              <button style={{ width: 28, height: 28, borderRadius: 4, border: 'none', fontSize: 12, fontWeight: 600, background: '#2968B0', color: '#fff', cursor: 'pointer' }}>{page + 1}</button>
+              <button style={{ width: 28, height: 28, borderRadius: 4, border: 'none', fontSize: 12, fontWeight: 600, background: '#005C8D', color: '#fff', cursor: 'pointer' }}>{page + 1}</button>
               <button onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1}
                 style={{ padding: '4px 10px', borderRadius: 6, border: 'none', background: 'none', color: page >= totalPages - 1 ? '#CBD5E1' : '#64748B', fontSize: 12, cursor: page >= totalPages - 1 ? 'default' : 'pointer', fontWeight: 500 }}>
                 Next

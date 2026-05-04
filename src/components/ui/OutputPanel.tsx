@@ -48,8 +48,8 @@ export type OutputTab = 'results' | 'sql' | 'charts' | 'export';
 const insightStyle: Record<string, { icon: React.ReactNode; bg: string; border: string; color: string }> = {
   danger:  { icon: <IconAlertTriangle size={14} color="#DC2626"/>, bg: '#FEF2F2', border: '#FECACA', color: '#991B1B' },
   warning: { icon: <IconBarChart size={14} color="#D97706"/>,      bg: '#FFF7ED', border: '#FDE68A', color: '#92400E' },
-  success: { icon: <IconBarChart size={14} color="#059669"/>,      bg: '#ECFDF5', border: '#A7F3D0', color: '#065F46' },
-  info:    { icon: <IconShield size={14} color="#2968B0"/>,        bg: '#F0F7FF', border: '#B8D5F5', color: '#1E40AF' },
+  success: { icon: <IconBarChart size={14} color="#449055"/>,      bg: '#ECFDF5', border: '#A7F3D0', color: '#2A6936' },
+  info:    { icon: <IconShield size={14} color="#005C8D"/>,        bg: '#E8F3F9', border: '#8FC2D8', color: '#1E40AF' },
 };
 
 /* ── Insights Banner ─────────────────────────────────────────────── */
@@ -58,9 +58,9 @@ function InsightsBanner({ insights }: { insights: InsightItem[] }) {
   const visible = insights.filter((_, i) => !dismissed.has(i));
   if (visible.length === 0) return null;
   return (
-    <div style={{ marginBottom: 16, padding: '14px 16px', borderRadius: 12, background: 'linear-gradient(135deg, #FAFBFC 0%, #F0F7FF 50%, #FAFBFC 100%)', border: '1px solid #E8EFF8' }}>
+    <div style={{ marginBottom: 16, padding: '14px 16px', borderRadius: 12, background: 'linear-gradient(135deg, #FAFBFC 0%, #E8F3F9 50%, #FAFBFC 100%)', border: '1px solid #E8EFF8' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 10 }}>
-        <IconSparkles size={12} color="#2968B0"/> AI Insights
+        <IconSparkles size={12} color="#005C8D"/> AI Insights
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {visible.map((ins, idx) => {
@@ -105,10 +105,10 @@ export function ResultsTab({ ctx }: { ctx: QueryContext }) {
           <tbody>
             {ctx.rows.map(r => (
               <tr key={r.ncpdp} style={{ transition: 'background .08s' }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#F0F7FF')}
+                onMouseEnter={e => (e.currentTarget.style.background = '#E8F3F9')}
                 onMouseLeave={e => (e.currentTarget.style.background = '')}
               >
-                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
+                <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#005C8D', fontSize: 13 }}>{r.ncpdp}</td>
                 <td style={{ fontWeight: 500 }}>{r.name}</td>
                 <td style={{ color: '#64748B' }}>{r.city}</td>
                 <td style={{ fontWeight: 600 }}>{r.state}</td>
@@ -143,19 +143,19 @@ export function SqlTab({ ctx }: { ctx: QueryContext }) {
         }}>{ctx.sql}</pre>
         <button onClick={() => { navigator.clipboard.writeText(ctx.sql).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1800); }} style={{
           position: 'absolute', top: 12, right: 14,
-          background: copied ? '#059669' : 'rgba(41,104,176,.15)',
-          border: '1px solid rgba(41,104,176,.25)', borderRadius: 6,
+          background: copied ? '#449055' : 'rgba(0,92,141,.15)',
+          border: '1px solid rgba(0,92,141,.25)', borderRadius: 6,
           padding: '4px 16px', fontSize: 12, fontWeight: 600,
-          color: copied ? '#fff' : '#2968B0', cursor: 'pointer',
+          color: copied ? '#fff' : '#005C8D', cursor: 'pointer',
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
           <IconCopy size={12}/> {copied ? 'Copied!' : 'Copy SQL'}
         </button>
       </div>
       <div style={{ marginTop: 12, padding: '10px 16px', background: '#fff', borderRadius: 8, border: '1px solid #E2E8F0', display: 'flex', gap: 20, fontSize: 12, color: '#64748B' }}>
-        <span>Execution: <strong style={{ color: '#10B981' }}>{ctx.execTime}</strong></span>
+        <span>Execution: <strong style={{ color: '#76C799' }}>{ctx.execTime}</strong></span>
         <span>Scanned: <strong style={{ color: '#334155' }}>81,500</strong></span>
-        <span>Returned: <strong style={{ color: '#2968B0' }}>{ctx.totalResults.toLocaleString()} rows</strong></span>
+        <span>Returned: <strong style={{ color: '#005C8D' }}>{ctx.totalResults.toLocaleString()} rows</strong></span>
         <span>Engine: <strong style={{ color: '#334155' }}>PostgreSQL 16</strong></span>
       </div>
     </div>
@@ -175,7 +175,7 @@ export function ChartsTab({ ctx }: { ctx: QueryContext }) {
               <XAxis dataKey="label" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
               <YAxis tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
               <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-              <Bar dataKey="value" fill="#2968B0" radius={[4, 4, 0, 0]} barSize={32}/>
+              <Bar dataKey="value" fill="#005C8D" radius={[4, 4, 0, 0]} barSize={32}/>
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -204,7 +204,7 @@ export function ChartsTab({ ctx }: { ctx: QueryContext }) {
                 <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
                 <YAxis tick={{ fontSize: 12, fill: '#64748B' }} axisLine={{ stroke: '#E2E8F0' }}/>
                 <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }}/>
-                <Area type="monotone" dataKey="primary" stackId="1" stroke="#10B981" fill="#D1FAE5" strokeWidth={2} name={ctx.trendKeys[0]}/>
+                <Area type="monotone" dataKey="primary" stackId="1" stroke="#76C799" fill="#D1FAE5" strokeWidth={2} name={ctx.trendKeys[0]}/>
                 <Area type="monotone" dataKey="secondary" stackId="2" stroke="#EF4444" fill="#FEE2E2" strokeWidth={2} name={ctx.trendKeys[1]}/>
               </AreaChart>
             </ResponsiveContainer>
@@ -247,10 +247,10 @@ export function ExportTab({ title, ctx }: { title?: string; ctx: QueryContext })
   }
 
   const formats = [
-    { key: 'csv',  icon: <IconReport size={22} color="#2968B0"/>,  label: 'CSV',          desc: 'Comma-separated values for Excel, Google Sheets.', size: `~${(ctx.rows.length * 120 / 1024).toFixed(0)} KB`, action: 'Download CSV',  fn: downloadCSV,  gradient: '#F0F7FF' },
-    { key: 'json', icon: <IconCode size={22} color="#10B981"/>,    label: 'JSON',         desc: 'Structured JSON for programmatic access.',          size: `~${(ctx.rows.length * 200 / 1024).toFixed(0)} KB`, action: 'Download JSON', fn: downloadJSON, gradient: '#ECFDF5' },
+    { key: 'csv',  icon: <IconReport size={22} color="#005C8D"/>,  label: 'CSV',          desc: 'Comma-separated values for Excel, Google Sheets.', size: `~${(ctx.rows.length * 120 / 1024).toFixed(0)} KB`, action: 'Download CSV',  fn: downloadCSV,  gradient: '#E8F3F9' },
+    { key: 'json', icon: <IconCode size={22} color="#76C799"/>,    label: 'JSON',         desc: 'Structured JSON for programmatic access.',          size: `~${(ctx.rows.length * 200 / 1024).toFixed(0)} KB`, action: 'Download JSON', fn: downloadJSON, gradient: '#ECFDF5' },
     { key: 'sql',  icon: <IconDatabase size={22} color="#F59E0B"/>,label: 'SQL Query',    desc: 'Run directly against your database.',                size: '~1 KB',                                            action: 'Download SQL',  fn: downloadSQL,  gradient: '#FFF7ED' },
-    { key: 'api',  icon: <IconNetwork size={22} color="#2968B0"/>, label: 'API Endpoint', desc: 'REST endpoint for live results.',                    size: 'Live',                                             action: 'Copy Endpoint', fn: copyEndpoint, gradient: '#F0F7FF' },
+    { key: 'api',  icon: <IconNetwork size={22} color="#005C8D"/>, label: 'API Endpoint', desc: 'REST endpoint for live results.',                    size: 'Live',                                             action: 'Copy Endpoint', fn: copyEndpoint, gradient: '#E8F3F9' },
   ];
 
   return (
@@ -273,7 +273,7 @@ export function ExportTab({ title, ctx }: { title?: string; ctx: QueryContext })
   );
 }
 
-/* ── Output Panel (tabs container) ───────────────────────────────── */
+/* ── Output Panel (tabs) ──────────────────────────────────────────── */
 export function OutputPanel({ ctx, title }: { ctx: QueryContext; title?: string }) {
   const [activeTab, setActiveTab] = useState<OutputTab>('results');
   const tabs: { id: OutputTab; label: string; icon: React.ReactNode }[] = [
@@ -285,13 +285,14 @@ export function OutputPanel({ ctx, title }: { ctx: QueryContext; title?: string 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', background: '#FAFBFC', height: '100%', minWidth: 0 }}>
+      {/* Tab bar */}
       <div style={{ display: 'flex', borderBottom: '1px solid #E2E8F0', background: '#fff', flexShrink: 0 }}>
         {tabs.map(t => (
           <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
             padding: '10px 18px', border: 'none', cursor: 'pointer',
             background: activeTab === t.id ? '#fff' : 'transparent',
-            borderBottom: activeTab === t.id ? '2px solid #2968B0' : '2px solid transparent',
-            color: activeTab === t.id ? '#2968B0' : '#64748B',
+            borderBottom: activeTab === t.id ? '2px solid #005C8D' : '2px solid transparent',
+            color: activeTab === t.id ? '#005C8D' : '#64748B',
             fontSize: 13, fontWeight: activeTab === t.id ? 700 : 500,
             display: 'flex', alignItems: 'center', gap: 6, transition: 'all .15s',
           }}>

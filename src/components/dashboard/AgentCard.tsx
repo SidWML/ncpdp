@@ -22,18 +22,18 @@ const priorityColor: Record<string, 'danger' | 'warning' | 'neutral'> = {
   P0: 'danger', P1: 'warning', P2: 'neutral',
 };
 const categoryColors: Record<string, { bg: string; text: string; icon: string }> = {
-  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', icon: '#2968B0' },
+  'Search & Discovery':      { bg: '#E8F3F9', text: '#005C8D', icon: '#005C8D' },
   'Network Management':      { bg: '#ECFEFF', text: '#0891B2', icon: '#0891B2' },
   'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', icon: '#DC2626' },
   'Data Delivery':           { bg: '#FFFBEB', text: '#B45309', icon: '#D97706' },
-  'Credentialing (resQ)':    { bg: '#ECFDF5', text: '#059669', icon: '#059669' },
-  'Analytics & Prediction':  { bg: '#EFF6FF', text: '#2563EB', icon: '#2563EB' },
-  'Claims & Routing':        { bg: '#F0F7FF', text: '#1E5690', icon: '#1E5690' },
-  'NCPDP Internal':          { bg: '#F5F3FF', text: '#6D28D9', icon: '#6D28D9' },
+  'Credentialing (resQ)':    { bg: '#ECFDF5', text: '#449055', icon: '#449055' },
+  'Analytics & Prediction':  { bg: '#E8F3F9', text: '#1474A4', icon: '#1474A4' },
+  'Claims & Routing':        { bg: '#E8F3F9', text: '#004870', icon: '#004870' },
+  'NCPDP Internal':          { bg: '#E8F3F9', text: '#004870', icon: '#004870' },
 };
 
 function CategoryIcon({ category }: { category: string }) {
-  const color = categoryColors[category]?.icon || '#2968B0';
+  const color = categoryColors[category]?.icon || '#005C8D';
   const icons: Record<string, React.ReactNode> = {
     'Search & Discovery':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>,
     'Network Management':      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M12 11l-6.5 6M12 11l6.5 6"/></svg>,

@@ -14,14 +14,14 @@ import {
 
 /* ── Category color map ───────────────────────────────────────────── */
 const catColors: Record<string, { bg: string; text: string; border: string }> = {
-  'Search & Discovery':      { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5' },
-  'Network Management':      { bg: '#ECFDF5', text: '#059669', border: '#A7F3D0' },
+  'Search & Discovery':      { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8' },
+  'Network Management':      { bg: '#ECFDF5', text: '#449055', border: '#A7F3D0' },
   'Compliance & Regulatory': { bg: '#FEF2F2', text: '#DC2626', border: '#FECACA' },
-  'Data Delivery':           { bg: '#EFF6FF', text: '#2563EB', border: '#BFDBFE' },
+  'Data Delivery':           { bg: '#E8F3F9', text: '#1474A4', border: '#8FC2D8' },
   'Credentialing (resQ)':    { bg: '#FFF7ED', text: '#D97706', border: '#FDE68A' },
-  'Analytics & Prediction':  { bg: '#F0F7FF', text: '#2968B0', border: '#B8D5F5' },
-  'Claims & Routing':        { bg: '#ECFDF5', text: '#10B981', border: '#6EE7B7' },
-  'NCPDP Internal':          { bg: '#F0F9FF', text: '#0284C7', border: '#BAE6FD' },
+  'Analytics & Prediction':  { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8' },
+  'Claims & Routing':        { bg: '#ECFDF5', text: '#76C799', border: '#A6DFB8' },
+  'NCPDP Internal':          { bg: '#E8F3F9', text: '#005C8D', border: '#8FC2D8' },
 };
 
 const catIcon = (cat: string) => {
@@ -100,7 +100,7 @@ type AgentType = typeof agents[0];
 /* ── Agent card (inline, no import) ──────────────────────────────── */
 function AgentGridCard({ agent, onLaunch }: { agent: AgentType; onLaunch: () => void }) {
   const cc = catColors[agent.category] || catColors['Search & Discovery'];
-  const phaseColors: Record<string, string> = { '1a': '#10B981', '1b': '#2968B0', '1c': '#94A3B8' };
+  const phaseColors: Record<string, string> = { '1a': '#76C799', '1b': '#005C8D', '1c': '#94A3B8' };
   const phaseColor = phaseColors[agent.phase] || '#94A3B8';
 
   return (

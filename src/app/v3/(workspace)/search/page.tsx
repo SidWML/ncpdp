@@ -14,8 +14,8 @@ import {
 
 // -- Avatar colors for pharmacy initials
 const AVATAR_COLORS = [
-  '#6366F1','#8B5CF6','#EC4899','#F43F5E','#F97316','#EAB308',
-  '#22C55E','#14B8A6','#06B6D4','#3B82F6','#A855F7','#D946EF',
+  '#005C8D','#005C8D','#EC4899','#F43F5E','#F97316','#EAB308',
+  '#22C55E','#14B8A6','#449055','#1474A4','#A855F7','#D946EF',
 ];
 
 // -- Pharmacy data
@@ -53,10 +53,10 @@ const OWNERSHIP_CHANGES_UNPROCESSED = [
 
 // -- Geographic adequacy data
 const GEO_STATS = [
-  { label: 'States Analyzed', value: '50', sub: 'All US states', color: '#6366F1' },
-  { label: 'Adequate', value: '44', sub: '88% meeting criteria', color: '#059669' },
+  { label: 'States Analyzed', value: '50', sub: 'All US states', color: '#005C8D' },
+  { label: 'Adequate', value: '44', sub: '88% meeting criteria', color: '#449055' },
   { label: 'Coverage Gaps', value: '12', sub: 'Counties below threshold', color: '#D97706' },
-  { label: 'Avg Coverage', value: '94.2%', sub: '+1.3% vs last quarter', color: '#3B82F6' },
+  { label: 'Avg Coverage', value: '94.2%', sub: '+1.3% vs last quarter', color: '#1474A4' },
 ];
 
 const GEO_TABLE = [
@@ -76,8 +76,8 @@ const GEO_TABLE = [
 
 // -- Mode pills
 const MODES = [
-  { label: 'Search', icon: IconSearch, color: '#6366F1' },
-  { label: 'Reports', icon: IconReport, color: '#059669' },
+  { label: 'Search', icon: IconSearch, color: '#005C8D' },
+  { label: 'Reports', icon: IconReport, color: '#449055' },
   { label: 'Compliance', icon: IconShield, color: '#DC2626' },
 ];
 
@@ -141,10 +141,10 @@ export default function SearchPage() {
           {/* Sparkle icon */}
           <div style={{
             width: 48, height: 48, borderRadius: 14,
-            background: 'linear-gradient(135deg,#6366F1,#A78BFA)',
+            background: 'linear-gradient(135deg,#005C8D,#76C799)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 14px',
-            boxShadow: '0 4px 20px rgba(99,102,241,.2)',
+            boxShadow: '0 4px 20px rgba(0,92,141,.2)',
           }}>
             <IconSparkles size={24} color="#fff"/>
           </div>

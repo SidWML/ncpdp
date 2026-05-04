@@ -11,11 +11,11 @@ import { credentialStatus, networkTrend, stateBreakdown } from '@/lib/mockData';
 import { IconDownload, IconActivity } from '@/components/ui/Icons';
 
 const pharmacyTypes = [
-  { label: 'Retail',      value: 45640, pct: 56, color: '#2968B0' },
-  { label: 'Specialty',   value: 17930, pct: 22, color: '#06B6D4' },
-  { label: 'LTC',         value: 9780,  pct: 12, color: '#10B981' },
+  { label: 'Retail',      value: 45640, pct: 56, color: '#005C8D' },
+  { label: 'Specialty',   value: 17930, pct: 22, color: '#449055' },
+  { label: 'LTC',         value: 9780,  pct: 12, color: '#76C799' },
   { label: 'Compounding', value: 4890,  pct: 6,  color: '#F59E0B' },
-  { label: 'Mail Order',  value: 3260,  pct: 4,  color: '#2968B0' },
+  { label: 'Mail Order',  value: 3260,  pct: 4,  color: '#005C8D' },
 ];
 
 const apiTrend = [
@@ -36,8 +36,8 @@ const platformKpis = [
 
 const complianceTargets = [
   { label: 'FWA Attestation',  value: 90.0, target: 95, gap: 8150, color: '#F59E0B' },
-  { label: 'State License',    value: 99.0, target: 99, gap: 490,  color: '#10B981' },
-  { label: 'DEA Registration', value: 98.0, target: 98, gap: 1685, color: '#10B981' },
+  { label: 'State License',    value: 99.0, target: 99, gap: 490,  color: '#76C799' },
+  { label: 'DEA Registration', value: 98.0, target: 98, gap: 1685, color: '#76C799' },
   { label: 'Network Adequacy', value: 94.2, target: 95, gap: 406,  color: '#F59E0B' },
 ];
 
@@ -53,7 +53,7 @@ const coverageStates = [
 ];
 
 const statusCfg = {
-  Pass:   { color: '#10B981', bg: '#D1FAE5', border: '#A7F3D0' },
+  Pass:   { color: '#76C799', bg: '#D1FAE5', border: '#A7F3D0' },
   Review: { color: '#D97706', bg: '#FEF3C7', border: '#FDE68A' },
   Below:  { color: '#DC2626', bg: '#FEE2E2', border: '#FECACA' },
 };
@@ -109,16 +109,16 @@ export default function AnalyticsPage() {
         {/* ── KPI cards ── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
           {[
-            { label: 'Total Network',    value: '81,500', sub: '+1,204 this month',       bar: 82,  color: '#2968B0', delta: '+1.5%', green: true  },
-            { label: 'DEA Compliance',   value: '98%',    sub: '76,425 active registrations', bar: 98, color: '#10B981', delta: '+0.8%', green: true  },
-            { label: 'Network Adequacy', value: '94.2%',  sub: '44 / 50 states meet threshold', bar: 94, color: '#2968B0', delta: '+0.4%', green: true  },
+            { label: 'Total Network',    value: '81,500', sub: '+1,204 this month',       bar: 82,  color: '#005C8D', delta: '+1.5%', green: true  },
+            { label: 'DEA Compliance',   value: '98%',    sub: '76,425 active registrations', bar: 98, color: '#76C799', delta: '+0.8%', green: true  },
+            { label: 'Network Adequacy', value: '94.2%',  sub: '44 / 50 states meet threshold', bar: 94, color: '#005C8D', delta: '+0.4%', green: true  },
             { label: 'FWA Attestation',  value: '90%',    sub: '73,350 of 81,500 attested', bar: 90, color: '#F59E0B', delta: '+2.1%', green: true  },
           ].map(k => (
             <div key={k.label} className="card" style={{ padding: '18px 20px' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 8 }}>{k.label}</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
                 <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)' }}>{k.value}</span>
-                <span style={{ fontSize: 12, fontWeight: 600, color: k.green ? '#059669' : '#DC2626', background: k.green ? '#ECFDF5' : '#FEE2E2', padding: '2px 8px', borderRadius: 6 }}>{k.delta}</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: k.green ? '#449055' : '#DC2626', background: k.green ? '#ECFDF5' : '#FEE2E2', padding: '2px 8px', borderRadius: 6 }}>{k.delta}</span>
               </div>
               <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10 }}>{k.sub}</div>
               <Progress value={k.bar} color={k.color} height={4}/>
@@ -141,16 +141,16 @@ export default function AnalyticsPage() {
                   <button key={t} onClick={() => setChartTab(t)} style={{
                     fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 8, border: '1px solid',
                     cursor: 'pointer',
-                    background: chartTab === t ? '#F0F7FF' : 'transparent',
-                    color: chartTab === t ? '#2968B0' : 'var(--text-muted)',
-                    borderColor: chartTab === t ? '#B8D5F5' : 'var(--border)',
+                    background: chartTab === t ? '#E8F3F9' : 'transparent',
+                    color: chartTab === t ? '#005C8D' : 'var(--text-muted)',
+                    borderColor: chartTab === t ? '#8FC2D8' : 'var(--border)',
                     transition: 'all .15s',
                   }}>{t}</button>
                 ))}
               </div>
               <ReAreaChart
                 data={networkTrend.map(d => ({ label: d.month, value: d.count }))}
-                color="#2968B0"
+                color="#005C8D"
                 height={150}
                 yDomain={[77000, 82500]}
               />
@@ -211,7 +211,7 @@ export default function AnalyticsPage() {
                         <td>
                           <span style={{ fontSize: 12, fontWeight: 600, color: sc.color, background: sc.bg, padding: '2px 8px', borderRadius: 4 }}>{r.status}</span>
                         </td>
-                        <td style={{ fontSize: 12, fontWeight: 600, color: r.up ? '#10B981' : '#DC2626' }}>{r.trend}</td>
+                        <td style={{ fontSize: 12, fontWeight: 600, color: r.up ? '#76C799' : '#DC2626' }}>{r.trend}</td>
                       </tr>
                     );
                   })}
@@ -250,9 +250,9 @@ export default function AnalyticsPage() {
                 <div key={c.label}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{c.label}</span>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: c.value >= 95 ? '#10B981' : c.value >= 90 ? '#D97706' : '#DC2626' }}>{c.value}%</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: c.value >= 95 ? '#76C799' : c.value >= 90 ? '#D97706' : '#DC2626' }}>{c.value}%</span>
                   </div>
-                  <Progress value={c.value} color={c.value >= 95 ? '#10B981' : c.value >= 90 ? '#D97706' : '#DC2626'} height={5}/>
+                  <Progress value={c.value} color={c.value >= 95 ? '#76C799' : c.value >= 90 ? '#D97706' : '#DC2626'} height={5}/>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontSize: 12, color: 'var(--text-muted)' }}>
                     <span>Target: {c.target}%</span>
                     <span style={{ color: '#DC2626', fontWeight: 600 }}>Gap: {c.gap.toLocaleString()}</span>
@@ -272,7 +272,7 @@ export default function AnalyticsPage() {
           />
           <CardBody>
             <ReBarChart
-              data={stateBreakdown.map(s => ({ label: s.state, value: s.count, color: '#2968B0' }))}
+              data={stateBreakdown.map(s => ({ label: s.state, value: s.count, color: '#005C8D' }))}
               height={140}
             />
           </CardBody>
@@ -290,7 +290,7 @@ export default function AnalyticsPage() {
             <CardBody>
               <ReAreaChart
                 data={apiTrend}
-                color="#06B6D4"
+                color="#449055"
                 height={140}
                 valueFormatter={(v: number) => `${(v/1000).toFixed(0)}K`}
               />
@@ -314,7 +314,7 @@ export default function AnalyticsPage() {
                     <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{k.value}</span>
                     <span style={{
                       fontSize: 12, fontWeight: 600,
-                      color: '#059669', background: '#ECFDF5',
+                      color: '#449055', background: '#ECFDF5',
                       padding: '2px 8px', borderRadius: 6,
                     }}>{k.delta}</span>
                   </div>

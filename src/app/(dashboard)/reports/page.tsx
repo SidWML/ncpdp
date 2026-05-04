@@ -126,7 +126,7 @@ export default function ReportsPage() {
         {reported && (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>Report Results — <span style={{ color: '#10B981' }}>{total.toLocaleString()} records found</span></div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>Report Results — <span style={{ color: '#76C799' }}>{total.toLocaleString()} records found</span></div>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button className="btn-secondary" style={{ fontSize: 12, gap: 4 }}><IconDownload size={12}/> Export CSV</button>
                 <button className="btn-secondary" style={{ fontSize: 12, gap: 4 }}><IconDownload size={12}/> Export PDF</button>
@@ -139,7 +139,7 @@ export default function ReportsPage() {
                   {visible.map(r => (
                     <tr key={r.ncpdp}>
                       <td style={{ fontWeight: 500 }}>{r.name}</td>
-                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#2968B0', fontSize: 13 }}>{r.ncpdp}</td>
+                      <td style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 600, color: '#005C8D', fontSize: 13 }}>{r.ncpdp}</td>
                       <td style={{ color: '#64748B' }}>{r.relType}</td>
                       <td>{r.city}</td>
                       <td style={{ fontWeight: 600 }}>{r.state}</td>

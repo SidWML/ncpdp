@@ -20,12 +20,12 @@ const variantMap: Record<Variant, string> = {
 };
 
 const dotColors: Record<Variant, string> = {
-  success: '#10B981',
+  success: '#76C799',
   warning: '#F59E0B',
   danger:  '#EF4444',
-  info:    '#3B82F6',
-  brand:   '#2968B0',
-  violet:  '#6D28D9',
+  info:    '#1474A4',
+  brand:   '#005C8D',
+  violet:  '#004870',
   neutral: '#94A3B8',
 };
 
